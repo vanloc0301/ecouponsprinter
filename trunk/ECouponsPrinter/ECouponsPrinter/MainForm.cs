@@ -42,7 +42,7 @@ namespace ECouponsPrinter
             //加载计时器
             this.Timer_Countdown.Enabled = true;
 
-            //加载设置
+            //加载隐藏按钮
             this.Label_Option.BackColor = Color.Transparent;
         }
 
