@@ -29,11 +29,11 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(KeyBoard));
-            this.Button_Close = new System.Windows.Forms.Button();
+            this.Key_CE = new System.Windows.Forms.Button();
             this.Panel_Background = new System.Windows.Forms.Panel();
-            this.button37 = new System.Windows.Forms.Button();
-            this.button35 = new System.Windows.Forms.Button();
-            this.button34 = new System.Windows.Forms.Button();
+            this.Key_BS = new System.Windows.Forms.Button();
+            this.Key_CR = new System.Windows.Forms.Button();
+            this.Key_CH = new System.Windows.Forms.Button();
             this.Key_z = new System.Windows.Forms.Button();
             this.Key_j = new System.Windows.Forms.Button();
             this.Key_9 = new System.Windows.Forms.Button();
@@ -73,25 +73,25 @@
             this.Panel_Background.SuspendLayout();
             this.SuspendLayout();
             // 
-            // Button_Close
+            // Key_CE
             // 
-            this.Button_Close.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("Button_Close.BackgroundImage")));
-            this.Button_Close.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.Button_Close.Location = new System.Drawing.Point(532, 344);
-            this.Button_Close.Margin = new System.Windows.Forms.Padding(0);
-            this.Button_Close.Name = "Button_Close";
-            this.Button_Close.Size = new System.Drawing.Size(217, 70);
-            this.Button_Close.TabIndex = 0;
-            this.Button_Close.UseVisualStyleBackColor = true;
-            this.Button_Close.Click += new System.EventHandler(this.Button_Close_Click);
+            this.Key_CE.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("Key_CE.BackgroundImage")));
+            this.Key_CE.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.Key_CE.Location = new System.Drawing.Point(532, 344);
+            this.Key_CE.Margin = new System.Windows.Forms.Padding(0);
+            this.Key_CE.Name = "Key_CE";
+            this.Key_CE.Size = new System.Drawing.Size(217, 70);
+            this.Key_CE.TabIndex = 0;
+            this.Key_CE.UseVisualStyleBackColor = true;
+            this.Key_CE.Click += new System.EventHandler(this.Button_Close_Click);
             // 
             // Panel_Background
             // 
             this.Panel_Background.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("Panel_Background.BackgroundImage")));
             this.Panel_Background.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.Panel_Background.Controls.Add(this.button37);
-            this.Panel_Background.Controls.Add(this.button35);
-            this.Panel_Background.Controls.Add(this.button34);
+            this.Panel_Background.Controls.Add(this.Key_BS);
+            this.Panel_Background.Controls.Add(this.Key_CR);
+            this.Panel_Background.Controls.Add(this.Key_CH);
             this.Panel_Background.Controls.Add(this.Key_z);
             this.Panel_Background.Controls.Add(this.Key_j);
             this.Panel_Background.Controls.Add(this.Key_9);
@@ -128,41 +128,47 @@
             this.Panel_Background.Controls.Add(this.Key_a);
             this.Panel_Background.Controls.Add(this.Key_1);
             this.Panel_Background.Controls.Add(this.Key_0);
-            this.Panel_Background.Controls.Add(this.Button_Close);
+            this.Panel_Background.Controls.Add(this.Key_CE);
             this.Panel_Background.Location = new System.Drawing.Point(0, 0);
             this.Panel_Background.Margin = new System.Windows.Forms.Padding(0);
             this.Panel_Background.Name = "Panel_Background";
             this.Panel_Background.Size = new System.Drawing.Size(763, 432);
             this.Panel_Background.TabIndex = 1;
             // 
-            // button37
+            // Key_BS
             // 
-            this.button37.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("button37.BackgroundImage")));
-            this.button37.Location = new System.Drawing.Point(233, 344);
-            this.button37.Margin = new System.Windows.Forms.Padding(0);
-            this.button37.Name = "button37";
-            this.button37.Size = new System.Drawing.Size(289, 70);
-            this.button37.TabIndex = 4;
-            this.button37.UseVisualStyleBackColor = true;
+            this.Key_BS.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("Key_BS.BackgroundImage")));
+            this.Key_BS.Location = new System.Drawing.Point(459, 271);
+            this.Key_BS.Margin = new System.Windows.Forms.Padding(0);
+            this.Key_BS.Name = "Key_BS";
+            this.Key_BS.Size = new System.Drawing.Size(289, 70);
+            this.Key_BS.TabIndex = 4;
+            this.Key_BS.UseVisualStyleBackColor = true;
+            this.Key_BS.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Key_MouseDown);
+            this.Key_BS.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Key_MouseUp);
             // 
-            // button35
+            // Key_CR
             // 
-            this.button35.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("button35.BackgroundImage")));
-            this.button35.Location = new System.Drawing.Point(460, 271);
-            this.button35.Name = "button35";
-            this.button35.Size = new System.Drawing.Size(289, 70);
-            this.button35.TabIndex = 3;
-            this.button35.UseVisualStyleBackColor = true;
+            this.Key_CR.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("Key_CR.BackgroundImage")));
+            this.Key_CR.Location = new System.Drawing.Point(234, 344);
+            this.Key_CR.Name = "Key_CR";
+            this.Key_CR.Size = new System.Drawing.Size(289, 70);
+            this.Key_CR.TabIndex = 3;
+            this.Key_CR.UseVisualStyleBackColor = true;
+            this.Key_CR.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Key_MouseDown);
+            this.Key_CR.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Key_MouseUp);
             // 
-            // button34
+            // Key_CH
             // 
-            this.button34.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("button34.BackgroundImage")));
-            this.button34.Location = new System.Drawing.Point(9, 344);
-            this.button34.Margin = new System.Windows.Forms.Padding(0);
-            this.button34.Name = "button34";
-            this.button34.Size = new System.Drawing.Size(217, 70);
-            this.button34.TabIndex = 2;
-            this.button34.UseVisualStyleBackColor = true;
+            this.Key_CH.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("Key_CH.BackgroundImage")));
+            this.Key_CH.Location = new System.Drawing.Point(9, 344);
+            this.Key_CH.Margin = new System.Windows.Forms.Padding(0);
+            this.Key_CH.Name = "Key_CH";
+            this.Key_CH.Size = new System.Drawing.Size(217, 70);
+            this.Key_CH.TabIndex = 2;
+            this.Key_CH.UseVisualStyleBackColor = true;
+            this.Key_CH.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Key_MouseDown);
+            this.Key_CH.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Key_MouseUp);
             // 
             // Key_z
             // 
@@ -425,7 +431,6 @@
             this.Key_n.Size = new System.Drawing.Size(70, 70);
             this.Key_n.TabIndex = 1;
             this.Key_n.UseVisualStyleBackColor = true;
-            this.Key_n.Click += new System.EventHandler(this.button22_Click);
             this.Key_n.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Key_MouseDown);
             this.Key_n.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Key_MouseUp);
             // 
@@ -570,6 +575,7 @@
             this.Name = "KeyBoard";
             this.Text = "KeyBoard";
             this.TopMost = true;
+            this.Load += new System.EventHandler(this.KeyBoard_Load);
             this.Panel_Background.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -577,7 +583,7 @@
 
         #endregion
 
-        private System.Windows.Forms.Button Button_Close;
+        private System.Windows.Forms.Button Key_CE;
         private System.Windows.Forms.Panel Panel_Background;
         private System.Windows.Forms.Button Key_0;
         private System.Windows.Forms.Button Key_9;
@@ -615,9 +621,9 @@
         private System.Windows.Forms.Button Key_b;
         private System.Windows.Forms.Button Key_k;
         private System.Windows.Forms.Button Key_a;
-        private System.Windows.Forms.Button button34;
-        private System.Windows.Forms.Button button37;
-        private System.Windows.Forms.Button button35;
+        private System.Windows.Forms.Button Key_CH;
+        private System.Windows.Forms.Button Key_BS;
+        private System.Windows.Forms.Button Key_CR;
 
     }
 }

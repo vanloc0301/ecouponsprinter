@@ -16,11 +16,12 @@ namespace ECouponsPrinter
         public KeyBoard()
         {
             InitializeComponent();
-        //    this.FormBorderStyle = FormBorderStyle.None;
+            this.FormBorderStyle = FormBorderStyle.None;
         }
 
         private const int WS_EX_TOOLWINDOW = 0x00000080;
         private const int WS_EX_NOACTIVATE = 0x08000000;
+        private int KeyType = 0;
 
         protected override CreateParams CreateParams
         {
@@ -37,13 +38,8 @@ namespace ECouponsPrinter
 
         private void Button_Close_Click(object sender, EventArgs e)
         {
-            this.Close();
+            this.Hide();
         }
-
-        private void button22_Click(object sender, EventArgs e)
-        {
-
-        }   
 
         [DllImport("User32.dll",EntryPoint="FindWindow")]
         private static extern IntPtr FindWindow(string lpClassName,string lpWindowName);
@@ -66,7 +62,58 @@ namespace ECouponsPrinter
             int length = name.Length;
             String str = name.Substring(length - 1,1);
 
-    //        MessageBox.Show(str);
+      //      if(hWnd != null)
+      //      MessageBox.Show(hWnd.ToString("aa"));
+
+            String sec = null;
+
+            switch(str)
+            {
+                case "S":
+                    sec = name.Substring(length - 2, 2);
+                    if (sec == "BS")
+                    {
+                        SendKeys.Send("{BS}");
+                        return;
+                    }
+                    break;
+                case "R":
+                    sec = name.Substring(length - 2, 2);
+                    if (sec == "CR")
+                    {
+                        this.Hide();
+                        return;
+                    }
+                    break;
+
+                case "E":
+                    sec = name.Substring(length - 2, 2);
+                    if (sec == "CE")
+                    {
+                        this.Hide();
+                        return;
+                    }
+                    break;
+
+                case "H":
+                    sec = name.Substring(length - 2, 2);
+                    if (sec == "CH")
+                    {
+                        if(KeyType == 0)
+                            KeyType = 1;
+                        else
+                            KeyType = 0;
+                        return;
+                    }
+                    break;
+                    
+
+            }
+
+            if (KeyType == 1)
+            {
+                str = str.ToUpperInvariant();
+            }
 
             SendKeys.Send(str);
 
@@ -78,5 +125,11 @@ namespace ECouponsPrinter
         {
       //      this.Key_0.BackgroundImage = Image.FromFile(path+"
         }
+
+        private void KeyBoard_Load(object sender, EventArgs e)
+        {
+            this.Location = new Point(100,340);
+        }
+
     }
 }

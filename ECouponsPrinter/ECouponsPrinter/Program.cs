@@ -28,6 +28,8 @@ namespace ECouponsPrinter
             GlobalVariables.Set_CouponsPage(csf);
             CouponsPopForm cpf = new CouponsPopForm();
             GlobalVariables.Set_CouponsPopPage(cpf);
+            Option op = new Option();
+            GlobalVariables.Set_Option(op);
 
             Application.Run(mf);
         }
