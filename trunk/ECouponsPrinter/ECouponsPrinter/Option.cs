@@ -19,14 +19,28 @@ namespace ECouponsPrinter
 
         private void button3_Click(object sender, EventArgs e)
         {
-            this.Close();
+            this.Hide();
         }
 
         private void ID_Enter(object sender, EventArgs e)
         {
-            KeyBoard kb = new KeyBoard();
-            kb.Show();
-            
+            Form temp = GlobalVariables.Get_KeyBoard();
+
+            if (temp != null)
+            {
+                temp.Show();
+            }
+            else
+            {
+                KeyBoard kb = new KeyBoard();
+                GlobalVariables.Set_KeyBoard(kb);
+                kb.Show();
+            }         
+        }
+
+        private void Option_Load(object sender, EventArgs e)
+        {
+            this.Location = new Point(150, 20);
         }
     }
 }
