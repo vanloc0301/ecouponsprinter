@@ -24,9 +24,10 @@ namespace ECouponsPrinter
             objConn.Open();
             objCmd = new OleDbCommand(strSql, objConn);
             objReader = objCmd.ExecuteReader();
+            return objReader;
         }
 
-        public OleDbDataReader ExecuteNonQuery(String strSql)
+        public void ExecuteNonQuery(String strSql)
         {
             objConn.Open();
             objCmd = new OleDbCommand(strSql, objConn);
