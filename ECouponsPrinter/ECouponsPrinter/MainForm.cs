@@ -114,6 +114,10 @@ namespace ECouponsPrinter
 
             this.Button_NextShop.BackgroundImage = Image.FromFile(path + "\\images\\切图\\首页\\后一页.jpg");
 
+            ++num;
+            SourceBitmap = new Bitmap(path + "\\images\\(" + num + ").jpg");
+            MyBitmap = new Bitmap(SourceBitmap, this.PictureBox_Shop.Width, this.PictureBox_Shop.Height);
+
        //     Thread th = new Thread(new ThreadStart(Next_Picture));
 
        //     th.Start();
