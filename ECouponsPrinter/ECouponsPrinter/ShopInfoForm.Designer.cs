@@ -51,6 +51,7 @@
             this.Label_ScrollText = new System.Windows.Forms.Label();
             this.Label_Countdown = new System.Windows.Forms.Label();
             this.Timer_Countdown = new System.Windows.Forms.Timer(this.components);
+            this.Label_Option = new System.Windows.Forms.Label();
             this.Panel_Background.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox_Coupons06)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox_Coupons05)).BeginInit();
@@ -67,6 +68,7 @@
             // Panel_Background
             // 
             this.Panel_Background.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("Panel_Background.BackgroundImage")));
+            this.Panel_Background.Controls.Add(this.Label_Option);
             this.Panel_Background.Controls.Add(this.PictureBox_Coupons06);
             this.Panel_Background.Controls.Add(this.PictureBox_Coupons05);
             this.Panel_Background.Controls.Add(this.PictureBox_Coupons04);
@@ -306,6 +308,14 @@
             this.Timer_Countdown.Interval = 1000;
             this.Timer_Countdown.Tick += new System.EventHandler(this.Timer_Countdown_Tick);
             // 
+            // Label_Option
+            // 
+            this.Label_Option.Location = new System.Drawing.Point(-2, 0);
+            this.Label_Option.Name = "Label_Option";
+            this.Label_Option.Size = new System.Drawing.Size(41, 12);
+            this.Label_Option.TabIndex = 16;
+            this.Label_Option.DoubleClick += new System.EventHandler(this.Show_Option);
+            // 
             // ShopInfoForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -354,5 +364,6 @@
         private System.Windows.Forms.PictureBox PictureBox_Coupons03;
         private System.Windows.Forms.PictureBox PictureBox_Coupons02;
         private System.Windows.Forms.PictureBox PictureBox_Coupons06;
+        private System.Windows.Forms.Label Label_Option;
     }
 }

@@ -41,6 +41,9 @@ namespace ECouponsPrinter
             //加载计时器
             this.Timer_Countdown.Enabled = true;
 
+            //加载隐藏按钮
+            this.Label_Option.BackColor = Color.Transparent;
+
         }
 
 
@@ -205,6 +208,23 @@ namespace ECouponsPrinter
             _workerScrollText.CancelAsync();
         }
 
+
+        private void Show_Option(object sender, EventArgs e)
+        {
+            Form temp = GlobalVariables.Get_Option();
+
+            if (temp != null)
+            {
+                temp.ShowDialog();
+            }
+            else
+            {
+                Option op = new Option();
+                GlobalVariables.Set_Option(op);
+                op.ShowDialog();
+            }
+
+        }
 
     }
 }

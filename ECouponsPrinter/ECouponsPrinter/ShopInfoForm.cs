@@ -12,7 +12,6 @@ namespace ECouponsPrinter
 {
     public partial class ShopInfoForm : Form
     {
-        private Form parent;
         private String path = System.Windows.Forms.Application.StartupPath;
         private Bitmap SourceBitmap;
         private Bitmap MyBitmap;
@@ -24,8 +23,6 @@ namespace ECouponsPrinter
         {
             InitializeComponent();
             InitializeScrollTextWorker();
-
-            this.parent = GlobalVariables.Get_HomePage();
         }
 
         private void ShopInfoForm_Load(object sender, EventArgs e)
@@ -40,6 +37,9 @@ namespace ECouponsPrinter
 
             //加载计时器
             this.Timer_Countdown.Enabled = true;
+
+            //加载隐藏按钮
+            this.Label_Option.BackColor = Color.Transparent;
             
         }
 
@@ -231,6 +231,23 @@ namespace ECouponsPrinter
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             _workerScrollText.CancelAsync();
+        }
+
+        private void Show_Option(object sender, EventArgs e)
+        {
+            Form temp = GlobalVariables.Get_Option();
+
+            if (temp != null)
+            {
+                temp.ShowDialog();
+            }
+            else
+            {
+                Option op = new Option();
+                GlobalVariables.Set_Option(op);
+                op.ShowDialog();
+            }
+
         }
 
     }
