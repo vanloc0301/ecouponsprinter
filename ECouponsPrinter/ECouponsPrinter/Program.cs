@@ -12,10 +12,24 @@ namespace ECouponsPrinter
         /// </summary>
         [STAThread]
         static void Main()
-        {
+        {        
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+
+            MainForm mf = new MainForm();
+            GlobalVariables.Set_Homepage(mf);
+            ShopInfoForm sif = new ShopInfoForm();
+            GlobalVariables.Set_ShopInfoPage(sif);
+            ShopSecondForm ssf = new ShopSecondForm();
+            GlobalVariables.Set_ShopPage(ssf);
+            MyInfoForm mip = new MyInfoForm();
+            GlobalVariables.Set_MyInfoPage(mip);
+            CouponsSecondForm csf = new CouponsSecondForm();
+            GlobalVariables.Set_CouponsPage(csf);
+            CouponsPopForm cpf = new CouponsPopForm();
+            GlobalVariables.Set_CouponsPopPage(cpf);
+
+            Application.Run(new Option());
         }
     }
 }
