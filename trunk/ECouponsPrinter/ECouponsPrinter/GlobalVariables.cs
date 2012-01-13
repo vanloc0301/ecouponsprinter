@@ -14,6 +14,8 @@ namespace ECouponsPrinter
         private static Form _MyInfoPage;
         private static Form _CouponsPage;
         private static Form _CouponsPopPage;
+        private static Form _Option;
+        private static Form _KeyBoard;
 
         private static String strTerminalNo;
         private static String strServerUrl;
@@ -88,6 +90,26 @@ namespace ECouponsPrinter
         public static Form Get_CouponsPopPage()
         {
             return _CouponsPopPage;
+        }
+
+        public static void Set_Option(Form form)
+        {
+            _Option = form;
+        }
+
+        public static Form Get_Option()
+        {
+            return _Option;
+        }
+
+        public static void Set_KeyBoard(Form form)
+        {
+            _KeyBoard = form;
+        }
+
+        public static Form Get_KeyBoard()
+        {
+            return _KeyBoard;
         }
     }
 }
