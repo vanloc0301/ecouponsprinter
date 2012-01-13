@@ -29,7 +29,7 @@ namespace ECouponsPrinter
             CouponsPopForm cpf = new CouponsPopForm();
             GlobalVariables.Set_CouponsPopPage(cpf);
 
-            Application.Run(new Option());
+            Application.Run(mf);
         }
     }
 }
