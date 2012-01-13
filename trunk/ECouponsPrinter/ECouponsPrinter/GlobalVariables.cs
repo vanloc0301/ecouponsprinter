@@ -15,6 +15,14 @@ namespace ECouponsPrinter
         private static Form _CouponsPage;
         private static Form _CouponsPopPage;
 
+        private static String strTerminalNo;
+
+        public static String StrTerminalNo
+        {
+            get { return GlobalVariables.strTerminalNo; }
+            set { GlobalVariables.strTerminalNo = value; }
+        }
+
         public static void Set_Homepage(Form form)
         {
            _HomePage = form;
