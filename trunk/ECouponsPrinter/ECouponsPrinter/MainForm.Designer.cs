@@ -266,7 +266,6 @@
             this.PictureBox_Shop.Size = new System.Drawing.Size(1074, 540);
             this.PictureBox_Shop.TabIndex = 1;
             this.PictureBox_Shop.TabStop = false;
-            this.PictureBox_Shop.Visible = false;
             // 
             // Button_NextShop
             // 
