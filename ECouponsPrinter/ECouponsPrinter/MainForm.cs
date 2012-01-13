@@ -114,9 +114,9 @@ namespace ECouponsPrinter
 
             this.Button_NextShop.BackgroundImage = Image.FromFile(path + "\\images\\切图\\首页\\后一页.jpg");
 
-            Thread th = new Thread(new ThreadStart(Next_Picture));
+       //     Thread th = new Thread(new ThreadStart(Next_Picture));
 
-            th.Start();
+       //     th.Start();
 
             
             /*       try
@@ -153,8 +153,8 @@ namespace ECouponsPrinter
                        MessageBox.Show(ex.Message, "错误!");
                    } 
                    */
-   //         if (MyBitmap != null)
-    //            this.PictureBox_Shop.Image = MyBitmap;
+            if (MyBitmap != null)
+                this.PictureBox_Shop.Image = MyBitmap;
         }
 
         #endregion
