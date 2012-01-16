@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Xml;
 using System.IO;
+using System.Data.OleDb;
 
 namespace ECouponsPrinter
 {
@@ -52,6 +53,36 @@ namespace ECouponsPrinter
 
         }
 
+        private void deleteShop(XmlNode xnShop)
+        {
+            String strId, strSmallImg = "", strLargeImg = "";
+            XmlElement xeShop = (XmlElement)xnShop;
+            strId = xeShop.GetElementsByTagName("strId").Item(0).InnerText;
+            //查询文件
+            string strSql = "select strSmallImg,strLargeImg from t_bz_shop where strId='" + strId + "'";
+            AccessCmd cmd = new AccessCmd();
+            OleDbDataReader reader = cmd.ExecuteReader(strSql);
+            if (reader.Read())
+            {
+                strSmallImg = reader.GetString(0);
+                strLargeImg = reader.GetString(1);
+            }
+            reader.Close();
+            //写入数据库
+            strSql = "delete t_bz_shop where strId='" + strId + "'";
+            cmd.ExecuteNonQuery(strSql);
+            cmd.Close();
+            //删除原文件
+            if (!strSmallImg.Equals(""))
+            {
+                File.Delete(System.Windows.Forms.Application.StartupPath + "shop\\" + strSmallImg);
+            }
+            if (!strLargeImg.Equals(""))
+            {
+                File.Delete(System.Windows.Forms.Application.StartupPath + "shop\\" + strLargeImg);
+            }
+        }
+
         private void updateShop(XmlNode xnShop)
         {
             String strId, strBizName, strShopName, strTrade, strAddr, strIntro, strSmallImg, strSmallImgContent, strLargeImg, strLargeImgContent;
@@ -61,7 +92,7 @@ namespace ECouponsPrinter
             AccessCmd cmd = new AccessCmd();
             string strSql = "update t_bz_shop set strBizName='" + strBizName + "',strShopName='" + strShopName + "',strTrade='" + strTrade + "',strAddr='" + strAddr + 
                 "',strIntro='" + strIntro + "',strSmallImg='" + strSmallImg + "',strLargeImg='" + strLargeImg + "' where strId='" + strId + "'";
-            cmd.ExecuteNonQuery();
+            cmd.ExecuteNonQuery(strSql);
             cmd.Close();
             //删除原文件
             File.Delete(System.Windows.Forms.Application.StartupPath + "shop\\" + strSmallImg);
@@ -79,7 +110,7 @@ namespace ECouponsPrinter
             AccessCmd cmd = new AccessCmd();
             string strSql = "insert t_bz_shop(strId,strBizName,strShopName,strTrade,strAddr,strIntro,strSmallImg,strLargeImg) values('" + strId + "','" + strBizName + "','" + strShopName +
                 "','" + strTrade + "','" + strAddr + "','" + strIntro + "','" + strSmallImg + "','" + strLargeImg + "')";
-            cmd.ExecuteNonQuery();
+            cmd.ExecuteNonQuery(strSql);
             cmd.Close();
             //创建文件文件
             createShopImg(strSmallImg, strSmallImgContent, strLargeImg, strLargeImgContent);
@@ -93,7 +124,7 @@ namespace ECouponsPrinter
             fs.Write(info, 0, info.Length);
             fs.Close();
             fs = new FileStream(System.Windows.Forms.Application.StartupPath + "shop\\" + strLargeImg, FileMode.CreateNew);
-            Byte[] info = objDec.GetDecoded(strLargeImgContent);
+            info = objDec.GetDecoded(strLargeImgContent);
             fs.Write(info, 0, info.Length);
             fs.Close();
         }
