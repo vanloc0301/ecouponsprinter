@@ -17,11 +17,11 @@ namespace ECouponsPrinter
         public AccessCmd()
         {
             objConn = new OleDbConnection(strConn);
+            objConn.Open();
         }
 
         public OleDbDataReader ExecuteReader(String strSql)
         {
-            objConn.Open();
             objCmd = new OleDbCommand(strSql, objConn);
             objReader = objCmd.ExecuteReader();
             return objReader;
@@ -29,15 +29,12 @@ namespace ECouponsPrinter
 
         public void ExecuteNonQuery(String strSql)
         {
-            objConn.Open();
             objCmd = new OleDbCommand(strSql, objConn);
             objCmd.ExecuteNonQuery();
         }
 
         public void Close()
         {
-            if (objReader != null)
-                objReader.Close();
             if (objConn.State == System.Data.ConnectionState.Open)
                 objConn.Close();
         }
