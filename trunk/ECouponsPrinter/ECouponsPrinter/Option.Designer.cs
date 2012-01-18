@@ -56,6 +56,8 @@
             // Buttom_Close
             // 
             this.Buttom_Close.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("Buttom_Close.BackgroundImage")));
+            this.Buttom_Close.FlatAppearance.BorderSize = 0;
+            this.Buttom_Close.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.Buttom_Close.Location = new System.Drawing.Point(340, 252);
             this.Buttom_Close.Name = "Buttom_Close";
             this.Buttom_Close.Size = new System.Drawing.Size(149, 63);
@@ -67,6 +69,8 @@
             // Button_Exit
             // 
             this.Button_Exit.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("Button_Exit.BackgroundImage")));
+            this.Button_Exit.FlatAppearance.BorderSize = 0;
+            this.Button_Exit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.Button_Exit.Location = new System.Drawing.Point(185, 252);
             this.Button_Exit.Name = "Button_Exit";
             this.Button_Exit.Size = new System.Drawing.Size(149, 63);
@@ -78,6 +82,8 @@
             // Button_ModifyID
             // 
             this.Button_ModifyID.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("Button_ModifyID.BackgroundImage")));
+            this.Button_ModifyID.FlatAppearance.BorderSize = 0;
+            this.Button_ModifyID.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.Button_ModifyID.Location = new System.Drawing.Point(30, 252);
             this.Button_ModifyID.Name = "Button_ModifyID";
             this.Button_ModifyID.Size = new System.Drawing.Size(149, 63);
