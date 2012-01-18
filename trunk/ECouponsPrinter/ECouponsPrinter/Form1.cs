@@ -19,7 +19,13 @@ namespace ECouponsPrinter
         private void button1_Click(object sender, EventArgs e)
         {
             DownloadInfo di = new DownloadInfo();
+            di.form1 = this;
             di.download();
+        }
+
+        public void setText(string str)
+        {
+            this.textBox1.Text = str;
         }
     }
 }

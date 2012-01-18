@@ -32,6 +32,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.Button_LastShop = new System.Windows.Forms.Button();
             this.Panel_Background = new System.Windows.Forms.Panel();
+            this.Label_Option = new System.Windows.Forms.Label();
             this.Label_ScrollText = new System.Windows.Forms.Label();
             this.Button_NextCouponsPage = new System.Windows.Forms.Button();
             this.Button_LastCouponsPage = new System.Windows.Forms.Button();
@@ -48,7 +49,6 @@
             this.PictureBox_Shop = new System.Windows.Forms.PictureBox();
             this.Button_NextShop = new System.Windows.Forms.Button();
             this.Timer_Countdown = new System.Windows.Forms.Timer(this.components);
-            this.Label_Option = new System.Windows.Forms.Label();
             this.Panel_Background.SuspendLayout();
             this.Panel_CouponsBig.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox_CouponsBig)).BeginInit();
@@ -97,10 +97,18 @@
             this.Panel_Background.Size = new System.Drawing.Size(1080, 1920);
             this.Panel_Background.TabIndex = 1;
             // 
+            // Label_Option
+            // 
+            this.Label_Option.Location = new System.Drawing.Point(0, 0);
+            this.Label_Option.Name = "Label_Option";
+            this.Label_Option.Size = new System.Drawing.Size(41, 12);
+            this.Label_Option.TabIndex = 15;
+            this.Label_Option.DoubleClick += new System.EventHandler(this.Show_Option);
+            // 
             // Label_ScrollText
             // 
             this.Label_ScrollText.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.Label_ScrollText.Font = new System.Drawing.Font("微软简粗黑", 40F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.Label_ScrollText.Font = new System.Drawing.Font("Microsoft Sans Serif", 40F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.Label_ScrollText.ForeColor = System.Drawing.Color.White;
             this.Label_ScrollText.Location = new System.Drawing.Point(25, 12);
             this.Label_ScrollText.Margin = new System.Windows.Forms.Padding(0);
@@ -207,7 +215,7 @@
             // 
             // Label_Countdown
             // 
-            this.Label_Countdown.Font = new System.Drawing.Font("微软简粗黑", 39.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.Label_Countdown.Font = new System.Drawing.Font("Microsoft Sans Serif", 39.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.Label_Countdown.Image = ((System.Drawing.Image)(resources.GetObject("Label_Countdown.Image")));
             this.Label_Countdown.Location = new System.Drawing.Point(901, 12);
             this.Label_Countdown.Margin = new System.Windows.Forms.Padding(0);
@@ -216,6 +224,7 @@
             this.Label_Countdown.TabIndex = 6;
             this.Label_Countdown.Text = "100";
             this.Label_Countdown.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.Label_Countdown.Click += new System.EventHandler(this.Label_Countdown_Click);
             // 
             // Panel_CouponsBig
             // 
@@ -287,14 +296,6 @@
             // 
             this.Timer_Countdown.Interval = 1000;
             this.Timer_Countdown.Tick += new System.EventHandler(this.Timer_Countdown_Tick);
-            // 
-            // Label_Option
-            // 
-            this.Label_Option.Location = new System.Drawing.Point(0, 0);
-            this.Label_Option.Name = "Label_Option";
-            this.Label_Option.Size = new System.Drawing.Size(41, 12);
-            this.Label_Option.TabIndex = 15;
-            this.Label_Option.DoubleClick += new System.EventHandler(this.Show_Option);
             // 
             // MainForm
             // 

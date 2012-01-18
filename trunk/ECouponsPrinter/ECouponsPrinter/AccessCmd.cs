@@ -9,7 +9,7 @@ namespace ECouponsPrinter
     class AccessCmd
     {
         String strConn = "Provider=Microsoft.Jet.OleDb.4.0;Data Source=" + 
-            System.Windows.Forms.Application.StartupPath + "ecoupons.mdb";
+            System.Windows.Forms.Application.StartupPath + "\\ecoupons.mdb";
         OleDbConnection objConn;
         OleDbDataReader objReader;
         OleDbCommand objCmd;
