@@ -70,18 +70,6 @@
   <ItemGroup>
     <Compile Include="AccessCmd.cs" />
     <Compile Include="DownloadInfo.cs" />
-    <Compile Include="CouponsPopForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="CouponsPopForm.Designer.cs">
-      <DependentUpon>CouponsPopForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="CouponsSecondForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="CouponsSecondForm.Designer.cs">
-      <DependentUpon>CouponsSecondForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -90,70 +78,24 @@
     </Compile>
     <Compile Include="GlobalVariables.cs" />
     <Compile Include="HttpRequest.cs" />
-    <Compile Include="KeyBoard.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="KeyBoard.Designer.cs">
-      <DependentUpon>KeyBoard.cs</DependentUpon>
-    </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="MyInfoForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="MyInfoForm.Designer.cs">
-      <DependentUpon>MyInfoForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Option.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Option.Designer.cs">
-      <DependentUpon>Option.cs</DependentUpon>
-    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="CouponsPopForm.resx">
-      <DependentUpon>CouponsPopForm.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="CouponsSecondForm.resx">
-      <DependentUpon>CouponsSecondForm.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="KeyBoard.resx">
-      <DependentUpon>KeyBoard.cs</DependentUpon>
-      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="MyInfoForm.resx">
-      <DependentUpon>MyInfoForm.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Option.resx">
-      <DependentUpon>Option.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ShopInfoForm.resx">
-      <DependentUpon>ShopInfoForm.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ShopSecondForm.resx">
-      <DependentUpon>ShopSecondForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <Compile Include="Properties\Resources.Designer.cs">
@@ -168,18 +110,6 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
-    </Compile>
-    <Compile Include="ShopInfoForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ShopInfoForm.Designer.cs">
-      <DependentUpon>ShopInfoForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="ShopSecondForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ShopSecondForm.Designer.cs">
-      <DependentUpon>ShopSecondForm.cs</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
