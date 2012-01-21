@@ -258,7 +258,7 @@
             // 
             // Label_Countdown
             // 
-            this.Label_Countdown.Font = new System.Drawing.Font("微软简粗黑", 40F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.Label_Countdown.Font = new System.Drawing.Font("Microsoft Sans Serif", 40F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.Label_Countdown.ForeColor = System.Drawing.Color.White;
             this.Label_Countdown.Image = ((System.Drawing.Image)(resources.GetObject("Label_Countdown.Image")));
             this.Label_Countdown.Location = new System.Drawing.Point(901, 12);
@@ -267,6 +267,7 @@
             this.Label_Countdown.Size = new System.Drawing.Size(164, 115);
             this.Label_Countdown.TabIndex = 1;
             this.Label_Countdown.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.Label_Countdown.Click += new System.EventHandler(this.Label_Countdown_Click);
             // 
             // Panel_Bottom
             // 
@@ -1091,7 +1092,7 @@
             // 
             // Label_LastConsumption
             // 
-            this.Label_LastConsumption.Font = new System.Drawing.Font("微软简粗黑", 39.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.Label_LastConsumption.Font = new System.Drawing.Font("Microsoft Sans Serif", 39.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.Label_LastConsumption.Image = ((System.Drawing.Image)(resources.GetObject("Label_LastConsumption.Image")));
             this.Label_LastConsumption.Location = new System.Drawing.Point(4, 865);
             this.Label_LastConsumption.Name = "Label_LastConsumption";
@@ -1185,7 +1186,7 @@
             // 
             // Label_MyDocuments
             // 
-            this.Label_MyDocuments.Font = new System.Drawing.Font("微软简粗黑", 39.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.Label_MyDocuments.Font = new System.Drawing.Font("Microsoft Sans Serif", 39.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.Label_MyDocuments.Image = ((System.Drawing.Image)(resources.GetObject("Label_MyDocuments.Image")));
             this.Label_MyDocuments.Location = new System.Drawing.Point(4, 39);
             this.Label_MyDocuments.Name = "Label_MyDocuments";
