@@ -11,8 +11,8 @@ namespace ECouponsPrinter
         private static bool _isKeyBoardExist;
 
 
-        private static String strTerminalNo;
-        private static String strServerUrl;
+        private static String strTerminalNo = "45";
+        private static String strServerUrl = "http://127.0.0.1:8080/ecoupons";
 
         public static String StrServerUrl
         {

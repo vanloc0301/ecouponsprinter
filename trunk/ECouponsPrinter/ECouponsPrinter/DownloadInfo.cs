@@ -20,6 +20,7 @@ namespace ECouponsPrinter
         public void download()
         {
             //下载商家信息
+            MessageBox.Show("download shop information...");
             request.OpenRequest(GlobalVariables.StrServerUrl + "/servlet/ShopDownload?strTerminalNo=" + GlobalVariables.StrTerminalNo, "");
             XmlDocument doc = new XmlDocument();
             string strXml = request.HtmlDocument;
@@ -59,19 +60,315 @@ namespace ECouponsPrinter
                 }
                 catch (Exception e)
                 {
-                    MessageBox.Show(e.Message);
+                    MessageBox.Show(e.StackTrace);
                 }
             }
             //下载优惠券信息
+            MessageBox.Show("download coupon information...");
+            request.OpenRequest(GlobalVariables.StrServerUrl + "/servlet/CouponDownload?strTerminalNo=" + GlobalVariables.StrTerminalNo, "");
+            strXml = request.HtmlDocument;
+            form1.setText(strXml);
+            if (strXml.IndexOf("<coupons>") > 0)
+            {
+                try
+                {
+                    doc.LoadXml(strXml);
+                    XmlNodeList xnlCoupons = doc.GetElementsByTagName("coupons");
+                    for (int i = 0; i < xnlCoupons.Count; i++)
+                    {
+                        XmlElement xeCoupons = (XmlElement)xnlCoupons.Item(i);
+                        String strOpe = xeCoupons.FirstChild.InnerText;
+                        if (strOpe.Equals("add"))
+                        {
+                            foreach (XmlNode xnCoupon in xeCoupons.GetElementsByTagName("coupon"))
+                            {
+                                addCoupon(xnCoupon);
+                            }
+                        }
+                        else if (strOpe.Equals("update"))
+                        {
+                            foreach (XmlNode xnCoupon in xeCoupons.GetElementsByTagName("coupon"))
+                            {
+                                updateCoupon(xnCoupon);
+                            }
+                        }
+                        else if (strOpe.Equals("delete"))
+                        {
+                            foreach (XmlNode xnCoupon in xeCoupons.GetElementsByTagName("coupon"))
+                            {
+                                deleteCoupon(xnCoupon);
+                            }
+                        }
+                    }
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show(e.StackTrace);
+                }
+            }
             //下载广告信息
+            MessageBox.Show("download ad information...");
+            request.OpenRequest(GlobalVariables.StrServerUrl + "/servlet/AdDownload?strTerminalNo=" + GlobalVariables.StrTerminalNo, "");
+            strXml = request.HtmlDocument;
+            form1.setText(strXml);
+            if (strXml.IndexOf("<ads>") > 0)
+            {
+                try
+                {
+                    doc.LoadXml(strXml);
+                    XmlNodeList xnls = doc.GetElementsByTagName("ads");
+                    for (int i = 0; i < xnls.Count; i++)
+                    {
+                        XmlElement xes = (XmlElement)xnls.Item(i);
+                        String strOpe = xes.FirstChild.InnerText;
+                        if (strOpe.Equals("add"))
+                        {
+                            foreach (XmlNode xn in xes.GetElementsByTagName("ad"))
+                            {
+                                addAd(xn);
+                            }
+                        }
+                        else if (strOpe.Equals("update"))
+                        {
+                            foreach (XmlNode xn in xes.GetElementsByTagName("ad"))
+                            {
+                                updateAd(xn);
+                            }
+                        }
+                        else if (strOpe.Equals("delete"))
+                        {
+                            foreach (XmlNode xn in xes.GetElementsByTagName("ad"))
+                            {
+                                deleteAd(xn);
+                            }
+                        }
+                    }
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show(e.StackTrace);
+                }
+            }
+        }
 
+        private void deleteAd(XmlNode xn)
+        {
+            String strId, strContentOld = "";
+            int intTypeOld = 0;
+            XmlElement xe = (XmlElement)xn;
+            strId = xe.GetElementsByTagName("strId").Item(0).InnerText.Trim();
+            //查询文件
+            string strSql = "select intType,strContent from t_bz_advertisement where strId='" + strId + "'";
+            AccessCmd cmd = new AccessCmd();
+            OleDbDataReader reader = cmd.ExecuteReader(strSql);
+            if (reader.Read())
+            {
+                intTypeOld = reader.GetInt32(0);
+                strContentOld = reader.GetString(1);
+            }
+            reader.Close();
+            //删除原文件
+            if (intTypeOld == 1)
+            {
+                File.Delete(System.Windows.Forms.Application.StartupPath + "\\ad\\" + strContentOld);
+            }
+            else if (intTypeOld == 2)
+            {
+                string[] aryFile = strContentOld.Split(new char[] { ',' });
+                for (int i = 0; i < aryFile.Length; i++)
+                {
+                    File.Delete(System.Windows.Forms.Application.StartupPath + "\\ad\\" + aryFile[i]);
+                }
+            }
+            //写入数据库
+            strSql = "delete from t_bz_advertisement where strId='" + strId + "'";
+            cmd.ExecuteNonQuery(strSql);
+            cmd.Close();
+        }
+
+        private void updateAd(XmlNode xn)
+        {
+            String strId, strName, strContent, strContentOld = "", dtStartTime, dtEndTime;
+            int intType, intTypeOld = 0;
+            getAdProps(xn, out strId, out strName, out intType, out strContent, out dtStartTime, out dtEndTime);
+            //查询文件
+            string strSql = "select intType,strContent from t_bz_advertisement where strId='" + strId + "'";
+            AccessCmd cmd = new AccessCmd();
+            OleDbDataReader reader = cmd.ExecuteReader(strSql);
+            if (reader.Read())
+            {
+                intTypeOld = reader.GetInt32(0);
+                strContentOld = reader.GetString(1);
+            }
+            reader.Close();
+            //删除原文件
+            if (intTypeOld == 1)
+            {
+                File.Delete(System.Windows.Forms.Application.StartupPath + "\\ad\\" + strContentOld);
+            }
+            else if (intTypeOld == 2)
+            {
+                string[] aryFile = strContentOld.Split(new char[] { ',' });
+                for (int i = 0; i < aryFile.Length; i++)
+                {
+                    File.Delete(System.Windows.Forms.Application.StartupPath + "\\ad\\" + aryFile[i]);
+                }
+            }
+            //创建文件
+            if (intType == 1)
+            {
+                createImg("ad", strContent);
+            }
+            else if (intType == 2)
+            {
+                string[] aryFile = strContent.Split(new char[] { ',' });
+                for (int i = 0; i < aryFile.Length; i++)
+                {
+                    createImg("ad", aryFile[i]);
+                }
+            }
+            //写入数据库
+            strSql = "update t_bz_advertisement set strName='" + strName + "',intType=" + intType + ",strContent='" + strContent + "',dtStartTime='" + dtStartTime +
+                "',dtEndTime='" + dtEndTime + "' where strId='" + strId + "'";
+            cmd.ExecuteNonQuery(strSql);
+            cmd.Close();
+        }
+
+        private void addAd(XmlNode xn)
+        {
+            String strId, strName, strContent, dtStartTime, dtEndTime;
+            int intType;
+            getAdProps(xn, out strId, out strName, out intType, out strContent, out dtStartTime, out dtEndTime);
+            //创建文件
+            if (intType == 1)
+            {
+                createImg("ad", strContent);
+            }
+            else if (intType == 2)
+            {
+                string[] aryFile = strContent.Split(new char[] { ',' });
+                for (int i = 0; i < aryFile.Length; i++)
+                {
+                    createImg("ad", aryFile[i]);
+                }
+            }
+            //写入数据库
+            AccessCmd cmd = new AccessCmd();
+            string strSql = "insert into t_bz_advertisement(strId,strName,intType,strContent,dtStartTime,dtEndTime) values('" + strId + "','" + strName + "'," + intType +
+                ",'" + strContent + "','" + dtStartTime + "','" + dtEndTime + "')";
+            cmd.ExecuteNonQuery(strSql);
+            cmd.Close();
+        }
+
+        private void deleteCoupon(XmlNode xnCoupon)
+        {
+            String strId, strSmallImg = "", strLargeImg = "", strPrintImg = "";
+            XmlElement xeCoupon = (XmlElement)xnCoupon;
+            strId = xeCoupon.GetElementsByTagName("strId").Item(0).InnerText.Trim();
+            //查询文件
+            string strSql = "select strSmallImg,strLargeImg,strPrintImg from t_bz_coupon where strId='" + strId + "'";
+            AccessCmd cmd = new AccessCmd();
+            OleDbDataReader reader = cmd.ExecuteReader(strSql);
+            if (reader.Read())
+            {
+                strSmallImg = reader.GetString(0);
+                strLargeImg = reader.GetString(1);
+                strPrintImg = reader.GetString(2);
+            }
+            reader.Close();
+            //删除原文件
+            if (!strSmallImg.Equals(""))
+            {
+                File.Delete(System.Windows.Forms.Application.StartupPath + "\\coupon\\" + strSmallImg);
+            }
+            if (!strLargeImg.Equals(""))
+            {
+                File.Delete(System.Windows.Forms.Application.StartupPath + "\\coupon\\" + strLargeImg);
+            }
+            if (!strPrintImg.Equals(""))
+            {
+                File.Delete(System.Windows.Forms.Application.StartupPath + "\\coupon\\" + strPrintImg);
+            }
+            //写入数据库
+            strSql = "delete from t_bz_coupon where strId='" + strId + "'";
+            cmd.ExecuteNonQuery(strSql);
+            cmd.Close();
+        }
+
+        private void updateCoupon(XmlNode xnCoupon)
+        {
+            String strId, strName, dtActiveTime, dtExpireTime, strShopId, strSmallImg, strLargeImg, strPrintImg, strSmallImgOld = "", strLargeImgOld = "", strPrintImgOld = "";
+            int intVip, intRecommend;
+            float flaPrice;
+            getCouponProps(xnCoupon, out strId, out strName, out dtActiveTime, out dtExpireTime, out strShopId, out intVip, out flaPrice, out intRecommend,
+                out strSmallImg, out strLargeImg, out strPrintImg);
+            //查询文件
+            string strSql = "select strSmallImg,strLargeImg,strPrintImg from t_bz_coupon where strId='" + strId + "'";
+            AccessCmd cmd = new AccessCmd();
+            OleDbDataReader reader = cmd.ExecuteReader(strSql);
+            if (reader.Read())
+            {
+                strSmallImgOld = reader.GetString(0);
+                strLargeImgOld = reader.GetString(1);
+                strPrintImgOld = reader.GetString(2);
+            }
+            reader.Close();
+            //删除原文件
+            if (!strSmallImgOld.Equals(""))
+            {
+                File.Delete(System.Windows.Forms.Application.StartupPath + "\\coupon\\" + strSmallImgOld);
+            }
+            if (!strLargeImgOld.Equals(""))
+            {
+                File.Delete(System.Windows.Forms.Application.StartupPath + "\\coupon\\" + strLargeImgOld);
+            }
+            if (!strPrintImgOld.Equals(""))
+            {
+                File.Delete(System.Windows.Forms.Application.StartupPath + "\\coupon\\" + strPrintImgOld);
+            }
+            //创建文件
+            if (strSmallImg.Length > 0)
+                createImg("coupon", strSmallImg);
+            if (strLargeImg.Length > 0)
+                createImg("coupon", strLargeImg);
+            if (strPrintImg.Length > 0)
+                createImg("coupon", strPrintImg);
+            //写入数据库
+            strSql = "update t_bz_coupon set strName='" + strName + "',dtActiveTime='" + dtActiveTime + "',dtExpireTime='" + dtExpireTime + "',strShopId='" + strShopId +
+                "',intVip=" + intVip + ",intRecommend=" + intRecommend + ",flaPrice=" + flaPrice + ",strSmallImg='" + strSmallImg + "',strLargeImg='" + strLargeImg +
+                "',strPrintImg='" + strPrintImg + "' where strId='" + strId + "'";
+            cmd.ExecuteNonQuery(strSql);
+            cmd.Close();
+        }
+
+        private void addCoupon(XmlNode xnCoupon)
+        {
+            String strId, strName, dtActiveTime, dtExpireTime, strShopId, strSmallImg, strLargeImg, strPrintImg;
+            int intVip, intRecommend;
+            float flaPrice;
+            getCouponProps(xnCoupon, out strId, out strName, out dtActiveTime, out dtExpireTime, out strShopId, out intVip, out flaPrice, out intRecommend, 
+                out strSmallImg, out strLargeImg, out strPrintImg);
+            //创建文件
+            if (strSmallImg.Length > 0)
+                createImg("coupon", strSmallImg);
+            if (strLargeImg.Length > 0)
+                createImg("coupon", strLargeImg);
+            if (strPrintImg.Length > 0)
+                createImg("coupon", strPrintImg);
+            //写入数据库
+            AccessCmd cmd = new AccessCmd();
+            string strSql = "insert into t_bz_coupon(strId,strName,dtActiveTime,dtExpireTime,strShopId,intVip,intRecommend,flaPrice,strSmallImg,strLargeImg,strPrintImg) " +
+                "values('" + strId + "','" + strName + "','" + dtActiveTime + "','" + dtExpireTime + "','" + strShopId + "'," + intVip + "," + intRecommend + "," + flaPrice + 
+                ",'" + strSmallImg + "','" + strLargeImg + "','" + strPrintImg + "')";
+            cmd.ExecuteNonQuery(strSql);
+            cmd.Close();
         }
 
         private void deleteShop(XmlNode xnShop)
         {
             String strId, strSmallImg = "", strLargeImg = "";
             XmlElement xeShop = (XmlElement)xnShop;
-            strId = xeShop.GetElementsByTagName("strId").Item(0).InnerText;
+            strId = xeShop.GetElementsByTagName("strId").Item(0).InnerText.Trim();
             //查询文件
             string strSql = "select strSmallImg,strLargeImg from t_bz_shop where strId='" + strId + "'";
             AccessCmd cmd = new AccessCmd();
@@ -122,9 +419,9 @@ namespace ECouponsPrinter
             }
             //创建文件
             if (strSmallImg.Length > 0)
-                createShopImg(strSmallImg);
+                createImg("shop", strSmallImg);
             if (strLargeImg.Length > 0)
-                createShopImg(strLargeImg);
+                createImg("shop", strLargeImg);
             //写入数据库
             strSql = "update t_bz_shop set strBizName='" + strBizName + "',strShopName='" + strShopName + "',strTrade='" + strTrade + "',strAddr='" + strAddr + 
                 "',strIntro='" + strIntro + "',strSmallImg='" + strSmallImg + "',strLargeImg='" + strLargeImg + "' where strId='" + strId + "'";
@@ -138,9 +435,9 @@ namespace ECouponsPrinter
             getShopProps(xnShop, out strId, out strBizName, out strShopName, out strTrade, out strAddr, out strIntro, out strSmallImg, out strLargeImg);
             //创建文件
             if (strSmallImg.Length > 0)
-                createShopImg(strSmallImg);
+                createImg("shop", strSmallImg);
             if (strLargeImg.Length > 0)
-                createShopImg(strLargeImg);
+                createImg("shop", strLargeImg);
             //写入数据库
             AccessCmd cmd = new AccessCmd();
             string strSql = "insert into t_bz_shop(strId,strBizName,strShopName,strTrade,strAddr,strIntro,strSmallImg,strLargeImg) values('" + strId + "','" + strBizName + "','" + strShopName +
@@ -149,13 +446,14 @@ namespace ECouponsPrinter
             cmd.Close();
         }
 
-        private static void createShopImg(String strImg)
+        private static void createImg(String strType, String strImg)
         {
-            WebRequest request = HttpWebRequest.Create(GlobalVariables.StrServerUrl + "/servlet/FileDownload?strFileType=shop&strFileName=" + strImg);
+            ;
+            WebRequest request = HttpWebRequest.Create(GlobalVariables.StrServerUrl + "/servlet/FileDownload?strFileType=" + strType + "&strFileName=" + strImg);
             Stream stream = request.GetResponse().GetResponseStream();
             byte[] bytes = new byte[2048];
             int i;
-            FileStream fs = new FileStream(System.Windows.Forms.Application.StartupPath + "\\shop\\" + strImg, FileMode.CreateNew);
+            FileStream fs = new FileStream(System.Windows.Forms.Application.StartupPath + "\\" + strType + "\\" + strImg, FileMode.CreateNew);
             while ((i = stream.Read(bytes, 0, 2048)) > 0)
             {
                 fs.Write(bytes, 0, i);
@@ -176,6 +474,34 @@ namespace ECouponsPrinter
             strIntro = xeShop.GetElementsByTagName("strIntro").Item(0).InnerText.Trim();
             strSmallImg = xeShop.GetElementsByTagName("strSmallImg").Item(0).InnerText.Trim();
             strLargeImg = xeShop.GetElementsByTagName("strLargeImg").Item(0).InnerText.Trim();
+        }
+
+        private static void getCouponProps(XmlNode xnCoupon, out string strId, out string strName, out string dtActiveTime, out string dtExpireTime, out string strShopId,
+            out int intVip, out float flaPrice, out int intRecommend, out string strSmallImg, out string strLargeImg, out string strPrintImg)
+        {
+            XmlElement xeCoupon = (XmlElement)xnCoupon;
+            strId = xeCoupon.GetElementsByTagName("strId").Item(0).InnerText.Trim();
+            strName = xeCoupon.GetElementsByTagName("strName").Item(0).InnerText.Trim();
+            dtActiveTime = xeCoupon.GetElementsByTagName("dtActiveTime").Item(0).InnerText.Trim();
+            dtExpireTime = xeCoupon.GetElementsByTagName("dtExpireTime").Item(0).InnerText.Trim();
+            strShopId = xeCoupon.GetElementsByTagName("strShopId").Item(0).InnerText.Trim();
+            intVip = Int32.Parse(xeCoupon.GetElementsByTagName("intVip").Item(0).InnerText.Trim());
+            flaPrice = float.Parse(xeCoupon.GetElementsByTagName("flaPrice").Item(0).InnerText.Trim());
+            intRecommend = Int32.Parse(xeCoupon.GetElementsByTagName("intRecommend").Item(0).InnerText.Trim());
+            strSmallImg = xeCoupon.GetElementsByTagName("strSmallImg").Item(0).InnerText.Trim();
+            strLargeImg = xeCoupon.GetElementsByTagName("strLargeImg").Item(0).InnerText.Trim();
+            strPrintImg = xeCoupon.GetElementsByTagName("strPrintImg").Item(0).InnerText.Trim();
+        }
+
+        private void getAdProps(XmlNode xn, out string strId, out string strName, out int intType, out string strContent, out string dtStartTime, out string dtEndTime)
+        {
+            XmlElement xe = (XmlElement)xn;
+            strId = xe.GetElementsByTagName("strId").Item(0).InnerText.Trim();
+            strName = xe.GetElementsByTagName("strName").Item(0).InnerText.Trim();
+            intType = Int32.Parse(xe.GetElementsByTagName("intType").Item(0).InnerText.Trim());
+            strContent = xe.GetElementsByTagName("strContent").Item(0).InnerText.Trim();
+            dtStartTime = xe.GetElementsByTagName("dtStartTime").Item(0).InnerText.Trim();
+            dtEndTime = xe.GetElementsByTagName("dtEndTime").Item(0).InnerText.Trim();
         }
     }
 }
