@@ -242,7 +242,7 @@
             this.Label_ScrollText.Padding = new System.Windows.Forms.Padding(0, 25, 0, 0);
             this.Label_ScrollText.scrollamount = 2;
             this.Label_ScrollText.scrolldelay = 100;
-            this.Label_ScrollText.Size = new System.Drawing.Size(514, 115);
+            this.Label_ScrollText.Size = new System.Drawing.Size(798, 115);
             this.Label_ScrollText.strContent = "";
             this.Label_ScrollText.TabIndex = 2;
             // 
