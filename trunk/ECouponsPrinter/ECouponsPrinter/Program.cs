@@ -15,7 +15,22 @@ namespace ECouponsPrinter
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainFrame());
+            while (true)
+            {
+                try
+                {
+                    Application.Run(new MainFrame());
+                }
+                catch (Exception e)
+                {
+                    
+                }
+            }
+        }
+
+        public static void Exit()
+        {
+            System.Environment.Exit(0);
         }
     }
 }
