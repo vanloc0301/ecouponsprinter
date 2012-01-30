@@ -69,5 +69,17 @@ namespace ECouponsPrinter
                 textBox1.Text = sb.ToString();
             }
         }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            UploadInfo ui = new UploadInfo();
+            ui.form1 = this;
+            MessageBox.Show(ui.PrintAlert(500) + "");
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            Program.Exit();
+        }
     }
 }

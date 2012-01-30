@@ -18,8 +18,8 @@ namespace ECouponsPrinter
 
         public bool CouponAuth(string strCardNo, string strCode)
         {
-            try
-            {
+            //try
+            //{
                 request.OpenRequest(GlobalVariables.StrServerUrl + "/servlet/CouponAuth?strTerminalNo=" + GlobalVariables.StrTerminalNo + "&strCardNo=" +
                     strCardNo + "&strCode=" + strCode, "");
                 XmlDocument doc = new XmlDocument();
@@ -27,12 +27,12 @@ namespace ECouponsPrinter
                 form1.setText(strXml);
                 doc.LoadXml(strXml);
                 return doc.GetElementsByTagName("return").Item(0).InnerText.Trim().Equals("OK");
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show(e.StackTrace);
-                return false;
-            }
+            //}
+            //catch (Exception e)
+            //{
+            //    MessageBox.Show(e.StackTrace);
+            //    return false;
+            //}
         }
 
         public bool CouponPrint()
@@ -123,6 +123,24 @@ namespace ECouponsPrinter
             {
                 MessageBox.Show(e.Message + "\n" + e.StackTrace);
                 return null;
+            }
+        }
+
+        internal bool PrintAlert(int intCouponPrint)
+        {
+            try
+            {
+                request.OpenRequest(GlobalVariables.StrServerUrl + "/servlet/PrintAlert?strTerminalNo=" + GlobalVariables.StrTerminalNo + "&intCouponPrint=" + intCouponPrint, "");
+                XmlDocument doc = new XmlDocument();
+                string strXml = request.HtmlDocument;
+                form1.setText(strXml);
+                doc.LoadXml(strXml);
+                return doc.GetElementsByTagName("return").Item(0).InnerText.Trim().Equals("OK");
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message + "\n" + e.StackTrace);
+                return false;
             }
         }
     }
