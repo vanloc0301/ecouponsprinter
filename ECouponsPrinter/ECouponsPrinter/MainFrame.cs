@@ -13,8 +13,8 @@ namespace ECouponsPrinter
     public partial class MainFrame : Form
     {
         private String path = System.Windows.Forms.Application.StartupPath;
-        private static int CountDownNumber = 5;
-        private string _stringScrollText = "欢迎使用本系统";
+        private static int CountDownNumber = GlobalVariables.WindowWaitTime;
+        private string _stringScrollText = GlobalVariables.MarqueeText;
 
         public MainFrame()
         {          
