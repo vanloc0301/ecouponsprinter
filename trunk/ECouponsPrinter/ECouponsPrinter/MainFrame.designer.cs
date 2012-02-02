@@ -43,6 +43,20 @@
             this.Button_CouponsPage = new System.Windows.Forms.Button();
             this.Timer_Countdown = new System.Windows.Forms.Timer(this.components);
             this.Panel_Home = new System.Windows.Forms.Panel();
+            this.PB_Home_Bottom12 = new System.Windows.Forms.PictureBox();
+            this.PB_Home_Bottom6 = new System.Windows.Forms.PictureBox();
+            this.PB_Home_Bottom11 = new System.Windows.Forms.PictureBox();
+            this.PB_Home_Bottom5 = new System.Windows.Forms.PictureBox();
+            this.PB_Home_Bottom10 = new System.Windows.Forms.PictureBox();
+            this.PB_Home_Bottom4 = new System.Windows.Forms.PictureBox();
+            this.PB_Home_Bottom9 = new System.Windows.Forms.PictureBox();
+            this.PB_Home_Bottom3 = new System.Windows.Forms.PictureBox();
+            this.PB_Home_Bottom8 = new System.Windows.Forms.PictureBox();
+            this.PB_Home_Bottom7 = new System.Windows.Forms.PictureBox();
+            this.PB_Home_Bottom2 = new System.Windows.Forms.PictureBox();
+            this.PB_Home_Bottom1 = new System.Windows.Forms.PictureBox();
+            this.PB_Home_Down = new System.Windows.Forms.PictureBox();
+            this.PB_Home_Up = new System.Windows.Forms.PictureBox();
             this.Button_ShopInfo = new System.Windows.Forms.Button();
             this.Button_NextShop = new System.Windows.Forms.Button();
             this.Button_LastShop = new System.Windows.Forms.Button();
@@ -145,6 +159,20 @@
             this.Panel_Top.SuspendLayout();
             this.Panel_Bottom.SuspendLayout();
             this.Panel_Home.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.PB_Home_Bottom12)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PB_Home_Bottom6)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PB_Home_Bottom11)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PB_Home_Bottom5)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PB_Home_Bottom10)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PB_Home_Bottom4)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PB_Home_Bottom9)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PB_Home_Bottom3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PB_Home_Bottom8)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PB_Home_Bottom7)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PB_Home_Bottom2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PB_Home_Bottom1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PB_Home_Down)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PB_Home_Up)).BeginInit();
             this.Panel_ShopInfo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox_Coupons06)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox_Coupons03)).BeginInit();
@@ -240,8 +268,8 @@
             this.Label_ScrollText.Location = new System.Drawing.Point(25, 12);
             this.Label_ScrollText.Name = "Label_ScrollText";
             this.Label_ScrollText.Padding = new System.Windows.Forms.Padding(0, 25, 0, 0);
-            this.Label_ScrollText.scrollamount = 2;
-            this.Label_ScrollText.scrolldelay = 100;
+            this.Label_ScrollText.scrollamount = 1;
+            this.Label_ScrollText.scrolldelay = 10;
             this.Label_ScrollText.Size = new System.Drawing.Size(798, 115);
             this.Label_ScrollText.strContent = "";
             this.Label_ScrollText.TabIndex = 2;
@@ -384,6 +412,20 @@
             // 
             this.Panel_Home.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("Panel_Home.BackgroundImage")));
             this.Panel_Home.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.Panel_Home.Controls.Add(this.PB_Home_Bottom12);
+            this.Panel_Home.Controls.Add(this.PB_Home_Bottom6);
+            this.Panel_Home.Controls.Add(this.PB_Home_Bottom11);
+            this.Panel_Home.Controls.Add(this.PB_Home_Bottom5);
+            this.Panel_Home.Controls.Add(this.PB_Home_Bottom10);
+            this.Panel_Home.Controls.Add(this.PB_Home_Bottom4);
+            this.Panel_Home.Controls.Add(this.PB_Home_Bottom9);
+            this.Panel_Home.Controls.Add(this.PB_Home_Bottom3);
+            this.Panel_Home.Controls.Add(this.PB_Home_Bottom8);
+            this.Panel_Home.Controls.Add(this.PB_Home_Bottom7);
+            this.Panel_Home.Controls.Add(this.PB_Home_Bottom2);
+            this.Panel_Home.Controls.Add(this.PB_Home_Bottom1);
+            this.Panel_Home.Controls.Add(this.PB_Home_Down);
+            this.Panel_Home.Controls.Add(this.PB_Home_Up);
             this.Panel_Home.Controls.Add(this.Button_ShopInfo);
             this.Panel_Home.Controls.Add(this.Button_NextShop);
             this.Panel_Home.Controls.Add(this.Button_LastShop);
@@ -393,6 +435,142 @@
             this.Panel_Home.Name = "Panel_Home";
             this.Panel_Home.Size = new System.Drawing.Size(1080, 1650);
             this.Panel_Home.TabIndex = 3;
+            // 
+            // PB_Home_Bottom12
+            // 
+            this.PB_Home_Bottom12.Location = new System.Drawing.Point(898, 1468);
+            this.PB_Home_Bottom12.Margin = new System.Windows.Forms.Padding(0);
+            this.PB_Home_Bottom12.Name = "PB_Home_Bottom12";
+            this.PB_Home_Bottom12.Size = new System.Drawing.Size(168, 175);
+            this.PB_Home_Bottom12.TabIndex = 33;
+            this.PB_Home_Bottom12.TabStop = false;
+            this.PB_Home_Bottom12.MouseUp += new System.Windows.Forms.MouseEventHandler(this.ChangHomePicture);
+            // 
+            // PB_Home_Bottom6
+            // 
+            this.PB_Home_Bottom6.Location = new System.Drawing.Point(898, 1282);
+            this.PB_Home_Bottom6.Margin = new System.Windows.Forms.Padding(0);
+            this.PB_Home_Bottom6.Name = "PB_Home_Bottom6";
+            this.PB_Home_Bottom6.Size = new System.Drawing.Size(168, 175);
+            this.PB_Home_Bottom6.TabIndex = 33;
+            this.PB_Home_Bottom6.TabStop = false;
+            this.PB_Home_Bottom6.MouseUp += new System.Windows.Forms.MouseEventHandler(this.ChangHomePicture);
+            // 
+            // PB_Home_Bottom11
+            // 
+            this.PB_Home_Bottom11.Location = new System.Drawing.Point(721, 1468);
+            this.PB_Home_Bottom11.Margin = new System.Windows.Forms.Padding(0);
+            this.PB_Home_Bottom11.Name = "PB_Home_Bottom11";
+            this.PB_Home_Bottom11.Size = new System.Drawing.Size(168, 175);
+            this.PB_Home_Bottom11.TabIndex = 33;
+            this.PB_Home_Bottom11.TabStop = false;
+            this.PB_Home_Bottom11.MouseUp += new System.Windows.Forms.MouseEventHandler(this.ChangHomePicture);
+            // 
+            // PB_Home_Bottom5
+            // 
+            this.PB_Home_Bottom5.Location = new System.Drawing.Point(721, 1282);
+            this.PB_Home_Bottom5.Margin = new System.Windows.Forms.Padding(0);
+            this.PB_Home_Bottom5.Name = "PB_Home_Bottom5";
+            this.PB_Home_Bottom5.Size = new System.Drawing.Size(168, 175);
+            this.PB_Home_Bottom5.TabIndex = 33;
+            this.PB_Home_Bottom5.TabStop = false;
+            this.PB_Home_Bottom5.MouseUp += new System.Windows.Forms.MouseEventHandler(this.ChangHomePicture);
+            // 
+            // PB_Home_Bottom10
+            // 
+            this.PB_Home_Bottom10.Location = new System.Drawing.Point(544, 1468);
+            this.PB_Home_Bottom10.Margin = new System.Windows.Forms.Padding(0);
+            this.PB_Home_Bottom10.Name = "PB_Home_Bottom10";
+            this.PB_Home_Bottom10.Size = new System.Drawing.Size(168, 175);
+            this.PB_Home_Bottom10.TabIndex = 33;
+            this.PB_Home_Bottom10.TabStop = false;
+            this.PB_Home_Bottom10.MouseUp += new System.Windows.Forms.MouseEventHandler(this.ChangHomePicture);
+            // 
+            // PB_Home_Bottom4
+            // 
+            this.PB_Home_Bottom4.Location = new System.Drawing.Point(544, 1282);
+            this.PB_Home_Bottom4.Margin = new System.Windows.Forms.Padding(0);
+            this.PB_Home_Bottom4.Name = "PB_Home_Bottom4";
+            this.PB_Home_Bottom4.Size = new System.Drawing.Size(168, 175);
+            this.PB_Home_Bottom4.TabIndex = 33;
+            this.PB_Home_Bottom4.TabStop = false;
+            this.PB_Home_Bottom4.MouseUp += new System.Windows.Forms.MouseEventHandler(this.ChangHomePicture);
+            // 
+            // PB_Home_Bottom9
+            // 
+            this.PB_Home_Bottom9.Location = new System.Drawing.Point(367, 1468);
+            this.PB_Home_Bottom9.Margin = new System.Windows.Forms.Padding(0);
+            this.PB_Home_Bottom9.Name = "PB_Home_Bottom9";
+            this.PB_Home_Bottom9.Size = new System.Drawing.Size(168, 175);
+            this.PB_Home_Bottom9.TabIndex = 33;
+            this.PB_Home_Bottom9.TabStop = false;
+            this.PB_Home_Bottom9.MouseUp += new System.Windows.Forms.MouseEventHandler(this.ChangHomePicture);
+            // 
+            // PB_Home_Bottom3
+            // 
+            this.PB_Home_Bottom3.Location = new System.Drawing.Point(367, 1282);
+            this.PB_Home_Bottom3.Margin = new System.Windows.Forms.Padding(0);
+            this.PB_Home_Bottom3.Name = "PB_Home_Bottom3";
+            this.PB_Home_Bottom3.Size = new System.Drawing.Size(168, 175);
+            this.PB_Home_Bottom3.TabIndex = 33;
+            this.PB_Home_Bottom3.TabStop = false;
+            this.PB_Home_Bottom3.MouseUp += new System.Windows.Forms.MouseEventHandler(this.ChangHomePicture);
+            // 
+            // PB_Home_Bottom8
+            // 
+            this.PB_Home_Bottom8.Location = new System.Drawing.Point(189, 1468);
+            this.PB_Home_Bottom8.Margin = new System.Windows.Forms.Padding(0);
+            this.PB_Home_Bottom8.Name = "PB_Home_Bottom8";
+            this.PB_Home_Bottom8.Size = new System.Drawing.Size(168, 175);
+            this.PB_Home_Bottom8.TabIndex = 33;
+            this.PB_Home_Bottom8.TabStop = false;
+            this.PB_Home_Bottom8.MouseUp += new System.Windows.Forms.MouseEventHandler(this.ChangHomePicture);
+            // 
+            // PB_Home_Bottom7
+            // 
+            this.PB_Home_Bottom7.Location = new System.Drawing.Point(12, 1468);
+            this.PB_Home_Bottom7.Margin = new System.Windows.Forms.Padding(0);
+            this.PB_Home_Bottom7.Name = "PB_Home_Bottom7";
+            this.PB_Home_Bottom7.Size = new System.Drawing.Size(168, 175);
+            this.PB_Home_Bottom7.TabIndex = 33;
+            this.PB_Home_Bottom7.TabStop = false;
+            this.PB_Home_Bottom7.MouseUp += new System.Windows.Forms.MouseEventHandler(this.ChangHomePicture);
+            // 
+            // PB_Home_Bottom2
+            // 
+            this.PB_Home_Bottom2.Location = new System.Drawing.Point(189, 1282);
+            this.PB_Home_Bottom2.Margin = new System.Windows.Forms.Padding(0);
+            this.PB_Home_Bottom2.Name = "PB_Home_Bottom2";
+            this.PB_Home_Bottom2.Size = new System.Drawing.Size(168, 175);
+            this.PB_Home_Bottom2.TabIndex = 33;
+            this.PB_Home_Bottom2.TabStop = false;
+            this.PB_Home_Bottom2.MouseUp += new System.Windows.Forms.MouseEventHandler(this.ChangHomePicture);
+            // 
+            // PB_Home_Bottom1
+            // 
+            this.PB_Home_Bottom1.Location = new System.Drawing.Point(12, 1282);
+            this.PB_Home_Bottom1.Margin = new System.Windows.Forms.Padding(0);
+            this.PB_Home_Bottom1.Name = "PB_Home_Bottom1";
+            this.PB_Home_Bottom1.Size = new System.Drawing.Size(168, 175);
+            this.PB_Home_Bottom1.TabIndex = 33;
+            this.PB_Home_Bottom1.TabStop = false;
+            this.PB_Home_Bottom1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.ChangHomePicture);
+            // 
+            // PB_Home_Down
+            // 
+            this.PB_Home_Down.Location = new System.Drawing.Point(5, 720);
+            this.PB_Home_Down.Name = "PB_Home_Down";
+            this.PB_Home_Down.Size = new System.Drawing.Size(1071, 548);
+            this.PB_Home_Down.TabIndex = 12;
+            this.PB_Home_Down.TabStop = false;
+            // 
+            // PB_Home_Up
+            // 
+            this.PB_Home_Up.Location = new System.Drawing.Point(5, 18);
+            this.PB_Home_Up.Name = "PB_Home_Up";
+            this.PB_Home_Up.Size = new System.Drawing.Size(1071, 540);
+            this.PB_Home_Up.TabIndex = 12;
+            this.PB_Home_Up.TabStop = false;
             // 
             // Button_ShopInfo
             // 
@@ -419,6 +597,8 @@
             this.Button_NextShop.Size = new System.Drawing.Size(134, 115);
             this.Button_NextShop.TabIndex = 10;
             this.Button_NextShop.UseVisualStyleBackColor = true;
+            this.Button_NextShop.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Button_NextShop_MouseDown);
+            this.Button_NextShop.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Button_NextShop_MouseUp);
             // 
             // Button_LastShop
             // 
@@ -432,14 +612,20 @@
             this.Button_LastShop.Size = new System.Drawing.Size(134, 116);
             this.Button_LastShop.TabIndex = 9;
             this.Button_LastShop.UseVisualStyleBackColor = true;
+            this.Button_LastShop.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Button_LastShop_MouseDown);
+            this.Button_LastShop.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Button_LastShop_MouseUp);
             // 
             // Label_ShopName
             // 
+            this.Label_ShopName.Font = new System.Drawing.Font("宋体", 40F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.Label_ShopName.ForeColor = System.Drawing.Color.White;
             this.Label_ShopName.Image = ((System.Drawing.Image)(resources.GetObject("Label_ShopName.Image")));
             this.Label_ShopName.Location = new System.Drawing.Point(8, 574);
             this.Label_ShopName.Name = "Label_ShopName";
             this.Label_ShopName.Size = new System.Drawing.Size(598, 116);
             this.Label_ShopName.TabIndex = 8;
+            this.Label_ShopName.Text = "商家名称";
+            this.Label_ShopName.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // Panel_ShopInfo
             // 
@@ -1453,14 +1639,14 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
-            this.ClientSize = new System.Drawing.Size(1101, 742);
+            this.ClientSize = new System.Drawing.Size(1118, 742);
+            this.Controls.Add(this.Panel_Home);
             this.Controls.Add(this.Panel_Coupons);
             this.Controls.Add(this.Panel_MyInfo);
             this.Controls.Add(this.Panel_Shop);
             this.Controls.Add(this.Panel_ShopInfo);
             this.Controls.Add(this.Panel_Bottom);
             this.Controls.Add(this.Panel_Top);
-            this.Controls.Add(this.Panel_Home);
             this.DoubleBuffered = true;
             this.Name = "MainFrame";
             this.Text = "MainFrame";
@@ -1468,6 +1654,20 @@
             this.Panel_Top.ResumeLayout(false);
             this.Panel_Bottom.ResumeLayout(false);
             this.Panel_Home.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.PB_Home_Bottom12)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PB_Home_Bottom6)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PB_Home_Bottom11)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PB_Home_Bottom5)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PB_Home_Bottom10)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PB_Home_Bottom4)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PB_Home_Bottom9)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PB_Home_Bottom3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PB_Home_Bottom8)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PB_Home_Bottom7)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PB_Home_Bottom2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PB_Home_Bottom1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PB_Home_Down)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PB_Home_Up)).EndInit();
             this.Panel_ShopInfo.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox_Coupons06)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox_Coupons03)).EndInit();
@@ -1658,6 +1858,20 @@
         private System.Windows.Forms.Button Button_CouponsRight;
         private System.Windows.Forms.Button Button_CouponsLeft;
         private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.PictureBox PB_Home_Up;
+        private System.Windows.Forms.PictureBox PB_Home_Down;
+        private System.Windows.Forms.PictureBox PB_Home_Bottom1;
+        private System.Windows.Forms.PictureBox PB_Home_Bottom12;
+        private System.Windows.Forms.PictureBox PB_Home_Bottom6;
+        private System.Windows.Forms.PictureBox PB_Home_Bottom11;
+        private System.Windows.Forms.PictureBox PB_Home_Bottom5;
+        private System.Windows.Forms.PictureBox PB_Home_Bottom10;
+        private System.Windows.Forms.PictureBox PB_Home_Bottom4;
+        private System.Windows.Forms.PictureBox PB_Home_Bottom9;
+        private System.Windows.Forms.PictureBox PB_Home_Bottom3;
+        private System.Windows.Forms.PictureBox PB_Home_Bottom8;
+        private System.Windows.Forms.PictureBox PB_Home_Bottom7;
+        private System.Windows.Forms.PictureBox PB_Home_Bottom2;
 
     }
 }
