@@ -509,10 +509,11 @@ namespace ECouponsPrinter
             //下载参数信息
             MessageBox.Show("download param information...");
             request.OpenRequest(GlobalVariables.StrServerUrl + "/servlet/TerminalParam?strTerminalNo=" + GlobalVariables.StrTerminalNo, "");
-            strXml = request.HtmlDocument;
+            string strXml = request.HtmlDocument;
             form1.setText(strXml);
             if (strXml.IndexOf("<params>") > 0)
             {
+                XmlDocument doc = new XmlDocument();
                 doc.LoadXml(strXml);
                 //删除原纪录
                 AccessCmd cmd = new AccessCmd();
