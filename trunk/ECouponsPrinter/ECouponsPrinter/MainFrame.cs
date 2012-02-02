@@ -578,7 +578,7 @@ namespace ECouponsPrinter
                         }
                         else
                         {
-                            MessageBox.Show(temp.Visible.ToString());
+                       //     MessageBox.Show(temp.Visible.ToString());
                             
                             if(temp.Visible.CompareTo(false) != 0)
                                 temp.Visible = false;
