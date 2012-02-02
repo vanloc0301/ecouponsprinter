@@ -17,15 +17,15 @@ namespace ECouponsPrinter
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             // Add the event handler for handling UI thread exceptions to the event.
-      //      Application.ThreadException += new ThreadExceptionEventHandler(UIThreadException);
+            //Application.ThreadException += new ThreadExceptionEventHandler(UIThreadException);
 
             // Set the unhandled exception mode to force all Windows Forms errors to go through
             // our handler.
-      //      Application.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
+            //Application.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
 
             // Add the event handler for handling non-UI thread exceptions to the event. 
-     //       AppDomain.CurrentDomain.UnhandledException +=
-     //           new UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);
+            //AppDomain.CurrentDomain.UnhandledException +=
+            //    new UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);
 
             Application.Run(new MainFrame());
         }
