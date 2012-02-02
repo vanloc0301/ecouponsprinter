@@ -503,5 +503,36 @@ namespace ECouponsPrinter
             dtStartTime = xe.GetElementsByTagName("dtStartTime").Item(0).InnerText.Trim();
             dtEndTime = xe.GetElementsByTagName("dtEndTime").Item(0).InnerText.Trim();
         }
+
+        internal void SynParam()
+        {
+            //下载参数信息
+            MessageBox.Show("download param information...");
+            request.OpenRequest(GlobalVariables.StrServerUrl + "/servlet/TerminalParam?strTerminalNo=" + GlobalVariables.StrTerminalNo, "");
+            strXml = request.HtmlDocument;
+            form1.setText(strXml);
+            if (strXml.IndexOf("<params>") > 0)
+            {
+                doc.LoadXml(strXml);
+                //删除原纪录
+                AccessCmd cmd = new AccessCmd();
+                string strSql = "delete from t_bz_terminal_param";
+                cmd.ExecuteNonQuery(strSql);
+                //增加新纪录
+                XmlNodeList xnl = doc.GetElementsByTagName("param");
+                for (int i = 0; i < xnl.Count; i++)
+                {
+                    XmlElement xe = (XmlElement)xnl.Item(i);
+                    //获取信息
+                    string strId = xe.ChildNodes.Item(0).InnerText.Trim();
+                    string strParamName = xe.ChildNodes.Item(1).InnerText.Trim();
+                    string strParamValue = xe.ChildNodes.Item(2).InnerText.Trim();
+                    //更新数据库
+                    strSql = "insert into t_bz_terminal_param (strId,strParamName,strParamValue) values ('" + strId + "','" + strParamName + "','" + strParamValue + "')";
+                    cmd.ExecuteNonQuery(strSql);
+                }
+                cmd.Close();
+            }
+        }
     }
 }
