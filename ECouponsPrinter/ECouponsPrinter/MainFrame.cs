@@ -571,7 +571,7 @@ namespace ECouponsPrinter
 
                     if ((temp = (PictureBox)GetControl(name)) != null)
                     {
-                        if ((i+1) < (curPageShowCount))
+                        if ((i) < (curPageShowCount))
                         {
                             if (temp.Visible.CompareTo(true) != 0)
                                 temp.Visible = true;
@@ -590,7 +590,7 @@ namespace ECouponsPrinter
 
             for (int i = 0; i < curPageShowCount; i++)
             {
-                String name = "PB_Home_Bottom" + (i);
+                String name = "PB_Home_Bottom" + (i + 1);
                 PictureBox temp = null;
                 if ((temp = (PictureBox)GetControl(name)) != null)
                 {
@@ -634,7 +634,7 @@ namespace ECouponsPrinter
 
             PB_Home_Down.Image.Dispose();
 
-            PB_Home_Down.Image = new Bitmap(Image.FromFile( LS_Lcoupon[num + (curPage - 1) * 12]), 1071, 548);
+            PB_Home_Down.Image = new Bitmap(Image.FromFile( LS_Lcoupon[num - 1 + (curPage - 1) * 12]), 1071, 548);
 
         }
 
