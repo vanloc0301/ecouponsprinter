@@ -80,6 +80,7 @@
       <DependentUpon>Form3.cs</DependentUpon>
     </Compile>
     <Compile Include="Member.cs" />
+    <Compile Include="PicInfo.cs" />
     <Compile Include="UploadInfo.cs" />
     <Compile Include="CouponsPopForm.cs">
       <SubType>Form</SubType>
