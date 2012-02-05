@@ -73,6 +73,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AccessCmd.cs" />
+    <Compile Include="ErrorLog.cs" />
     <Compile Include="Form3.cs">
       <SubType>Form</SubType>
     </Compile>

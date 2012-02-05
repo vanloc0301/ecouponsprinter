@@ -23,7 +23,7 @@ namespace ECouponsPrinter
             get { return GlobalVariables.strExitPwd; }
             set { GlobalVariables.strExitPwd = value; }
         }
-        private static int intRefreshSec = 60;//终端定时与服务器同步的时间间隔，以秒为单位
+        private static int intRefreshSec = 6;//终端定时与服务器同步的时间间隔，以秒为单位
 
         public static int IntRefreshSec
         {

@@ -35,6 +35,7 @@
             this.Label_Option = new System.Windows.Forms.Label();
             this.Label_Countdown = new System.Windows.Forms.Label();
             this.Panel_Bottom = new System.Windows.Forms.Panel();
+            this.button1 = new System.Windows.Forms.Button();
             this.Button_LastCouponsPage = new System.Windows.Forms.Button();
             this.Button_NextCouponsPage = new System.Windows.Forms.Button();
             this.Button_MyInfoPage = new System.Windows.Forms.Button();
@@ -162,7 +163,7 @@
             this.PB_Coupon_2 = new System.Windows.Forms.PictureBox();
             this.PB_Coupon_5 = new System.Windows.Forms.PictureBox();
             this.PB_Coupon_1 = new System.Windows.Forms.PictureBox();
-            this.button1 = new System.Windows.Forms.Button();
+            this.Timer_DownloadInfo = new System.Windows.Forms.Timer(this.components);
             this.Panel_Top.SuspendLayout();
             this.Panel_Bottom.SuspendLayout();
             this.Panel_Home.SuspendLayout();
@@ -330,6 +331,16 @@
             this.Panel_Bottom.Name = "Panel_Bottom";
             this.Panel_Bottom.Size = new System.Drawing.Size(1080, 128);
             this.Panel_Bottom.TabIndex = 1;
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(764, 86);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(299, 39);
+            this.button1.TabIndex = 20;
+            this.button1.Text = "登录";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // Button_LastCouponsPage
             // 
@@ -1783,15 +1794,9 @@
             this.PB_Coupon_1.TabStop = false;
             this.PB_Coupon_1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.ChangeCouponPicture);
             // 
-            // button1
+            // Timer_DownloadInfo
             // 
-            this.button1.Location = new System.Drawing.Point(764, 86);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(299, 39);
-            this.button1.TabIndex = 20;
-            this.button1.Text = "登录";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.Timer_DownloadInfo.Tick += new System.EventHandler(this.Timer_DownloadInfo_Tick);
             // 
             // MainFrame
             // 
@@ -2049,6 +2054,7 @@
         private System.Windows.Forms.Button Btn_Coupon_Type3;
         private System.Windows.Forms.Button Btn_Coupon_Type2;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Timer Timer_DownloadInfo;
 
     }
 }

@@ -32,10 +32,7 @@ namespace ECouponsPrinter
                 ErrorLog.log(ep);
                 this.Close();
             }
-            finally
-            {
-                return objReader;
-            }
+            return objReader;
         }
 
         public void ExecuteNonQuery(String strSql)
