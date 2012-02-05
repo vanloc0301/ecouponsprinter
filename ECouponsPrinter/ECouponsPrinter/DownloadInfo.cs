@@ -19,7 +19,6 @@ namespace ECouponsPrinter
         public void download()
         {
             //下载商家信息
-            MessageBox.Show("download shop information...");
             request.OpenRequest(GlobalVariables.StrServerUrl + "/servlet/ShopDownload?strTerminalNo=" + GlobalVariables.StrTerminalNo, "");
             XmlDocument doc = new XmlDocument();
             string strXml = request.HtmlDocument;
@@ -55,7 +54,6 @@ namespace ECouponsPrinter
                 }
             }
             //下载优惠券信息
-            MessageBox.Show("download coupon information...");
             request.OpenRequest(GlobalVariables.StrServerUrl + "/servlet/CouponDownload?strTerminalNo=" + GlobalVariables.StrTerminalNo, "");
             strXml = request.HtmlDocument;
             if (strXml.IndexOf("<coupons>") > 0)
@@ -90,7 +88,6 @@ namespace ECouponsPrinter
                 }
             }
             //下载广告信息
-            MessageBox.Show("download ad information...");
             request.OpenRequest(GlobalVariables.StrServerUrl + "/servlet/AdDownload?strTerminalNo=" + GlobalVariables.StrTerminalNo, "");
             strXml = request.HtmlDocument;
             if (strXml.IndexOf("<ads>") > 0)
@@ -482,7 +479,6 @@ namespace ECouponsPrinter
         internal void SynParam()
         {
             //下载参数信息
-            MessageBox.Show("download param information...");
             request.OpenRequest(GlobalVariables.StrServerUrl + "/servlet/TerminalParam?strTerminalNo=" + GlobalVariables.StrTerminalNo, "");
             string strXml = request.HtmlDocument;
             if (strXml.IndexOf("<params>") > 0)
