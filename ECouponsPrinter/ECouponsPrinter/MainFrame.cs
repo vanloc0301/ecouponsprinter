@@ -20,19 +20,20 @@ namespace ECouponsPrinter
 
         private List<PicInfo> LP_shop;
         private List<PicInfo> LP_coupon;
-        private List<PicInfo> LP_shoptype1, LP_shoptype2, LP_shoptype3;
+        //    private List<PicInfo> LP_shoptype1, LP_shoptype2, LP_shoptype3;
         private List<PicInfo>[] LP_type;
 
         private static int curType = 0;                         //指示主页当前显示的类别
         private static int count, curPage, totalPage, curPageShowCount;
         private static int tPage1, tPage2, tPage3;
 
-        enum part{up=1,middle=2,bottom=3};      
+        enum part { up = 1, middle = 2, bottom = 3 };
 
         public MainFrame()
         {
             InitializeComponent();
-            this.SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw | ControlStyles.AllPaintingInWmPaint, true);
+            this.SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.AllPaintingInWmPaint, true);
+            this.SetStyle(ControlStyles.UserPaint, true);
             this.Panel_Shop.GetType().GetProperty("DoubleBuffered", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic).SetValue(Panel_Shop, true, null);
             this.Panel_Coupons.GetType().GetProperty("DoubleBuffered", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic).SetValue(Panel_Coupons, true, null);
             this.Panel_ShopInfo.GetType().GetProperty("DoubleBuffered", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic).SetValue(Panel_ShopInfo, true, null);
@@ -107,7 +108,7 @@ namespace ECouponsPrinter
             int y = this.VerticalScroll.Value;
             this.Panel_ShopInfo.Location = new System.Drawing.Point(0, 142 - y);
 
-            InitShopInfoData();
+            InitShopInfoData(LP_shop[curType].name);
             Thread.Sleep(20);
 
             this.Panel_ShopInfo.Visible = true;
@@ -152,6 +153,7 @@ namespace ECouponsPrinter
             PictureBox pb = sender as PictureBox;
             int tPage = 0;
 
+            int iCount = 0;
             switch (pb.Name)
             {
                 case "PB_Shop_Type1_LastPage":
@@ -180,7 +182,9 @@ namespace ECouponsPrinter
                     return;
                 case "PB_Shop_Type1_NextPage":
                     pb.Image = Image.FromFile(path + "\\images\\切图\\商家二级\\N.jpg");
-                    tPage = LP_shoptype1.Count / 12 + 1;
+                    iCount = LP_type[0].Count;
+                    tPage = iCount / 12 + (iCount % 12 == 0 ? 0 : 1);
+
                     if (tPage1 < tPage)
                     {
                         tPage1++;
@@ -189,7 +193,8 @@ namespace ECouponsPrinter
                     return;
                 case "PB_Shop_Type2_NextPage":
                     pb.Image = Image.FromFile(path + "\\images\\切图\\商家二级\\N.jpg");
-                    tPage = LP_shoptype2.Count / 12 + 1;
+                    iCount = LP_type[1].Count;
+                    tPage = iCount / 12 + (iCount % 12 == 0 ? 0 : 1);
                     if (tPage2 < tPage)
                     {
                         tPage2++;
@@ -198,7 +203,8 @@ namespace ECouponsPrinter
                     return;
                 case "PB_Shop_Type3_NextPage":
                     pb.Image = Image.FromFile(path + "\\images\\切图\\商家二级\\N.jpg");
-                    tPage = LP_shoptype3.Count / 12 + 1;
+                    iCount = LP_type[2].Count;
+                    tPage = iCount / 12 + (iCount % 12 == 0 ? 0 : 1);
                     if (tPage3 < tPage)
                     {
                         tPage3++;
@@ -290,6 +296,11 @@ namespace ECouponsPrinter
         {
             Button btn = (Button)sender;
             btn.BackgroundImage = Image.FromFile(path + "\\images\\切图\\优惠券二级\\Shoptype.jpg");
+
+            String trade = btn.Name.Substring(15, 1);
+
+            InitCouponData(trade);
+            ShowCoupon();
         }
 
         #endregion
@@ -359,12 +370,13 @@ namespace ECouponsPrinter
             //切换
             int y = this.VerticalScroll.Value;
             this.Panel_Shop.Location = new System.Drawing.Point(0, 142 - y);
-            
+
             //准备工作
             this.UnVisibleAllPanels();
             this.InitTimer();
-            Thread.Sleep(20);
+
             this.Panel_Shop.Visible = true;
+
             InitShopData();
             ShowShop();
         }
@@ -382,7 +394,7 @@ namespace ECouponsPrinter
         {
             this.Button_CouponsPage.BackgroundImage = Image.FromFile(path + "\\images\\切图\\首页\\优惠券.jpg");
 
-            
+
 
             //Form3 f = new Form3();
             //f.TopLevel = false;
@@ -397,7 +409,7 @@ namespace ECouponsPrinter
             int y = this.VerticalScroll.Value;
             this.Panel_Coupons.Location = new System.Drawing.Point(0, 142 - y);
 
-            InitCouponData();
+            InitCouponData("1");
             Thread.Sleep(20);
             //准备工作
             this.UnVisibleAllPanels();
@@ -526,6 +538,7 @@ namespace ECouponsPrinter
 
             //加载主页面
             this.UnVisibleAllPanels();
+            InitData();
             InitHomeData();
             this.Panel_Home.Visible = true;
             ShowHome();
@@ -577,12 +590,12 @@ namespace ECouponsPrinter
 
         #region 数据处理和图片绑定
 
-        #region 首页数据处理
+        #region 加载所有小图信息
 
         /// <summary>
-        /// 加载首页的数据
+        /// 预加载所有的图片信息
         /// </summary>
-        private void InitHomeData()
+        private void InitData()
         {
             try
             {
@@ -592,7 +605,7 @@ namespace ECouponsPrinter
                 OleDbDataReader reader = cmd.ExecuteReader(strSql);
                 LP_shop = new List<PicInfo>();
 
-                String lPath, sPath, name, id;
+                String lPath, sPath, name, id, trade, shopid;
 
                 while (reader.Read())
                 {
@@ -608,6 +621,7 @@ namespace ECouponsPrinter
                     if (sPath != "" && sPath != null)
                     {
                         pi.spath = path + "\\shop\\" + sPath;
+                        pi.image = new Bitmap(Image.FromFile(pi.spath), 168, 195);
                     }
 
                     name = reader.GetString(1);
@@ -621,6 +635,13 @@ namespace ECouponsPrinter
                     {
                         pi.id = id;
                     }
+
+                    trade = reader.GetString(3);
+                    if (trade != "" && trade != null)
+                    {
+                        pi.trade = trade;
+                    }
+
                     LP_shop.Add(pi);
                 }
 
@@ -647,6 +668,7 @@ namespace ECouponsPrinter
                         if (sPath != "" && sPath != null)
                         {
                             pi.spath = path + "\\coupon\\" + sPath;
+                            pi.image = new Bitmap(Image.FromFile(pi.spath), 168, 175);
                         }
                     }
 
@@ -667,6 +689,28 @@ namespace ECouponsPrinter
                             pi.id = id;
                         }
                     }
+
+                    if (!reader.IsDBNull(4))
+                    {
+                        shopid = reader.GetString(4);
+                        if (shopid != "" && shopid != null)
+                        {
+                            pi.shopid = shopid;
+
+                            strSql = "select strTrade from t_bz_shop where strId='" + shopid + "'";
+                            OleDbDataReader oddr = cmd.ExecuteReader(strSql);
+
+                            if (oddr.Read())
+                            {
+                                if (!reader.IsDBNull(0))
+                                {
+                                    pi.trade = oddr.GetString(0);
+                                }
+                            }
+                            oddr.Close();
+                        }
+                    }
+
                     LP_coupon.Add(pi);
                 }
                 reader.Close();
@@ -676,7 +720,18 @@ namespace ECouponsPrinter
             {
                 MessageBox.Show(e.Message);
             }
+        }
 
+        #endregion
+
+        #region 首页数据处理
+
+        /// <summary>
+        /// 加载首页的数据
+        /// </summary>
+        private void InitHomeData()
+        {
+            //暂时不需要做任何事       
         }
 
         /// <summary>
@@ -746,45 +801,33 @@ namespace ECouponsPrinter
         /// <summary>
         /// 加载商家详细页面的数据
         /// </summary>
-        private void InitShopInfoData()
+        private void InitShopInfoData(String shopname)
         {
-            string strSql = "select * from t_bz_shop where strBizName ='" + LP_shop[curType].name + "'";
+            string strSql = "select * from t_bz_shop where strBizName ='" + shopname + "'";
             AccessCmd cmd = new AccessCmd();
             OleDbDataReader reader = cmd.ExecuteReader(strSql);
 
-            LP_shop.Clear();
+            String lPath, name, address, info, id = null;
 
-            String lPath, sPath, name, address, info, id = null;
+            LP_type = new List<PicInfo>[1];
+
+            LP_type[0] = new List<PicInfo>();
 
             if (reader.Read())
             {
-                PicInfo pi = new PicInfo();
-
                 lPath = reader.GetString(9);
                 if (lPath != "" && lPath != null)
                 {
-                    pi.lpath = path + "\\shop\\" + lPath;
-                }
-
-                sPath = reader.GetString(8);
-                if (sPath != "" && sPath != null)
-                {
-                    pi.spath = path + "\\shop\\" + sPath;
+                    PB_ShopInfo_Shop.Image = new Bitmap(Image.FromFile(path + "\\shop\\" + lPath), 1070, 559);
                 }
 
                 name = reader.GetString(1);
                 if (name != "" && name != null)
                 {
-                    pi.name = name;
                     Label_ShopInfo_Name.Text = "商家名称: " + name;
                 }
 
                 id = reader.GetString(0);
-                if (id != "" && id != null)
-                {
-                    pi.id = id;
-                }
-                LP_shop.Add(pi);
 
                 address = reader.GetString(4);
                 if (address != "" && address != null)
@@ -799,39 +842,8 @@ namespace ECouponsPrinter
                 }
             }
 
-            strSql = "select * from t_bz_coupon where strShopId='" + id + "'";
-            reader = cmd.ExecuteReader(strSql);
-            LP_coupon.Clear();
+            LP_type[0] = FindCouponByShopId(id);
 
-            while (reader.Read())
-            {
-                PicInfo pi = new PicInfo();
-
-                lPath = reader.GetString(9);
-                if (lPath != "" && lPath != null)
-                {
-                    pi.lpath = path + "\\coupon\\" + lPath;
-                }
-
-                sPath = reader.GetString(8);
-                if (sPath != "" && sPath != null)
-                {
-                    pi.spath = path + "\\coupon\\" + sPath;
-                }
-
-                name = reader.GetString(1);
-                if (name != "" && name != null)
-                {
-                    pi.name = name;
-                }
-
-                id = reader.GetString(0);
-                if (id != "" && id != null)
-                {
-                    pi.id = id;
-                }
-                LP_coupon.Add(pi);
-            }
             reader.Close();
             cmd.Close();
 
@@ -845,10 +857,7 @@ namespace ECouponsPrinter
         /// </summary>
         private void ShowShopInfo()
         {
-            PB_ShopInfo_Shop.Image = new Bitmap(Image.FromFile(LP_shop[curType].lpath), 1070, 559);
-
             ShowBottomPicure();
-
         }
 
         /// <summary>
@@ -884,99 +893,120 @@ namespace ECouponsPrinter
         /// </summary>
         private void InitShopData()
         {
-            try{
-            //读取数据库
-            string strSql = "select * from t_bz_shop where strTrade='1'";
-            AccessCmd cmd = new AccessCmd();
-            OleDbDataReader reader = cmd.ExecuteReader(strSql);
-            LP_shoptype1 = new List<PicInfo>();
-            Label_Shop_Type1.Text = "1";
-            Label_Shop_Type2.Text = "2";
-            Label_Shop_Type3.Text = "3";
-            String sPath, name;
-            
-            while (reader.Read())
+            if (LP_type != null)
             {
-                PicInfo pi = new PicInfo();
-
-                sPath = reader.GetString(8);
-                if (sPath != "" && sPath != null)
+                for (int i = 0; i < LP_type.Length; i++)
                 {
-                    pi.spath = path + "\\shop\\" + sPath;
+                    LP_type[i].Clear();
                 }
-
-                name = reader.GetString(1);
-                if (name != "" && name != null)
-                {
-                    pi.name = name;
-                }
-                LP_shoptype1.Add(pi);      
             }
 
-            strSql = "select * from t_bz_shop where strTrade='2'";
-            reader = cmd.ExecuteReader(strSql);
-            LP_shoptype2 = new List<PicInfo>();
-
-            while (reader.Read())
-            {
-                PicInfo pi = new PicInfo();
-
-                sPath = reader.GetString(8);
-                if (sPath != "" && sPath != null)
-                {
-                    pi.spath = path + "\\shop\\" + sPath;
-                }
-
-                name = reader.GetString(1);
-                if (name != "" && name != null)
-                {
-                    pi.name = name;
-                }
-
-                LP_shoptype2.Add(pi);
-            }
-
-            strSql = "select * from t_bz_shop where strTrade='3'";
-            reader = cmd.ExecuteReader(strSql);
-            LP_shoptype3 = new List<PicInfo>();
-
-            while (reader.Read())
-            {
-                PicInfo pi = new PicInfo();
-
-                sPath = reader.GetString(8);
-                if (sPath != "" && sPath != null)
-                {
-                    pi.spath = path + "\\shop\\" + sPath;
-                }
-
-                name = reader.GetString(1);
-                if (name != "" && name != null)
-                {
-                    pi.name = name;
-                }
-
-                LP_shoptype3.Add(pi);
-            }
-
-            reader.Close();
-            cmd.Close();
+            LP_type = new List<PicInfo>[3];
+            LP_type[0] = FindShopByTrade("1");
+            LP_type[1] = FindShopByTrade("2");
+            LP_type[2] = FindShopByTrade("3");
 
             tPage1 = 1;
             tPage2 = 1;
             tPage3 = 1;
-        }
-            catch (Exception e)
-            {
-                MessageBox.Show(e.Message);
-            }
+            curType = 0;
+
+            #region 暂时不用的代码
+            //    try{
+            //    //读取数据库
+            //    string strSql = "select * from t_bz_shop where strTrade='1'";
+            //    AccessCmd cmd = new AccessCmd();
+            //    OleDbDataReader reader = cmd.ExecuteReader(strSql);
+            //    LP_shoptype1 = new List<PicInfo>();
+            //    Label_Shop_Type1.Text = "1";
+            //    Label_Shop_Type2.Text = "2";
+            //    Label_Shop_Type3.Text = "3";
+            //    String sPath, name;
+
+            //    while (reader.Read())
+            //    {
+            //        PicInfo pi = new PicInfo();
+
+            //        sPath = reader.GetString(8);
+            //        if (sPath != "" && sPath != null)
+            //        {
+            //            pi.spath = path + "\\shop\\" + sPath;
+            //        }
+
+            //        name = reader.GetString(1);
+            //        if (name != "" && name != null)
+            //        {
+            //            pi.name = name;
+            //        }
+            //        LP_shoptype1.Add(pi);      
+            //    }
+
+            //    strSql = "select * from t_bz_shop where strTrade='2'";
+            //    reader = cmd.ExecuteReader(strSql);
+            //    LP_shoptype2 = new List<PicInfo>();
+
+            //    while (reader.Read())
+            //    {
+            //        PicInfo pi = new PicInfo();
+
+            //        sPath = reader.GetString(8);
+            //        if (sPath != "" && sPath != null)
+            //        {
+            //            pi.spath = path + "\\shop\\" + sPath;
+            //        }
+
+            //        name = reader.GetString(1);
+            //        if (name != "" && name != null)
+            //        {
+            //            pi.name = name;
+            //        }
+
+            //        LP_shoptype2.Add(pi);
+            //    }
+
+            //    strSql = "select * from t_bz_shop where strTrade='3'";
+            //    reader = cmd.ExecuteReader(strSql);
+            //    LP_shoptype3 = new List<PicInfo>();
+
+            //    while (reader.Read())
+            //    {
+            //        PicInfo pi = new PicInfo();
+
+            //        sPath = reader.GetString(8);
+            //        if (sPath != "" && sPath != null)
+            //        {
+            //            pi.spath = path + "\\shop\\" + sPath;
+            //        }
+
+            //        name = reader.GetString(1);
+            //        if (name != "" && name != null)
+            //        {
+            //            pi.name = name;
+            //        }
+
+            //        LP_shoptype3.Add(pi);
+            //    }
+
+            //    reader.Close();
+            //    cmd.Close();
+
+            //    tPage1 = 1;
+            //    tPage2 = 1;
+            //    tPage3 = 1;
+            //}
+            //    catch (Exception e)
+            //    {
+            //        MessageBox.Show(e.Message);
+            //    }
+            #endregion
+
         }
 
         /// <summary>
         /// 更新商家页面
         /// </summary>
         private void ShowShop()
-        { 
+        {
             ShowShopPart((int)part.up);         //显示商家页面的上面部分
             ShowShopPart((int)part.middle);     //显示商家页面的中间部分
             ShowShopPart((int)part.bottom);         //显示商家页面的下面部分
@@ -996,19 +1026,19 @@ namespace ECouponsPrinter
             if (type == 1)
             {
                 controlName = "PB_Shop_type1_";
-                lp = LP_shoptype1;
+                lp = LP_type[0];
                 curPage = tPage1;
             }
             else if (type == 2)
             {
                 controlName = "PB_Shop_type2_";
-                lp = LP_shoptype2;
+                lp = LP_type[1];
                 curPage = tPage2;
             }
             else
             {
                 controlName = "PB_Shop_type3_";
-                lp = LP_shoptype3;
+                lp = LP_type[2];
                 curPage = tPage3;
             }
 
@@ -1016,7 +1046,9 @@ namespace ECouponsPrinter
             totalPage = count / perNum + (count % perNum == 0 ? 0 : 1);
             //    MessageBox.Show(totalPage.ToString());
             if (curPage == totalPage)
-                curPageShowCount = count % perNum;
+            {
+                curPageShowCount = count % (perNum + 1);
+            }
             else
                 curPageShowCount = perNum;
 
@@ -1049,7 +1081,7 @@ namespace ECouponsPrinter
                 PictureBox temp = null;
                 if ((temp = (PictureBox)GetControl(name, container)) != null)
                 {
-                    temp.Image = new Bitmap(Image.FromFile(lp[i + perNum * (curPage - 1)].spath), 168, 195);
+                    temp.Image = lp[i + perNum * (curPage - 1)].image;
                 }
             }
         }
@@ -1065,7 +1097,7 @@ namespace ECouponsPrinter
 
             if (pb.Name == "PB_Shop_Type1_LastPage" || pb.Name == "PB_Shop_Type1_NextPage")
             {
-                ShowShopPart((int)part.up);   
+                ShowShopPart((int)part.up);
             }
 
             if (pb.Name == "PB_Shop_Type2_LastPage" || pb.Name == "PB_Shop_Type2_NextPage")
@@ -1087,63 +1119,21 @@ namespace ECouponsPrinter
         /// <summary>
         /// 加载商家页面的数据
         /// </summary>
-        private void InitCouponData()
+        private void InitCouponData(String trade)
         {
-            try
+            if (LP_type != null)
             {
-                //读取数据库
-                string strSql = "select * from t_bz_shop where strTrade='1'";
-                AccessCmd cmd = new AccessCmd();
-                OleDbDataReader reader = cmd.ExecuteReader(strSql);
-                List<String> trade = new List<string>() ;
-                
-                while (reader.Read())
+                for (int i = 0; i < LP_type.Length; i++)
                 {
-                    if(!reader.IsDBNull(0))
-                        trade.Add(reader.GetString(0));
+                    LP_type[i].Clear();
                 }
-
-                LP_type = new List<PicInfo>[trade.Count];
-
-                int index = 0;
-                foreach (String id in trade)
-                {
-                    strSql = "select * from t_bz_coupon where strShopId='"+id+"'";
-                    cmd = new AccessCmd();
-                    reader = cmd.ExecuteReader(strSql);
-                    String sPath, lPath;
-
-                    LP_type[index] = new List<PicInfo>();
-                    while (reader.Read())
-                    {
-                        PicInfo pi = new PicInfo();
-
-                        if (!reader.IsDBNull(8))
-                        {
-                            sPath = reader.GetString(8);
-                            pi.spath = path + "\\coupon\\" + sPath;
-                        }
-
-                        if (!reader.IsDBNull(9))
-                        {
-                            lPath = reader.GetString(8);
-                            pi.lpath = path + "\\coupon\\" + lPath;
-                        }
-                        LP_type[index].Add(pi);                     
-                    }
-                    index++;
-                }
-                
-                reader.Close();
-                cmd.Close();
-
-                curPage = 1;
-                curType = 0;
             }
-            catch (Exception e)
-            {
-                MessageBox.Show(e.Message);
-            }
+
+            LP_type = new List<PicInfo>[1];
+            LP_type[0] = FindCouponByTrade(trade);
+
+            curPage = 1;
+            curType = 0;
         }
 
         /// <summary>
@@ -1153,18 +1143,20 @@ namespace ECouponsPrinter
         {
             String controlName = "PB_Coupon_";        //显示小优惠劵的控件的Name
             Panel container = Panel_Coupons;         //现在正在操作的Panel容器的对象
-            int perNum = 12;                 //每页显示小优惠劵的控件的数量
+            int perNum = 12;                        //每页显示小优惠劵的控件的数量
             List<PicInfo> lp = LP_type[curType];
 
             count = lp.Count;
             totalPage = count / perNum + (count % perNum == 0 ? 0 : 1);
             //    MessageBox.Show(totalPage.ToString());
             if (curPage == totalPage)
-                curPageShowCount = count % perNum;
+            {
+                curPageShowCount = count % (perNum + 1);
+            }
             else
                 curPageShowCount = perNum;
 
-            PB_Coupon_Top.Image = new Bitmap(Image.FromFile(LP_type[curType][(curPage-1) * 12].lpath), 1070, 609);
+            PB_Coupon_Top.Image = new Bitmap(Image.FromFile(LP_type[curType][(curPage - 1) * 12].lpath), 1070, 609);
 
             if (curPageShowCount > 0)
                 for (int i = 0; i < perNum; i++)
@@ -1189,13 +1181,14 @@ namespace ECouponsPrinter
                     }
                 }
 
+
             for (int i = 0; i < curPageShowCount; i++)
             {
                 String name = controlName + (i + 1);
                 PictureBox temp = null;
                 if ((temp = (PictureBox)GetControl(name, container)) != null)
                 {
-                    temp.Image = new Bitmap(Image.FromFile(lp[i + perNum * (curPage - 1)].spath), 195, 211);
+                    temp.Image = new Bitmap(lp[i + perNum * (curPage - 1)].image,195,211);
                 }
             }
         }
@@ -1204,7 +1197,7 @@ namespace ECouponsPrinter
         {
             PictureBox pb = sender as PictureBox;
 
-           
+
             String name = pb.Name;
             String numstr = null;
             int num = 1;
@@ -1239,25 +1232,30 @@ namespace ECouponsPrinter
             String controlName = "";        //显示小优惠劵的控件的Name
             Panel container = null;         //现在正在操作的Panel容器的对象
             int perNum = 0;                 //每页显示小优惠劵的控件的数量
+            List<PicInfo> LP_temp = null;
 
             if (this.Panel_ShopInfo.Visible == true)
             {
                 controlName = "PB_ShopInfo_Coupons0";
                 container = Panel_ShopInfo;
                 perNum = 6;
+                LP_temp = LP_type[0];
             }
             else
             {
                 controlName = "PB_Home_Bottom";
                 container = Panel_Home;
                 perNum = 12;
+                LP_temp = LP_coupon;
             }
 
-            count = LP_coupon.Count;
+            count = LP_temp.Count;
             totalPage = count / perNum + (count % perNum == 0 ? 0 : 1);
             //    MessageBox.Show(totalPage.ToString());
             if (curPage == totalPage)
-                curPageShowCount = count % perNum;
+            {
+                curPageShowCount = count % (perNum + 1);
+            }
             else
                 curPageShowCount = perNum;
 
@@ -1285,10 +1283,10 @@ namespace ECouponsPrinter
                 }
 
             if (container == Panel_Home)
-                PB_Home_Down.Image = new Bitmap(Image.FromFile(LP_coupon[(curPage - 1) * 12].lpath), 1071, 548);
+                PB_Home_Down.Image = new Bitmap(Image.FromFile(LP_temp[(curPage - 1) * 12].lpath), 1071, 548);
 
             if (container == Panel_ShopInfo)
-                PB_ShopInfo_Coupons.Image = new Bitmap(Image.FromFile(LP_coupon[(curPage - 1) * 6].lpath), 1070, 573);
+                PB_ShopInfo_Coupons.Image = new Bitmap(Image.FromFile(LP_temp[(curPage - 1) * 6].lpath), 1070, 573);
 
             for (int i = 0; i < curPageShowCount; i++)
             {
@@ -1296,7 +1294,7 @@ namespace ECouponsPrinter
                 PictureBox temp = null;
                 if ((temp = (PictureBox)GetControl(name, container)) != null)
                 {
-                    temp.Image = new Bitmap(Image.FromFile(LP_coupon[i + perNum * (curPage - 1)].spath), 168, 175);
+                    temp.Image = LP_temp[i + perNum * (curPage - 1)].image;
                 }
             }
         }
@@ -1317,6 +1315,64 @@ namespace ECouponsPrinter
             return null;
         }
 
+        /// <summary>
+        /// 按商店来划分优惠劵
+        /// </summary>
+        /// <param name="shopId">商店id</param>
+        /// <returns></returns>
+        private List<PicInfo> FindCouponByShopId(String shopId)
+        {
+            List<PicInfo> temp = new List<PicInfo>();
+
+            foreach (PicInfo pi in LP_coupon)
+            {
+                if (pi.shopid == shopId)
+                {
+                    temp.Add(pi);
+                }
+            }
+
+            return temp;
+        }
+
+        /// <summary>
+        /// 按商家类别来划分商家
+        /// </summary>
+        /// <param name="trade">商家类别</param>
+        /// <returns></returns>
+        private List<PicInfo> FindShopByTrade(String trade)
+        {
+            List<PicInfo> temp = new List<PicInfo>();
+
+            foreach (PicInfo pi in LP_shop)
+            {
+                if (pi.trade == trade)
+                {
+                    temp.Add(pi);
+                }
+            }
+            return temp;
+        }
+
+        /// <summary>
+        /// 按商家类别来划分优惠劵
+        /// </summary>
+        /// <param name="trade">商家类别</param>
+        /// <returns></returns>
+        private List<PicInfo> FindCouponByTrade(String trade)
+        {
+            List<PicInfo> temp = new List<PicInfo>();
+
+            foreach (PicInfo pi in LP_coupon)
+            {
+                if (pi.trade == trade)
+                {
+                    temp.Add(pi);
+                }
+            }
+            return temp;
+        }
+
         #endregion
 
         private void Label_Countdown_Click(object sender, EventArgs e)
@@ -1327,7 +1383,46 @@ namespace ECouponsPrinter
 
         #endregion
 
-        
+        private void ChangeShopPic(object sender, MouseEventArgs e)
+        {
+            PictureBox pb = sender as PictureBox;
+
+            String name = pb.Name;
+            //   MessageBox.Show(name.Length.ToString());
+            String numstr = "1";
+            int num = 1;
+
+            if (name.Length == 15)
+            {
+                numstr = name.Substring(14, 1);
+                num = (numstr[0] - '0');
+            }
+
+            if (name.Length == 16)
+            {
+                numstr = name.Substring(14, 2);
+                num = (numstr[0] - '0') * 10 + (numstr[1] - '0');
+            }
+
+            //      MessageBox.Show(num.ToString());
+
+            int curNumType = name.Substring(12, 1)[0] - '0';
+
+            this.UnVisibleAllPanels();
+            this.InitTimer();
+
+            int y = this.VerticalScroll.Value;
+            this.Panel_ShopInfo.Location = new System.Drawing.Point(0, 142 - y);
+
+            InitShopInfoData(LP_type[curNumType-1][num + (tPage1 - 1) * 12 - 1].name);
+            Thread.Sleep(20);
+
+            this.Panel_ShopInfo.Visible = true;
+            ShowShopInfo();
+        }
+
+
+
 
         #endregion
 
