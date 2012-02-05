@@ -4,6 +4,7 @@ using System.Linq;
 using System.Windows.Forms;
 using System.Threading;
 using System.Data.OleDb;
+using System.IO;
 
 namespace ECouponsPrinter
 {
@@ -29,6 +30,7 @@ namespace ECouponsPrinter
             //AppDomain.CurrentDomain.UnhandledException +=
             //    new UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);
 
+            //加载参数
             string strSql = "select * from t_bz_terminal_param";
             AccessCmd cmd = new AccessCmd();
             OleDbDataReader reader = cmd.ExecuteReader(strSql);
@@ -57,6 +59,11 @@ namespace ECouponsPrinter
                     GlobalVariables.StrServerUrl = reader.GetString(2);
             }
             cmd.Close();
+            //创建日志文件
+            if (!File.Exists(System.Windows.Forms.Application.StartupPath + "\\error.log"))
+            {
+                File.CreateText(System.Windows.Forms.Application.StartupPath + "\\error.log");
+            }
 
             Application.Run(new MainFrame());
         }
