@@ -910,6 +910,7 @@
             this.PB_Shop_type3_12.Size = new System.Drawing.Size(168, 195);
             this.PB_Shop_type3_12.TabIndex = 65;
             this.PB_Shop_type3_12.TabStop = false;
+            this.PB_Shop_type3_12.MouseUp += new System.Windows.Forms.MouseEventHandler(this.ChangeShopPic);
             // 
             // PB_Shop_type3_6
             // 
@@ -919,6 +920,7 @@
             this.PB_Shop_type3_6.Size = new System.Drawing.Size(168, 195);
             this.PB_Shop_type3_6.TabIndex = 64;
             this.PB_Shop_type3_6.TabStop = false;
+            this.PB_Shop_type3_6.MouseUp += new System.Windows.Forms.MouseEventHandler(this.ChangeShopPic);
             // 
             // PB_Shop_type3_11
             // 
@@ -928,6 +930,7 @@
             this.PB_Shop_type3_11.Size = new System.Drawing.Size(168, 195);
             this.PB_Shop_type3_11.TabIndex = 66;
             this.PB_Shop_type3_11.TabStop = false;
+            this.PB_Shop_type3_11.MouseUp += new System.Windows.Forms.MouseEventHandler(this.ChangeShopPic);
             // 
             // PB_Shop_type3_5
             // 
@@ -937,6 +940,7 @@
             this.PB_Shop_type3_5.Size = new System.Drawing.Size(168, 195);
             this.PB_Shop_type3_5.TabIndex = 67;
             this.PB_Shop_type3_5.TabStop = false;
+            this.PB_Shop_type3_5.MouseUp += new System.Windows.Forms.MouseEventHandler(this.ChangeShopPic);
             // 
             // PB_Shop_type3_10
             // 
@@ -946,6 +950,7 @@
             this.PB_Shop_type3_10.Size = new System.Drawing.Size(168, 195);
             this.PB_Shop_type3_10.TabIndex = 69;
             this.PB_Shop_type3_10.TabStop = false;
+            this.PB_Shop_type3_10.MouseUp += new System.Windows.Forms.MouseEventHandler(this.ChangeShopPic);
             // 
             // PB_Shop_type3_9
             // 
@@ -955,6 +960,7 @@
             this.PB_Shop_type3_9.Size = new System.Drawing.Size(168, 195);
             this.PB_Shop_type3_9.TabIndex = 59;
             this.PB_Shop_type3_9.TabStop = false;
+            this.PB_Shop_type3_9.MouseUp += new System.Windows.Forms.MouseEventHandler(this.ChangeShopPic);
             // 
             // PB_Shop_type3_4
             // 
@@ -964,6 +970,7 @@
             this.PB_Shop_type3_4.Size = new System.Drawing.Size(168, 195);
             this.PB_Shop_type3_4.TabIndex = 68;
             this.PB_Shop_type3_4.TabStop = false;
+            this.PB_Shop_type3_4.MouseUp += new System.Windows.Forms.MouseEventHandler(this.ChangeShopPic);
             // 
             // PB_Shop_type3_8
             // 
@@ -973,6 +980,7 @@
             this.PB_Shop_type3_8.Size = new System.Drawing.Size(168, 195);
             this.PB_Shop_type3_8.TabIndex = 60;
             this.PB_Shop_type3_8.TabStop = false;
+            this.PB_Shop_type3_8.MouseUp += new System.Windows.Forms.MouseEventHandler(this.ChangeShopPic);
             // 
             // PB_Shop_type3_3
             // 
@@ -982,6 +990,7 @@
             this.PB_Shop_type3_3.Size = new System.Drawing.Size(168, 195);
             this.PB_Shop_type3_3.TabIndex = 58;
             this.PB_Shop_type3_3.TabStop = false;
+            this.PB_Shop_type3_3.MouseUp += new System.Windows.Forms.MouseEventHandler(this.ChangeShopPic);
             // 
             // PB_Shop_type3_7
             // 
@@ -991,6 +1000,7 @@
             this.PB_Shop_type3_7.Size = new System.Drawing.Size(168, 195);
             this.PB_Shop_type3_7.TabIndex = 62;
             this.PB_Shop_type3_7.TabStop = false;
+            this.PB_Shop_type3_7.MouseUp += new System.Windows.Forms.MouseEventHandler(this.ChangeShopPic);
             // 
             // PB_Shop_type3_2
             // 
@@ -1000,6 +1010,7 @@
             this.PB_Shop_type3_2.Size = new System.Drawing.Size(168, 195);
             this.PB_Shop_type3_2.TabIndex = 61;
             this.PB_Shop_type3_2.TabStop = false;
+            this.PB_Shop_type3_2.MouseUp += new System.Windows.Forms.MouseEventHandler(this.ChangeShopPic);
             // 
             // PB_Shop_type3_1
             // 
@@ -1009,6 +1020,7 @@
             this.PB_Shop_type3_1.Size = new System.Drawing.Size(168, 195);
             this.PB_Shop_type3_1.TabIndex = 63;
             this.PB_Shop_type3_1.TabStop = false;
+            this.PB_Shop_type3_1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.ChangeShopPic);
             // 
             // Label_Shop_Type3
             // 
@@ -1030,6 +1042,7 @@
             this.PB_Shop_type2_12.Size = new System.Drawing.Size(168, 195);
             this.PB_Shop_type2_12.TabIndex = 52;
             this.PB_Shop_type2_12.TabStop = false;
+            this.PB_Shop_type2_12.MouseUp += new System.Windows.Forms.MouseEventHandler(this.ChangeShopPic);
             // 
             // PB_Shop_type2_6
             // 
@@ -1039,6 +1052,7 @@
             this.PB_Shop_type2_6.Size = new System.Drawing.Size(168, 195);
             this.PB_Shop_type2_6.TabIndex = 51;
             this.PB_Shop_type2_6.TabStop = false;
+            this.PB_Shop_type2_6.MouseUp += new System.Windows.Forms.MouseEventHandler(this.ChangeShopPic);
             // 
             // PB_Shop_type2_11
             // 
@@ -1048,6 +1062,7 @@
             this.PB_Shop_type2_11.Size = new System.Drawing.Size(168, 195);
             this.PB_Shop_type2_11.TabIndex = 53;
             this.PB_Shop_type2_11.TabStop = false;
+            this.PB_Shop_type2_11.MouseUp += new System.Windows.Forms.MouseEventHandler(this.ChangeShopPic);
             // 
             // PB_Shop_type2_5
             // 
@@ -1057,6 +1072,7 @@
             this.PB_Shop_type2_5.Size = new System.Drawing.Size(168, 195);
             this.PB_Shop_type2_5.TabIndex = 54;
             this.PB_Shop_type2_5.TabStop = false;
+            this.PB_Shop_type2_5.MouseUp += new System.Windows.Forms.MouseEventHandler(this.ChangeShopPic);
             // 
             // PB_Shop_type2_10
             // 
@@ -1066,6 +1082,7 @@
             this.PB_Shop_type2_10.Size = new System.Drawing.Size(168, 195);
             this.PB_Shop_type2_10.TabIndex = 56;
             this.PB_Shop_type2_10.TabStop = false;
+            this.PB_Shop_type2_10.MouseUp += new System.Windows.Forms.MouseEventHandler(this.ChangeShopPic);
             // 
             // PB_Shop_type2_9
             // 
@@ -1075,6 +1092,7 @@
             this.PB_Shop_type2_9.Size = new System.Drawing.Size(168, 195);
             this.PB_Shop_type2_9.TabIndex = 46;
             this.PB_Shop_type2_9.TabStop = false;
+            this.PB_Shop_type2_9.MouseUp += new System.Windows.Forms.MouseEventHandler(this.ChangeShopPic);
             // 
             // PB_Shop_type2_4
             // 
@@ -1084,6 +1102,7 @@
             this.PB_Shop_type2_4.Size = new System.Drawing.Size(168, 195);
             this.PB_Shop_type2_4.TabIndex = 55;
             this.PB_Shop_type2_4.TabStop = false;
+            this.PB_Shop_type2_4.MouseUp += new System.Windows.Forms.MouseEventHandler(this.ChangeShopPic);
             // 
             // PB_Shop_type2_8
             // 
@@ -1093,6 +1112,7 @@
             this.PB_Shop_type2_8.Size = new System.Drawing.Size(168, 195);
             this.PB_Shop_type2_8.TabIndex = 47;
             this.PB_Shop_type2_8.TabStop = false;
+            this.PB_Shop_type2_8.MouseUp += new System.Windows.Forms.MouseEventHandler(this.ChangeShopPic);
             // 
             // PB_Shop_type2_3
             // 
@@ -1102,6 +1122,7 @@
             this.PB_Shop_type2_3.Size = new System.Drawing.Size(168, 195);
             this.PB_Shop_type2_3.TabIndex = 45;
             this.PB_Shop_type2_3.TabStop = false;
+            this.PB_Shop_type2_3.MouseUp += new System.Windows.Forms.MouseEventHandler(this.ChangeShopPic);
             // 
             // PB_Shop_type2_7
             // 
@@ -1111,6 +1132,7 @@
             this.PB_Shop_type2_7.Size = new System.Drawing.Size(168, 195);
             this.PB_Shop_type2_7.TabIndex = 49;
             this.PB_Shop_type2_7.TabStop = false;
+            this.PB_Shop_type2_7.MouseUp += new System.Windows.Forms.MouseEventHandler(this.ChangeShopPic);
             // 
             // PB_Shop_type2_2
             // 
@@ -1120,6 +1142,7 @@
             this.PB_Shop_type2_2.Size = new System.Drawing.Size(168, 195);
             this.PB_Shop_type2_2.TabIndex = 48;
             this.PB_Shop_type2_2.TabStop = false;
+            this.PB_Shop_type2_2.MouseUp += new System.Windows.Forms.MouseEventHandler(this.ChangeShopPic);
             // 
             // PB_Shop_type2_1
             // 
@@ -1129,6 +1152,7 @@
             this.PB_Shop_type2_1.Size = new System.Drawing.Size(168, 195);
             this.PB_Shop_type2_1.TabIndex = 50;
             this.PB_Shop_type2_1.TabStop = false;
+            this.PB_Shop_type2_1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.ChangeShopPic);
             // 
             // Label_Shop_Type2
             // 
@@ -1150,6 +1174,7 @@
             this.PB_Shop_type1_12.Size = new System.Drawing.Size(168, 195);
             this.PB_Shop_type1_12.TabIndex = 39;
             this.PB_Shop_type1_12.TabStop = false;
+            this.PB_Shop_type1_12.MouseUp += new System.Windows.Forms.MouseEventHandler(this.ChangeShopPic);
             // 
             // PB_Shop_type1_3
             // 
@@ -1159,6 +1184,7 @@
             this.PB_Shop_type1_3.Size = new System.Drawing.Size(168, 195);
             this.PB_Shop_type1_3.TabIndex = 32;
             this.PB_Shop_type1_3.TabStop = false;
+            this.PB_Shop_type1_3.MouseUp += new System.Windows.Forms.MouseEventHandler(this.ChangeShopPic);
             // 
             // PB_Shop_type1_6
             // 
@@ -1168,6 +1194,7 @@
             this.PB_Shop_type1_6.Size = new System.Drawing.Size(168, 195);
             this.PB_Shop_type1_6.TabIndex = 38;
             this.PB_Shop_type1_6.TabStop = false;
+            this.PB_Shop_type1_6.MouseUp += new System.Windows.Forms.MouseEventHandler(this.ChangeShopPic);
             // 
             // Label_Shop_Type1
             // 
@@ -1189,6 +1216,7 @@
             this.PB_Shop_type1_11.Size = new System.Drawing.Size(168, 195);
             this.PB_Shop_type1_11.TabIndex = 40;
             this.PB_Shop_type1_11.TabStop = false;
+            this.PB_Shop_type1_11.MouseUp += new System.Windows.Forms.MouseEventHandler(this.ChangeShopPic);
             // 
             // PB_Shop_type1_1
             // 
@@ -1198,6 +1226,7 @@
             this.PB_Shop_type1_1.Size = new System.Drawing.Size(168, 195);
             this.PB_Shop_type1_1.TabIndex = 37;
             this.PB_Shop_type1_1.TabStop = false;
+            this.PB_Shop_type1_1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.ChangeShopPic);
             // 
             // PB_Shop_type1_5
             // 
@@ -1207,6 +1236,7 @@
             this.PB_Shop_type1_5.Size = new System.Drawing.Size(168, 195);
             this.PB_Shop_type1_5.TabIndex = 41;
             this.PB_Shop_type1_5.TabStop = false;
+            this.PB_Shop_type1_5.MouseUp += new System.Windows.Forms.MouseEventHandler(this.ChangeShopPic);
             // 
             // PB_Shop_type1_2
             // 
@@ -1216,6 +1246,7 @@
             this.PB_Shop_type1_2.Size = new System.Drawing.Size(168, 195);
             this.PB_Shop_type1_2.TabIndex = 35;
             this.PB_Shop_type1_2.TabStop = false;
+            this.PB_Shop_type1_2.MouseUp += new System.Windows.Forms.MouseEventHandler(this.ChangeShopPic);
             // 
             // PB_Shop_type1_10
             // 
@@ -1225,6 +1256,7 @@
             this.PB_Shop_type1_10.Size = new System.Drawing.Size(168, 195);
             this.PB_Shop_type1_10.TabIndex = 43;
             this.PB_Shop_type1_10.TabStop = false;
+            this.PB_Shop_type1_10.MouseUp += new System.Windows.Forms.MouseEventHandler(this.ChangeShopPic);
             // 
             // PB_Shop_type1_7
             // 
@@ -1234,6 +1266,7 @@
             this.PB_Shop_type1_7.Size = new System.Drawing.Size(168, 195);
             this.PB_Shop_type1_7.TabIndex = 36;
             this.PB_Shop_type1_7.TabStop = false;
+            this.PB_Shop_type1_7.MouseUp += new System.Windows.Forms.MouseEventHandler(this.ChangeShopPic);
             // 
             // PB_Shop_type1_9
             // 
@@ -1243,6 +1276,7 @@
             this.PB_Shop_type1_9.Size = new System.Drawing.Size(168, 195);
             this.PB_Shop_type1_9.TabIndex = 33;
             this.PB_Shop_type1_9.TabStop = false;
+            this.PB_Shop_type1_9.MouseUp += new System.Windows.Forms.MouseEventHandler(this.ChangeShopPic);
             // 
             // PB_Shop_type1_8
             // 
@@ -1252,6 +1286,7 @@
             this.PB_Shop_type1_8.Size = new System.Drawing.Size(168, 195);
             this.PB_Shop_type1_8.TabIndex = 34;
             this.PB_Shop_type1_8.TabStop = false;
+            this.PB_Shop_type1_8.MouseUp += new System.Windows.Forms.MouseEventHandler(this.ChangeShopPic);
             // 
             // PB_Shop_type1_4
             // 
@@ -1261,6 +1296,7 @@
             this.PB_Shop_type1_4.Size = new System.Drawing.Size(168, 195);
             this.PB_Shop_type1_4.TabIndex = 42;
             this.PB_Shop_type1_4.TabStop = false;
+            this.PB_Shop_type1_4.MouseUp += new System.Windows.Forms.MouseEventHandler(this.ChangeShopPic);
             // 
             // Panel_MyInfo
             // 
@@ -1751,8 +1787,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(1135, 742);
-            this.Controls.Add(this.Panel_Coupons);
             this.Controls.Add(this.Panel_Shop);
+            this.Controls.Add(this.Panel_Coupons);
             this.Controls.Add(this.Panel_Home);
             this.Controls.Add(this.Panel_ShopInfo);
             this.Controls.Add(this.Panel_MyInfo);
