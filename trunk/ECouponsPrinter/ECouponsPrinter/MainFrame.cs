@@ -39,7 +39,10 @@ namespace ECouponsPrinter
             this.Panel_ShopInfo.GetType().GetProperty("DoubleBuffered", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic).SetValue(Panel_ShopInfo, true, null);
             this.Panel_MyInfo.GetType().GetProperty("DoubleBuffered", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic).SetValue(Panel_MyInfo, true, null);
             this.Panel_Home.GetType().GetProperty("DoubleBuffered", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic).SetValue(Panel_Home, true, null);
-
+            //设置定时刷新时钟
+            this.Timer_DownloadInfo.Stop();
+            this.Timer_DownloadInfo.Interval = GlobalVariables.IntRefreshSec * 1000;
+            this.Timer_DownloadInfo.Start();
         }
 
         #region 主要
@@ -552,10 +555,6 @@ namespace ECouponsPrinter
             this.Timer_Countdown.Stop();
             CountDownNumber = 5;
             this.Timer_Countdown.Start();
-
-            this.Timer_DownloadInfo.Stop();
-            this.Timer_DownloadInfo.Interval = GlobalVariables.IntRefreshSec * 1000;
-            this.Timer_DownloadInfo.Start();
         }
 
         #endregion
@@ -718,6 +717,33 @@ namespace ECouponsPrinter
                     LP_coupon.Add(pi);
                 }
                 reader.Close();
+                //加载参数
+                strSql = "select * from t_bz_terminal_param";
+                reader = cmd.ExecuteReader(strSql);
+                while (reader.Read())
+                {
+                    string strParamName = reader.GetString(1);
+                    if (strParamName.Equals("strExitPwd"))
+                        GlobalVariables.StrExitPwd = reader.GetString(2);
+                    else if (strParamName.Equals("intMemberSec"))
+                        GlobalVariables.UserWaitTime = Int16.Parse(reader.GetString(2));
+                    else if (strParamName.Equals("intRefreshSec"))
+                        GlobalVariables.IntRefreshSec = Int16.Parse(reader.GetString(2));
+                    else if (strParamName.Equals("strPhone"))
+                        GlobalVariables.StrPhone = reader.GetString(2);
+                    else if (strParamName.Equals("intAdSec"))
+                        GlobalVariables.WindowWaitTime = Int16.Parse(reader.GetString(2));
+                    else if (strParamName.Equals("intAdImg"))
+                        GlobalVariables.IntAdImg = Int16.Parse(reader.GetString(2));
+                    else if (strParamName.Equals("intHistory"))
+                        GlobalVariables.IntHistory = Int16.Parse(reader.GetString(2));
+                    else if (strParamName.Equals("intCouponPrint"))
+                        GlobalVariables.IntCouponPrint = Int16.Parse(reader.GetString(2));
+                    else if (strParamName.Equals("strTerminalNo"))
+                        GlobalVariables.StrTerminalNo = reader.GetString(2);
+                    else if (strParamName.Equals("strServerUrl"))
+                        GlobalVariables.StrServerUrl = reader.GetString(2);
+                }
                 cmd.Close();
             }
             catch (Exception e)
@@ -1446,6 +1472,8 @@ namespace ECouponsPrinter
                 //下载信息
                 DownloadInfo di = new DownloadInfo();
                 di.download();
+                //同步数据
+                this.InitData();
                 MessageBox.Show("下载信息成功");
             }
             catch (Exception ep)

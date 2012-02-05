@@ -30,35 +30,6 @@ namespace ECouponsPrinter
             //AppDomain.CurrentDomain.UnhandledException +=
             //    new UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);
 
-            //加载参数
-            string strSql = "select * from t_bz_terminal_param";
-            AccessCmd cmd = new AccessCmd();
-            OleDbDataReader reader = cmd.ExecuteReader(strSql);
-            while (reader.Read())
-            {
-                string strParamName = reader.GetString(1);
-                if (strParamName.Equals("strExitPwd"))
-                    GlobalVariables.StrExitPwd = reader.GetString(2);
-                else if (strParamName.Equals("intMemberSec"))
-                    GlobalVariables.UserWaitTime = Int16.Parse(reader.GetString(2));
-                else if (strParamName.Equals("intRefreshSec"))
-                    GlobalVariables.IntRefreshSec = Int16.Parse(reader.GetString(2));
-                else if (strParamName.Equals("strPhone"))
-                    GlobalVariables.StrPhone = reader.GetString(2);
-                else if (strParamName.Equals("intAdSec"))
-                    GlobalVariables.WindowWaitTime = Int16.Parse(reader.GetString(2));
-                else if (strParamName.Equals("intAdImg"))
-                    GlobalVariables.IntAdImg = Int16.Parse(reader.GetString(2));
-                else if (strParamName.Equals("intHistory"))
-                    GlobalVariables.IntHistory = Int16.Parse(reader.GetString(2));
-                else if (strParamName.Equals("intCouponPrint"))
-                    GlobalVariables.IntCouponPrint = Int16.Parse(reader.GetString(2));
-                else if (strParamName.Equals("strTerminalNo"))
-                    GlobalVariables.StrTerminalNo = reader.GetString(2);
-                else if (strParamName.Equals("strServerUrl"))
-                    GlobalVariables.StrServerUrl = reader.GetString(2);
-            }
-            cmd.Close();
             //创建日志文件
             if (!File.Exists(System.Windows.Forms.Application.StartupPath + "\\error.log"))
             {
