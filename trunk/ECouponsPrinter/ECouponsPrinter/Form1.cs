@@ -19,7 +19,6 @@ namespace ECouponsPrinter
         private void button1_Click(object sender, EventArgs e)
         {
             DownloadInfo di = new DownloadInfo();
-            di.form1 = this;
             di.download();
         }
 
@@ -85,7 +84,6 @@ namespace ECouponsPrinter
         private void button7_Click(object sender, EventArgs e)
         {
             DownloadInfo di = new DownloadInfo();
-            di.form1 = this;
             di.SynParam();
         }
     }

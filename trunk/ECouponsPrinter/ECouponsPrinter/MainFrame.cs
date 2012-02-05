@@ -552,6 +552,10 @@ namespace ECouponsPrinter
             this.Timer_Countdown.Stop();
             CountDownNumber = 5;
             this.Timer_Countdown.Start();
+
+            this.Timer_DownloadInfo.Stop();
+            this.Timer_DownloadInfo.Interval = GlobalVariables.IntRefreshSec * 1000;
+            this.Timer_DownloadInfo.Start();
         }
 
         #endregion
@@ -1430,6 +1434,25 @@ namespace ECouponsPrinter
         {
             Form3 f3 = new Form3();
             f3.Show();
+        }
+
+
+        private void Timer_DownloadInfo_Tick(object sender, EventArgs e)
+        {
+            this.Timer_DownloadInfo.Stop();
+            MessageBox.Show("begin download info");
+            try
+            {
+                //下载信息
+                DownloadInfo di = new DownloadInfo();
+                di.download();
+                MessageBox.Show("下载信息成功");
+            }
+            catch (Exception ep)
+            {
+                ErrorLog.log(ep);
+            }
+            this.Timer_DownloadInfo.Start();
         }
 
     }
