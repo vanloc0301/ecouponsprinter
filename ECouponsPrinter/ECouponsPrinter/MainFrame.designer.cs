@@ -162,6 +162,7 @@
             this.PB_Coupon_2 = new System.Windows.Forms.PictureBox();
             this.PB_Coupon_5 = new System.Windows.Forms.PictureBox();
             this.PB_Coupon_1 = new System.Windows.Forms.PictureBox();
+            this.button1 = new System.Windows.Forms.Button();
             this.Panel_Top.SuspendLayout();
             this.Panel_Bottom.SuspendLayout();
             this.Panel_Home.SuspendLayout();
@@ -317,6 +318,7 @@
             // Panel_Bottom
             // 
             this.Panel_Bottom.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("Panel_Bottom.BackgroundImage")));
+            this.Panel_Bottom.Controls.Add(this.button1);
             this.Panel_Bottom.Controls.Add(this.Button_LastCouponsPage);
             this.Panel_Bottom.Controls.Add(this.Button_NextCouponsPage);
             this.Panel_Bottom.Controls.Add(this.Button_MyInfoPage);
@@ -1781,6 +1783,16 @@
             this.PB_Coupon_1.TabStop = false;
             this.PB_Coupon_1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.ChangeCouponPicture);
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(764, 86);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(299, 39);
+            this.button1.TabIndex = 20;
+            this.button1.Text = "登录";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // MainFrame
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -2036,6 +2048,7 @@
         private System.Windows.Forms.Button Btn_Coupon_Type4;
         private System.Windows.Forms.Button Btn_Coupon_Type3;
         private System.Windows.Forms.Button Btn_Coupon_Type2;
+        private System.Windows.Forms.Button button1;
 
     }
 }

@@ -1426,5 +1426,11 @@ namespace ECouponsPrinter
 
         #endregion
 
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Form3 f3 = new Form3();
+            f3.Show();
+        }
+
     }
 }

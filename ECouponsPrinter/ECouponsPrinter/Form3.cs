@@ -14,9 +14,18 @@ namespace ECouponsPrinter
         public Form3()
         {
             InitializeComponent();
-
-            this.FormBorderStyle = FormBorderStyle.None;
-            this.WindowState = FormWindowState.Maximized;
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            String id = listBox1.SelectedItem.ToString();
+
+
+
+            GlobalVariables.isUserLogin = true;
+
+        }
+
+
     }
 }
