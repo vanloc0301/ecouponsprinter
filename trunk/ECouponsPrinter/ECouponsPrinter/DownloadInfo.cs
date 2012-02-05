@@ -13,7 +13,6 @@ namespace ECouponsPrinter
     class DownloadInfo
     {
         private HttpRequest request = new HttpRequest();
-        public Form1 form1;
 
         public DownloadInfo() { }
 
@@ -24,129 +23,105 @@ namespace ECouponsPrinter
             request.OpenRequest(GlobalVariables.StrServerUrl + "/servlet/ShopDownload?strTerminalNo=" + GlobalVariables.StrTerminalNo, "");
             XmlDocument doc = new XmlDocument();
             string strXml = request.HtmlDocument;
-            form1.setText(strXml);
             if (strXml.IndexOf("<shops>") > 0)
             {
-                try
+                doc.LoadXml(strXml);
+                XmlNodeList xnlShops = doc.GetElementsByTagName("shops");
+                for (int i = 0; i < xnlShops.Count; i++)
                 {
-                    doc.LoadXml(strXml);
-                    XmlNodeList xnlShops = doc.GetElementsByTagName("shops");
-                    for (int i = 0; i < xnlShops.Count; i++)
+                    XmlElement xeShops = (XmlElement)xnlShops.Item(i);
+                    String strOpe = xeShops.FirstChild.InnerText;
+                    if (strOpe.Equals("add"))
                     {
-                        XmlElement xeShops = (XmlElement)xnlShops.Item(i);
-                        String strOpe = xeShops.FirstChild.InnerText;
-                        if (strOpe.Equals("add"))
+                        foreach (XmlNode xnShop in xeShops.GetElementsByTagName("shop"))
                         {
-                            foreach (XmlNode xnShop in xeShops.GetElementsByTagName("shop"))
-                            {
-                                addShop(xnShop);
-                            }
-                        }
-                        else if (strOpe.Equals("update"))
-                        {
-                            foreach (XmlNode xnShop in xeShops.GetElementsByTagName("shop"))
-                            {
-                                updateShop(xnShop);
-                            }
-                        }
-                        else if (strOpe.Equals("delete"))
-                        {
-                            foreach (XmlNode xnShop in xeShops.GetElementsByTagName("shop"))
-                            {
-                                deleteShop(xnShop);
-                            }
+                            addShop(xnShop);
                         }
                     }
-                }
-                catch (Exception e)
-                {
-                    MessageBox.Show(e.StackTrace);
+                    else if (strOpe.Equals("update"))
+                    {
+                        foreach (XmlNode xnShop in xeShops.GetElementsByTagName("shop"))
+                        {
+                            updateShop(xnShop);
+                        }
+                    }
+                    else if (strOpe.Equals("delete"))
+                    {
+                        foreach (XmlNode xnShop in xeShops.GetElementsByTagName("shop"))
+                        {
+                            deleteShop(xnShop);
+                        }
+                    }
                 }
             }
             //下载优惠券信息
             MessageBox.Show("download coupon information...");
             request.OpenRequest(GlobalVariables.StrServerUrl + "/servlet/CouponDownload?strTerminalNo=" + GlobalVariables.StrTerminalNo, "");
             strXml = request.HtmlDocument;
-            form1.setText(strXml);
             if (strXml.IndexOf("<coupons>") > 0)
             {
-                try
+                doc.LoadXml(strXml);
+                XmlNodeList xnlCoupons = doc.GetElementsByTagName("coupons");
+                for (int i = 0; i < xnlCoupons.Count; i++)
                 {
-                    doc.LoadXml(strXml);
-                    XmlNodeList xnlCoupons = doc.GetElementsByTagName("coupons");
-                    for (int i = 0; i < xnlCoupons.Count; i++)
+                    XmlElement xeCoupons = (XmlElement)xnlCoupons.Item(i);
+                    String strOpe = xeCoupons.FirstChild.InnerText;
+                    if (strOpe.Equals("add"))
                     {
-                        XmlElement xeCoupons = (XmlElement)xnlCoupons.Item(i);
-                        String strOpe = xeCoupons.FirstChild.InnerText;
-                        if (strOpe.Equals("add"))
+                        foreach (XmlNode xnCoupon in xeCoupons.GetElementsByTagName("coupon"))
                         {
-                            foreach (XmlNode xnCoupon in xeCoupons.GetElementsByTagName("coupon"))
-                            {
-                                addCoupon(xnCoupon);
-                            }
-                        }
-                        else if (strOpe.Equals("update"))
-                        {
-                            foreach (XmlNode xnCoupon in xeCoupons.GetElementsByTagName("coupon"))
-                            {
-                                updateCoupon(xnCoupon);
-                            }
-                        }
-                        else if (strOpe.Equals("delete"))
-                        {
-                            foreach (XmlNode xnCoupon in xeCoupons.GetElementsByTagName("coupon"))
-                            {
-                                deleteCoupon(xnCoupon);
-                            }
+                            addCoupon(xnCoupon);
                         }
                     }
-                }
-                catch (Exception e)
-                {
-                    MessageBox.Show(e.StackTrace);
+                    else if (strOpe.Equals("update"))
+                    {
+                        foreach (XmlNode xnCoupon in xeCoupons.GetElementsByTagName("coupon"))
+                        {
+                            updateCoupon(xnCoupon);
+                        }
+                    }
+                    else if (strOpe.Equals("delete"))
+                    {
+                        foreach (XmlNode xnCoupon in xeCoupons.GetElementsByTagName("coupon"))
+                        {
+                            deleteCoupon(xnCoupon);
+                        }
+                    }
                 }
             }
             //下载广告信息
             MessageBox.Show("download ad information...");
             request.OpenRequest(GlobalVariables.StrServerUrl + "/servlet/AdDownload?strTerminalNo=" + GlobalVariables.StrTerminalNo, "");
             strXml = request.HtmlDocument;
-            form1.setText(strXml);
             if (strXml.IndexOf("<ads>") > 0)
             {
-                try
+                doc.LoadXml(strXml);
+                XmlNodeList xnls = doc.GetElementsByTagName("ads");
+                for (int i = 0; i < xnls.Count; i++)
                 {
-                    doc.LoadXml(strXml);
-                    XmlNodeList xnls = doc.GetElementsByTagName("ads");
-                    for (int i = 0; i < xnls.Count; i++)
+                    XmlElement xes = (XmlElement)xnls.Item(i);
+                    String strOpe = xes.FirstChild.InnerText;
+                    if (strOpe.Equals("add"))
                     {
-                        XmlElement xes = (XmlElement)xnls.Item(i);
-                        String strOpe = xes.FirstChild.InnerText;
-                        if (strOpe.Equals("add"))
+                        foreach (XmlNode xn in xes.GetElementsByTagName("ad"))
                         {
-                            foreach (XmlNode xn in xes.GetElementsByTagName("ad"))
-                            {
-                                addAd(xn);
-                            }
-                        }
-                        else if (strOpe.Equals("update"))
-                        {
-                            foreach (XmlNode xn in xes.GetElementsByTagName("ad"))
-                            {
-                                updateAd(xn);
-                            }
-                        }
-                        else if (strOpe.Equals("delete"))
-                        {
-                            foreach (XmlNode xn in xes.GetElementsByTagName("ad"))
-                            {
-                                deleteAd(xn);
-                            }
+                            addAd(xn);
                         }
                     }
-                }
-                catch (Exception e)
-                {
-                    MessageBox.Show(e.StackTrace);
+                    else if (strOpe.Equals("update"))
+                    {
+                        foreach (XmlNode xn in xes.GetElementsByTagName("ad"))
+                        {
+                            updateAd(xn);
+                        }
+                    }
+                    else if (strOpe.Equals("delete"))
+                    {
+                        foreach (XmlNode xn in xes.GetElementsByTagName("ad"))
+                        {
+                            deleteAd(xn);
+                        }
+                    }
                 }
             }
         }
@@ -182,7 +157,7 @@ namespace ECouponsPrinter
             }
             //写入数据库
             strSql = "delete from t_bz_advertisement where strId='" + strId + "'";
-            cmd.ExecuteNonQuery(strSql);
+            cmd.ExecuteNonQuery(strSql);                
             cmd.Close();
         }
 
@@ -510,7 +485,6 @@ namespace ECouponsPrinter
             MessageBox.Show("download param information...");
             request.OpenRequest(GlobalVariables.StrServerUrl + "/servlet/TerminalParam?strTerminalNo=" + GlobalVariables.StrTerminalNo, "");
             string strXml = request.HtmlDocument;
-            form1.setText(strXml);
             if (strXml.IndexOf("<params>") > 0)
             {
                 XmlDocument doc = new XmlDocument();

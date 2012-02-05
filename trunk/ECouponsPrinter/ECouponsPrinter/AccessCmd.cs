@@ -22,15 +22,34 @@ namespace ECouponsPrinter
 
         public OleDbDataReader ExecuteReader(String strSql)
         {
-            objCmd = new OleDbCommand(strSql, objConn);
-            objReader = objCmd.ExecuteReader();
-            return objReader;
+            try
+            {
+                objCmd = new OleDbCommand(strSql, objConn);
+                objReader = objCmd.ExecuteReader();
+            }
+            catch (Exception ep)
+            {
+                ErrorLog.log(ep);
+                this.Close();
+            }
+            finally
+            {
+                return objReader;
+            }
         }
 
         public void ExecuteNonQuery(String strSql)
         {
-            objCmd = new OleDbCommand(strSql, objConn);
-            objCmd.ExecuteNonQuery();
+            try
+            {
+                objCmd = new OleDbCommand(strSql, objConn);
+                objCmd.ExecuteNonQuery();
+            }
+            catch (Exception ep)
+            {
+                ErrorLog.log(ep);
+                this.Close();
+            }
         }
 
         public void Close()
