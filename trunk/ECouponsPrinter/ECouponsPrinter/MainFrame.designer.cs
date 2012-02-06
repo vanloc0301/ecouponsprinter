@@ -121,23 +121,23 @@
             this.PB_Shop_type1_8 = new System.Windows.Forms.PictureBox();
             this.PB_Shop_type1_4 = new System.Windows.Forms.PictureBox();
             this.Panel_MyInfo = new System.Windows.Forms.Panel();
-            this.pictureBox37 = new System.Windows.Forms.PictureBox();
-            this.pictureBox38 = new System.Windows.Forms.PictureBox();
-            this.pictureBox39 = new System.Windows.Forms.PictureBox();
-            this.pictureBox40 = new System.Windows.Forms.PictureBox();
-            this.pictureBox41 = new System.Windows.Forms.PictureBox();
-            this.pictureBox42 = new System.Windows.Forms.PictureBox();
-            this.pictureBox43 = new System.Windows.Forms.PictureBox();
+            this.PB_MyInfo_His = new System.Windows.Forms.PictureBox();
+            this.PB_MyInfo_His6 = new System.Windows.Forms.PictureBox();
+            this.PB_MyInfo_His3 = new System.Windows.Forms.PictureBox();
+            this.PB_MyInfo_His5 = new System.Windows.Forms.PictureBox();
+            this.PB_MyInfo_His4 = new System.Windows.Forms.PictureBox();
+            this.PB_MyInfo_His2 = new System.Windows.Forms.PictureBox();
+            this.PB_MyInfo_His1 = new System.Windows.Forms.PictureBox();
             this.Button_NextConsumption = new System.Windows.Forms.Button();
             this.Button_LastConsumption = new System.Windows.Forms.Button();
             this.Label_LastConsumption = new System.Windows.Forms.Label();
-            this.pictureBox44 = new System.Windows.Forms.PictureBox();
-            this.pictureBox45 = new System.Windows.Forms.PictureBox();
-            this.pictureBox46 = new System.Windows.Forms.PictureBox();
-            this.pictureBox47 = new System.Windows.Forms.PictureBox();
-            this.pictureBox48 = new System.Windows.Forms.PictureBox();
-            this.pictureBox49 = new System.Windows.Forms.PictureBox();
-            this.pictureBox50 = new System.Windows.Forms.PictureBox();
+            this.PB_MyInfo_Fav = new System.Windows.Forms.PictureBox();
+            this.PB_MyInfo_Fav6 = new System.Windows.Forms.PictureBox();
+            this.PB_MyInfo_Fav3 = new System.Windows.Forms.PictureBox();
+            this.PB_MyInfo_Fav5 = new System.Windows.Forms.PictureBox();
+            this.PB_MyInfo_Fav4 = new System.Windows.Forms.PictureBox();
+            this.PB_MyInfo_Fav2 = new System.Windows.Forms.PictureBox();
+            this.PB_MyInfo_Fav1 = new System.Windows.Forms.PictureBox();
             this.Button_NextDocument = new System.Windows.Forms.Button();
             this.Button_LastDocument = new System.Windows.Forms.Button();
             this.Label_MyDocuments = new System.Windows.Forms.Label();
@@ -234,20 +234,20 @@
             ((System.ComponentModel.ISupportInitialize)(this.PB_Shop_type1_8)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PB_Shop_type1_4)).BeginInit();
             this.Panel_MyInfo.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox37)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox38)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox39)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox40)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox41)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox42)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox43)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox44)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox45)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox46)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox47)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox48)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox49)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox50)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PB_MyInfo_His)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PB_MyInfo_His6)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PB_MyInfo_His3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PB_MyInfo_His5)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PB_MyInfo_His4)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PB_MyInfo_His2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PB_MyInfo_His1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PB_MyInfo_Fav)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PB_MyInfo_Fav6)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PB_MyInfo_Fav3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PB_MyInfo_Fav5)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PB_MyInfo_Fav4)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PB_MyInfo_Fav2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PB_MyInfo_Fav1)).BeginInit();
             this.Panel_Coupons.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PB_Coupon_Right)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PB_Coupon_Left)).BeginInit();
@@ -1316,23 +1316,23 @@
             this.Panel_MyInfo.BackColor = System.Drawing.Color.White;
             this.Panel_MyInfo.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("Panel_MyInfo.BackgroundImage")));
             this.Panel_MyInfo.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.Panel_MyInfo.Controls.Add(this.pictureBox37);
-            this.Panel_MyInfo.Controls.Add(this.pictureBox38);
-            this.Panel_MyInfo.Controls.Add(this.pictureBox39);
-            this.Panel_MyInfo.Controls.Add(this.pictureBox40);
-            this.Panel_MyInfo.Controls.Add(this.pictureBox41);
-            this.Panel_MyInfo.Controls.Add(this.pictureBox42);
-            this.Panel_MyInfo.Controls.Add(this.pictureBox43);
+            this.Panel_MyInfo.Controls.Add(this.PB_MyInfo_His);
+            this.Panel_MyInfo.Controls.Add(this.PB_MyInfo_His6);
+            this.Panel_MyInfo.Controls.Add(this.PB_MyInfo_His3);
+            this.Panel_MyInfo.Controls.Add(this.PB_MyInfo_His5);
+            this.Panel_MyInfo.Controls.Add(this.PB_MyInfo_His4);
+            this.Panel_MyInfo.Controls.Add(this.PB_MyInfo_His2);
+            this.Panel_MyInfo.Controls.Add(this.PB_MyInfo_His1);
             this.Panel_MyInfo.Controls.Add(this.Button_NextConsumption);
             this.Panel_MyInfo.Controls.Add(this.Button_LastConsumption);
             this.Panel_MyInfo.Controls.Add(this.Label_LastConsumption);
-            this.Panel_MyInfo.Controls.Add(this.pictureBox44);
-            this.Panel_MyInfo.Controls.Add(this.pictureBox45);
-            this.Panel_MyInfo.Controls.Add(this.pictureBox46);
-            this.Panel_MyInfo.Controls.Add(this.pictureBox47);
-            this.Panel_MyInfo.Controls.Add(this.pictureBox48);
-            this.Panel_MyInfo.Controls.Add(this.pictureBox49);
-            this.Panel_MyInfo.Controls.Add(this.pictureBox50);
+            this.Panel_MyInfo.Controls.Add(this.PB_MyInfo_Fav);
+            this.Panel_MyInfo.Controls.Add(this.PB_MyInfo_Fav6);
+            this.Panel_MyInfo.Controls.Add(this.PB_MyInfo_Fav3);
+            this.Panel_MyInfo.Controls.Add(this.PB_MyInfo_Fav5);
+            this.Panel_MyInfo.Controls.Add(this.PB_MyInfo_Fav4);
+            this.Panel_MyInfo.Controls.Add(this.PB_MyInfo_Fav2);
+            this.Panel_MyInfo.Controls.Add(this.PB_MyInfo_Fav1);
             this.Panel_MyInfo.Controls.Add(this.Button_NextDocument);
             this.Panel_MyInfo.Controls.Add(this.Button_LastDocument);
             this.Panel_MyInfo.Controls.Add(this.Label_MyDocuments);
@@ -1343,61 +1343,67 @@
             this.Panel_MyInfo.TabIndex = 70;
             this.Panel_MyInfo.Visible = false;
             // 
-            // pictureBox37
+            // PB_MyInfo_His
             // 
-            this.pictureBox37.Location = new System.Drawing.Point(23, 1130);
-            this.pictureBox37.Name = "pictureBox37";
-            this.pictureBox37.Size = new System.Drawing.Size(1033, 519);
-            this.pictureBox37.TabIndex = 39;
-            this.pictureBox37.TabStop = false;
+            this.PB_MyInfo_His.Location = new System.Drawing.Point(23, 1130);
+            this.PB_MyInfo_His.Name = "PB_MyInfo_His";
+            this.PB_MyInfo_His.Size = new System.Drawing.Size(1033, 515);
+            this.PB_MyInfo_His.TabIndex = 39;
+            this.PB_MyInfo_His.TabStop = false;
             // 
-            // pictureBox38
+            // PB_MyInfo_His6
             // 
-            this.pictureBox38.Location = new System.Drawing.Point(891, 945);
-            this.pictureBox38.Name = "pictureBox38";
-            this.pictureBox38.Size = new System.Drawing.Size(165, 175);
-            this.pictureBox38.TabIndex = 36;
-            this.pictureBox38.TabStop = false;
+            this.PB_MyInfo_His6.Location = new System.Drawing.Point(891, 945);
+            this.PB_MyInfo_His6.Name = "PB_MyInfo_His6";
+            this.PB_MyInfo_His6.Size = new System.Drawing.Size(165, 175);
+            this.PB_MyInfo_His6.TabIndex = 36;
+            this.PB_MyInfo_His6.TabStop = false;
+            this.PB_MyInfo_His6.MouseUp += new System.Windows.Forms.MouseEventHandler(this.ChangeMyInfoPic);
             // 
-            // pictureBox39
+            // PB_MyInfo_His3
             // 
-            this.pictureBox39.Location = new System.Drawing.Point(370, 945);
-            this.pictureBox39.Name = "pictureBox39";
-            this.pictureBox39.Size = new System.Drawing.Size(165, 175);
-            this.pictureBox39.TabIndex = 35;
-            this.pictureBox39.TabStop = false;
+            this.PB_MyInfo_His3.Location = new System.Drawing.Point(370, 945);
+            this.PB_MyInfo_His3.Name = "PB_MyInfo_His3";
+            this.PB_MyInfo_His3.Size = new System.Drawing.Size(165, 175);
+            this.PB_MyInfo_His3.TabIndex = 35;
+            this.PB_MyInfo_His3.TabStop = false;
+            this.PB_MyInfo_His3.MouseUp += new System.Windows.Forms.MouseEventHandler(this.ChangeMyInfoPic);
             // 
-            // pictureBox40
+            // PB_MyInfo_His5
             // 
-            this.pictureBox40.Location = new System.Drawing.Point(717, 945);
-            this.pictureBox40.Name = "pictureBox40";
-            this.pictureBox40.Size = new System.Drawing.Size(165, 175);
-            this.pictureBox40.TabIndex = 38;
-            this.pictureBox40.TabStop = false;
+            this.PB_MyInfo_His5.Location = new System.Drawing.Point(717, 945);
+            this.PB_MyInfo_His5.Name = "PB_MyInfo_His5";
+            this.PB_MyInfo_His5.Size = new System.Drawing.Size(165, 175);
+            this.PB_MyInfo_His5.TabIndex = 38;
+            this.PB_MyInfo_His5.TabStop = false;
+            this.PB_MyInfo_His5.MouseUp += new System.Windows.Forms.MouseEventHandler(this.ChangeMyInfoPic);
             // 
-            // pictureBox41
+            // PB_MyInfo_His4
             // 
-            this.pictureBox41.Location = new System.Drawing.Point(544, 945);
-            this.pictureBox41.Name = "pictureBox41";
-            this.pictureBox41.Size = new System.Drawing.Size(165, 175);
-            this.pictureBox41.TabIndex = 37;
-            this.pictureBox41.TabStop = false;
+            this.PB_MyInfo_His4.Location = new System.Drawing.Point(544, 945);
+            this.PB_MyInfo_His4.Name = "PB_MyInfo_His4";
+            this.PB_MyInfo_His4.Size = new System.Drawing.Size(165, 175);
+            this.PB_MyInfo_His4.TabIndex = 37;
+            this.PB_MyInfo_His4.TabStop = false;
+            this.PB_MyInfo_His4.MouseUp += new System.Windows.Forms.MouseEventHandler(this.ChangeMyInfoPic);
             // 
-            // pictureBox42
+            // PB_MyInfo_His2
             // 
-            this.pictureBox42.Location = new System.Drawing.Point(196, 945);
-            this.pictureBox42.Name = "pictureBox42";
-            this.pictureBox42.Size = new System.Drawing.Size(165, 175);
-            this.pictureBox42.TabIndex = 33;
-            this.pictureBox42.TabStop = false;
+            this.PB_MyInfo_His2.Location = new System.Drawing.Point(196, 945);
+            this.PB_MyInfo_His2.Name = "PB_MyInfo_His2";
+            this.PB_MyInfo_His2.Size = new System.Drawing.Size(165, 175);
+            this.PB_MyInfo_His2.TabIndex = 33;
+            this.PB_MyInfo_His2.TabStop = false;
+            this.PB_MyInfo_His2.MouseUp += new System.Windows.Forms.MouseEventHandler(this.ChangeMyInfoPic);
             // 
-            // pictureBox43
+            // PB_MyInfo_His1
             // 
-            this.pictureBox43.Location = new System.Drawing.Point(23, 945);
-            this.pictureBox43.Name = "pictureBox43";
-            this.pictureBox43.Size = new System.Drawing.Size(165, 175);
-            this.pictureBox43.TabIndex = 34;
-            this.pictureBox43.TabStop = false;
+            this.PB_MyInfo_His1.Location = new System.Drawing.Point(23, 945);
+            this.PB_MyInfo_His1.Name = "PB_MyInfo_His1";
+            this.PB_MyInfo_His1.Size = new System.Drawing.Size(165, 175);
+            this.PB_MyInfo_His1.TabIndex = 34;
+            this.PB_MyInfo_His1.TabStop = false;
+            this.PB_MyInfo_His1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.ChangeMyInfoPic);
             // 
             // Button_NextConsumption
             // 
@@ -1410,8 +1416,8 @@
             this.Button_NextConsumption.Size = new System.Drawing.Size(145, 54);
             this.Button_NextConsumption.TabIndex = 31;
             this.Button_NextConsumption.UseVisualStyleBackColor = true;
-            this.Button_NextConsumption.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Button_NextDocument_MouseDown);
-            this.Button_NextConsumption.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Button_NextDocument_MouseUp);
+            this.Button_NextConsumption.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Button_Coupon_NextPage_MouseDown);
+            this.Button_NextConsumption.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Button_Coupon_NextPage_MouseUp);
             // 
             // Button_LastConsumption
             // 
@@ -1424,8 +1430,8 @@
             this.Button_LastConsumption.Size = new System.Drawing.Size(145, 54);
             this.Button_LastConsumption.TabIndex = 32;
             this.Button_LastConsumption.UseVisualStyleBackColor = true;
-            this.Button_LastConsumption.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Button_LastDocument_MouseDown);
-            this.Button_LastConsumption.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Button_LastDocument_MouseUp);
+            this.Button_LastConsumption.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Button_Coupon_LastPage_MouseDown);
+            this.Button_LastConsumption.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Button_Coupon_LastPage_MouseUp);
             // 
             // Label_LastConsumption
             // 
@@ -1437,61 +1443,68 @@
             this.Label_LastConsumption.TabIndex = 30;
             this.Label_LastConsumption.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // pictureBox44
+            // PB_MyInfo_Fav
             // 
-            this.pictureBox44.Location = new System.Drawing.Point(23, 301);
-            this.pictureBox44.Name = "pictureBox44";
-            this.pictureBox44.Size = new System.Drawing.Size(1033, 515);
-            this.pictureBox44.TabIndex = 29;
-            this.pictureBox44.TabStop = false;
+            this.PB_MyInfo_Fav.Location = new System.Drawing.Point(23, 301);
+            this.PB_MyInfo_Fav.Name = "PB_MyInfo_Fav";
+            this.PB_MyInfo_Fav.Size = new System.Drawing.Size(1033, 515);
+            this.PB_MyInfo_Fav.TabIndex = 29;
+            this.PB_MyInfo_Fav.TabStop = false;
+            this.PB_MyInfo_Fav.MouseUp += new System.Windows.Forms.MouseEventHandler(this.ChangeMyInfoPic);
             // 
-            // pictureBox45
+            // PB_MyInfo_Fav6
             // 
-            this.pictureBox45.Location = new System.Drawing.Point(891, 116);
-            this.pictureBox45.Name = "pictureBox45";
-            this.pictureBox45.Size = new System.Drawing.Size(165, 175);
-            this.pictureBox45.TabIndex = 26;
-            this.pictureBox45.TabStop = false;
+            this.PB_MyInfo_Fav6.Location = new System.Drawing.Point(891, 116);
+            this.PB_MyInfo_Fav6.Name = "PB_MyInfo_Fav6";
+            this.PB_MyInfo_Fav6.Size = new System.Drawing.Size(165, 175);
+            this.PB_MyInfo_Fav6.TabIndex = 26;
+            this.PB_MyInfo_Fav6.TabStop = false;
+            this.PB_MyInfo_Fav6.MouseUp += new System.Windows.Forms.MouseEventHandler(this.ChangeMyInfoPic);
             // 
-            // pictureBox46
+            // PB_MyInfo_Fav3
             // 
-            this.pictureBox46.Location = new System.Drawing.Point(370, 116);
-            this.pictureBox46.Name = "pictureBox46";
-            this.pictureBox46.Size = new System.Drawing.Size(165, 175);
-            this.pictureBox46.TabIndex = 25;
-            this.pictureBox46.TabStop = false;
+            this.PB_MyInfo_Fav3.Location = new System.Drawing.Point(370, 116);
+            this.PB_MyInfo_Fav3.Name = "PB_MyInfo_Fav3";
+            this.PB_MyInfo_Fav3.Size = new System.Drawing.Size(165, 175);
+            this.PB_MyInfo_Fav3.TabIndex = 25;
+            this.PB_MyInfo_Fav3.TabStop = false;
+            this.PB_MyInfo_Fav3.MouseUp += new System.Windows.Forms.MouseEventHandler(this.ChangeMyInfoPic);
             // 
-            // pictureBox47
+            // PB_MyInfo_Fav5
             // 
-            this.pictureBox47.Location = new System.Drawing.Point(717, 116);
-            this.pictureBox47.Name = "pictureBox47";
-            this.pictureBox47.Size = new System.Drawing.Size(165, 175);
-            this.pictureBox47.TabIndex = 28;
-            this.pictureBox47.TabStop = false;
+            this.PB_MyInfo_Fav5.Location = new System.Drawing.Point(717, 116);
+            this.PB_MyInfo_Fav5.Name = "PB_MyInfo_Fav5";
+            this.PB_MyInfo_Fav5.Size = new System.Drawing.Size(165, 175);
+            this.PB_MyInfo_Fav5.TabIndex = 28;
+            this.PB_MyInfo_Fav5.TabStop = false;
+            this.PB_MyInfo_Fav5.MouseUp += new System.Windows.Forms.MouseEventHandler(this.ChangeMyInfoPic);
             // 
-            // pictureBox48
+            // PB_MyInfo_Fav4
             // 
-            this.pictureBox48.Location = new System.Drawing.Point(544, 116);
-            this.pictureBox48.Name = "pictureBox48";
-            this.pictureBox48.Size = new System.Drawing.Size(165, 175);
-            this.pictureBox48.TabIndex = 27;
-            this.pictureBox48.TabStop = false;
+            this.PB_MyInfo_Fav4.Location = new System.Drawing.Point(544, 116);
+            this.PB_MyInfo_Fav4.Name = "PB_MyInfo_Fav4";
+            this.PB_MyInfo_Fav4.Size = new System.Drawing.Size(165, 175);
+            this.PB_MyInfo_Fav4.TabIndex = 27;
+            this.PB_MyInfo_Fav4.TabStop = false;
+            this.PB_MyInfo_Fav4.MouseUp += new System.Windows.Forms.MouseEventHandler(this.ChangeMyInfoPic);
             // 
-            // pictureBox49
+            // PB_MyInfo_Fav2
             // 
-            this.pictureBox49.Location = new System.Drawing.Point(196, 116);
-            this.pictureBox49.Name = "pictureBox49";
-            this.pictureBox49.Size = new System.Drawing.Size(165, 175);
-            this.pictureBox49.TabIndex = 23;
-            this.pictureBox49.TabStop = false;
+            this.PB_MyInfo_Fav2.Location = new System.Drawing.Point(196, 116);
+            this.PB_MyInfo_Fav2.Name = "PB_MyInfo_Fav2";
+            this.PB_MyInfo_Fav2.Size = new System.Drawing.Size(165, 175);
+            this.PB_MyInfo_Fav2.TabIndex = 23;
+            this.PB_MyInfo_Fav2.TabStop = false;
+            this.PB_MyInfo_Fav2.MouseUp += new System.Windows.Forms.MouseEventHandler(this.ChangeMyInfoPic);
             // 
-            // pictureBox50
+            // PB_MyInfo_Fav1
             // 
-            this.pictureBox50.Location = new System.Drawing.Point(23, 116);
-            this.pictureBox50.Name = "pictureBox50";
-            this.pictureBox50.Size = new System.Drawing.Size(165, 175);
-            this.pictureBox50.TabIndex = 24;
-            this.pictureBox50.TabStop = false;
+            this.PB_MyInfo_Fav1.Location = new System.Drawing.Point(23, 116);
+            this.PB_MyInfo_Fav1.Name = "PB_MyInfo_Fav1";
+            this.PB_MyInfo_Fav1.Size = new System.Drawing.Size(165, 175);
+            this.PB_MyInfo_Fav1.TabIndex = 24;
+            this.PB_MyInfo_Fav1.TabStop = false;
+            this.PB_MyInfo_Fav1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.ChangeMyInfoPic);
             // 
             // Button_NextDocument
             // 
@@ -1504,8 +1517,8 @@
             this.Button_NextDocument.Size = new System.Drawing.Size(145, 54);
             this.Button_NextDocument.TabIndex = 21;
             this.Button_NextDocument.UseVisualStyleBackColor = true;
-            this.Button_NextDocument.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Button_NextDocument_MouseDown);
-            this.Button_NextDocument.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Button_NextDocument_MouseUp);
+            this.Button_NextDocument.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Button_Coupon_NextPage_MouseDown);
+            this.Button_NextDocument.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Button_Coupon_NextPage_MouseUp);
             // 
             // Button_LastDocument
             // 
@@ -1518,8 +1531,8 @@
             this.Button_LastDocument.Size = new System.Drawing.Size(145, 54);
             this.Button_LastDocument.TabIndex = 22;
             this.Button_LastDocument.UseVisualStyleBackColor = true;
-            this.Button_LastDocument.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Button_LastDocument_MouseDown);
-            this.Button_LastDocument.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Button_LastDocument_MouseUp);
+            this.Button_LastDocument.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Button_Coupon_LastPage_MouseDown);
+            this.Button_LastDocument.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Button_Coupon_LastPage_MouseUp);
             // 
             // Label_MyDocuments
             // 
@@ -1794,27 +1807,25 @@
             this.PB_Coupon_1.TabStop = false;
             this.PB_Coupon_1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.ChangeCouponPicture);
             // 
-            // Timer_DownloadInfo
-            // 
-            this.Timer_DownloadInfo.Tick += new System.EventHandler(this.Timer_DownloadInfo_Tick);
-            // 
             // MainFrame
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(1135, 742);
+            this.Controls.Add(this.Panel_MyInfo);
             this.Controls.Add(this.Panel_Shop);
             this.Controls.Add(this.Panel_Coupons);
             this.Controls.Add(this.Panel_Home);
             this.Controls.Add(this.Panel_ShopInfo);
-            this.Controls.Add(this.Panel_MyInfo);
             this.Controls.Add(this.Panel_Bottom);
             this.Controls.Add(this.Panel_Top);
             this.DoubleBuffered = true;
             this.Name = "MainFrame";
             this.Text = "MainFrame";
             this.Load += new System.EventHandler(this.MainFrame_Load);
+            this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Button_Coupon_NextPage_MouseUp);
+            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Button_Coupon_NextPage_MouseDown);
             this.Panel_Top.ResumeLayout(false);
             this.Panel_Bottom.ResumeLayout(false);
             this.Panel_Home.ResumeLayout(false);
@@ -1885,20 +1896,20 @@
             ((System.ComponentModel.ISupportInitialize)(this.PB_Shop_type1_8)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PB_Shop_type1_4)).EndInit();
             this.Panel_MyInfo.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox37)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox38)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox39)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox40)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox41)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox42)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox43)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox44)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox45)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox46)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox47)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox48)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox49)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox50)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PB_MyInfo_His)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PB_MyInfo_His6)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PB_MyInfo_His3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PB_MyInfo_His5)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PB_MyInfo_His4)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PB_MyInfo_His2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PB_MyInfo_His1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PB_MyInfo_Fav)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PB_MyInfo_Fav6)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PB_MyInfo_Fav3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PB_MyInfo_Fav5)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PB_MyInfo_Fav4)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PB_MyInfo_Fav2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PB_MyInfo_Fav1)).EndInit();
             this.Panel_Coupons.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.PB_Coupon_Right)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PB_Coupon_Left)).EndInit();
@@ -1989,23 +2000,23 @@
         private System.Windows.Forms.PictureBox PB_Shop_type1_8;
         private System.Windows.Forms.PictureBox PB_Shop_type1_4;
         private System.Windows.Forms.Panel Panel_MyInfo;
-        private System.Windows.Forms.PictureBox pictureBox37;
-        private System.Windows.Forms.PictureBox pictureBox38;
-        private System.Windows.Forms.PictureBox pictureBox39;
-        private System.Windows.Forms.PictureBox pictureBox40;
-        private System.Windows.Forms.PictureBox pictureBox41;
-        private System.Windows.Forms.PictureBox pictureBox42;
-        private System.Windows.Forms.PictureBox pictureBox43;
+        private System.Windows.Forms.PictureBox PB_MyInfo_His;
+        private System.Windows.Forms.PictureBox PB_MyInfo_His6;
+        private System.Windows.Forms.PictureBox PB_MyInfo_His3;
+        private System.Windows.Forms.PictureBox PB_MyInfo_His5;
+        private System.Windows.Forms.PictureBox PB_MyInfo_His4;
+        private System.Windows.Forms.PictureBox PB_MyInfo_His2;
+        private System.Windows.Forms.PictureBox PB_MyInfo_His1;
         private System.Windows.Forms.Button Button_NextConsumption;
         private System.Windows.Forms.Button Button_LastConsumption;
         private System.Windows.Forms.Label Label_LastConsumption;
-        private System.Windows.Forms.PictureBox pictureBox44;
-        private System.Windows.Forms.PictureBox pictureBox45;
-        private System.Windows.Forms.PictureBox pictureBox46;
-        private System.Windows.Forms.PictureBox pictureBox47;
-        private System.Windows.Forms.PictureBox pictureBox48;
-        private System.Windows.Forms.PictureBox pictureBox49;
-        private System.Windows.Forms.PictureBox pictureBox50;
+        private System.Windows.Forms.PictureBox PB_MyInfo_Fav;
+        private System.Windows.Forms.PictureBox PB_MyInfo_Fav6;
+        private System.Windows.Forms.PictureBox PB_MyInfo_Fav3;
+        private System.Windows.Forms.PictureBox PB_MyInfo_Fav5;
+        private System.Windows.Forms.PictureBox PB_MyInfo_Fav4;
+        private System.Windows.Forms.PictureBox PB_MyInfo_Fav2;
+        private System.Windows.Forms.PictureBox PB_MyInfo_Fav1;
         private System.Windows.Forms.Button Button_NextDocument;
         private System.Windows.Forms.Button Button_LastDocument;
         private System.Windows.Forms.Label Label_MyDocuments;
