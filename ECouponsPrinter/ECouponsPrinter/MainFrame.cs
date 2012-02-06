@@ -1677,7 +1677,6 @@ namespace ECouponsPrinter
             }
             catch (Exception ep)
             {
-                MessageBox.Show(ep.Message + "\n" + ep.StackTrace);
                 ErrorLog.log(ep);
             }
             this.Timer_DownloadInfo.Start();
