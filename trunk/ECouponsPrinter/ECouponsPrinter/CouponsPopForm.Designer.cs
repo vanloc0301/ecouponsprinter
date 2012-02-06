@@ -36,7 +36,6 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.Label_Top = new System.Windows.Forms.Label();
             this.pageSetupDialog1 = new System.Windows.Forms.PageSetupDialog();
-            this.printDocument1 = new System.Drawing.Printing.PrintDocument();
             this.printPreviewDialog1 = new System.Windows.Forms.PrintPreviewDialog();
             this.printDialog1 = new System.Windows.Forms.PrintDialog();
             this.Panel_Background.SuspendLayout();
@@ -152,7 +151,6 @@
         private System.Windows.Forms.Button Button_Close;
         private System.Windows.Forms.Button Button_Print;
         private System.Windows.Forms.PageSetupDialog pageSetupDialog1;
-        private System.Drawing.Printing.PrintDocument printDocument1;
         private System.Windows.Forms.PrintPreviewDialog printPreviewDialog1;
         private System.Windows.Forms.PrintDialog printDialog1;
     }
