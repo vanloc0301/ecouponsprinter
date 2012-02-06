@@ -1669,8 +1669,10 @@ namespace ECouponsPrinter
                 //下载信息
                 DownloadInfo di = new DownloadInfo();
                 di.download();
+                di.SynParam();
                 //同步数据
                 this.InitData();
+                this.Timer_DownloadInfo.Interval = GlobalVariables.IntRefreshSec * 1000;
                 MessageBox.Show("下载信息成功");
             }
             catch (Exception ep)

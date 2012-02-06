@@ -1807,12 +1807,16 @@
             this.PB_Coupon_1.TabStop = false;
             this.PB_Coupon_1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.ChangeCouponPicture);
             // 
+            // Timer_DownloadInfo
+            // 
+            this.Timer_DownloadInfo.Tick += new System.EventHandler(this.Timer_DownloadInfo_Tick);
+            // 
             // MainFrame
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
-            this.ClientSize = new System.Drawing.Size(1135, 742);
+            this.ClientSize = new System.Drawing.Size(1151, 742);
             this.Controls.Add(this.Panel_MyInfo);
             this.Controls.Add(this.Panel_Shop);
             this.Controls.Add(this.Panel_Coupons);
