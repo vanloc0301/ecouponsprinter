@@ -44,7 +44,7 @@ namespace ECouponsPrinter
             }
             catch (Exception ep)
             {
-            //    ErrorLog.log(ep);
+                ErrorLog.log(ep);
                 this.Close();
             }
         }
