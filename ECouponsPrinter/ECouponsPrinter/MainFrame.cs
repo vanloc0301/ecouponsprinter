@@ -20,12 +20,14 @@ namespace ECouponsPrinter
 
         private List<PicInfo> LP_shop;
         private List<PicInfo> LP_coupon;
-        //    private List<PicInfo> LP_shoptype1, LP_shoptype2, LP_shoptype3;
         private List<PicInfo>[] LP_type;
 
         private static int curType = 0;                         //指示主页当前显示的类别
         private static int count, curPage, totalPage, curPageShowCount;
         private static int tPage1, tPage2, tPage3;
+        private static int cPage1, cPage2;
+
+        Member m = null;
 
         enum part { up = 1, middle = 2, bottom = 3 };
 
@@ -222,30 +224,71 @@ namespace ECouponsPrinter
         #region 我的专区
 
         #region "上一页"和"下一页"事件处理
-        private void Button_LastDocument_MouseDown(object sender, MouseEventArgs e)
-        {
-            Button btn = (Button)sender;
-            btn.BackgroundImage = Image.FromFile(path + "\\images\\切图\\我的专区\\last_1.jpg");
-        }
-
-        private void Button_LastDocument_MouseUp(object sender, MouseEventArgs e)
+        private void Button_Coupon_LastPage_MouseUp(object sender, MouseEventArgs e)
         {
             Button btn = (Button)sender;
             btn.BackgroundImage = Image.FromFile(path + "\\images\\切图\\我的专区\\last.jpg");
+
+            String name = btn.Name;
+            switch (name)
+            {
+                case "Button_LastDocument":
+                    if (cPage1 > 1)
+                    {
+                        cPage1--;
+                        ShowMyInfoPart((int)part.up);
+                    }
+                    return;
+                case "Button_LastConsumption":
+                    if (cPage2 > 1)
+                    {
+                        cPage2--;
+                        ShowMyInfoPart((int)part.bottom);
+                    }
+                    return;
+            }
         }
 
-        private void Button_NextDocument_MouseDown(object sender, MouseEventArgs e)
+        private void Button_Coupon_LastPage_MouseDown(object sender, MouseEventArgs e)
         {
-            Button btn = (Button)sender;
-            btn.BackgroundImage = Image.FromFile(path + "\\images\\切图\\我的专区\\next_1.jpg");
+            Button btn = sender as Button;
+            btn.BackgroundImage = Image.FromFile(path + "\\images\\切图\\我的专区\\last_1.jpg");
         }
 
-        private void Button_NextDocument_MouseUp(object sender, MouseEventArgs e)
+        private void Button_Coupon_NextPage_MouseUp(object sender, MouseEventArgs e)
         {
             Button btn = (Button)sender;
             btn.BackgroundImage = Image.FromFile(path + "\\images\\切图\\我的专区\\next.jpg");
+
+            String name = btn.Name;
+            int pageAll = 1;
+            switch (name)
+            {
+                case "Button_NextDocument":
+                    pageAll = LP_type[0].Count / 6 + (LP_type[0].Count % 6 == 0 ? 0 : 1);
+                    if (cPage1 < pageAll)
+                    {
+                        cPage1++;
+                        ShowMyInfoPart((int)part.up);
+                    }
+                    return;
+                case "Button_NextConsumption":
+                    pageAll = LP_type[1].Count / 6 + (LP_type[0].Count % 6 == 0 ? 0 : 1);
+                    if (cPage2 < pageAll)
+                    {
+                        cPage2++;
+                        ShowMyInfoPart((int)part.bottom);
+                    }
+                    return;
+            }
         }
 
+        private void Button_Coupon_NextPage_MouseDown(object sender, MouseEventArgs e)
+        {
+            Button btn = (Button)sender;
+            btn.BackgroundImage = Image.FromFile(path + "\\images\\切图\\我的专区\\next_1.jpg");
+
+        }
 
         #endregion
 
@@ -441,6 +484,8 @@ namespace ECouponsPrinter
         {
             this.Button_MyInfoPage.BackgroundImage = Image.FromFile(path + "\\images\\切图\\首页\\我的专区.jpg");
 
+            m = GlobalVariables.testM;
+
             //准备工作
             this.UnVisibleAllPanels();
             this.InitTimer();
@@ -452,12 +497,11 @@ namespace ECouponsPrinter
             //切换
             int y = this.VerticalScroll.Value;
             this.Panel_MyInfo.Location = new System.Drawing.Point(0, 142 - y);
-            /*  
-                   this.Panel_MyInfo.BringToFront();
-                   p.SendToBack();
-                   Thread.Sleep(100);
-            */
+
+            InitMyInfoData();
+
             this.Panel_MyInfo.Visible = true;
+            ShowMyInfo();
 
 
         }
@@ -1142,6 +1186,44 @@ namespace ECouponsPrinter
 
         }
 
+        private void ChangeShopPic(object sender, MouseEventArgs e)
+        {
+            PictureBox pb = sender as PictureBox;
+
+            String name = pb.Name;
+            //   MessageBox.Show(name.Length.ToString());
+            String numstr = "1";
+            int num = 1;
+
+            if (name.Length == 15)
+            {
+                numstr = name.Substring(14, 1);
+                num = (numstr[0] - '0');
+            }
+
+            if (name.Length == 16)
+            {
+                numstr = name.Substring(14, 2);
+                num = (numstr[0] - '0') * 10 + (numstr[1] - '0');
+            }
+
+            //      MessageBox.Show(num.ToString());
+
+            int curNumType = name.Substring(12, 1)[0] - '0';
+
+            this.UnVisibleAllPanels();
+            this.InitTimer();
+
+            int y = this.VerticalScroll.Value;
+            this.Panel_ShopInfo.Location = new System.Drawing.Point(0, 142 - y);
+
+            InitShopInfoData(LP_type[curNumType - 1][num + (tPage1 - 1) * 12 - 1].name);
+            Thread.Sleep(20);
+
+            this.Panel_ShopInfo.Visible = true;
+            ShowShopInfo();
+        }
+
         #endregion
 
         #region 优惠劵数据处理
@@ -1248,6 +1330,114 @@ namespace ECouponsPrinter
 
             PB_Coupon_Top.Image = new Bitmap(Image.FromFile(LP_type[curType][(curPage - 1) * 12 + num - 1].lpath), 1070, 609);
 
+        }
+
+        #endregion
+
+        #region 我的专区数据处理
+        private void InitMyInfoData()
+        {
+            if (m == null)
+            {
+                MessageBox.Show("下载用户信息失败！");
+                return;
+            }
+
+            if (LP_type != null)
+            {
+                for (int i = 0; i < LP_type.Length; i++)
+                {
+                    LP_type[i].Clear();
+                }
+            }
+
+            LP_type = new List<PicInfo>[2];
+
+            LP_type[0] = FindCouponById(m.AryFavourite);
+            LP_type[1] = FindCouponById(m.AryHistory);
+
+            cPage1 = 1;
+            cPage2 = 1;
+        }
+
+        /// <summary>
+        /// 显示我的专区页面
+        /// </summary>
+        private void ShowMyInfo()
+        {
+            ShowMyInfoPart((int)part.up);         //显示页面的上面部分
+            ShowMyInfoPart((int)part.bottom);     //显示页面的下间部分
+        }
+
+        /// <summary>
+        /// 更新我的专区页面的某一部分
+        /// </summary>
+        /// <param name="type">指示要更新的部分,1、2、3分别代表上、中、下三个部分</param>
+        private void ShowMyInfoPart(int type)
+        {
+            String controlName = "";        //显示小优惠劵的控件的Name
+            Panel container = Panel_MyInfo;         //现在正在操作的Panel容器的对象
+            int perNum = 6;                 //每页显示小优惠劵的控件的数量
+            List<PicInfo> lp = null;
+
+            if (type == 1)
+            {
+                controlName = "PB_MyInfo_Fav";
+                lp = LP_type[0];
+                curPage = cPage1;
+                PB_MyInfo_Fav.Image = new Bitmap(Image.FromFile(lp[(curPage - 1) * 6].lpath), 1033, 515);
+            }
+            else
+            {
+                controlName = "PB_MyInfo_His";
+                lp = LP_type[1];
+                curPage = cPage2;
+                PB_MyInfo_His.Image = new Bitmap(Image.FromFile(lp[(curPage - 1) * 6].lpath), 1033, 515);
+            }
+
+            count = lp.Count;
+            totalPage = count / perNum + (count % perNum == 0 ? 0 : 1);
+            //    MessageBox.Show(totalPage.ToString());
+            if (curPage == totalPage)
+            {
+                curPageShowCount = count % (perNum + 1);
+            }
+            else
+                curPageShowCount = perNum;
+
+            if (curPageShowCount > 0)
+                for (int i = 0; i < perNum; i++)
+                {
+                    String name = controlName + (i + 1);
+                    PictureBox temp = null;
+
+                    if ((temp = (PictureBox)GetControl(name, container)) != null)
+                    {
+                        if ((i) < (curPageShowCount))
+                        {
+                            if (temp.Visible.CompareTo(true) != 0)
+                                temp.Visible = true;
+                        }
+                        else
+                        {
+                            //     MessageBox.Show(temp.Visible.ToString());
+                            if (temp.Visible.CompareTo(false) != 0)
+                                temp.Visible = false;
+                        }
+                    }
+                }
+
+            
+
+            for (int i = 0; i < curPageShowCount; i++)
+            {
+                String name = controlName + (i + 1);
+                PictureBox temp = null;
+                if ((temp = (PictureBox)GetControl(name, container)) != null)
+                {
+                    temp.Image = lp[i + perNum * (curPage - 1)].image;
+                }
+            }
         }
 
         #endregion
@@ -1403,6 +1593,32 @@ namespace ECouponsPrinter
             return temp;
         }
 
+        /// <summary>
+        /// 按优惠劵id来划分优惠劵
+        /// </summary>
+        /// <param name="id">优惠劵id</param>
+        /// <returns></returns>
+        private List<PicInfo> FindCouponById(String [] id)
+        {
+            List<PicInfo> temp = new List<PicInfo>();
+
+            String [] couponId = id;
+
+            foreach (String tempId in couponId)
+            {
+                foreach (PicInfo pi in LP_coupon)
+                {
+                    if (pi.id == tempId)
+                    {
+                        temp.Add(pi);
+                    }
+                }
+            }
+            return temp;
+        }
+
+
+
         #endregion
 
         private void Label_Countdown_Click(object sender, EventArgs e)
@@ -1412,47 +1628,7 @@ namespace ECouponsPrinter
         }
 
         #endregion
-
-        private void ChangeShopPic(object sender, MouseEventArgs e)
-        {
-            PictureBox pb = sender as PictureBox;
-
-            String name = pb.Name;
-            //   MessageBox.Show(name.Length.ToString());
-            String numstr = "1";
-            int num = 1;
-
-            if (name.Length == 15)
-            {
-                numstr = name.Substring(14, 1);
-                num = (numstr[0] - '0');
-            }
-
-            if (name.Length == 16)
-            {
-                numstr = name.Substring(14, 2);
-                num = (numstr[0] - '0') * 10 + (numstr[1] - '0');
-            }
-
-            //      MessageBox.Show(num.ToString());
-
-            int curNumType = name.Substring(12, 1)[0] - '0';
-
-            this.UnVisibleAllPanels();
-            this.InitTimer();
-
-            int y = this.VerticalScroll.Value;
-            this.Panel_ShopInfo.Location = new System.Drawing.Point(0, 142 - y);
-
-            InitShopInfoData(LP_type[curNumType-1][num + (tPage1 - 1) * 12 - 1].name);
-            Thread.Sleep(20);
-
-            this.Panel_ShopInfo.Visible = true;
-            ShowShopInfo();
-        }
-
-
-
+      
 
         #endregion
 
@@ -1460,6 +1636,25 @@ namespace ECouponsPrinter
         {
             Form3 f3 = new Form3();
             f3.Show();
+        }
+
+        private void ChangeMyInfoPic(object sender, MouseEventArgs e)
+        {
+            PictureBox pb = sender as PictureBox;
+
+            String type = pb.Name.Substring(10, 3);
+            String numstr = pb.Name.Substring(13, 1);
+            int num = numstr[0] - '0';
+
+            if (type == "Fav")
+            {
+                PB_MyInfo_Fav.Image = new Bitmap(Image.FromFile(LP_type[0][num - 1 + (cPage1-1) * 6].lpath), 1033, 515);
+            }
+            else 
+            {
+                PB_MyInfo_His.Image = new Bitmap(Image.FromFile(LP_type[1][num - 1 + (cPage2 - 1) * 6].lpath), 1033, 515);
+            }
+
         }
 
 
