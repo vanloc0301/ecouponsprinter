@@ -13,10 +13,17 @@ namespace ECouponsPrinter
         private static int _WindowWaitTime = 30;                //未登录时,屏幕无操作超过此时间,自动开始播放广告
         private static int _UserWaitTime = 30;                  //登录后，屏幕无操作超过此时间,自动注销用户登录信息,并返回首页
         private static String _MarqueeText = "欢迎使用本系统";  //走马灯的文字
+        private static Member _testM = null;
 
         private static String strTerminalNo = "45";//终端编号
         private static String strServerUrl = "http://127.0.0.1:8080/ecoupons";//远程服务端URL
         private static String strExitPwd = "xjtcmzc";//终端推出密码
+
+        public static Member testM
+        {
+            set { _testM = value; }
+            get { return _testM; }
+        }
 
         public static String StrExitPwd
         {
