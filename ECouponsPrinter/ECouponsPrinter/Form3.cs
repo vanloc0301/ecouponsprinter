@@ -11,6 +11,7 @@ namespace ECouponsPrinter
 {
     public partial class Form3 : Form
     {
+
         public Form3()
         {
             InitializeComponent();
@@ -20,12 +21,20 @@ namespace ECouponsPrinter
         {
             String id = listBox1.SelectedItem.ToString();
 
+            UploadInfo ui = new UploadInfo();
+            Member m = null;
+            m = ui.MemberAuth(id);
 
-
-            GlobalVariables.isUserLogin = true;
-
+            if (m != null)
+            {
+                MessageBox.Show("登录成功！");
+                GlobalVariables.isUserLogin = true;
+                GlobalVariables.testM = m;
+            }
+            else
+                MessageBox.Show("登录失败");
+     
         }
-
 
     }
 }
