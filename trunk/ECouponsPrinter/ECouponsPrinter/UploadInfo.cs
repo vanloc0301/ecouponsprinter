@@ -89,7 +89,7 @@ namespace ECouponsPrinter
                 request.OpenRequest(GlobalVariables.StrServerUrl + "/servlet/MemberAuth?strCardNo=" + strCardNo, "");
                 XmlDocument doc = new XmlDocument();
                 string strXml = request.HtmlDocument;
-                form1.setText(strXml);
+           //     form1.setText(strXml);
                 doc.LoadXml(strXml);
                 string strAuth = doc.GetElementsByTagName("auth").Item(0).InnerText.Trim();
                 if (strAuth.Equals("yes"))
