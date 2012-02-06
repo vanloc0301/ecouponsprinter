@@ -1440,6 +1440,25 @@ namespace ECouponsPrinter
             }
         }
 
+        private void ChangeMyInfoPic(object sender, MouseEventArgs e)
+        {
+            PictureBox pb = sender as PictureBox;
+
+            String type = pb.Name.Substring(10, 3);
+            String numstr = pb.Name.Substring(13, 1);
+            int num = numstr[0] - '0';
+
+            if (type == "Fav")
+            {
+                PB_MyInfo_Fav.Image = new Bitmap(Image.FromFile(LP_type[0][num - 1 + (cPage1 - 1) * 6].lpath), 1033, 515);
+            }
+            else
+            {
+                PB_MyInfo_His.Image = new Bitmap(Image.FromFile(LP_type[1][num - 1 + (cPage2 - 1) * 6].lpath), 1033, 515);
+            }
+
+        }
+
         #endregion
 
         #region 一些公用的函数
@@ -1638,24 +1657,7 @@ namespace ECouponsPrinter
             f3.Show();
         }
 
-        private void ChangeMyInfoPic(object sender, MouseEventArgs e)
-        {
-            PictureBox pb = sender as PictureBox;
-
-            String type = pb.Name.Substring(10, 3);
-            String numstr = pb.Name.Substring(13, 1);
-            int num = numstr[0] - '0';
-
-            if (type == "Fav")
-            {
-                PB_MyInfo_Fav.Image = new Bitmap(Image.FromFile(LP_type[0][num - 1 + (cPage1-1) * 6].lpath), 1033, 515);
-            }
-            else 
-            {
-                PB_MyInfo_His.Image = new Bitmap(Image.FromFile(LP_type[1][num - 1 + (cPage2 - 1) * 6].lpath), 1033, 515);
-            }
-
-        }
+        
 
 
         private void Timer_DownloadInfo_Tick(object sender, EventArgs e)
@@ -1673,7 +1675,7 @@ namespace ECouponsPrinter
             }
             catch (Exception ep)
             {
-                ErrorLog.log(ep);
+            //    ErrorLog.log(ep);
             }
             this.Timer_DownloadInfo.Start();
         }
