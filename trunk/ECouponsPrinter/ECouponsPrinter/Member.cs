@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ECouponsPrinter
 {
-    class Member
+    public class Member
     {
         private string strCardNo;
 
