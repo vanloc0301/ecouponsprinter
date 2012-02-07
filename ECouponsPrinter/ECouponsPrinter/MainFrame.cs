@@ -26,6 +26,7 @@ namespace ECouponsPrinter
         private static int count, curPage, totalPage, curPageShowCount;
         private static int tPage1, tPage2, tPage3;
         private static int cPage1, cPage2;
+        private static int theCouponNum;
 
         Member m = null;
 
@@ -44,7 +45,7 @@ namespace ECouponsPrinter
             //设置定时刷新时钟
             this.Timer_DownloadInfo.Stop();
             this.Timer_DownloadInfo.Interval = GlobalVariables.IntRefreshSec * 1000;
-            this.Timer_DownloadInfo.Start();
+       //     this.Timer_DownloadInfo.Start();
         }
 
         #region 主要
@@ -805,7 +806,10 @@ namespace ECouponsPrinter
         /// </summary>
         private void InitHomeData()
         {
-            //暂时不需要做任何事       
+            //暂时不需要做任何事  
+            curPage = 1;
+            curType = 0;
+            theCouponNum = 0;
         }
 
         /// <summary>
@@ -860,6 +864,7 @@ namespace ECouponsPrinter
                 num = (numstr[0] - '0') * 10 + (numstr[1] - '0');
             }
 
+            theCouponNum = num - 1;
             //      MessageBox.Show(num.ToString());
 
             PB_Home_Down.Image.Dispose();
@@ -923,7 +928,7 @@ namespace ECouponsPrinter
 
             curPage = 1;
             curType = 0;
-
+            theCouponNum = 0;
         }
 
         /// <summary>
@@ -950,6 +955,8 @@ namespace ECouponsPrinter
 
             numstr = name.Substring(20, 1);
             num = (numstr[0] - '0');
+
+            theCouponNum = num - 1;
 
             //      MessageBox.Show(num.ToString());
 
@@ -983,7 +990,6 @@ namespace ECouponsPrinter
             tPage1 = 1;
             tPage2 = 1;
             tPage3 = 1;
-            curType = 0;
 
             #region 暂时不用的代码
             //    try{
@@ -1160,32 +1166,6 @@ namespace ECouponsPrinter
             }
         }
 
-        /// <summary>
-        /// 点击商家二级页面上一页和下一页按钮进行的操作
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void ChangeShopPic(object sender, EventArgs e)
-        {
-            PictureBox pb = sender as PictureBox;
-
-            if (pb.Name == "PB_Shop_Type1_LastPage" || pb.Name == "PB_Shop_Type1_NextPage")
-            {
-                ShowShopPart((int)part.up);
-            }
-
-            if (pb.Name == "PB_Shop_Type2_LastPage" || pb.Name == "PB_Shop_Type2_NextPage")
-            {
-                ShowShopPart((int)part.middle);
-            }
-
-            if (pb.Name == "PB_Shop_Type3_LastPage" || pb.Name == "PB_Shop_Type3_NextPage")
-            {
-                ShowShopPart((int)part.bottom);
-            }
-
-        }
-
         private void ChangeShopPic(object sender, MouseEventArgs e)
         {
             PictureBox pb = sender as PictureBox;
@@ -1246,6 +1226,7 @@ namespace ECouponsPrinter
 
             curPage = 1;
             curType = 0;
+            theCouponNum = 0;
         }
 
         /// <summary>
@@ -1326,6 +1307,8 @@ namespace ECouponsPrinter
                 num = (numstr[0] - '0') * 10 + (numstr[1] - '0');
             }
 
+            theCouponNum = num - 1;
+
             PB_Coupon_Top.Image.Dispose();
 
             PB_Coupon_Top.Image = new Bitmap(Image.FromFile(LP_type[curType][(curPage - 1) * 12 + num - 1].lpath), 1070, 609);
@@ -1358,6 +1341,7 @@ namespace ECouponsPrinter
 
             cPage1 = 1;
             cPage2 = 1;
+            theCouponNum = 0;
         }
 
         /// <summary>
@@ -1448,6 +1432,8 @@ namespace ECouponsPrinter
             String numstr = pb.Name.Substring(13, 1);
             int num = numstr[0] - '0';
 
+            theCouponNum = num - 1;
+
             if (type == "Fav")
             {
                 PB_MyInfo_Fav.Image = new Bitmap(Image.FromFile(LP_type[0][num - 1 + (cPage1 - 1) * 6].lpath), 1033, 515);
@@ -1460,6 +1446,33 @@ namespace ECouponsPrinter
         }
 
         #endregion
+
+        #region 优惠卷弹出页面数据处理
+        private String[] InitCouponPopData(String strid)
+        {
+            //读取数据库
+            string strSql = "select * from t_bz_coupon where strId='"+strid+"'";
+            AccessCmd cmd = new AccessCmd();
+            OleDbDataReader reader = cmd.ExecuteReader(strSql);
+
+            String pPath;
+            String[] value = new String[2];
+
+            if (reader.Read())
+            {
+                pPath = reader.GetString(10);
+                if (pPath != "" && pPath != null)
+                {
+                    value[0] = path + "\\coupon\\" + pPath;
+                }
+
+                value[1] = strid;
+                
+            }
+            return value;
+        }
+        #endregion
+
 
         #region 一些公用的函数
 
@@ -1636,7 +1649,47 @@ namespace ECouponsPrinter
             return temp;
         }
 
+        /// <summary>
+        /// 点击优惠劵大图弹出的优惠劵打印页面
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void PB_Coupons_Click(object sender, MouseEventArgs e)
+        {
+            PictureBox pb = sender as PictureBox;
 
+            String id = null;
+
+            switch (pb.Name)
+            {
+                case "PB_Home_Down":
+                    id = LP_coupon[(curPage - 1) * 6 + theCouponNum].id;
+                    return;
+                case "PB_ShopInfo_Coupons":
+                case "PB_Coupon_Top":
+                case "PB_MyInfo_Fav":
+                    id = LP_type[0][(curPage - 1) * 6 + theCouponNum].id;
+                    break;
+                case "PB_MyInfo_His":
+                    id = LP_type[1][(curPage - 1) * 6 + theCouponNum].id;
+                    break;
+                default: break;
+            }
+
+            String[] value = new String[2];
+
+            if (id != null)
+            {
+                value = InitCouponPopData(id);
+            }
+            else
+                return;
+
+            CouponsPopForm cpf = new CouponsPopForm(value[0], value[1]);
+            cpf.ShowDialog();
+            Thread.Sleep(200);
+
+        }
 
         #endregion
 
@@ -1663,7 +1716,7 @@ namespace ECouponsPrinter
         private void Timer_DownloadInfo_Tick(object sender, EventArgs e)
         {
             this.Timer_DownloadInfo.Stop();
-            MessageBox.Show("begin download info");
+       //     MessageBox.Show("begin download info");
             try
             {
                 //下载信息
@@ -1673,7 +1726,7 @@ namespace ECouponsPrinter
                 //同步数据
                 this.InitData();
                 this.Timer_DownloadInfo.Interval = GlobalVariables.IntRefreshSec * 1000;
-                MessageBox.Show("下载信息成功");
+       //         MessageBox.Show("下载信息成功");
             }
             catch (Exception ep)
             {
