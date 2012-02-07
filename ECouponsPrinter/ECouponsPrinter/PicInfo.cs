@@ -15,6 +15,13 @@ namespace ECouponsPrinter
         private String _trade = null;       //商家类别，如果当前指代的不是商家图片，则这一项设置为空
         private String _shopid = null;      //优惠劵所属的商家id，如果当前不是优惠劵图片，则这一项置为空
         private Image _image = null;        //预加载的图片
+        private String _flaPrice = null;    //指示当前的优惠劵是否是有价卷，如果当前不是优惠劵图片，则这一项置为空
+
+        public String flaPrice
+        {
+            get { return _flaPrice; }
+            set { _flaPrice = value; }
+        }
 
         public String lpath
         {
@@ -58,4 +65,15 @@ namespace ECouponsPrinter
             set { _image = value; }
         }
     }
+
+    class ShopPicInfo : PicInfo 
+    {
+        
+    
+    }
+
+    class CouponPicInfo : PicInfo 
+    {
+    
+       }
 }
