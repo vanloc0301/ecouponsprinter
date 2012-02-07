@@ -16,23 +16,14 @@ namespace ECouponsPrinter
 
         public UploadInfo() { }
 
-        public bool CouponAuth(string strCardNo, string strCode)
+        public string CouponAuth(string strCardNo, string strCode, string strCouponId)
         {
-            //try
-            //{
-                request.OpenRequest(GlobalVariables.StrServerUrl + "/servlet/CouponAuth?strTerminalNo=" + GlobalVariables.StrTerminalNo + "&strCardNo=" +
-                    strCardNo + "&strCode=" + strCode, "");
-                XmlDocument doc = new XmlDocument();
-                string strXml = request.HtmlDocument;
-                form1.setText(strXml);
-                doc.LoadXml(strXml);
-                return doc.GetElementsByTagName("return").Item(0).InnerText.Trim().Equals("OK");
-            //}
-            //catch (Exception e)
-            //{
-            //    MessageBox.Show(e.StackTrace);
-            //    return false;
-            //}
+            request.OpenRequest(GlobalVariables.StrServerUrl + "/servlet/CouponAuth?strTerminalNo=" + GlobalVariables.StrTerminalNo + "&strCardNo=" +
+                strCardNo + "&strCode=" + strCode + "&strCouponId=" + strCouponId, "");
+            XmlDocument doc = new XmlDocument();
+            string strXml = request.HtmlDocument;
+            doc.LoadXml(strXml);
+            return doc.GetElementsByTagName("return").Item(0).InnerText.Trim();
         }
 
         public bool CouponPrint()
