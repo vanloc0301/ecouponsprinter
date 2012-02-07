@@ -1448,28 +1448,32 @@ namespace ECouponsPrinter
         #endregion
 
         #region 优惠卷弹出页面数据处理
-        private String[] InitCouponPopData(String strid)
+        private PicInfo InitCouponPopData(String strid)
         {
             //读取数据库
             string strSql = "select * from t_bz_coupon where strId='"+strid+"'";
             AccessCmd cmd = new AccessCmd();
             OleDbDataReader reader = cmd.ExecuteReader(strSql);
 
-            String pPath;
-            String[] value = new String[2];
+            String pPath = null, flaPrice = null;
+            PicInfo pi = new PicInfo();
+            pi.id = strid;
 
             if (reader.Read())
             {
                 pPath = reader.GetString(10);
                 if (pPath != "" && pPath != null)
                 {
-                    value[0] = path + "\\coupon\\" + pPath;
+                    pi.lpath = path + "\\coupon\\" + pPath;
                 }
 
-                value[1] = strid;
-                
+                flaPrice = reader.GetString(7);
+                if (flaPrice != "" && flaPrice != null)
+                {
+                    pi.flaPrice = flaPrice;
+                }                    
             }
-            return value;
+            return pi;
         }
         #endregion
 
@@ -1676,16 +1680,16 @@ namespace ECouponsPrinter
                 default: break;
             }
 
-            String[] value = new String[2];
+            PicInfo pi = null;
 
             if (id != null)
             {
-                value = InitCouponPopData(id);
+                pi = InitCouponPopData(id);
             }
             else
                 return;
 
-            CouponsPopForm cpf = new CouponsPopForm(value[0], value[1]);
+            CouponsPopForm cpf = new CouponsPopForm(pi);
             cpf.ShowDialog();
             Thread.Sleep(200);
 
