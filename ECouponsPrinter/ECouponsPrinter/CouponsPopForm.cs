@@ -7,21 +7,21 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Security.Cryptography;
+using System.Globalization;
 
 namespace ECouponsPrinter
 {
     public partial class CouponsPopForm : Form
     {
         private String path = System.Windows.Forms.Application.StartupPath;
-        private String pPath, id;
+        private PicInfo pi;
 
-        public CouponsPopForm(String pPath, String id)
+        public CouponsPopForm(PicInfo info)
         {
             InitializeComponent();
             this.SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.AllPaintingInWmPaint, true);
             this.SetStyle(ControlStyles.UserPaint, true);
-            this.pPath = pPath;
-            this.id = id;
+            this.pi = info;
         }
 
         #region 添加收藏
@@ -62,40 +62,36 @@ namespace ECouponsPrinter
 
         private void Button_Print_MouseUp(object sender, MouseEventArgs e)
         {
-
+            this.Button_Print.BackgroundImage = Image.FromFile(path + "\\images\\切图\\优惠券详细弹出\\打印.jpg");
         }
 
         private void CouponPop_OnLoad(object sender, EventArgs e)
         {
             this.FormBorderStyle = FormBorderStyle.None;
             this.Height = 780;
-            MD5Change();
-
-           
-            this.PB_Couponpop.Image = Image.FromFile(this.pPath);
+          
+            this.PB_Couponpop.Image = Image.FromFile(pi.lpath);
+            this.Code.Text = "验证码：" + this.ReturnCode();
         }
 
-        public void MD5Change()
+        public String ReturnCode()
         {
             
             String MD5str = "";
             DateTime localtime = DateTime.Now;
-            String year = localtime.Year.ToString();
-            String month = ModStr(localtime.Month.ToString());
-            String day = ModStr(localtime.Day.ToString());
-            String hour = ModStr(localtime.Hour.ToString());
-            String minute = ModStr(localtime.Minute.ToString());
-            String second = ModStr(localtime.Second.ToString());
+            String time = localtime.ToString("yyyyMMddhhmmss",DateTimeFormatInfo.InvariantInfo);
 
-            MD5str += year + month + day + hour + minute + second;
+            MD5str += GlobalVariables.LoginUserId + pi.id + time;
+            String pwdCode = StrToMD5(MD5str);
+            MessageBox.Show(pwdCode);
 
-            MessageBox.Show(MD5str);
+            return (pwdCode.Substring(0, 4) + pwdCode.Substring(pwdCode.Length - 4, 4));
 
         }
 
         public static string StrToMD5(string str)
         {
-            byte[] data = Encoding.GetEncoding("GB2312").GetBytes(str);
+            byte[] data = Encoding.GetEncoding("GBK").GetBytes(str);
             MD5 md5 = new MD5CryptoServiceProvider();
             byte[] OutBytes = md5.ComputeHash(data);
 
@@ -106,7 +102,6 @@ namespace ECouponsPrinter
             }
             return OutString.ToUpper();
         }
-
 
         public String ModStr(String str)
         {
