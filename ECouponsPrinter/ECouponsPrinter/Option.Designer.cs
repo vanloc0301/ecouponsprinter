@@ -30,6 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Option));
             this.Panel_Background = new System.Windows.Forms.Panel();
+            this.Button_Paper = new System.Windows.Forms.Button();
             this.Label_Warning = new System.Windows.Forms.Label();
             this.Buttom_Close = new System.Windows.Forms.Button();
             this.Button_Exit = new System.Windows.Forms.Button();
@@ -37,7 +38,6 @@
             this.URL = new System.Windows.Forms.TextBox();
             this.Pwd = new System.Windows.Forms.TextBox();
             this.ID = new System.Windows.Forms.TextBox();
-            this.Button_Paper = new System.Windows.Forms.Button();
             this.Panel_Background.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -56,6 +56,19 @@
             this.Panel_Background.Name = "Panel_Background";
             this.Panel_Background.Size = new System.Drawing.Size(528, 342);
             this.Panel_Background.TabIndex = 0;
+            // 
+            // Button_Paper
+            // 
+            this.Button_Paper.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("Button_Paper.BackgroundImage")));
+            this.Button_Paper.FlatAppearance.BorderSize = 0;
+            this.Button_Paper.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.Button_Paper.Location = new System.Drawing.Point(151, 252);
+            this.Button_Paper.Name = "Button_Paper";
+            this.Button_Paper.Size = new System.Drawing.Size(114, 53);
+            this.Button_Paper.TabIndex = 3;
+            this.Button_Paper.UseVisualStyleBackColor = true;
+            this.Button_Paper.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Option_MouseDown);
+            this.Button_Paper.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Option_MouseUp);
             // 
             // Label_Warning
             // 
@@ -86,7 +99,7 @@
             this.Button_Exit.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("Button_Exit.BackgroundImage")));
             this.Button_Exit.FlatAppearance.BorderSize = 0;
             this.Button_Exit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Button_Exit.Location = new System.Drawing.Point(272, 252);
+            this.Button_Exit.Location = new System.Drawing.Point(273, 252);
             this.Button_Exit.Name = "Button_Exit";
             this.Button_Exit.Size = new System.Drawing.Size(114, 53);
             this.Button_Exit.TabIndex = 1;
@@ -124,6 +137,7 @@
             this.Pwd.Location = new System.Drawing.Point(165, 142);
             this.Pwd.Margin = new System.Windows.Forms.Padding(0);
             this.Pwd.Name = "Pwd";
+            this.Pwd.PasswordChar = '*';
             this.Pwd.Size = new System.Drawing.Size(277, 30);
             this.Pwd.TabIndex = 0;
             this.Pwd.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Textbox_MouseDown);
@@ -139,19 +153,6 @@
             this.ID.TabIndex = 0;
             this.ID.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Textbox_MouseDown);
             this.ID.Enter += new System.EventHandler(this.Show_KeyBoard);
-            // 
-            // Button_Paper
-            // 
-            this.Button_Paper.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("Button_Paper.BackgroundImage")));
-            this.Button_Paper.FlatAppearance.BorderSize = 0;
-            this.Button_Paper.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Button_Paper.Location = new System.Drawing.Point(150, 252);
-            this.Button_Paper.Name = "Button_Paper";
-            this.Button_Paper.Size = new System.Drawing.Size(114, 53);
-            this.Button_Paper.TabIndex = 3;
-            this.Button_Paper.UseVisualStyleBackColor = true;
-            this.Button_Paper.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Option_MouseDown);
-            this.Button_Paper.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Option_MouseUp);
             // 
             // Option
             // 
