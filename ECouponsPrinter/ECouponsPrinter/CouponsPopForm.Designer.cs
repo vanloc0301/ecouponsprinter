@@ -35,11 +35,11 @@
             this.Button_Close = new System.Windows.Forms.Button();
             this.Button_Print = new System.Windows.Forms.Button();
             this.Button_Document = new System.Windows.Forms.Button();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.PB_Couponpop = new System.Windows.Forms.PictureBox();
             this.Label_Top = new System.Windows.Forms.Label();
             this.Panel_Background.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PB_Couponpop)).BeginInit();
             this.SuspendLayout();
             // 
             // Panel_Background
@@ -51,9 +51,9 @@
             this.Panel_Background.Controls.Add(this.Button_Close);
             this.Panel_Background.Controls.Add(this.Button_Print);
             this.Panel_Background.Controls.Add(this.Button_Document);
-            this.Panel_Background.Controls.Add(this.pictureBox1);
+            this.Panel_Background.Controls.Add(this.PB_Couponpop);
             this.Panel_Background.Controls.Add(this.Label_Top);
-            this.Panel_Background.Location = new System.Drawing.Point(0, -11);
+            this.Panel_Background.Location = new System.Drawing.Point(0, 0);
             this.Panel_Background.Margin = new System.Windows.Forms.Padding(0);
             this.Panel_Background.Name = "Panel_Background";
             this.Panel_Background.Size = new System.Drawing.Size(436, 768);
@@ -90,6 +90,8 @@
             this.Button_Close.Size = new System.Drawing.Size(137, 63);
             this.Button_Close.TabIndex = 2;
             this.Button_Close.UseVisualStyleBackColor = true;
+            this.Button_Close.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Button_Close_MouseDown);
+            this.Button_Close.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Button_Close_MouseUp);
             // 
             // Button_Print
             // 
@@ -102,6 +104,8 @@
             this.Button_Print.Size = new System.Drawing.Size(137, 63);
             this.Button_Print.TabIndex = 2;
             this.Button_Print.UseVisualStyleBackColor = true;
+            this.Button_Print.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Button_Print_MouseDown);
+            this.Button_Print.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Button_Print_MouseUp);
             // 
             // Button_Document
             // 
@@ -113,16 +117,18 @@
             this.Button_Document.Size = new System.Drawing.Size(137, 63);
             this.Button_Document.TabIndex = 2;
             this.Button_Document.UseVisualStyleBackColor = true;
+            this.Button_Document.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Button_Document_MouseDown);
+            this.Button_Document.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Button_Document_MouseUp);
             // 
-            // pictureBox1
+            // PB_Couponpop
             // 
-            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(6, 95);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(425, 497);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox1.TabIndex = 1;
-            this.pictureBox1.TabStop = false;
+            this.PB_Couponpop.Image = ((System.Drawing.Image)(resources.GetObject("PB_Couponpop.Image")));
+            this.PB_Couponpop.Location = new System.Drawing.Point(6, 95);
+            this.PB_Couponpop.Name = "PB_Couponpop";
+            this.PB_Couponpop.Size = new System.Drawing.Size(425, 497);
+            this.PB_Couponpop.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.PB_Couponpop.TabIndex = 1;
+            this.PB_Couponpop.TabStop = false;
             // 
             // Label_Top
             // 
@@ -145,9 +151,10 @@
             this.Controls.Add(this.Panel_Background);
             this.Name = "CouponsPopForm";
             this.Text = "CouponsPopForm";
+            this.Load += new System.EventHandler(this.CouponPop_OnLoad);
             this.Panel_Background.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PB_Couponpop)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -160,7 +167,7 @@
         private System.Windows.Forms.Button Button_Close;
         private System.Windows.Forms.Button Button_Print;
         private System.Windows.Forms.Button Button_Document;
-        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.PictureBox PB_Couponpop;
         private System.Windows.Forms.Label Label_Top;
 
     }
