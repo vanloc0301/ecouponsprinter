@@ -6,7 +6,7 @@ using System.Drawing;
 
 namespace ECouponsPrinter
 {
-    class PicInfo
+    public class PicInfo
     {
         private String _lpath = null;        //大图片的路径
         private String _spath = null;       //小图片的路径
