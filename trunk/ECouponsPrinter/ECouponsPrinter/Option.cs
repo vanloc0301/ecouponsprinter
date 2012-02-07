@@ -17,7 +17,9 @@ namespace ECouponsPrinter
         {
             InitializeComponent();
             this.FormBorderStyle = FormBorderStyle.None;
-
+            //赋值
+            this.ID.Text = GlobalVariables.StrTerminalNo;
+            this.URL.Text = GlobalVariables.StrServerUrl;
             GlobalVariables.isKeyBoardExist = false;
         }
 
@@ -54,7 +56,7 @@ namespace ECouponsPrinter
             switch (btn.Name)
             {
                 case "Button_ModifyID":
-                    btn.BackgroundImage = Image.FromFile(path + "\\images\\切图\\Option\\修改编码_1.jpg");
+                    btn.BackgroundImage = Image.FromFile(path + "\\images\\切图\\Option\\修改参数_1.jpg");
                     return;
                 case "Button_Exit":
                     btn.BackgroundImage = Image.FromFile(path + "\\images\\切图\\Option\\退出系统_1.jpg");
@@ -75,20 +77,25 @@ namespace ECouponsPrinter
             switch (btn.Name)
             {
                 case "Button_ModifyID":
-                    btn.BackgroundImage = Image.FromFile(path + "\\images\\切图\\Option\\修改编码.jpg");
+                    btn.BackgroundImage = Image.FromFile(path + "\\images\\切图\\Option\\修改参数.jpg");
                     if (this.Pwd.Text.Equals(GlobalVariables.StrExitPwd))
                     {
                         if (this.ID.Text.Trim().Equals(""))
                         {
                             this.Label_Warning.Text = "请输入本机编码！";
                         }
+                        else if (this.URL.Text.Trim().Equals(""))
+                        {
+                            this.Label_Warning.Text = "请输入远程URL！";
+                        }
                         else
                         {
                             AccessCmd cmd = new AccessCmd();
-                            cmd.ExecuteNonQuery("delete from t_bz_terminal_param where strParamName='strTerminalNo'");
+                            cmd.ExecuteNonQuery("delete from t_bz_terminal_param where strParamName='strTerminalNo' or strParamName='strServerUrl'");
                             cmd.ExecuteNonQuery("insert into t_bz_terminal_param(strId,strParamName,strParamValue) values('" + 99 + "','strTerminalNo','" + this.ID.Text.Trim() + "')");
+                            cmd.ExecuteNonQuery("insert into t_bz_terminal_param(strId,strParamName,strParamValue) values('" + 99 + "','strServerUrl','" + this.URL.Text.Trim() + "')");
                             cmd.Close();
-                            this.Label_Warning.Text = "编码修改成功！";
+                            this.Label_Warning.Text = "操作成功！";
                         }
                     }
                     else
@@ -111,8 +118,19 @@ namespace ECouponsPrinter
                     btn.BackgroundImage = Image.FromFile(path + "\\images\\切图\\Option\\关闭.jpg");
                     this.Close();
                     return;
-                case "Buttom_Paper":
+                case "Button_Paper":
                     btn.BackgroundImage = Image.FromFile(path + "\\images\\切图\\Option\\换纸结束.jpg");
+                    if (this.Pwd.Text.Equals(GlobalVariables.StrExitPwd))
+                    {
+                        AccessCmd cmd = new AccessCmd();
+                        cmd.ExecuteNonQuery("update t_bz_print_total set intPrintTotal=0");
+                        cmd.Close();
+                        this.Label_Warning.Text = "操作成功！";
+                    }
+                    else
+                    {
+                        this.Label_Warning.Text = "密码错误，请重新输入！";
+                    }
                     return;
             }
         }
