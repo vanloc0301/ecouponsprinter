@@ -30,6 +30,7 @@ namespace ECouponsPrinter
                 MessageBox.Show("登录成功！");
                 GlobalVariables.isUserLogin = true;
                 GlobalVariables.testM = m;
+                GlobalVariables.LoginUserId = id;
             }
             else
                 MessageBox.Show("登录失败");
