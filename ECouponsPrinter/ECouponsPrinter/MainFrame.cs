@@ -1455,7 +1455,8 @@ namespace ECouponsPrinter
             AccessCmd cmd = new AccessCmd();
             OleDbDataReader reader = cmd.ExecuteReader(strSql);
 
-            String pPath = null, flaPrice = null;
+            String pPath = null;
+            int flaPrice = 0;
             PicInfo pi = new PicInfo();
             pi.id = strid;
 
@@ -1467,8 +1468,8 @@ namespace ECouponsPrinter
                     pi.lpath = path + "\\coupon\\" + pPath;
                 }
 
-                flaPrice = reader.GetString(7);
-                if (flaPrice != "" && flaPrice != null)
+                flaPrice = reader.GetInt32(7);
+                if (flaPrice != null)
                 {
                     pi.flaPrice = flaPrice;
                 }                    
