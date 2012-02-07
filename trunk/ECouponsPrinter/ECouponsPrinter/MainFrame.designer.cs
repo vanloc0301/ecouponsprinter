@@ -1350,6 +1350,7 @@
             this.PB_MyInfo_His.Size = new System.Drawing.Size(1033, 515);
             this.PB_MyInfo_His.TabIndex = 39;
             this.PB_MyInfo_His.TabStop = false;
+            this.PB_MyInfo_His.MouseUp += new System.Windows.Forms.MouseEventHandler(this.PB_Coupons_Click);
             // 
             // PB_MyInfo_His6
             // 
@@ -1450,7 +1451,7 @@
             this.PB_MyInfo_Fav.Size = new System.Drawing.Size(1033, 515);
             this.PB_MyInfo_Fav.TabIndex = 29;
             this.PB_MyInfo_Fav.TabStop = false;
-            this.PB_MyInfo_Fav.MouseUp += new System.Windows.Forms.MouseEventHandler(this.ChangeMyInfoPic);
+            this.PB_MyInfo_Fav.MouseUp += new System.Windows.Forms.MouseEventHandler(this.PB_Coupons_Click);
             // 
             // PB_MyInfo_Fav6
             // 
@@ -1816,7 +1817,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
-            this.ClientSize = new System.Drawing.Size(1151, 742);
+            this.ClientSize = new System.Drawing.Size(1168, 742);
             this.Controls.Add(this.Panel_MyInfo);
             this.Controls.Add(this.Panel_Shop);
             this.Controls.Add(this.Panel_Coupons);
