@@ -31,7 +31,23 @@ namespace ECouponsPrinter
         {
             UploadInfo ui = new UploadInfo();
             ui.form1 = this;
-            MessageBox.Show(ui.CouponAuth("0526", "3403") + "");
+            string strReturn = ui.CouponAuth("0526", "3403", "1325207051877004");
+            if (strReturn.Equals("OK"))
+            {
+                MessageBox.Show("成功！");
+            }
+            else if (strReturn.Equals("balance_error"))
+            {
+                MessageBox.Show("余额不足！");
+            }
+            else if (strReturn.Equals("sms_error"))
+            {
+                MessageBox.Show("短信发送失败！");
+            }
+            else
+            {
+                MessageBox.Show("未知错误！");
+            }
         }
 
         private void button3_Click(object sender, EventArgs e)
