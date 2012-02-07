@@ -68,7 +68,6 @@
             this.Code.Name = "Code";
             this.Code.Size = new System.Drawing.Size(424, 82);
             this.Code.TabIndex = 4;
-            this.Code.Text = "验证码: 12345678";
             this.Code.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // pictureBox2
