@@ -35,21 +35,6 @@ namespace ECouponsPrinter
             this.Height = 780;
         }
 
-        #region 添加收藏
-
-        private void Button_Document_MouseUp(object sender, MouseEventArgs e)
-        {
-            this.Button_Document.BackgroundImage = Image.FromFile(path + "\\images\\切图\\优惠券详细弹出\\收藏.jpg");
-            //添加收藏代码
-        }
-
-        private void Button_Document_MouseDown(object sender, MouseEventArgs e)
-        {
-            this.Button_Document.BackgroundImage = Image.FromFile(path + "\\images\\切图\\优惠券详细弹出\\收藏_1.jpg");
-        }
-
-        #endregion
-
         #region 关闭优惠劵弹出窗口
 
         private void Button_Close_MouseDown(object sender, MouseEventArgs e)
