@@ -34,7 +34,6 @@
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.Button_Close = new System.Windows.Forms.Button();
             this.Button_Print = new System.Windows.Forms.Button();
-            this.Button_Document = new System.Windows.Forms.Button();
             this.PB_Couponpop = new System.Windows.Forms.PictureBox();
             this.Label_Top = new System.Windows.Forms.Label();
             this.Panel_Background.SuspendLayout();
@@ -50,7 +49,6 @@
             this.Panel_Background.Controls.Add(this.pictureBox2);
             this.Panel_Background.Controls.Add(this.Button_Close);
             this.Panel_Background.Controls.Add(this.Button_Print);
-            this.Panel_Background.Controls.Add(this.Button_Document);
             this.Panel_Background.Controls.Add(this.PB_Couponpop);
             this.Panel_Background.Controls.Add(this.Label_Top);
             this.Panel_Background.Location = new System.Drawing.Point(0, 0);
@@ -83,7 +81,7 @@
             this.Button_Close.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("Button_Close.BackgroundImage")));
             this.Button_Close.FlatAppearance.BorderSize = 0;
             this.Button_Close.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Button_Close.Location = new System.Drawing.Point(291, 694);
+            this.Button_Close.Location = new System.Drawing.Point(219, 694);
             this.Button_Close.Margin = new System.Windows.Forms.Padding(0);
             this.Button_Close.Name = "Button_Close";
             this.Button_Close.Size = new System.Drawing.Size(137, 63);
@@ -97,7 +95,7 @@
             this.Button_Print.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("Button_Print.BackgroundImage")));
             this.Button_Print.FlatAppearance.BorderSize = 0;
             this.Button_Print.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Button_Print.Location = new System.Drawing.Point(148, 694);
+            this.Button_Print.Location = new System.Drawing.Point(67, 694);
             this.Button_Print.Margin = new System.Windows.Forms.Padding(0);
             this.Button_Print.Name = "Button_Print";
             this.Button_Print.Size = new System.Drawing.Size(137, 63);
@@ -105,19 +103,6 @@
             this.Button_Print.UseVisualStyleBackColor = true;
             this.Button_Print.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Button_Print_MouseDown);
             this.Button_Print.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Button_Print_MouseUp);
-            // 
-            // Button_Document
-            // 
-            this.Button_Document.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("Button_Document.BackgroundImage")));
-            this.Button_Document.FlatAppearance.BorderSize = 0;
-            this.Button_Document.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Button_Document.Location = new System.Drawing.Point(5, 694);
-            this.Button_Document.Name = "Button_Document";
-            this.Button_Document.Size = new System.Drawing.Size(137, 63);
-            this.Button_Document.TabIndex = 2;
-            this.Button_Document.UseVisualStyleBackColor = true;
-            this.Button_Document.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Button_Document_MouseDown);
-            this.Button_Document.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Button_Document_MouseUp);
             // 
             // PB_Couponpop
             // 
@@ -165,7 +150,6 @@
         private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.Button Button_Close;
         private System.Windows.Forms.Button Button_Print;
-        private System.Windows.Forms.Button Button_Document;
         private System.Windows.Forms.PictureBox PB_Couponpop;
         private System.Windows.Forms.Label Label_Top;
 
