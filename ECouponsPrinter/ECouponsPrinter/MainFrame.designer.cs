@@ -593,6 +593,7 @@
             this.PB_Home_Down.Size = new System.Drawing.Size(1071, 548);
             this.PB_Home_Down.TabIndex = 12;
             this.PB_Home_Down.TabStop = false;
+            this.PB_Home_Down.MouseUp += new System.Windows.Forms.MouseEventHandler(this.PB_Coupons_Click);
             // 
             // PB_Home_Up
             // 
@@ -687,6 +688,7 @@
             this.PB_ShopInfo_Coupons.Size = new System.Drawing.Size(1070, 573);
             this.PB_ShopInfo_Coupons.TabIndex = 34;
             this.PB_ShopInfo_Coupons.TabStop = false;
+            this.PB_ShopInfo_Coupons.MouseUp += new System.Windows.Forms.MouseEventHandler(this.PB_Coupons_Click);
             // 
             // PB_ShopInfo_Shop
             // 
@@ -1687,6 +1689,7 @@
             this.PB_Coupon_Top.Size = new System.Drawing.Size(1070, 609);
             this.PB_Coupon_Top.TabIndex = 46;
             this.PB_Coupon_Top.TabStop = false;
+            this.PB_Coupon_Top.MouseUp += new System.Windows.Forms.MouseEventHandler(this.PB_Coupons_Click);
             // 
             // PB_Coupon_12
             // 
@@ -1818,11 +1821,11 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(1168, 742);
-            this.Controls.Add(this.Panel_MyInfo);
-            this.Controls.Add(this.Panel_Shop);
-            this.Controls.Add(this.Panel_Coupons);
             this.Controls.Add(this.Panel_Home);
             this.Controls.Add(this.Panel_ShopInfo);
+            this.Controls.Add(this.Panel_Coupons);
+            this.Controls.Add(this.Panel_MyInfo);
+            this.Controls.Add(this.Panel_Shop);
             this.Controls.Add(this.Panel_Bottom);
             this.Controls.Add(this.Panel_Top);
             this.DoubleBuffered = true;

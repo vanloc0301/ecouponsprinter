@@ -10,18 +10,10 @@ namespace ECouponsPrinter
     {
         private String _lpath = null;        //大图片的路径
         private String _spath = null;       //小图片的路径
-        private String _name = null;        //图片代表的商家或优惠劵的名字
         private String _id = null;          //图片代表的商家或优惠劵的id
-        private String _trade = null;       //商家类别，如果当前指代的不是商家图片，则这一项设置为空
-        private String _shopid = null;      //优惠劵所属的商家id，如果当前不是优惠劵图片，则这一项置为空
+        private String _trade = null;       //类别
         private Image _image = null;        //预加载的图片
-        private int _flaPrice = 0;    //指示当前的优惠劵是否是有价卷，如果当前不是优惠劵图片，则这一项置为空
-
-        public int flaPrice
-        {
-            get { return _flaPrice; }
-            set { _flaPrice = value; }
-        }
+        private String _name;
 
         public String lpath
         {
@@ -35,10 +27,10 @@ namespace ECouponsPrinter
             set { _spath = value; }
         }
 
-        public String name
+        public String trade
         {
-            get { return _name; }
-            set { _name = value; }
+            get { return _trade; }
+            set { _trade = value; }
         }
 
         public String id
@@ -47,33 +39,42 @@ namespace ECouponsPrinter
             set { _id = value; }
         }
 
-        public String trade
-        {
-            get { return _trade; }
-            set { _trade = value; }
-        }
-
-        public String shopid
-        {
-            get { return _shopid; }
-            set { _shopid = value; }
-        }
-
         public Image image
         {
             get { return _image; }
             set { _image = value; }
         }
+
+        public String name
+        {
+            get { return _name; }
+            set { _name = value; }
+        }
     }
 
-    class ShopPicInfo : PicInfo 
+    public class CouponPicInfo : PicInfo 
     {
         
-    
-    }
+        private String _shopId;
+        private double _flaPrice;
+        private int _vip;
 
-    class CouponPicInfo : PicInfo 
-    {
-    
-       }
+        public String shopId
+        {
+            get { return _shopId; }
+            set { _shopId = value; }
+        }
+
+        public double flaPrice
+        {
+            get { return _flaPrice; }
+            set { _flaPrice = value; }
+        }
+
+        public int vip
+        {
+            get { return _vip; }
+            set { _vip = value; }
+        } 
+    }
 }
