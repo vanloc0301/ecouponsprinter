@@ -66,26 +66,18 @@ namespace ECouponsPrinter
                 info = new Info(pi.flaPrice, pi.name);
                 if (info.ShowDialog() == DialogResult.Yes)
                 {
-                    Random rand = new Random(new DateTime().Second);
-                    String code = rand.Next(1000, 10000).ToString();
-                    UploadInfo ui = new UploadInfo();
-
-                    string strReturn = ui.CouponAuth(GlobalVariables.LoginUserId, code, pi.id);
-                    if (strReturn.Equals("OK"))
+                    check check = new check(pi.flaPrice, pi.id);
+                         
+                    if (check.ShowDialog() == DialogResult.Yes)
                     {
-                        MessageBox.Show("成功！");
-                    }
-                    else if (strReturn.Equals("balance_error"))
-                    {
-                        MessageBox.Show("余额不足！");
-                    }
-                    else if (strReturn.Equals("sms_error"))
-                    {
-                        MessageBox.Show("短信发送失败！");
-                    }
-                    else
-                    {
-                        MessageBox.Show("未知错误！");
+                        try
+                        {
+                            pd.Print();
+                        }
+                        catch (Exception e1)
+                        {
+                            MessageBox.Show(e1.Message);
+                        }
                     }
                 }
             }
