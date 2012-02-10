@@ -31,7 +31,7 @@ namespace ECouponsPrinter
         {
             UploadInfo ui = new UploadInfo();
             ui.form1 = this;
-            string strReturn = ui.CouponAuth("0526", "3403", "1325207051877004");
+            string strReturn = ui.CouponAuth("3897", "3403", "1325207051877004");
             if (strReturn.Equals("OK"))
             {
                 MessageBox.Show("成功！");
