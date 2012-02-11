@@ -1759,5 +1759,31 @@ namespace ECouponsPrinter
             this.Timer_DownloadInfo.Start();
         }
 
+
+        //esc退出窗体
+        protected override bool ProcessCmdKey(ref System.Windows.Forms.Message msg, System.Windows.Forms.Keys keyData) //激活回车键
+        {
+            int WM_KEYDOWN = 256;
+            int WM_SYSKEYDOWN = 260;
+
+            if (msg.Msg == WM_KEYDOWN | msg.Msg == WM_SYSKEYDOWN)
+            {
+                switch (keyData)
+                {
+                    case Keys.Escape:
+                        this.Close();//csc关闭窗体
+                        break;
+
+                    case Keys.F12:
+                        MessageBox.Show("F12");
+                        break;
+
+                }
+
+            }
+            return false;
+        }
+
+
     }
 }
