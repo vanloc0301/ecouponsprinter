@@ -19,6 +19,7 @@ namespace ECouponsPrinter
         private CouponPicInfo pi;
         PrintDocument pd = new PrintDocument();
         Image printimage = null;
+        Wait wait;
 
         public CouponsPopForm(CouponPicInfo info)
         {
@@ -71,12 +72,14 @@ namespace ECouponsPrinter
                     if (check.ShowDialog() == DialogResult.Yes)
                     {
                         try
-                        {
-                            pd.Print();
+                        {              
+                            wait = new Wait();
+                            new System.Threading.Thread(DoWork).Start();//开启一个线程更新form2的进度条
+                            wait.ShowDialog();//现实form2，模式对话框
                         }
                         catch (Exception e1)
                         {
-                            MessageBox.Show(e1.Message);
+                            
                         }
                     }
                 }
@@ -89,17 +92,19 @@ namespace ECouponsPrinter
                 {
                     try
                     {
-                        pd.Print();
+                        wait = new Wait();
+                        new System.Threading.Thread(DoWork).Start();//开启一个线程更新form2的进度条
+                        wait.ShowDialog();//现实form2，模式对话框
                     }
                     catch (Exception e1)
                     {
-                        MessageBox.Show(e1.Message);
+                  //      MessageBox.Show(e1.Message);
                     }
                 }
             }
 
 
-            Thread.Sleep(500);
+            Thread.Sleep(200);
             this.Close();
         }
 
@@ -181,5 +186,17 @@ namespace ECouponsPrinter
             e.Graphics.DrawImage(printimage, new RectangleF(0, 0, width, height));
         }
 
+        private void DoWork()
+        {
+            pd.Print();
+            UploadInfo ui = new UploadInfo();
+            ui.CouponPrint();
+
+            for (int i = 0; i <= 100; i += 1)
+            {
+                wait.SetProgressBarPosition(i);//设置进度条当前位置
+                System.Threading.Thread.Sleep(50);//sleep一下减缓进度条进度，实际代码中，此处应该是实际的工作
+            }
+        }
     }
 }
