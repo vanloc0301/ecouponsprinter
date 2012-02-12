@@ -11,6 +11,8 @@ namespace ECouponsPrinter
 {
     public partial class Form1 : Form
     {
+        private string strCode = "";
+
         public Form1()
         {
             InitializeComponent();
@@ -82,6 +84,14 @@ namespace ECouponsPrinter
                     sb.Append(m.AryHistory[i]).Append(" ");
                 }
                 textBox1.Text = sb.ToString();
+                if (m.StrMobileNo.Length == 0)
+                {
+                    MessageBox.Show("未注册用户，请在下面文本框中输入手机号码进行注册！");
+                }
+                else
+                {
+                    MessageBox.Show("已注册用户！");
+                }
             }
         }
 
@@ -101,6 +111,42 @@ namespace ECouponsPrinter
         {
             DownloadInfo di = new DownloadInfo();
             di.SynParam();
+        }
+
+        private void button8_Click(object sender, EventArgs e)
+        {
+            Random rand = new Random();
+            this.strCode = rand.Next(0, 10000).ToString("D4");
+            
+            UploadInfo ui = new UploadInfo();
+            if (ui.MemberLogon(this.textBox2.Text, this.textBox3.Text, this.strCode))
+            {
+                MessageBox.Show("注册信息已发送，请在下面文本框中输入你手机收到的验证码");
+            }
+            else
+            {
+                MessageBox.Show("发生异常！");
+            }
+        }
+
+        private void button9_Click(object sender, EventArgs e)
+        {
+            if (this.textBox4.Text.Equals(this.strCode))
+            {
+                UploadInfo ui = new UploadInfo();
+                if (ui.MemberLogon(this.textBox2.Text, this.textBox3.Text))
+                {
+                    MessageBox.Show("注册成功！");
+                }
+                else
+                {
+                    MessageBox.Show("发生异常！");
+                }
+            }
+            else
+            {
+                MessageBox.Show("验证码错误，请重新输入！");
+            }
         }
     }
 }
