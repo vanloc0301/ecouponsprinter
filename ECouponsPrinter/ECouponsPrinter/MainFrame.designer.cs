@@ -164,8 +164,8 @@
             this.PB_Coupon_5 = new System.Windows.Forms.PictureBox();
             this.PB_Coupon_1 = new System.Windows.Forms.PictureBox();
             this.Timer_DownloadInfo = new System.Windows.Forms.Timer(this.components);
-            this.Home_fav = new System.Windows.Forms.Label();
-            this.Home_print = new System.Windows.Forms.Label();
+            this.Home_fav = new System.Windows.Forms.Panel();
+            this.Home_print = new System.Windows.Forms.Panel();
             this.Panel_Top.SuspendLayout();
             this.Panel_Bottom.SuspendLayout();
             this.Panel_Home.SuspendLayout();
@@ -1821,23 +1821,19 @@
             // 
             // Home_fav
             // 
-            this.Home_fav.Font = new System.Drawing.Font("宋体", 30F, System.Drawing.FontStyle.Bold);
-            this.Home_fav.Location = new System.Drawing.Point(6, 907);
+            this.Home_fav.BackColor = System.Drawing.Color.Transparent;
+            this.Home_fav.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("Home_fav.BackgroundImage")));
+            this.Home_fav.Location = new System.Drawing.Point(17, 909);
             this.Home_fav.Name = "Home_fav";
             this.Home_fav.Size = new System.Drawing.Size(140, 80);
             this.Home_fav.TabIndex = 34;
-            this.Home_fav.Text = "收藏";
-            this.Home_fav.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // Home_print
             // 
-            this.Home_print.Font = new System.Drawing.Font("宋体", 30F, System.Drawing.FontStyle.Bold);
-            this.Home_print.Location = new System.Drawing.Point(6, 1001);
+            this.Home_print.Location = new System.Drawing.Point(18, 1006);
             this.Home_print.Name = "Home_print";
             this.Home_print.Size = new System.Drawing.Size(140, 80);
             this.Home_print.TabIndex = 34;
-            this.Home_print.Text = "打印";
-            this.Home_print.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // MainFrame
             // 
@@ -2098,8 +2094,8 @@
         private System.Windows.Forms.Button Btn_Coupon_Type2;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Timer Timer_DownloadInfo;
-        private System.Windows.Forms.Label Home_fav;
-        private System.Windows.Forms.Label Home_print;
+        private System.Windows.Forms.Panel Home_fav;
+        private System.Windows.Forms.Panel Home_print;
 
     }
 }

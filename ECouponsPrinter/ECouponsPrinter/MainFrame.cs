@@ -594,7 +594,7 @@ namespace ECouponsPrinter
             ShowHome();
 
             //设置半透明的Label
-            Home_fav.BackColor = Color.FromArgb(105, Color.AliceBlue);
+       //     Home_fav.BackColor = Color.FromArgb(105, Color.AliceBlue);
 
         }
         #endregion
@@ -1786,6 +1786,11 @@ namespace ECouponsPrinter
             }
             return false;
         }
+
+        //private void HP_(object sender, PaintEventArgs e)
+        //{
+
+        //}
 
 
     }
