@@ -31,6 +31,22 @@ namespace ECouponsPrinter
             set { aryHistory = value; }
         }
 
+        private int intType;
+
+        public int IntType
+        {
+            get { return intType; }
+            set { intType = value; }
+        }
+
+        private string strMobileNo;
+
+        public string StrMobileNo
+        {
+            get { return strMobileNo; }
+            set { strMobileNo = value; }
+        }
+
         public Member() { }
     }
 }

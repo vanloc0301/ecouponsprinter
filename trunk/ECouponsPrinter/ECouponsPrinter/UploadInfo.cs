@@ -88,6 +88,8 @@ namespace ECouponsPrinter
                     //实例化Member对象并返回
                     Member m = new Member();
                     m.StrCardNo = strCardNo;
+                    m.IntType = Int16.Parse(doc.GetElementsByTagName("intType").Item(0).InnerText.Trim());
+                    m.StrMobileNo = doc.GetElementsByTagName("strMobileNo").Item(0).InnerText.Trim();
                     XmlNodeList xnlF = doc.GetElementsByTagName("favourite").Item(0).ChildNodes;
                     string[] aryF = new string[xnlF.Count];
                     for (int i = 0; i < xnlF.Count; i++)
