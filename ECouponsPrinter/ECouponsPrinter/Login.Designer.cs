@@ -28,11 +28,16 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.label1 = new System.Windows.Forms.Label();
             this.phone = new System.Windows.Forms.TextBox();
             this.code = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
+            this.confirm = new System.Windows.Forms.Button();
+            this.cancel = new System.Windows.Forms.Button();
+            this.Reget = new System.Windows.Forms.Button();
+            this.CodeTimer = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
             // label1
@@ -49,7 +54,7 @@
             this.phone.Font = new System.Drawing.Font("宋体", 25F);
             this.phone.Location = new System.Drawing.Point(137, 183);
             this.phone.Name = "phone";
-            this.phone.Size = new System.Drawing.Size(334, 46);
+            this.phone.Size = new System.Drawing.Size(256, 46);
             this.phone.TabIndex = 1;
             // 
             // code
@@ -57,7 +62,7 @@
             this.code.Font = new System.Drawing.Font("宋体", 25F);
             this.code.Location = new System.Drawing.Point(137, 244);
             this.code.Name = "code";
-            this.code.Size = new System.Drawing.Size(175, 46);
+            this.code.Size = new System.Drawing.Size(145, 46);
             this.code.TabIndex = 2;
             // 
             // label2
@@ -79,12 +84,50 @@
             this.label3.TabIndex = 3;
             this.label3.Text = "验证码";
             // 
+            // confirm
+            // 
+            this.confirm.Font = new System.Drawing.Font("宋体", 25F, System.Drawing.FontStyle.Bold);
+            this.confirm.Location = new System.Drawing.Point(40, 318);
+            this.confirm.Name = "confirm";
+            this.confirm.Size = new System.Drawing.Size(219, 69);
+            this.confirm.TabIndex = 4;
+            this.confirm.Text = "确  定";
+            this.confirm.UseVisualStyleBackColor = true;
+            // 
+            // cancel
+            // 
+            this.cancel.Font = new System.Drawing.Font("宋体", 25F, System.Drawing.FontStyle.Bold);
+            this.cancel.Location = new System.Drawing.Point(360, 318);
+            this.cancel.Name = "cancel";
+            this.cancel.Size = new System.Drawing.Size(219, 69);
+            this.cancel.TabIndex = 4;
+            this.cancel.Text = "取  消";
+            this.cancel.UseVisualStyleBackColor = true;
+            // 
+            // Reget
+            // 
+            this.Reget.Font = new System.Drawing.Font("宋体", 20F, System.Drawing.FontStyle.Bold);
+            this.Reget.Location = new System.Drawing.Point(415, 183);
+            this.Reget.Name = "Reget";
+            this.Reget.Size = new System.Drawing.Size(212, 46);
+            this.Reget.TabIndex = 5;
+            this.Reget.Text = "获取验证码";
+            this.Reget.UseVisualStyleBackColor = true;
+            this.Reget.Click += new System.EventHandler(this.Reget_Click);
+            // 
+            // CodeTimer
+            // 
+            this.CodeTimer.Tick += new System.EventHandler(this.CodeTimer_Tick);
+            // 
             // Login
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(668, 334);
+            this.ClientSize = new System.Drawing.Size(724, 399);
             this.ControlBox = false;
+            this.Controls.Add(this.Reget);
+            this.Controls.Add(this.cancel);
+            this.Controls.Add(this.confirm);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.code);
@@ -104,5 +147,9 @@
         private System.Windows.Forms.TextBox code;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Button confirm;
+        private System.Windows.Forms.Button cancel;
+        private System.Windows.Forms.Button Reget;
+        private System.Windows.Forms.Timer CodeTimer;
     }
 }

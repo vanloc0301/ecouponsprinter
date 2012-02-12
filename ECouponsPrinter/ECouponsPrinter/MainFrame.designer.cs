@@ -164,6 +164,8 @@
             this.PB_Coupon_5 = new System.Windows.Forms.PictureBox();
             this.PB_Coupon_1 = new System.Windows.Forms.PictureBox();
             this.Timer_DownloadInfo = new System.Windows.Forms.Timer(this.components);
+            this.Home_fav = new System.Windows.Forms.Label();
+            this.Home_print = new System.Windows.Forms.Label();
             this.Panel_Top.SuspendLayout();
             this.Panel_Bottom.SuspendLayout();
             this.Panel_Home.SuspendLayout();
@@ -442,6 +444,8 @@
             // 
             this.Panel_Home.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("Panel_Home.BackgroundImage")));
             this.Panel_Home.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.Panel_Home.Controls.Add(this.Home_print);
+            this.Panel_Home.Controls.Add(this.Home_fav);
             this.Panel_Home.Controls.Add(this.PB_Home_Bottom12);
             this.Panel_Home.Controls.Add(this.PB_Home_Bottom6);
             this.Panel_Home.Controls.Add(this.PB_Home_Bottom11);
@@ -1815,6 +1819,26 @@
             // 
             this.Timer_DownloadInfo.Tick += new System.EventHandler(this.Timer_DownloadInfo_Tick);
             // 
+            // Home_fav
+            // 
+            this.Home_fav.Font = new System.Drawing.Font("宋体", 30F, System.Drawing.FontStyle.Bold);
+            this.Home_fav.Location = new System.Drawing.Point(6, 907);
+            this.Home_fav.Name = "Home_fav";
+            this.Home_fav.Size = new System.Drawing.Size(140, 80);
+            this.Home_fav.TabIndex = 34;
+            this.Home_fav.Text = "收藏";
+            this.Home_fav.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // Home_print
+            // 
+            this.Home_print.Font = new System.Drawing.Font("宋体", 30F, System.Drawing.FontStyle.Bold);
+            this.Home_print.Location = new System.Drawing.Point(6, 1001);
+            this.Home_print.Name = "Home_print";
+            this.Home_print.Size = new System.Drawing.Size(140, 80);
+            this.Home_print.TabIndex = 34;
+            this.Home_print.Text = "打印";
+            this.Home_print.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // MainFrame
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -2074,6 +2098,8 @@
         private System.Windows.Forms.Button Btn_Coupon_Type2;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Timer Timer_DownloadInfo;
+        private System.Windows.Forms.Label Home_fav;
+        private System.Windows.Forms.Label Home_print;
 
     }
 }
