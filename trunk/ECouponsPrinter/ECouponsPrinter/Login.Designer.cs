@@ -40,7 +40,7 @@
             this.label1.Font = new System.Drawing.Font("宋体", 20F, System.Drawing.FontStyle.Bold);
             this.label1.Location = new System.Drawing.Point(35, 20);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(515, 139);
+            this.label1.Size = new System.Drawing.Size(608, 139);
             this.label1.TabIndex = 0;
             this.label1.Text = "为了保护您的账户余额和积分安全，请进行手机绑定。\r\n首先请输入手机号码，我们会以短信的方式将验证码发送至您的手机，您录入正确的验证码即可完成绑定。";
             // 
@@ -49,7 +49,7 @@
             this.phone.Font = new System.Drawing.Font("宋体", 25F);
             this.phone.Location = new System.Drawing.Point(137, 183);
             this.phone.Name = "phone";
-            this.phone.Size = new System.Drawing.Size(252, 46);
+            this.phone.Size = new System.Drawing.Size(334, 46);
             this.phone.TabIndex = 1;
             // 
             // code
@@ -57,7 +57,7 @@
             this.code.Font = new System.Drawing.Font("宋体", 25F);
             this.code.Location = new System.Drawing.Point(137, 244);
             this.code.Name = "code";
-            this.code.Size = new System.Drawing.Size(152, 46);
+            this.code.Size = new System.Drawing.Size(175, 46);
             this.code.TabIndex = 2;
             // 
             // label2
@@ -83,7 +83,8 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(583, 334);
+            this.ClientSize = new System.Drawing.Size(668, 334);
+            this.ControlBox = false;
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.code);
