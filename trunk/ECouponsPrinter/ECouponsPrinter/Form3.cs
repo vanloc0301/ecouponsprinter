@@ -27,10 +27,26 @@ namespace ECouponsPrinter
 
             if (m != null)
             {
-                MessageBox.Show("登录成功！");
-                GlobalVariables.isUserLogin = true;
-                GlobalVariables.testM = m;
-                GlobalVariables.LoginUserId = id;
+                if (m.StrMobileNo == null)
+                {
+                    Login login = new Login();
+                    if (DialogResult.Yes == login.ShowDialog())
+                    {
+
+                    }
+                    else
+                    {
+                        MessageBox.Show("登录失败");
+                        return;
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("登录成功！");
+                    GlobalVariables.isUserLogin = true;
+                    GlobalVariables.testM = m;
+                    GlobalVariables.LoginUserId = id;
+                }
             }
             else
                 MessageBox.Show("登录失败");

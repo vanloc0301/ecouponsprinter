@@ -593,6 +593,9 @@ namespace ECouponsPrinter
             this.Panel_Home.Visible = true;
             ShowHome();
 
+            //设置半透明的Label
+            Home_fav.BackColor = Color.FromArgb(105, Color.AliceBlue);
+
         }
         #endregion
 
@@ -1774,8 +1777,8 @@ namespace ECouponsPrinter
                         this.Close();//csc关闭窗体
                         break;
 
-                    case Keys.F12:
-                        MessageBox.Show("F12");
+                    case Keys.A:
+                        MessageBox.Show("A");
                         break;
 
                 }
