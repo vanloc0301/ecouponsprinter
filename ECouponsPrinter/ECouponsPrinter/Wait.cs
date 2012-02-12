@@ -18,7 +18,7 @@ namespace ECouponsPrinter
             this.Info.Text = "正在打印优惠劵.......";
         }
 
-        public void SetProgressBarPosition(int currentPosition)
+        public void SetProgressBarPositionP(int currentPosition)
         {
             if (currentPosition < prcBar.Maximum)
             {
