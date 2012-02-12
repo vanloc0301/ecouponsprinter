@@ -136,5 +136,39 @@ namespace ECouponsPrinter
                 return false;
             }
         }
+
+        internal bool MemberLogon(string strCardNo, string strMobileNo, string strCode)
+        {
+            request.OpenRequest(GlobalVariables.StrServerUrl + "/servlet/MemberMobile?strTerminalNo=" + GlobalVariables.StrTerminalNo + "&strCardNo=" + strCardNo + 
+                "&strCode=" + strCode + "&strMobileNo=" + strMobileNo, "");
+            XmlDocument doc = new XmlDocument();
+            string strXml = request.HtmlDocument;
+            if (strXml.IndexOf("<return>") > 0)
+            {
+                doc.LoadXml(strXml);
+                return doc.GetElementsByTagName("return").Item(0).InnerText.Trim().Equals("OK");
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        internal bool MemberLogon(string strCardNo, string strMobileNo)
+        {
+            request.OpenRequest(GlobalVariables.StrServerUrl + "/servlet/MemberMobile?strTerminalNo=" + GlobalVariables.StrTerminalNo + "&strCardNo=" + strCardNo +
+                "&strMobileNo=" + strMobileNo, "");
+            XmlDocument doc = new XmlDocument();
+            string strXml = request.HtmlDocument;
+            if (strXml.IndexOf("<return>") > 0)
+            {
+                doc.LoadXml(strXml);
+                return doc.GetElementsByTagName("return").Item(0).InnerText.Trim().Equals("OK");
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 }
