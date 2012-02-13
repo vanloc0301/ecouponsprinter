@@ -1763,7 +1763,7 @@ namespace ECouponsPrinter
         }
 
 
-        //esc退出窗体
+        
         protected override bool ProcessCmdKey(ref System.Windows.Forms.Message msg, System.Windows.Forms.Keys keyData) //激活回车键
         {
             int WM_KEYDOWN = 256;
@@ -1773,9 +1773,6 @@ namespace ECouponsPrinter
             {
                 switch (keyData)
                 {
-                    case Keys.Escape:
-                        this.Close();//csc关闭窗体
-                        break;
 
                     case Keys.A:
                         MessageBox.Show("A");

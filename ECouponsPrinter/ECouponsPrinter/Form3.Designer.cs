@@ -48,7 +48,9 @@
             this.listBox1.FormattingEnabled = true;
             this.listBox1.ItemHeight = 33;
             this.listBox1.Items.AddRange(new object[] {
-            "3897"});
+            "3897",
+            "67899",
+            "234"});
             this.listBox1.Location = new System.Drawing.Point(44, 12);
             this.listBox1.MultiColumn = true;
             this.listBox1.Name = "listBox1";
