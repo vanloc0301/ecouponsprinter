@@ -38,6 +38,8 @@
             this.button1 = new System.Windows.Forms.Button();
             this.Button_LastCouponsPage = new System.Windows.Forms.Button();
             this.Button_NextCouponsPage = new System.Windows.Forms.Button();
+            this.Button_Vip = new System.Windows.Forms.Button();
+            this.Button_NearShop = new System.Windows.Forms.Button();
             this.Button_MyInfoPage = new System.Windows.Forms.Button();
             this.Button_HomePage = new System.Windows.Forms.Button();
             this.Button_ShopPage = new System.Windows.Forms.Button();
@@ -167,35 +169,33 @@
             this.PB_Coupon_1 = new System.Windows.Forms.PictureBox();
             this.Timer_DownloadInfo = new System.Windows.Forms.Timer(this.components);
             this.Panel_NearShop = new System.Windows.Forms.Panel();
+            this.PB_NearShop12 = new System.Windows.Forms.PictureBox();
             this.PB_NearShop24 = new System.Windows.Forms.PictureBox();
+            this.PB_NearShop6 = new System.Windows.Forms.PictureBox();
             this.PB_NearShop18 = new System.Windows.Forms.PictureBox();
+            this.PB_NearShop11 = new System.Windows.Forms.PictureBox();
             this.PB_NearShop23 = new System.Windows.Forms.PictureBox();
+            this.PB_NearShop5 = new System.Windows.Forms.PictureBox();
             this.PB_NearShop17 = new System.Windows.Forms.PictureBox();
+            this.PB_NearShop10 = new System.Windows.Forms.PictureBox();
             this.PB_NearShop22 = new System.Windows.Forms.PictureBox();
+            this.PB_NearShop4 = new System.Windows.Forms.PictureBox();
             this.PB_NearShop16 = new System.Windows.Forms.PictureBox();
+            this.PB_NearShop9 = new System.Windows.Forms.PictureBox();
             this.PB_NearShop21 = new System.Windows.Forms.PictureBox();
+            this.PB_NearShop3 = new System.Windows.Forms.PictureBox();
             this.PB_NearShop15 = new System.Windows.Forms.PictureBox();
+            this.PB_NearShop8 = new System.Windows.Forms.PictureBox();
             this.PB_NearShop20 = new System.Windows.Forms.PictureBox();
+            this.PB_NearShop7 = new System.Windows.Forms.PictureBox();
             this.PB_NearShop19 = new System.Windows.Forms.PictureBox();
+            this.PB_NearShop2 = new System.Windows.Forms.PictureBox();
+            this.PB_NearShop1 = new System.Windows.Forms.PictureBox();
             this.PB_NearShop14 = new System.Windows.Forms.PictureBox();
             this.PB_NearShop13 = new System.Windows.Forms.PictureBox();
             this.PB_NearShop_Top = new System.Windows.Forms.PictureBox();
             this.btn_NearShopInfo = new System.Windows.Forms.Button();
             this.Label_NearShopName = new System.Windows.Forms.Label();
-            this.PB_NearShop1 = new System.Windows.Forms.PictureBox();
-            this.PB_NearShop2 = new System.Windows.Forms.PictureBox();
-            this.PB_NearShop7 = new System.Windows.Forms.PictureBox();
-            this.PB_NearShop8 = new System.Windows.Forms.PictureBox();
-            this.PB_NearShop3 = new System.Windows.Forms.PictureBox();
-            this.PB_NearShop9 = new System.Windows.Forms.PictureBox();
-            this.PB_NearShop4 = new System.Windows.Forms.PictureBox();
-            this.PB_NearShop10 = new System.Windows.Forms.PictureBox();
-            this.PB_NearShop5 = new System.Windows.Forms.PictureBox();
-            this.PB_NearShop11 = new System.Windows.Forms.PictureBox();
-            this.PB_NearShop6 = new System.Windows.Forms.PictureBox();
-            this.PB_NearShop12 = new System.Windows.Forms.PictureBox();
-            this.Button_NearShop = new System.Windows.Forms.Button();
-            this.Button_Vip = new System.Windows.Forms.Button();
             this.Panel_Top.SuspendLayout();
             this.Panel_Bottom.SuspendLayout();
             this.Panel_Home.SuspendLayout();
@@ -297,31 +297,31 @@
             ((System.ComponentModel.ISupportInitialize)(this.PB_Coupon_5)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PB_Coupon_1)).BeginInit();
             this.Panel_NearShop.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.PB_NearShop12)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PB_NearShop24)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PB_NearShop6)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PB_NearShop18)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PB_NearShop11)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PB_NearShop23)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PB_NearShop5)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PB_NearShop17)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PB_NearShop10)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PB_NearShop22)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PB_NearShop4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PB_NearShop16)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PB_NearShop9)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PB_NearShop21)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PB_NearShop3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PB_NearShop15)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PB_NearShop8)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PB_NearShop20)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PB_NearShop7)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PB_NearShop19)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PB_NearShop2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PB_NearShop1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PB_NearShop14)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PB_NearShop13)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PB_NearShop_Top)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PB_NearShop1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PB_NearShop2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PB_NearShop7)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PB_NearShop8)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PB_NearShop3)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PB_NearShop9)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PB_NearShop4)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PB_NearShop10)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PB_NearShop5)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PB_NearShop11)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PB_NearShop6)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PB_NearShop12)).BeginInit();
             this.SuspendLayout();
             // 
             // Panel_Top
@@ -434,6 +434,32 @@
             this.Button_NextCouponsPage.UseVisualStyleBackColor = true;
             this.Button_NextCouponsPage.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Button_NextCouponsPage_MouseDown);
             this.Button_NextCouponsPage.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Button_NextCouponsPage_MouseUp);
+            // 
+            // Button_Vip
+            // 
+            this.Button_Vip.FlatAppearance.BorderSize = 0;
+            this.Button_Vip.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.Button_Vip.Location = new System.Drawing.Point(593, 9);
+            this.Button_Vip.Margin = new System.Windows.Forms.Padding(0);
+            this.Button_Vip.Name = "Button_Vip";
+            this.Button_Vip.Size = new System.Drawing.Size(110, 116);
+            this.Button_Vip.TabIndex = 17;
+            this.Button_Vip.UseVisualStyleBackColor = true;
+            this.Button_Vip.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Button_MyInfoPage_MouseDown);
+            this.Button_Vip.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Button_MyInfoPage_MouseUp);
+            // 
+            // Button_NearShop
+            // 
+            this.Button_NearShop.FlatAppearance.BorderSize = 0;
+            this.Button_NearShop.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.Button_NearShop.Location = new System.Drawing.Point(475, 9);
+            this.Button_NearShop.Margin = new System.Windows.Forms.Padding(0);
+            this.Button_NearShop.Name = "Button_NearShop";
+            this.Button_NearShop.Size = new System.Drawing.Size(110, 116);
+            this.Button_NearShop.TabIndex = 17;
+            this.Button_NearShop.UseVisualStyleBackColor = true;
+            this.Button_NearShop.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Button_MyInfoPage_MouseDown);
+            this.Button_NearShop.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Button_MyInfoPage_MouseUp);
             // 
             // Button_MyInfoPage
             // 
@@ -1929,6 +1955,16 @@
             this.Panel_NearShop.Name = "Panel_NearShop";
             this.Panel_NearShop.Size = new System.Drawing.Size(1080, 1650);
             this.Panel_NearShop.TabIndex = 35;
+            this.Panel_NearShop.Visible = false;
+            // 
+            // PB_NearShop12
+            // 
+            this.PB_NearShop12.Location = new System.Drawing.Point(897, 961);
+            this.PB_NearShop12.Margin = new System.Windows.Forms.Padding(0);
+            this.PB_NearShop12.Name = "PB_NearShop12";
+            this.PB_NearShop12.Size = new System.Drawing.Size(168, 195);
+            this.PB_NearShop12.TabIndex = 33;
+            this.PB_NearShop12.TabStop = false;
             // 
             // PB_NearShop24
             // 
@@ -1939,6 +1975,15 @@
             this.PB_NearShop24.TabIndex = 33;
             this.PB_NearShop24.TabStop = false;
             // 
+            // PB_NearShop6
+            // 
+            this.PB_NearShop6.Location = new System.Drawing.Point(897, 729);
+            this.PB_NearShop6.Margin = new System.Windows.Forms.Padding(0);
+            this.PB_NearShop6.Name = "PB_NearShop6";
+            this.PB_NearShop6.Size = new System.Drawing.Size(168, 195);
+            this.PB_NearShop6.TabIndex = 33;
+            this.PB_NearShop6.TabStop = false;
+            // 
             // PB_NearShop18
             // 
             this.PB_NearShop18.Location = new System.Drawing.Point(897, 1192);
@@ -1947,6 +1992,15 @@
             this.PB_NearShop18.Size = new System.Drawing.Size(168, 195);
             this.PB_NearShop18.TabIndex = 33;
             this.PB_NearShop18.TabStop = false;
+            // 
+            // PB_NearShop11
+            // 
+            this.PB_NearShop11.Location = new System.Drawing.Point(720, 961);
+            this.PB_NearShop11.Margin = new System.Windows.Forms.Padding(0);
+            this.PB_NearShop11.Name = "PB_NearShop11";
+            this.PB_NearShop11.Size = new System.Drawing.Size(168, 195);
+            this.PB_NearShop11.TabIndex = 33;
+            this.PB_NearShop11.TabStop = false;
             // 
             // PB_NearShop23
             // 
@@ -1957,6 +2011,15 @@
             this.PB_NearShop23.TabIndex = 33;
             this.PB_NearShop23.TabStop = false;
             // 
+            // PB_NearShop5
+            // 
+            this.PB_NearShop5.Location = new System.Drawing.Point(720, 729);
+            this.PB_NearShop5.Margin = new System.Windows.Forms.Padding(0);
+            this.PB_NearShop5.Name = "PB_NearShop5";
+            this.PB_NearShop5.Size = new System.Drawing.Size(168, 195);
+            this.PB_NearShop5.TabIndex = 33;
+            this.PB_NearShop5.TabStop = false;
+            // 
             // PB_NearShop17
             // 
             this.PB_NearShop17.Location = new System.Drawing.Point(720, 1192);
@@ -1965,6 +2028,15 @@
             this.PB_NearShop17.Size = new System.Drawing.Size(168, 195);
             this.PB_NearShop17.TabIndex = 33;
             this.PB_NearShop17.TabStop = false;
+            // 
+            // PB_NearShop10
+            // 
+            this.PB_NearShop10.Location = new System.Drawing.Point(543, 961);
+            this.PB_NearShop10.Margin = new System.Windows.Forms.Padding(0);
+            this.PB_NearShop10.Name = "PB_NearShop10";
+            this.PB_NearShop10.Size = new System.Drawing.Size(168, 195);
+            this.PB_NearShop10.TabIndex = 33;
+            this.PB_NearShop10.TabStop = false;
             // 
             // PB_NearShop22
             // 
@@ -1975,6 +2047,15 @@
             this.PB_NearShop22.TabIndex = 33;
             this.PB_NearShop22.TabStop = false;
             // 
+            // PB_NearShop4
+            // 
+            this.PB_NearShop4.Location = new System.Drawing.Point(543, 729);
+            this.PB_NearShop4.Margin = new System.Windows.Forms.Padding(0);
+            this.PB_NearShop4.Name = "PB_NearShop4";
+            this.PB_NearShop4.Size = new System.Drawing.Size(168, 195);
+            this.PB_NearShop4.TabIndex = 33;
+            this.PB_NearShop4.TabStop = false;
+            // 
             // PB_NearShop16
             // 
             this.PB_NearShop16.Location = new System.Drawing.Point(543, 1192);
@@ -1983,6 +2064,15 @@
             this.PB_NearShop16.Size = new System.Drawing.Size(168, 195);
             this.PB_NearShop16.TabIndex = 33;
             this.PB_NearShop16.TabStop = false;
+            // 
+            // PB_NearShop9
+            // 
+            this.PB_NearShop9.Location = new System.Drawing.Point(366, 961);
+            this.PB_NearShop9.Margin = new System.Windows.Forms.Padding(0);
+            this.PB_NearShop9.Name = "PB_NearShop9";
+            this.PB_NearShop9.Size = new System.Drawing.Size(168, 195);
+            this.PB_NearShop9.TabIndex = 33;
+            this.PB_NearShop9.TabStop = false;
             // 
             // PB_NearShop21
             // 
@@ -1993,6 +2083,15 @@
             this.PB_NearShop21.TabIndex = 33;
             this.PB_NearShop21.TabStop = false;
             // 
+            // PB_NearShop3
+            // 
+            this.PB_NearShop3.Location = new System.Drawing.Point(366, 729);
+            this.PB_NearShop3.Margin = new System.Windows.Forms.Padding(0);
+            this.PB_NearShop3.Name = "PB_NearShop3";
+            this.PB_NearShop3.Size = new System.Drawing.Size(168, 195);
+            this.PB_NearShop3.TabIndex = 33;
+            this.PB_NearShop3.TabStop = false;
+            // 
             // PB_NearShop15
             // 
             this.PB_NearShop15.Location = new System.Drawing.Point(366, 1192);
@@ -2001,6 +2100,15 @@
             this.PB_NearShop15.Size = new System.Drawing.Size(168, 195);
             this.PB_NearShop15.TabIndex = 33;
             this.PB_NearShop15.TabStop = false;
+            // 
+            // PB_NearShop8
+            // 
+            this.PB_NearShop8.Location = new System.Drawing.Point(188, 961);
+            this.PB_NearShop8.Margin = new System.Windows.Forms.Padding(0);
+            this.PB_NearShop8.Name = "PB_NearShop8";
+            this.PB_NearShop8.Size = new System.Drawing.Size(168, 195);
+            this.PB_NearShop8.TabIndex = 33;
+            this.PB_NearShop8.TabStop = false;
             // 
             // PB_NearShop20
             // 
@@ -2011,6 +2119,15 @@
             this.PB_NearShop20.TabIndex = 33;
             this.PB_NearShop20.TabStop = false;
             // 
+            // PB_NearShop7
+            // 
+            this.PB_NearShop7.Location = new System.Drawing.Point(11, 961);
+            this.PB_NearShop7.Margin = new System.Windows.Forms.Padding(0);
+            this.PB_NearShop7.Name = "PB_NearShop7";
+            this.PB_NearShop7.Size = new System.Drawing.Size(168, 195);
+            this.PB_NearShop7.TabIndex = 33;
+            this.PB_NearShop7.TabStop = false;
+            // 
             // PB_NearShop19
             // 
             this.PB_NearShop19.Location = new System.Drawing.Point(11, 1422);
@@ -2019,6 +2136,24 @@
             this.PB_NearShop19.Size = new System.Drawing.Size(168, 195);
             this.PB_NearShop19.TabIndex = 33;
             this.PB_NearShop19.TabStop = false;
+            // 
+            // PB_NearShop2
+            // 
+            this.PB_NearShop2.Location = new System.Drawing.Point(188, 729);
+            this.PB_NearShop2.Margin = new System.Windows.Forms.Padding(0);
+            this.PB_NearShop2.Name = "PB_NearShop2";
+            this.PB_NearShop2.Size = new System.Drawing.Size(168, 195);
+            this.PB_NearShop2.TabIndex = 33;
+            this.PB_NearShop2.TabStop = false;
+            // 
+            // PB_NearShop1
+            // 
+            this.PB_NearShop1.Location = new System.Drawing.Point(11, 729);
+            this.PB_NearShop1.Margin = new System.Windows.Forms.Padding(0);
+            this.PB_NearShop1.Name = "PB_NearShop1";
+            this.PB_NearShop1.Size = new System.Drawing.Size(168, 195);
+            this.PB_NearShop1.TabIndex = 33;
+            this.PB_NearShop1.TabStop = false;
             // 
             // PB_NearShop14
             // 
@@ -2069,140 +2204,6 @@
             this.Label_NearShopName.TabIndex = 8;
             this.Label_NearShopName.Text = "商家名称";
             this.Label_NearShopName.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // PB_NearShop1
-            // 
-            this.PB_NearShop1.Location = new System.Drawing.Point(11, 729);
-            this.PB_NearShop1.Margin = new System.Windows.Forms.Padding(0);
-            this.PB_NearShop1.Name = "PB_NearShop1";
-            this.PB_NearShop1.Size = new System.Drawing.Size(168, 195);
-            this.PB_NearShop1.TabIndex = 33;
-            this.PB_NearShop1.TabStop = false;
-            // 
-            // PB_NearShop2
-            // 
-            this.PB_NearShop2.Location = new System.Drawing.Point(188, 729);
-            this.PB_NearShop2.Margin = new System.Windows.Forms.Padding(0);
-            this.PB_NearShop2.Name = "PB_NearShop2";
-            this.PB_NearShop2.Size = new System.Drawing.Size(168, 195);
-            this.PB_NearShop2.TabIndex = 33;
-            this.PB_NearShop2.TabStop = false;
-            // 
-            // PB_NearShop7
-            // 
-            this.PB_NearShop7.Location = new System.Drawing.Point(11, 961);
-            this.PB_NearShop7.Margin = new System.Windows.Forms.Padding(0);
-            this.PB_NearShop7.Name = "PB_NearShop7";
-            this.PB_NearShop7.Size = new System.Drawing.Size(168, 195);
-            this.PB_NearShop7.TabIndex = 33;
-            this.PB_NearShop7.TabStop = false;
-            // 
-            // PB_NearShop8
-            // 
-            this.PB_NearShop8.Location = new System.Drawing.Point(188, 961);
-            this.PB_NearShop8.Margin = new System.Windows.Forms.Padding(0);
-            this.PB_NearShop8.Name = "PB_NearShop8";
-            this.PB_NearShop8.Size = new System.Drawing.Size(168, 195);
-            this.PB_NearShop8.TabIndex = 33;
-            this.PB_NearShop8.TabStop = false;
-            // 
-            // PB_NearShop3
-            // 
-            this.PB_NearShop3.Location = new System.Drawing.Point(366, 729);
-            this.PB_NearShop3.Margin = new System.Windows.Forms.Padding(0);
-            this.PB_NearShop3.Name = "PB_NearShop3";
-            this.PB_NearShop3.Size = new System.Drawing.Size(168, 195);
-            this.PB_NearShop3.TabIndex = 33;
-            this.PB_NearShop3.TabStop = false;
-            // 
-            // PB_NearShop9
-            // 
-            this.PB_NearShop9.Location = new System.Drawing.Point(366, 961);
-            this.PB_NearShop9.Margin = new System.Windows.Forms.Padding(0);
-            this.PB_NearShop9.Name = "PB_NearShop9";
-            this.PB_NearShop9.Size = new System.Drawing.Size(168, 195);
-            this.PB_NearShop9.TabIndex = 33;
-            this.PB_NearShop9.TabStop = false;
-            // 
-            // PB_NearShop4
-            // 
-            this.PB_NearShop4.Location = new System.Drawing.Point(543, 729);
-            this.PB_NearShop4.Margin = new System.Windows.Forms.Padding(0);
-            this.PB_NearShop4.Name = "PB_NearShop4";
-            this.PB_NearShop4.Size = new System.Drawing.Size(168, 195);
-            this.PB_NearShop4.TabIndex = 33;
-            this.PB_NearShop4.TabStop = false;
-            // 
-            // PB_NearShop10
-            // 
-            this.PB_NearShop10.Location = new System.Drawing.Point(543, 961);
-            this.PB_NearShop10.Margin = new System.Windows.Forms.Padding(0);
-            this.PB_NearShop10.Name = "PB_NearShop10";
-            this.PB_NearShop10.Size = new System.Drawing.Size(168, 195);
-            this.PB_NearShop10.TabIndex = 33;
-            this.PB_NearShop10.TabStop = false;
-            // 
-            // PB_NearShop5
-            // 
-            this.PB_NearShop5.Location = new System.Drawing.Point(720, 729);
-            this.PB_NearShop5.Margin = new System.Windows.Forms.Padding(0);
-            this.PB_NearShop5.Name = "PB_NearShop5";
-            this.PB_NearShop5.Size = new System.Drawing.Size(168, 195);
-            this.PB_NearShop5.TabIndex = 33;
-            this.PB_NearShop5.TabStop = false;
-            // 
-            // PB_NearShop11
-            // 
-            this.PB_NearShop11.Location = new System.Drawing.Point(720, 961);
-            this.PB_NearShop11.Margin = new System.Windows.Forms.Padding(0);
-            this.PB_NearShop11.Name = "PB_NearShop11";
-            this.PB_NearShop11.Size = new System.Drawing.Size(168, 195);
-            this.PB_NearShop11.TabIndex = 33;
-            this.PB_NearShop11.TabStop = false;
-            // 
-            // PB_NearShop6
-            // 
-            this.PB_NearShop6.Location = new System.Drawing.Point(897, 729);
-            this.PB_NearShop6.Margin = new System.Windows.Forms.Padding(0);
-            this.PB_NearShop6.Name = "PB_NearShop6";
-            this.PB_NearShop6.Size = new System.Drawing.Size(168, 195);
-            this.PB_NearShop6.TabIndex = 33;
-            this.PB_NearShop6.TabStop = false;
-            // 
-            // PB_NearShop12
-            // 
-            this.PB_NearShop12.Location = new System.Drawing.Point(897, 961);
-            this.PB_NearShop12.Margin = new System.Windows.Forms.Padding(0);
-            this.PB_NearShop12.Name = "PB_NearShop12";
-            this.PB_NearShop12.Size = new System.Drawing.Size(168, 195);
-            this.PB_NearShop12.TabIndex = 33;
-            this.PB_NearShop12.TabStop = false;
-            // 
-            // Button_NearShop
-            // 
-            this.Button_NearShop.FlatAppearance.BorderSize = 0;
-            this.Button_NearShop.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Button_NearShop.Location = new System.Drawing.Point(475, 9);
-            this.Button_NearShop.Margin = new System.Windows.Forms.Padding(0);
-            this.Button_NearShop.Name = "Button_NearShop";
-            this.Button_NearShop.Size = new System.Drawing.Size(110, 116);
-            this.Button_NearShop.TabIndex = 17;
-            this.Button_NearShop.UseVisualStyleBackColor = true;
-            this.Button_NearShop.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Button_MyInfoPage_MouseDown);
-            this.Button_NearShop.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Button_MyInfoPage_MouseUp);
-            // 
-            // Button_Vip
-            // 
-            this.Button_Vip.FlatAppearance.BorderSize = 0;
-            this.Button_Vip.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Button_Vip.Location = new System.Drawing.Point(593, 9);
-            this.Button_Vip.Margin = new System.Windows.Forms.Padding(0);
-            this.Button_Vip.Name = "Button_Vip";
-            this.Button_Vip.Size = new System.Drawing.Size(110, 116);
-            this.Button_Vip.TabIndex = 17;
-            this.Button_Vip.UseVisualStyleBackColor = true;
-            this.Button_Vip.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Button_MyInfoPage_MouseDown);
-            this.Button_Vip.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Button_MyInfoPage_MouseUp);
             // 
             // MainFrame
             // 
@@ -2325,31 +2326,31 @@
             ((System.ComponentModel.ISupportInitialize)(this.PB_Coupon_5)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PB_Coupon_1)).EndInit();
             this.Panel_NearShop.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.PB_NearShop12)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PB_NearShop24)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PB_NearShop6)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PB_NearShop18)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PB_NearShop11)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PB_NearShop23)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PB_NearShop5)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PB_NearShop17)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PB_NearShop10)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PB_NearShop22)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PB_NearShop4)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PB_NearShop16)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PB_NearShop9)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PB_NearShop21)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PB_NearShop3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PB_NearShop15)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PB_NearShop8)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PB_NearShop20)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PB_NearShop7)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PB_NearShop19)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PB_NearShop2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PB_NearShop1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PB_NearShop14)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PB_NearShop13)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PB_NearShop_Top)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PB_NearShop1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PB_NearShop2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PB_NearShop7)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PB_NearShop8)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PB_NearShop3)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PB_NearShop9)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PB_NearShop4)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PB_NearShop10)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PB_NearShop5)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PB_NearShop11)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PB_NearShop6)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PB_NearShop12)).EndInit();
             this.ResumeLayout(false);
 
         }
