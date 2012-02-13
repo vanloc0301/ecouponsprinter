@@ -27,12 +27,13 @@ namespace ECouponsPrinter
 
             if (m != null)
             {
-                if (m.StrMobileNo == null)
+                if (m.StrMobileNo.Length == 0)
                 {
-                    Login login = new Login();
+                    Login login = new Login(id);
                     if (DialogResult.Yes == login.ShowDialog())
                     {
-
+                        MessageBox.Show("登录成功");
+                        return;
                     }
                     else
                     {

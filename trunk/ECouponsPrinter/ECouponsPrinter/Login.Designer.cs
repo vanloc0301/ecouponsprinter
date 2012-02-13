@@ -38,6 +38,7 @@
             this.cancel = new System.Windows.Forms.Button();
             this.Reget = new System.Windows.Forms.Button();
             this.CodeTimer = new System.Windows.Forms.Timer(this.components);
+            this.info = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label1
@@ -87,22 +88,24 @@
             // confirm
             // 
             this.confirm.Font = new System.Drawing.Font("宋体", 25F, System.Drawing.FontStyle.Bold);
-            this.confirm.Location = new System.Drawing.Point(40, 318);
+            this.confirm.Location = new System.Drawing.Point(40, 377);
             this.confirm.Name = "confirm";
             this.confirm.Size = new System.Drawing.Size(219, 69);
             this.confirm.TabIndex = 4;
             this.confirm.Text = "确  定";
             this.confirm.UseVisualStyleBackColor = true;
+            this.confirm.Click += new System.EventHandler(this.confirm_Click);
             // 
             // cancel
             // 
             this.cancel.Font = new System.Drawing.Font("宋体", 25F, System.Drawing.FontStyle.Bold);
-            this.cancel.Location = new System.Drawing.Point(360, 318);
+            this.cancel.Location = new System.Drawing.Point(408, 377);
             this.cancel.Name = "cancel";
             this.cancel.Size = new System.Drawing.Size(219, 69);
             this.cancel.TabIndex = 4;
             this.cancel.Text = "取  消";
             this.cancel.UseVisualStyleBackColor = true;
+            this.cancel.Click += new System.EventHandler(this.cancel_Click);
             // 
             // Reget
             // 
@@ -117,14 +120,25 @@
             // 
             // CodeTimer
             // 
+            this.CodeTimer.Interval = 1000;
             this.CodeTimer.Tick += new System.EventHandler(this.CodeTimer_Tick);
+            // 
+            // info
+            // 
+            this.info.Font = new System.Drawing.Font("宋体", 20F, System.Drawing.FontStyle.Bold);
+            this.info.ForeColor = System.Drawing.Color.Red;
+            this.info.Location = new System.Drawing.Point(35, 308);
+            this.info.Name = "info";
+            this.info.Size = new System.Drawing.Size(402, 39);
+            this.info.TabIndex = 6;
             // 
             // Login
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(724, 399);
+            this.ClientSize = new System.Drawing.Size(727, 471);
             this.ControlBox = false;
+            this.Controls.Add(this.info);
             this.Controls.Add(this.Reget);
             this.Controls.Add(this.cancel);
             this.Controls.Add(this.confirm);
@@ -151,5 +165,6 @@
         private System.Windows.Forms.Button cancel;
         private System.Windows.Forms.Button Reget;
         private System.Windows.Forms.Timer CodeTimer;
+        private System.Windows.Forms.Label info;
     }
 }
