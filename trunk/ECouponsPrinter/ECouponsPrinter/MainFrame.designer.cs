@@ -470,7 +470,7 @@
             this.Button_ShopPage.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("Button_ShopPage.BackgroundImage")));
             this.Button_ShopPage.FlatAppearance.BorderSize = 0;
             this.Button_ShopPage.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Button_ShopPage.Location = new System.Drawing.Point(121, 9);
+            this.Button_ShopPage.Location = new System.Drawing.Point(119, 9);
             this.Button_ShopPage.Margin = new System.Windows.Forms.Padding(0);
             this.Button_ShopPage.Name = "Button_ShopPage";
             this.Button_ShopPage.Size = new System.Drawing.Size(110, 116);
@@ -484,7 +484,7 @@
             this.Button_CouponsPage.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("Button_CouponsPage.BackgroundImage")));
             this.Button_CouponsPage.FlatAppearance.BorderSize = 0;
             this.Button_CouponsPage.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Button_CouponsPage.Location = new System.Drawing.Point(238, 9);
+            this.Button_CouponsPage.Location = new System.Drawing.Point(237, 9);
             this.Button_CouponsPage.Margin = new System.Windows.Forms.Padding(0);
             this.Button_CouponsPage.Name = "Button_CouponsPage";
             this.Button_CouponsPage.Size = new System.Drawing.Size(110, 116);
