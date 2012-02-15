@@ -53,7 +53,8 @@ namespace ECouponsPrinter
 
             if (strReturn.Equals("sms_error"))
             {
-           //     this.error.Text ="短信发送失败！请稍后重试。";
+                this.error.Text ="短信发送失败！请稍后重试。";
+                return;
             }
         }
 

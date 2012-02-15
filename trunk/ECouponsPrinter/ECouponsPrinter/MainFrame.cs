@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using System.Threading;
 using System.IO;
 using System.Data.OleDb;
+using System.Runtime.InteropServices;
 
 namespace ECouponsPrinter
 {
@@ -18,18 +19,22 @@ namespace ECouponsPrinter
         private static int CountDownNumber = GlobalVariables.WindowWaitTime;
         private string _stringScrollText = GlobalVariables.MarqueeText;
 
+//-----------------------------------------------------------------------------
         private List<PicInfo> LP_shop;
         private List<CouponPicInfo> LP_coupon;
         private List<PicInfo>[] LP_stype;
         private List<CouponPicInfo>[] LP_ctype;
-
         private static int curType = 0;                         //指示主页当前显示的类别
         private static int count, curPage, totalPage, curPageShowCount;
         private static int tPage1, tPage2, tPage3;
         private static int cPage1, cPage2;
         private static int theCouponNum;
 
-        Member m = null;
+//-----------------------------------------------------------------------------
+        private static bool isFirstKey = true;
+        Member m = new Member();
+
+        private SCard sc;
 
         enum part { up = 1, middle = 2, bottom = 3 };
 
@@ -443,17 +448,6 @@ namespace ECouponsPrinter
         {
             this.Button_CouponsPage.BackgroundImage = Image.FromFile(path + "\\images\\切图\\首页\\优惠券.jpg");
 
-
-
-            //Form3 f = new Form3();
-            //f.TopLevel = false;
-            //f.Opacity = 0;
-            //Panel_MyInfo.Controls.Clear();
-            //Panel_MyInfo.Controls.Add(f);
-            //f.Show();
-            //Thread.Sleep(1000);
-            //f.Opacity = 100;
-
             //切换
             int y = this.VerticalScroll.Value;
             this.Panel_Coupons.Location = new System.Drawing.Point(0, 142 - y);
@@ -486,8 +480,6 @@ namespace ECouponsPrinter
         private void Button_MyInfoPage_MouseUp(object sender, MouseEventArgs e)
         {
             this.Button_MyInfoPage.BackgroundImage = Image.FromFile(path + "\\images\\切图\\首页\\我的专区.jpg");
-
-            m = GlobalVariables.testM;
 
             //准备工作
             this.UnVisibleAllPanels();
@@ -592,9 +584,12 @@ namespace ECouponsPrinter
             InitHomeData();
             this.Panel_Home.Visible = true;
             ShowHome();
+          
+            //启动射频卡检测程序
+          //  this.SCardStart();
 
-            //设置半透明的Label
-       //     Home_fav.BackColor = Color.FromArgb(105, Color.AliceBlue);
+            //加载半透明的Label
+            this.OnLoadLabelStyle(Color.White);
 
         }
         #endregion
@@ -1234,11 +1229,14 @@ namespace ECouponsPrinter
         /// </summary>
         private void InitCouponData(String trade)
         {
-            if (LP_ctype != null)
+            if (LP_ctype != null )
             {
                 for (int i = 0; i < LP_ctype.Length; i++)
                 {
-                    LP_ctype[i].Clear();
+                    if (LP_ctype[i] != null)
+                    {
+                        LP_ctype[i].Clear();
+                    }
                 }
             }
 
@@ -1502,7 +1500,6 @@ namespace ECouponsPrinter
         }
         #endregion
 
-
         #region 一些公用的函数
 
         /// <summary>
@@ -1679,27 +1676,52 @@ namespace ECouponsPrinter
         }
 
         /// <summary>
-        /// 点击优惠劵大图弹出的优惠劵打印页面
+        /// 收藏和打印半透明Label的时间处理
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void PB_Coupons_Click(object sender, MouseEventArgs e)
+        private void TranlateLabel_Click(object sender, EventArgs e)
         {
-            PictureBox pb = sender as PictureBox;
+            Label lb = sender as Label;
+            int type = 1;        //0表示收藏，非0表示打印
 
             String id = null;
-
-            switch (pb.Name)
+            switch (lb.Name)
             {
-                case "PB_Home_Down":
+                case "Home_Fav":
+                    type = 0;
+                    id = LP_coupon[(curPage - 1) * 12 + theCouponNum].id;
+                    break;
+                case "Home_Print":
+                    type = 1;
+                    id = LP_coupon[(curPage - 1) * 12 + theCouponNum].id;
+                    break;
+                case "ShopInfo_Fav":
+                    type = 0;
                     id = LP_coupon[(curPage - 1) * 6 + theCouponNum].id;
                     break;
-                case "PB_ShopInfo_Coupons":
-                case "PB_Coupon_Top":
-                case "PB_MyInfo_Fav":
+                case "ShopInfo_Print":
+                    type = 1;
+                    id = LP_coupon[(curPage - 1) * 6 + theCouponNum].id;
+                    break;
+                case "Coupon_Fav":
+                    type = 0;
+                    id = LP_ctype[0][(curPage - 1) * 12 + theCouponNum].id;
+                    break;
+                case "Coupon_Print":
+                    type = 1;
+                    id = LP_ctype[0][(curPage - 1) * 12 + theCouponNum].id;
+                    break;
+                case "MyInfo_Top_Print":
+                    type = 1;
                     id = LP_ctype[0][(curPage - 1) * 6 + theCouponNum].id;
                     break;
-                case "PB_MyInfo_His":
+                case "Myinfo_Bottom_Fav":
+                    type = 0;
+                    id = LP_ctype[1][(curPage - 1) * 6 + theCouponNum].id;
+                    break;
+                case "Myinfo_Bottom_Print":
+                    type = 1;
                     id = LP_ctype[1][(curPage - 1) * 6 + theCouponNum].id;
                     break;
                 default: break;
@@ -1707,18 +1729,45 @@ namespace ECouponsPrinter
 
             CouponPicInfo pi = null;
 
-            if (id != null)
+            if (id != null)             
             {
-                pi = InitCouponPopData(id);
+                if (type == 1)
+                {
+                    pi = InitCouponPopData(id);
+                    CouponsPopForm cpf = new CouponsPopForm(pi);
+                    cpf.ShowDialog();
+                    Thread.Sleep(200);
+                }
+                else
+                {
+                    //收藏
+                }
             }
             else
                 return;
+     
+        }
 
-            CouponsPopForm cpf = new CouponsPopForm(pi);
-            cpf.ShowDialog();
-            Thread.Sleep(200);
+        /// <summary>
+        /// 预设定半透明的Label
+        /// </summary>
+        /// <param name="color"></param>
+        private void OnLoadLabelStyle(Color color)
+        {
+      //      Home_Fav.Parent = PB_Home_Down;
+      //      Home_Print.Parent = PB_Home_Down;
+            Home_Fav.BackColor =  Color.FromArgb(105, color);
+            Home_Print.BackColor = Color.FromArgb(105, color);
+            ShopInfo_Fav.BackColor = Color.FromArgb(105, color);
+            ShopInfo_Print.BackColor = Color.FromArgb(105, color);
+            Coupon_Fav.BackColor = Color.FromArgb(105, color);
+            Coupon_Print.BackColor = Color.FromArgb(105, color);
+            MyInfo_Bottom_Fav.BackColor = Color.FromArgb(105, color);
+            MyInfo_Bottom_Print.BackColor = Color.FromArgb(105, color);
+
 
         }
+
 
         #endregion
 
@@ -1762,33 +1811,147 @@ namespace ECouponsPrinter
             this.Timer_DownloadInfo.Start();
         }
 
+        #region 磁卡检测处理
+        [DllImport("user32.dll", CharSet = CharSet.Auto)]
+        private extern static int GetWindowTextLength(IntPtr hWnd);
 
-        
+        [DllImport("User.dll", EntryPoint = "SendMessage")]
+        private static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto, ExactSpelling = true)]
+        public static extern IntPtr GetForegroundWindow();
+
+        [DllImport("user32.dll", EntryPoint = "GetWindowText")]
+        private static extern bool GetWindowText(IntPtr hWnd, StringBuilder title, int maxBufSize);
+
+        private const int WM_CLOSE = 0x0010;
+
+        private void CloseAllDialog()
+        {
+            IntPtr hwnd;
+            hwnd = GetForegroundWindow();
+            if (hwnd == IntPtr.Zero)
+            {
+                return;
+            }
+
+            int length = GetWindowTextLength(hwnd);
+            StringBuilder stringBuilder = new StringBuilder(2 * length + 1);
+            GetWindowText(hwnd, stringBuilder, stringBuilder.Capacity);
+
+            String strTitle = stringBuilder.ToString();
+            if(strTitle.CompareTo("MainFrame") != 0)
+            {
+                SendMessage(hwnd, WM_CLOSE, 0, 0);
+            }
+        }
+
         protected override bool ProcessCmdKey(ref System.Windows.Forms.Message msg, System.Windows.Forms.Keys keyData) //激活回车键
         {
             int WM_KEYDOWN = 256;
             int WM_SYSKEYDOWN = 260;
 
-            if (msg.Msg == WM_KEYDOWN | msg.Msg == WM_SYSKEYDOWN)
+            if (isFirstKey)
             {
-                switch (keyData)
+                if (msg.Msg == WM_KEYDOWN | msg.Msg == WM_SYSKEYDOWN)
                 {
+                    LoginText.Focus();
 
-                    case Keys.A:
-                        MessageBox.Show("A");
-                        break;
-
+                    isFirstKey = false;
                 }
-
+            }
+            else
+            {
+                if (keyData.Equals(Keys.Enter))
+                {
+                    if(!UserLogin(LoginText.Text))
+                    {
+                        isFirstKey = true;
+                    }
+                }
             }
             return false;
         }
+        #endregion
 
-        //private void HP_(object sender, PaintEventArgs e)
-        //{
+        #region 射频卡检测处理
+        private void SCardStart()
+        {
+            sc = new SCard();
+            sc.Init();
+            this.SCardTimer.Enabled = true;
+            this.SCardTimer.Interval = 500;
+            this.SCardTimer.Start();
+        }
 
-        //}
+        private void SCardTimer_Tick(object sender, EventArgs e)
+        {
+            if (sc.searchCard() == null)
+            {
+                return;
+            }
+            else
+            {
+                string cardNo = sc.searchCard();
+                if (UserLogin(cardNo))
+                {
+                    this.SCardTimer.Stop();
+                    this.SCardTimer.Enabled = false;
+                }
+                else
+                    return;
+            }
+        }
 
+        #endregion
+
+        #region 用户登录
+        private bool UserLogin(string userid)
+        {
+            UploadInfo ui = new UploadInfo();
+            m = ui.MemberAuth(userid);
+            MyMsgBox mb = new MyMsgBox();
+            if (m == null)
+            {
+                mb.ShowMsg("无效的用户！", 2);
+                return false;
+            }
+            else
+            {
+                if (m.StrMobileNo.Length == 0)
+                {
+                    Login login = new Login(userid);
+                    if (DialogResult.Yes == login.ShowDialog())
+                    {
+                        mb.ShowMsg("登录成功！", 2);
+                        GlobalVariables.isUserLogin = true;
+                        GlobalVariables.LoginUserId = userid;
+                        return true;
+                    }
+                    else
+                    {
+                        mb.ShowMsg("登录失败！/n请先绑定手机！", 2);
+                        return false;
+                    }
+                }
+                else
+                {
+                    mb.ShowMsg("登录成功！", 2);
+                    GlobalVariables.isUserLogin = true;
+                    GlobalVariables.LoginUserId = userid;
+                    return true;
+                }
+            }
+        }
+
+        #endregion
+
+        private void Btn_Coupons_Click(object sender, MouseEventArgs e)
+        {
+
+        }
+
+        
 
     }
 }

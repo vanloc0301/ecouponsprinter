@@ -47,13 +47,13 @@ namespace ECouponsPrinter
         private static void UIThreadException(object sender, ThreadExceptionEventArgs e)
         {
             ErrorLog.log(e.Exception);
-            Application.Restart();
+    //        Application.Restart();
         }
 
         private static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
             ErrorLog.log(new Exception(e.ExceptionObject.ToString()));
-            Application.Restart();
+    //        Application.Restart();
         }
     }
 }
