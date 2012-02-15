@@ -148,5 +148,25 @@ namespace ECouponsPrinter
                 MessageBox.Show("验证码错误，请重新输入！");
             }
         }
+
+        private void button10_Click(object sender, EventArgs e)
+        {
+            UploadInfo ui = new UploadInfo();
+            ui.form1 = this;
+            if (ui.CouponFavourite("0526", "123456"))
+            {
+                MessageBox.Show("操作成功！");
+            }
+            else
+            {
+                MessageBox.Show("操作失败！");
+            }
+        }
+
+        private void button11_Click(object sender, EventArgs e)
+        {
+            DownloadInfo di = new DownloadInfo();
+            
+        }
     }
 }

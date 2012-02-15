@@ -170,5 +170,22 @@ namespace ECouponsPrinter
                 return false;
             }
         }
+
+        internal bool CouponFavourite(string strCardNo, string strCouponId)
+        {
+            request.OpenRequest(GlobalVariables.StrServerUrl + "/servlet/CouponFavourite?strTerminalNo=" + GlobalVariables.StrTerminalNo + "&strCardNo=" + strCardNo +
+                "&strCouponId=" + strCouponId, "");
+            XmlDocument doc = new XmlDocument();
+            string strXml = request.HtmlDocument;
+            if (strXml.IndexOf("<return>") > 0)
+            {
+                doc.LoadXml(strXml);
+                return doc.GetElementsByTagName("return").Item(0).InnerText.Trim().Equals("OK");
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 }
