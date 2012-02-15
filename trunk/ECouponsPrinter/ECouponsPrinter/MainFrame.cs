@@ -48,11 +48,47 @@ namespace ECouponsPrinter
             this.Panel_ShopInfo.GetType().GetProperty("DoubleBuffered", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic).SetValue(Panel_ShopInfo, true, null);
             this.Panel_MyInfo.GetType().GetProperty("DoubleBuffered", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic).SetValue(Panel_MyInfo, true, null);
             this.Panel_Home.GetType().GetProperty("DoubleBuffered", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic).SetValue(Panel_Home, true, null);
+            //根据分辨率作出调整
+            Size size = SystemInformation.PrimaryMonitorSize;
+            int width = size.Width;
+            int height = size.Height;
+            float widthRatio = width / 1080F;
+            float heightRatio = height / 1920F;
+            foreach (Control c in Controls)
+            {
+                ChangeControl(c, widthRatio, heightRatio);
+            }
+
             //设置定时刷新时钟
             this.Timer_DownloadInfo.Stop();
             this.Timer_DownloadInfo.Interval = GlobalVariables.IntRefreshSec * 1000;
             //     this.Timer_DownloadInfo.Start();
 
+        }
+
+        private void ChangeControl(Control c, float widthRatio, float heightRatio)
+        {
+            c.Width = (int)(c.Width * widthRatio);
+            c.Height = (int)(c.Height * heightRatio);
+            c.Location = new Point((int)(c.Location.X * widthRatio), (int)(c.Location.Y * heightRatio));
+            if (c is Button)
+            {
+                if (c.BackgroundImage != null)
+                {
+                    c.BackgroundImageLayout = ImageLayout.Stretch;
+                }
+            }
+            if (c is Label)
+            {
+                c.Font = new Font(c.Font.FontFamily, c.Font.Size * heightRatio, c.Font.Style);
+            }
+            if (c.Controls != null)
+            {
+                foreach (Control cc in c.Controls)
+                {
+                    ChangeControl(cc, widthRatio, heightRatio);
+                }
+            }
         }
 
         #region 主要
