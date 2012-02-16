@@ -19,7 +19,7 @@ namespace ECouponsPrinter
         private static int CountDownNumber = GlobalVariables.WindowWaitTime;
         private string _stringScrollText = GlobalVariables.MarqueeText;
 
-//-----------------------------------------------------------------------------
+        //-----------------------------------------------------------------------------
         private List<PicInfo> LP_shop;
         private List<CouponPicInfo> LP_coupon;
         private List<PicInfo>[] LP_stype;
@@ -30,7 +30,7 @@ namespace ECouponsPrinter
         private static int cPage1, cPage2;
         private static int theCouponNum;
 
-//-----------------------------------------------------------------------------
+        //-----------------------------------------------------------------------------
         private static bool isFirstKey = true;
         Member m = new Member();
 
@@ -49,15 +49,16 @@ namespace ECouponsPrinter
             this.Panel_MyInfo.GetType().GetProperty("DoubleBuffered", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic).SetValue(Panel_MyInfo, true, null);
             this.Panel_Home.GetType().GetProperty("DoubleBuffered", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic).SetValue(Panel_Home, true, null);
             //根据分辨率作出调整
-            Size size = SystemInformation.PrimaryMonitorSize;
-            int width = size.Width;
-            int height = size.Height;
-            float widthRatio = width / 1080F;
-            float heightRatio = height / 1920F;
-            foreach (Control c in Controls)
-            {
-                ChangeControl(c, widthRatio, heightRatio);
-            }
+            //Size size = SystemInformation.PrimaryMonitorSize;
+            //Size size = new Size(768, 1366);
+            //int width = size.Width;
+            //int height = size.Height;
+            //float widthRatio = width / 1080F;
+            //float heightRatio = height / 1920F;
+            //foreach (Control c in Controls)
+            //{
+            //    ChangeControl(c, widthRatio, heightRatio);
+            //}
 
             //设置定时刷新时钟
             this.Timer_DownloadInfo.Stop();
@@ -66,30 +67,41 @@ namespace ECouponsPrinter
 
         }
 
-        private void ChangeControl(Control c, float widthRatio, float heightRatio)
-        {
-            c.Width = (int)(c.Width * widthRatio);
-            c.Height = (int)(c.Height * heightRatio);
-            c.Location = new Point((int)(c.Location.X * widthRatio), (int)(c.Location.Y * heightRatio));
-            if (c is Button)
-            {
-                if (c.BackgroundImage != null)
-                {
-                    c.BackgroundImageLayout = ImageLayout.Stretch;
-                }
-            }
-            if (c is Label)
-            {
-                c.Font = new Font(c.Font.FontFamily, c.Font.Size * heightRatio, c.Font.Style);
-            }
-            if (c.Controls != null)
-            {
-                foreach (Control cc in c.Controls)
-                {
-                    ChangeControl(cc, widthRatio, heightRatio);
-                }
-            }
-        }
+        //private void ChangeControl(Control c, float widthRatio, float heightRatio)
+        //{
+        //    c.Width = (int)(c.Width * widthRatio);
+        //    c.Height = (int)(c.Height * heightRatio);
+        //    c.Location = new Point((int)(c.Location.X * widthRatio), (int)(c.Location.Y * heightRatio));
+        //    if (c is Button)
+        //    {
+        //        if (c.BackgroundImage != null)
+        //        {
+        //            c.BackgroundImageLayout = ImageLayout.Stretch;
+        //        }
+        //    }
+        //    if (c is Label)
+        //    {
+        //        c.Font = new Font(c.Font.FontFamily, c.Font.Size * heightRatio, c.Font.Style);
+        //        if (c.BackgroundImage != null)
+        //        {
+        //            c.BackgroundImageLayout = ImageLayout.Stretch;
+        //        }
+        //    }
+        //    if (c.Controls != null)
+        //    {
+        //        if (c is Panel)
+        //        {
+        //            if (c.BackgroundImage != null)
+        //            {
+        //                c.BackgroundImageLayout = ImageLayout.Stretch;
+        //            }
+        //        }
+        //        foreach (Control cc in c.Controls)
+        //        {
+        //            ChangeControl(cc, widthRatio, heightRatio);
+        //        }
+        //    }
+        //}
 
         #region 主要
 
@@ -155,7 +167,7 @@ namespace ECouponsPrinter
             this.InitTimer();
 
             int y = this.VerticalScroll.Value;
-            this.Panel_ShopInfo.Location = new System.Drawing.Point(0, 142 - y);
+            this.Panel_ShopInfo.Location = new System.Drawing.Point(0, 95 - y);
 
             InitShopInfoData(LP_shop[curType].id);
             Thread.Sleep(20);
@@ -428,7 +440,8 @@ namespace ECouponsPrinter
              */
             //切换
             int y = this.VerticalScroll.Value;
-            this.Panel_Home.Location = new System.Drawing.Point(0, 142 - y);
+            float _y = (float)(142 * 0.711);
+            this.Panel_Home.Location = new System.Drawing.Point(0, (int)_y - y);
 
             this.InitHomeData();
             this.Panel_Home.Visible = true;
@@ -459,7 +472,7 @@ namespace ECouponsPrinter
 
             //切换
             int y = this.VerticalScroll.Value;
-            this.Panel_Shop.Location = new System.Drawing.Point(0, 142 - y);
+            this.Panel_Shop.Location = new System.Drawing.Point(0, 95 - y);
 
             //准备工作
             this.UnVisibleAllPanels();
@@ -486,7 +499,7 @@ namespace ECouponsPrinter
 
             //切换
             int y = this.VerticalScroll.Value;
-            this.Panel_Coupons.Location = new System.Drawing.Point(0, 142 - y);
+            this.Panel_Coupons.Location = new System.Drawing.Point(0, 95 - y);
 
             InitCouponData("1");
             Thread.Sleep(20);
@@ -527,20 +540,43 @@ namespace ECouponsPrinter
 
             //切换
             int y = this.VerticalScroll.Value;
-            this.Panel_MyInfo.Location = new System.Drawing.Point(0, 142 - y);
+            this.Panel_MyInfo.Location = new System.Drawing.Point(0, 95 - y);
 
             InitMyInfoData();
 
             this.Panel_MyInfo.Visible = true;
             ShowMyInfo();
-
-
         }
 
         private void Button_MyInfoPage_MouseDown(object sender, MouseEventArgs e)
         {
             this.Button_MyInfoPage.BackgroundImage = Image.FromFile(path + "\\images\\切图\\首页\\我的专区_1.jpg");
 
+        }
+
+        #endregion
+
+        #region "周边专区"按钮事件
+        private void Button_NearShop_MouseDown(object sender, MouseEventArgs e)
+        {
+            this.Button_NearShop.BackgroundImage = Image.FromFile(path + "\\images\\切图\\首页\\周边商家_1.jpg");
+        }
+
+        private void Button_NearShop_MouseUp(object sender, MouseEventArgs e)
+        {
+            this.Button_NearShop.BackgroundImage = Image.FromFile(path + "\\images\\切图\\首页\\周边商家.jpg");
+        }
+        #endregion
+
+        #region "VIP专区"按钮事件
+        private void Button_VIP_MouseDown(object sender, MouseEventArgs e)
+        {
+            this.Button_Vip.BackgroundImage = Image.FromFile(path + "\\images\\切图\\首页\\VIP专区_1.jpg");
+        }
+
+        private void Button_VIP_MouseUp(object sender, MouseEventArgs e)
+        {
+            this.Button_Vip.BackgroundImage = Image.FromFile(path + "\\images\\切图\\首页\\VIP专区.jpg");
         }
 
         #endregion
@@ -620,9 +656,9 @@ namespace ECouponsPrinter
             InitHomeData();
             this.Panel_Home.Visible = true;
             ShowHome();
-          
+
             //启动射频卡检测程序
-          //  this.SCardStart();
+            //  this.SCardStart();
 
             //加载半透明的Label
             this.OnLoadLabelStyle(Color.White);
@@ -707,7 +743,7 @@ namespace ECouponsPrinter
                     if (sPath != "" && sPath != null)
                     {
                         pi.spath = path + "\\shop\\" + sPath;
-                        pi.image = new Bitmap(Image.FromFile(pi.spath), 168, 195);
+                        pi.image = new Bitmap(Image.FromFile(pi.spath), 119, 138);
                     }
 
                     id = reader.GetString(0);
@@ -754,7 +790,7 @@ namespace ECouponsPrinter
                         if (sPath != "" && sPath != null)
                         {
                             pi.spath = path + "\\coupon\\" + sPath;
-                            pi.image = new Bitmap(Image.FromFile(pi.spath), 168, 175);
+                            pi.image = new Bitmap(Image.FromFile(pi.spath), 119, 124);
                         }
                     }
 
@@ -886,7 +922,7 @@ namespace ECouponsPrinter
 
             if (LP_shop.Count > 0)
             {
-                PB_Home_Up.Image = new Bitmap(Image.FromFile(LP_shop[curType].lpath), 1071, 540);
+                PB_Home_Up.Image = new Bitmap(Image.FromFile(LP_shop[curType].lpath), 761, 384);
             }
         }
 
@@ -921,7 +957,7 @@ namespace ECouponsPrinter
 
             PB_Home_Down.Image.Dispose();
 
-            PB_Home_Down.Image = new Bitmap(Image.FromFile(LP_coupon[num - 1 + (curPage - 1) * 12].lpath), 1071, 548);
+            PB_Home_Down.Image = new Bitmap(Image.FromFile(LP_coupon[num - 1 + (curPage - 1) * 12].lpath), 761, 389);
 
         }
 
@@ -1014,7 +1050,7 @@ namespace ECouponsPrinter
 
             PB_ShopInfo_Coupons.Image.Dispose();
 
-            PB_ShopInfo_Coupons.Image = new Bitmap(Image.FromFile(LP_coupon[num - 1 + (curPage - 1) * 6].lpath), 1070, 573);
+            PB_ShopInfo_Coupons.Image = new Bitmap(Image.FromFile(LP_coupon[num - 1 + (curPage - 1) * 6].lpath), 760, 407);
         }
 
         #endregion
@@ -1265,7 +1301,7 @@ namespace ECouponsPrinter
         /// </summary>
         private void InitCouponData(String trade)
         {
-            if (LP_ctype != null )
+            if (LP_ctype != null)
             {
                 for (int i = 0; i < LP_ctype.Length; i++)
                 {
@@ -1304,7 +1340,7 @@ namespace ECouponsPrinter
             else
                 curPageShowCount = perNum;
 
-            PB_Coupon_Top.Image = new Bitmap(Image.FromFile(lp[(curPage - 1) * 12].lpath), 1070, 609);
+            PB_Coupon_Top.Image = new Bitmap(Image.FromFile(lp[(curPage - 1) * 12].lpath), 760, 433);
 
             if (curPageShowCount > 0)
                 for (int i = 0; i < perNum; i++)
@@ -1336,7 +1372,7 @@ namespace ECouponsPrinter
                 PictureBox temp = null;
                 if ((temp = (PictureBox)GetControl(name, container)) != null)
                 {
-                    temp.Image = new Bitmap(lp[i + perNum * (curPage - 1)].image, 195, 211);
+                    temp.Image = new Bitmap(lp[i + perNum * (curPage - 1)].image, 138, 150);
                 }
             }
         }
@@ -1424,14 +1460,14 @@ namespace ECouponsPrinter
                 controlName = "PB_MyInfo_Fav";
                 lp = LP_ctype[0];
                 curPage = cPage1;
-                PB_MyInfo_Fav.Image = new Bitmap(Image.FromFile(lp[(curPage - 1) * 6].lpath), 1033, 515);
+                PB_MyInfo_Fav.Image = new Bitmap(Image.FromFile(lp[(curPage - 1) * 6].lpath), 734, 366);
             }
             else
             {
                 controlName = "PB_MyInfo_His";
                 lp = LP_ctype[1];
                 curPage = cPage2;
-                PB_MyInfo_His.Image = new Bitmap(Image.FromFile(lp[(curPage - 1) * 6].lpath), 1033, 515);
+                PB_MyInfo_His.Image = new Bitmap(Image.FromFile(lp[(curPage - 1) * 6].lpath), 734, 366);
             }
 
             count = lp.Count;
@@ -1597,10 +1633,10 @@ namespace ECouponsPrinter
                 }
 
             if (container == Panel_Home)
-                PB_Home_Down.Image = new Bitmap(Image.FromFile(LP_temp[(curPage - 1) * 12].lpath), 1071, 548);
+                PB_Home_Down.Image = new Bitmap(Image.FromFile(LP_temp[(curPage - 1) * 12].lpath), 761, 389);
 
             if (container == Panel_ShopInfo)
-                PB_ShopInfo_Coupons.Image = new Bitmap(Image.FromFile(LP_temp[(curPage - 1) * 6].lpath), 1070, 573);
+                PB_ShopInfo_Coupons.Image = new Bitmap(Image.FromFile(LP_temp[(curPage - 1) * 6].lpath), 760, 407);
 
             for (int i = 0; i < curPageShowCount; i++)
             {
@@ -1765,7 +1801,7 @@ namespace ECouponsPrinter
 
             CouponPicInfo pi = null;
 
-            if (id != null)             
+            if (id != null)
             {
                 if (type == 1)
                 {
@@ -1781,7 +1817,7 @@ namespace ECouponsPrinter
             }
             else
                 return;
-     
+
         }
 
         /// <summary>
@@ -1790,9 +1826,9 @@ namespace ECouponsPrinter
         /// <param name="color"></param>
         private void OnLoadLabelStyle(Color color)
         {
-      //      Home_Fav.Parent = PB_Home_Down;
-      //      Home_Print.Parent = PB_Home_Down;
-            Home_Fav.BackColor =  Color.FromArgb(105, color);
+            //      Home_Fav.Parent = PB_Home_Down;
+            //      Home_Print.Parent = PB_Home_Down;
+            Home_Fav.BackColor = Color.FromArgb(105, color);
             Home_Print.BackColor = Color.FromArgb(105, color);
             ShopInfo_Fav.BackColor = Color.FromArgb(105, color);
             ShopInfo_Print.BackColor = Color.FromArgb(105, color);
@@ -1823,7 +1859,6 @@ namespace ECouponsPrinter
             Form3 f3 = new Form3();
             f3.Show();
         }
-
 
         private void Timer_DownloadInfo_Tick(object sender, EventArgs e)
         {
@@ -1876,7 +1911,7 @@ namespace ECouponsPrinter
             GetWindowText(hwnd, stringBuilder, stringBuilder.Capacity);
 
             String strTitle = stringBuilder.ToString();
-            if(strTitle.CompareTo("MainFrame") != 0)
+            if (strTitle.CompareTo("MainFrame") != 0)
             {
                 SendMessage(hwnd, WM_CLOSE, 0, 0);
             }
@@ -1900,7 +1935,7 @@ namespace ECouponsPrinter
             {
                 if (keyData.Equals(Keys.Enter))
                 {
-                    if(!UserLogin(LoginText.Text))
+                    if (!UserLogin(LoginText.Text))
                     {
                         isFirstKey = true;
                     }
@@ -1986,8 +2021,5 @@ namespace ECouponsPrinter
         {
 
         }
-
-        
-
     }
 }
