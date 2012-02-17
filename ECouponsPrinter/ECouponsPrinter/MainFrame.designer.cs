@@ -428,6 +428,7 @@
             // 
             // Button_Vip
             // 
+            this.Button_Vip.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("Button_Vip.BackgroundImage")));
             this.Button_Vip.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.Button_Vip.FlatAppearance.BorderSize = 0;
             this.Button_Vip.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -442,6 +443,7 @@
             // 
             // Button_NearShop
             // 
+            this.Button_NearShop.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("Button_NearShop.BackgroundImage")));
             this.Button_NearShop.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.Button_NearShop.FlatAppearance.BorderSize = 0;
             this.Button_NearShop.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
