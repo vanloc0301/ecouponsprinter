@@ -35,7 +35,6 @@
             this.Label_Option = new System.Windows.Forms.Label();
             this.Label_Countdown = new System.Windows.Forms.Label();
             this.Panel_Bottom = new System.Windows.Forms.Panel();
-            this.button1 = new System.Windows.Forms.Button();
             this.Button_LastCouponsPage = new System.Windows.Forms.Button();
             this.Button_NextCouponsPage = new System.Windows.Forms.Button();
             this.Button_Vip = new System.Windows.Forms.Button();
@@ -151,6 +150,7 @@
             this.Button_LastDocument = new System.Windows.Forms.Button();
             this.Label_MyDocuments = new System.Windows.Forms.Label();
             this.Panel_Coupons = new System.Windows.Forms.Panel();
+            this.Coupon_Print = new System.Windows.Forms.Label();
             this.Coupon_Fav = new System.Windows.Forms.Label();
             this.PB_Coupon_Right = new System.Windows.Forms.PictureBox();
             this.PB_Coupon_Left = new System.Windows.Forms.PictureBox();
@@ -198,7 +198,6 @@
             this.Label_NearShopName = new System.Windows.Forms.Label();
             this.LoginText = new System.Windows.Forms.TextBox();
             this.SCardTimer = new System.Windows.Forms.Timer(this.components);
-            this.Coupon_Print = new System.Windows.Forms.Label();
             this.Panel_Top.SuspendLayout();
             this.Panel_Bottom.SuspendLayout();
             this.Panel_Home.SuspendLayout();
@@ -382,7 +381,6 @@
             // 
             this.Panel_Bottom.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("Panel_Bottom.BackgroundImage")));
             this.Panel_Bottom.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.Panel_Bottom.Controls.Add(this.button1);
             this.Panel_Bottom.Controls.Add(this.Button_LastCouponsPage);
             this.Panel_Bottom.Controls.Add(this.Button_NextCouponsPage);
             this.Panel_Bottom.Controls.Add(this.Button_Vip);
@@ -396,16 +394,6 @@
             this.Panel_Bottom.Name = "Panel_Bottom";
             this.Panel_Bottom.Size = new System.Drawing.Size(768, 92);
             this.Panel_Bottom.TabIndex = 1;
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(538, 61);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(212, 27);
-            this.button1.TabIndex = 20;
-            this.button1.Text = "登录";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // Button_LastCouponsPage
             // 
@@ -440,7 +428,6 @@
             // 
             // Button_Vip
             // 
-            this.Button_Vip.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("Button_Vip.BackgroundImage")));
             this.Button_Vip.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.Button_Vip.FlatAppearance.BorderSize = 0;
             this.Button_Vip.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -455,7 +442,6 @@
             // 
             // Button_NearShop
             // 
-            this.Button_NearShop.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("Button_NearShop.BackgroundImage")));
             this.Button_NearShop.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.Button_NearShop.FlatAppearance.BorderSize = 0;
             this.Button_NearShop.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -1761,6 +1747,17 @@
             this.Panel_Coupons.TabIndex = 40;
             this.Panel_Coupons.Visible = false;
             // 
+            // Coupon_Print
+            // 
+            this.Coupon_Print.Font = new System.Drawing.Font("宋体", 20F, System.Drawing.FontStyle.Bold);
+            this.Coupon_Print.Location = new System.Drawing.Point(664, 387);
+            this.Coupon_Print.Name = "Coupon_Print";
+            this.Coupon_Print.Size = new System.Drawing.Size(99, 53);
+            this.Coupon_Print.TabIndex = 52;
+            this.Coupon_Print.Text = "打 印";
+            this.Coupon_Print.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.Coupon_Print.Click += new System.EventHandler(this.TranlateLabel_Click);
+            // 
             // Coupon_Fav
             // 
             this.Coupon_Fav.Font = new System.Drawing.Font("宋体", 20F, System.Drawing.FontStyle.Bold);
@@ -2217,33 +2214,23 @@
             // 
             // LoginText
             // 
-            this.LoginText.Location = new System.Drawing.Point(776, 54);
+            this.LoginText.Location = new System.Drawing.Point(656, 1333);
             this.LoginText.Name = "LoginText";
-            this.LoginText.Size = new System.Drawing.Size(100, 21);
+            this.LoginText.Size = new System.Drawing.Size(97, 21);
             this.LoginText.TabIndex = 71;
+            this.LoginText.Visible = false;
             // 
             // SCardTimer
             // 
             this.SCardTimer.Interval = 500;
             this.SCardTimer.Tick += new System.EventHandler(this.SCardTimer_Tick);
             // 
-            // Coupon_Print
-            // 
-            this.Coupon_Print.Font = new System.Drawing.Font("宋体", 20F, System.Drawing.FontStyle.Bold);
-            this.Coupon_Print.Location = new System.Drawing.Point(664, 387);
-            this.Coupon_Print.Name = "Coupon_Print";
-            this.Coupon_Print.Size = new System.Drawing.Size(99, 53);
-            this.Coupon_Print.TabIndex = 52;
-            this.Coupon_Print.Text = "打 印";
-            this.Coupon_Print.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.Coupon_Print.Click += new System.EventHandler(this.TranlateLabel_Click);
-            // 
             // MainFrame
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
-            this.ClientSize = new System.Drawing.Size(906, 742);
+            this.ClientSize = new System.Drawing.Size(786, 742);
             this.Controls.Add(this.Panel_Coupons);
             this.Controls.Add(this.Panel_Home);
             this.Controls.Add(this.Panel_ShopInfo);
@@ -2517,7 +2504,6 @@
         private System.Windows.Forms.PictureBox PB_Coupon_Top;
         private System.Windows.Forms.PictureBox PB_Coupon_Left;
         private System.Windows.Forms.PictureBox PB_Coupon_Right;
-        private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Timer Timer_DownloadInfo;
         private System.Windows.Forms.Panel Panel_NearShop;
         private System.Windows.Forms.PictureBox PB_NearShop24;
