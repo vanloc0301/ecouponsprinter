@@ -29,13 +29,12 @@ namespace ECouponsPrinter
         private static int tPage1, tPage2, tPage3;
         private static int cPage1, cPage2;
         private static int theCouponNum;
+        private Button[] Btn_Coupon_Type;
 
         //-----------------------------------------------------------------------------
         private static bool isFirstKey = true;
         Member m = new Member();
-
         private SCard sc;
-
         enum part { up = 1, middle = 2, bottom = 3 };
 
         public MainFrame()
@@ -481,6 +480,7 @@ namespace ECouponsPrinter
             this.Panel_Shop.Visible = true;
 
             InitShopData();
+
             ShowShop();
         }
 
@@ -509,11 +509,34 @@ namespace ECouponsPrinter
 
             //取消不必要的按钮
             this.Button_LastCouponsPage.Visible = false;
+
             this.Button_NextCouponsPage.Visible = false;
             this.Panel_Coupons.Visible = true;
             ShowCoupon();
 
             //         Thread.Sleep(100);
+        }
+
+        private void ShowCouponCommonBtn()
+        {
+            int tradeNum = GetTradeNum();
+            Point[] p = CaculatePosition(tradeNum);
+
+            Btn_Coupon_Type = new Button[tradeNum];
+            for (int i = 0; i < tradeNum; i++)
+            {
+                  this.Btn_Coupon_Type[i].BackgroundImage = Image.FromFile(path + "\\images\\切图\\优惠券二级\\Shoptype.jpg");
+                this.Btn_Coupon_Type[i].BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+                this.Btn_Coupon_Type[i].FlatAppearance.BorderSize = 0;
+                this.Btn_Coupon_Type[i].FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+                this.Btn_Coupon_Type[i].Location = p[i];
+                this.Btn_Coupon_Type[i].Name = "Btn_Coupon_Type" + (i + 1);
+                this.Btn_Coupon_Type[i].Size = new System.Drawing.Size(247, 79);
+                this.Btn_Coupon_Type[i].TabIndex = 49;
+                this.Btn_Coupon_Type[i].UseVisualStyleBackColor = true;
+                this.Btn_Coupon_Type[i].MouseDown += new System.Windows.Forms.MouseEventHandler(this.Button_ShopType_MouseDown);
+                this.Btn_Coupon_Type[i].MouseUp += new System.Windows.Forms.MouseEventHandler(this.Button_ShopType_MouseUp);
+            }
         }
 
         private void Button_CouponsPage_MouseDown(object sender, MouseEventArgs e)
@@ -637,6 +660,7 @@ namespace ECouponsPrinter
         #region Load事件
         private void MainFrame_Load(object sender, EventArgs e)
         {
+
             this.FormBorderStyle = FormBorderStyle.None;
             this.WindowState = FormWindowState.Maximized;
 
@@ -655,13 +679,13 @@ namespace ECouponsPrinter
             InitData();
             InitHomeData();
             this.Panel_Home.Visible = true;
+            //加载半透明的Label
+            this.OnLoadLabelStyle(90, Color.White);
             ShowHome();
-
             //启动射频卡检测程序
             //  this.SCardStart();
 
-            //加载半透明的Label
-            this.OnLoadLabelStyle(Color.White);
+
 
         }
         #endregion
@@ -985,7 +1009,7 @@ namespace ECouponsPrinter
                 lPath = reader.GetString(9);
                 if (lPath != "" && lPath != null)
                 {
-                    PB_ShopInfo_Shop.Image = new Bitmap(Image.FromFile(path + "\\shop\\" + lPath), 1070, 559);
+                    PB_ShopInfo_Shop.Image = new Bitmap(Image.FromFile(path + "\\shop\\" + lPath), 760, 397);
                 }
 
                 name = reader.GetString(1);
@@ -1402,7 +1426,7 @@ namespace ECouponsPrinter
 
             PB_Coupon_Top.Image.Dispose();
 
-            PB_Coupon_Top.Image = new Bitmap(Image.FromFile(LP_ctype[curType][(curPage - 1) * 12 + num - 1].lpath), 1070, 609);
+            PB_Coupon_Top.Image = new Bitmap(Image.FromFile(LP_ctype[curType][(curPage - 1) * 12 + num - 1].lpath), 760, 433);
 
         }
 
@@ -1411,17 +1435,22 @@ namespace ECouponsPrinter
         #region 我的专区数据处理
         private void InitMyInfoData()
         {
+            MyMsgBox mb = new MyMsgBox();
             if (m == null)
             {
-                MessageBox.Show("下载用户信息失败！");
+                mb.ShowMsg("下载用户信息失败！", 2);
                 return;
             }
 
+            //初始化List
             if (LP_ctype != null)
             {
                 for (int i = 0; i < LP_ctype.Length; i++)
                 {
-                    LP_ctype[i].Clear();
+                    if (LP_ctype[i] != null)
+                    {
+                        LP_ctype[i].Clear();
+                    }
                 }
             }
 
@@ -1527,11 +1556,11 @@ namespace ECouponsPrinter
 
             if (type == "Fav")
             {
-                PB_MyInfo_Fav.Image = new Bitmap(Image.FromFile(LP_ctype[0][num - 1 + (cPage1 - 1) * 6].lpath), 1033, 515);
+                PB_MyInfo_Fav.Image = new Bitmap(Image.FromFile(LP_ctype[0][num - 1 + (cPage1 - 1) * 6].lpath), 734, 366);
             }
             else
             {
-                PB_MyInfo_His.Image = new Bitmap(Image.FromFile(LP_ctype[1][num - 1 + (cPage2 - 1) * 6].lpath), 1033, 515);
+                PB_MyInfo_His.Image = new Bitmap(Image.FromFile(LP_ctype[1][num - 1 + (cPage2 - 1) * 6].lpath), 734, 366);
             }
 
         }
@@ -1770,11 +1799,11 @@ namespace ECouponsPrinter
                     break;
                 case "ShopInfo_Fav":
                     type = 0;
-                    id = LP_coupon[(curPage - 1) * 6 + theCouponNum].id;
+                    id = LP_ctype[0][(curPage - 1) * 6 + theCouponNum].id;
                     break;
                 case "ShopInfo_Print":
                     type = 1;
-                    id = LP_coupon[(curPage - 1) * 6 + theCouponNum].id;
+                    id = LP_ctype[0][(curPage - 1) * 6 + theCouponNum].id;
                     break;
                 case "Coupon_Fav":
                     type = 0;
@@ -1800,19 +1829,49 @@ namespace ECouponsPrinter
             }
 
             CouponPicInfo pi = null;
+            MyMsgBox mb = new MyMsgBox();
 
             if (id != null)
             {
                 if (type == 1)
                 {
-                    pi = InitCouponPopData(id);
-                    CouponsPopForm cpf = new CouponsPopForm(pi);
-                    cpf.ShowDialog();
-                    Thread.Sleep(200);
+                    if (!GlobalVariables.isUserLogin)
+                    {
+                        mb.ShowMsg("请您先登录", 2);
+                        return;
+                    }
+                    else
+                    {
+                        pi = InitCouponPopData(id);
+                        CouponsPopForm cpf = new CouponsPopForm(pi);
+                        cpf.ShowDialog();
+                        Thread.Sleep(200);
+                    }
                 }
                 else
                 {
-                    //收藏
+                    if (!GlobalVariables.isUserLogin)
+                    {
+                        mb.ShowMsg("请您先登录", 2);
+                        return;
+                    }
+                    else
+                    {
+                        mb.ShowMsg("确认收藏？", '1');
+                        if (mb.DialogResult == DialogResult.Yes)
+                        {
+                            UploadInfo ui = new UploadInfo();
+
+                            if (ui.CouponFavourite(GlobalVariables.LoginUserId, id))
+                            {
+                                mb.ShowMsg("收藏成功！", 2);
+                            }
+                            else
+                            {
+                                mb.ShowMsg("收藏失败！请稍后重试", 2);
+                            }
+                        }
+                    }
                 }
             }
             else
@@ -1824,22 +1883,90 @@ namespace ECouponsPrinter
         /// 预设定半透明的Label
         /// </summary>
         /// <param name="color"></param>
-        private void OnLoadLabelStyle(Color color)
+        private void OnLoadLabelStyle(int alph, Color color)
         {
-            //      Home_Fav.Parent = PB_Home_Down;
-            //      Home_Print.Parent = PB_Home_Down;
-            Home_Fav.BackColor = Color.FromArgb(105, color);
-            Home_Print.BackColor = Color.FromArgb(105, color);
-            ShopInfo_Fav.BackColor = Color.FromArgb(105, color);
-            ShopInfo_Print.BackColor = Color.FromArgb(105, color);
-            Coupon_Fav.BackColor = Color.FromArgb(105, color);
-            Coupon_Print.BackColor = Color.FromArgb(105, color);
-            MyInfo_Bottom_Fav.BackColor = Color.FromArgb(105, color);
-            MyInfo_Bottom_Print.BackColor = Color.FromArgb(105, color);
+            Point p = PB_Home_Down.Location;
+            Home_Fav.Parent = PB_Home_Down;
+            Home_Fav.Location = new Point(Home_Fav.Location.X - p.X, Home_Fav.Location.Y - p.Y);
+            Home_Fav.BackColor = Color.FromArgb(alph, color);
+            Home_Print.Parent = PB_Home_Down;
+            Home_Print.Location = new Point(Home_Print.Location.X - p.X, Home_Print.Location.Y - p.Y);
+            Home_Print.BackColor = Color.FromArgb(alph, color);
 
+            p = PB_ShopInfo_Coupons.Location;
+            ShopInfo_Fav.Parent = PB_ShopInfo_Coupons;
+            ShopInfo_Fav.Location = new Point(ShopInfo_Fav.Location.X - p.X, ShopInfo_Fav.Location.Y - p.Y);
+            ShopInfo_Fav.BackColor = Color.FromArgb(alph, color);
+            ShopInfo_Print.Parent = PB_ShopInfo_Coupons;
+            ShopInfo_Print.Location = new Point(ShopInfo_Print.Location.X - p.X, ShopInfo_Print.Location.Y - p.Y);
+            ShopInfo_Print.BackColor = Color.FromArgb(alph, color);
+
+            p = PB_Coupon_Top.Location;
+            Coupon_Fav.Parent = PB_Coupon_Top;
+            Coupon_Fav.Location = new Point(Coupon_Fav.Location.X - p.X, Coupon_Fav.Location.Y - p.Y);
+            Coupon_Fav.BackColor = Color.FromArgb(alph, color);
+            Coupon_Print.Parent = PB_Coupon_Top;
+            Coupon_Print.Location = new Point(Coupon_Print.Location.X - p.X, Coupon_Print.Location.Y - p.Y);
+            Coupon_Print.BackColor = Color.FromArgb(alph, color);
+
+            p = PB_MyInfo_His.Location;
+            MyInfo_Bottom_Fav.Parent = PB_MyInfo_His;
+            MyInfo_Bottom_Fav.Location = new Point(MyInfo_Bottom_Fav.Location.X - p.X, MyInfo_Bottom_Fav.Location.Y - p.Y);
+            MyInfo_Bottom_Fav.BackColor = Color.FromArgb(alph, color);
+            MyInfo_Bottom_Print.Parent = PB_MyInfo_His;
+            MyInfo_Bottom_Print.Location = new Point(MyInfo_Bottom_Print.Location.X - p.X, MyInfo_Bottom_Print.Location.Y - p.Y);
+            MyInfo_Bottom_Print.BackColor = Color.FromArgb(alph, color);
+
+            p = PB_MyInfo_Fav.Location;
+            MyInfo_Top_Print.Parent = PB_MyInfo_Fav;
+            MyInfo_Top_Print.Location = new Point(MyInfo_Top_Print.Location.X - p.X, MyInfo_Top_Print.Location.Y - p.Y);
+            MyInfo_Top_Print.BackColor = Color.FromArgb(alph, color);
 
         }
 
+        /// <summary>
+        /// 获取商家种类的个数
+        /// </summary>
+        /// <returns>返回商家种类的个数</returns>
+        private int GetTradeNum()
+        {
+            string strSql = "SELECT count(*) FROM [select distinct strTrade from t_bz_shop]";
+            AccessCmd cmd = new AccessCmd();
+            OleDbDataReader reader = cmd.ExecuteReader(strSql);
+
+            int tradeNum = 0;
+            if (reader.Read())
+            {
+                tradeNum = reader.GetInt32(0);
+            }
+
+            if (tradeNum > 9)
+            {
+                tradeNum = 9;
+            }
+
+            return tradeNum;
+
+        }
+
+        private Point[] CaculatePosition(int num)
+        {
+            Point[] p = new Point[num + 1];
+            int rowNum = num / 2 + ((num % 2 == 0) ? 0 : 1);
+            int width = (768 - (rowNum + 1) * 5) / rowNum;
+
+            for (int j = 0; j < 2; j++)
+            {
+                for (int i = 0; i < rowNum; i++)
+                {
+                    p[j * rowNum + i] = new Point(5 * (i + 1) + width * i, 976 + j * 10);
+                }
+            }
+            p[num] = new Point(width, 79);
+
+            return p;
+
+        }
 
         #endregion
 
@@ -1850,37 +1977,6 @@ namespace ECouponsPrinter
         }
 
         #endregion
-
-
-        #endregion
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            Form3 f3 = new Form3();
-            f3.Show();
-        }
-
-        private void Timer_DownloadInfo_Tick(object sender, EventArgs e)
-        {
-            this.Timer_DownloadInfo.Stop();
-            //     MessageBox.Show("begin download info");
-            try
-            {
-                //下载信息
-                DownloadInfo di = new DownloadInfo();
-                di.download();
-                di.SynParam();
-                //同步数据
-                this.InitData();
-                this.Timer_DownloadInfo.Interval = GlobalVariables.IntRefreshSec * 1000;
-                //         MessageBox.Show("下载信息成功");
-            }
-            catch (Exception ep)
-            {
-                ErrorLog.log(ep);
-            }
-            this.Timer_DownloadInfo.Start();
-        }
 
         #region 磁卡检测处理
         [DllImport("user32.dll", CharSet = CharSet.Auto)]
@@ -2017,9 +2113,35 @@ namespace ECouponsPrinter
 
         #endregion
 
-        private void Btn_Coupons_Click(object sender, MouseEventArgs e)
-        {
+        #endregion
 
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Form3 f3 = new Form3();
+            f3.Show();
         }
+
+        private void Timer_DownloadInfo_Tick(object sender, EventArgs e)
+        {
+            this.Timer_DownloadInfo.Stop();
+            //     MessageBox.Show("begin download info");
+            try
+            {
+                //下载信息
+                DownloadInfo di = new DownloadInfo();
+                di.download();
+                di.SynParam();
+                //同步数据
+                this.InitData();
+                this.Timer_DownloadInfo.Interval = GlobalVariables.IntRefreshSec * 1000;
+                //         MessageBox.Show("下载信息成功");
+            }
+            catch (Exception ep)
+            {
+                ErrorLog.log(ep);
+            }
+            this.Timer_DownloadInfo.Start();
+        }
+
     }
 }
