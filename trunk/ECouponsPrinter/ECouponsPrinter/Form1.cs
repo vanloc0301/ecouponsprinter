@@ -166,7 +166,20 @@ namespace ECouponsPrinter
         private void button11_Click(object sender, EventArgs e)
         {
             DownloadInfo di = new DownloadInfo();
-            
+            string[] aryStrCouponId = di.CouponTop();
+            if (aryStrCouponId.Length == 0)
+            {
+                MessageBox.Show("没有数据！");
+            }
+            else
+            {
+                string strCouponIds = "";
+                for (int i = 0; i < aryStrCouponId.Length; i++)
+                {
+                    strCouponIds += aryStrCouponId[i] + ",";
+                }
+                MessageBox.Show(strCouponIds);
+            }
         }
     }
 }
