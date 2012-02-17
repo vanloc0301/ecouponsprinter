@@ -505,5 +505,28 @@ namespace ECouponsPrinter
                 cmd.Close();
             }
         }
+
+        internal string[] CouponTop()
+        {
+            //下载参数信息
+            request.OpenRequest(GlobalVariables.StrServerUrl + "/servlet/CouponTop?strTerminalNo=" + GlobalVariables.StrTerminalNo, "");
+            string strXml = request.HtmlDocument;
+            if (strXml.IndexOf("<coupons>") > 0)
+            {
+                XmlDocument doc = new XmlDocument();
+                doc.LoadXml(strXml);
+                XmlNodeList xnl = doc.GetElementsByTagName("coupon");
+                string[] aryCouponId = new string[xnl.Count];
+                for (int i = 0; i < xnl.Count; i++)
+                {
+                    aryCouponId[i] = xnl.Item(i).InnerText.Trim();
+                }
+                return aryCouponId;
+            }
+            else
+            {
+                return new string[0];
+            }
+        }
     }
 }
