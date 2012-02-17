@@ -13,7 +13,8 @@ namespace ECouponsPrinter
     {
         public MyMsgBox()
         {
-            InitializeComponent();          
+            InitializeComponent();
+            this.StartPosition = FormStartPosition.CenterScreen;
         }
 
         private void CloseTimer_Tick(object sender, EventArgs e)
@@ -25,11 +26,44 @@ namespace ECouponsPrinter
 
         public void ShowMsg(string text, int count)
         {
+            this.confirm.Visible = false;
+            this.cancel.Visible = false;
+            this.Size = new Size(this.Size.Width, this.Size.Height - 60);
+
             closetimer.Enabled = true;
             closetimer.Interval = count * 1000;
-            msg.Text = text; 
+            msg.Text = text;
             closetimer.Start();
             ShowDialog();
+        }
+
+        public void ShowMsg(string text, char type)
+        {
+            if (type == '0')
+            {
+                this.confirm.Visible = false;
+                this.cancel.Visible = false;
+                this.Size = new Size(this.Size.Width, this.Size.Height - 60);
+            }
+            else if (type == '1')
+            {
+                this.confirm.Visible = true;
+                this.cancel.Visible = true;
+            }
+            msg.Text = text;
+            ShowDialog();
+        }
+
+        private void confirm_Click(object sender, EventArgs e)
+        {
+            DialogResult = DialogResult.Yes;
+            this.Close();
+        }
+
+        private void cancel_Click(object sender, EventArgs e)
+        {
+            DialogResult = DialogResult.No;
+            this.Close();
         }
     }
 }
