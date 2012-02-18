@@ -177,13 +177,13 @@ namespace ECouponsPrinter
 
             for (int i = 0; i < 2; i++)
             {
-                Sleep(50);
+                Sleep(20);
                 status = rf_request(icdev, mode, ref TagType);//搜寻所有的卡
                 if (status != 0)
                     break;
                 else
                 {
-                    rf_beep(icdev, 50);
+                    rf_beep(icdev, 30);
                 }
 
                 status = rf_anticoll(icdev, bcnt, pSnr, ref len);//返回卡的序列号
