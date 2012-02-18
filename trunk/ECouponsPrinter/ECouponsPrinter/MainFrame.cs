@@ -2389,10 +2389,15 @@ namespace ECouponsPrinter
                             j++;
                         }                   
                     }
-                    
+
                     if (!UserLogin(cardtext))
-                    {                      
+                    {
                         isFirstKey = true;
+                    }
+                    else
+                    {
+                        this.SCardTimer.Stop();
+                        this.SCardTimer.Enabled = false;
                     }
                 }
             }
