@@ -802,7 +802,7 @@ namespace ECouponsPrinter
             ShowHome();
 
             //启动射频卡检测程序
-            //  this.SCardStart();
+            this.SCardStart();
 
         }
         #endregion
