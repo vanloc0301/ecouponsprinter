@@ -28,7 +28,7 @@ namespace ECouponsPrinter
         private static int count, curPage, totalPage, curPageShowCount;
         private static int tPage1, tPage2, tPage3;
         private static int cPage1, cPage2;
-        private static int theCouponNum;
+        private static int theCouponNum, theShopNum;
         private Button[] Btn_Coupon_Type;
 
         //-----------------------------------------------------------------------------
@@ -48,6 +48,7 @@ namespace ECouponsPrinter
             this.Panel_ShopInfo.GetType().GetProperty("DoubleBuffered", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic).SetValue(Panel_ShopInfo, true, null);
             this.Panel_MyInfo.GetType().GetProperty("DoubleBuffered", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic).SetValue(Panel_MyInfo, true, null);
             this.Panel_Home.GetType().GetProperty("DoubleBuffered", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic).SetValue(Panel_Home, true, null);
+            this.Panel_NearShop.GetType().GetProperty("DoubleBuffered", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic).SetValue(Panel_NearShop, true, null);
             // 根据分辨率作出调整
             //Size size = SystemInformation.PrimaryMonitorSize;
             //int width = size.Width;
@@ -161,7 +162,6 @@ namespace ECouponsPrinter
 
             this.Button_ShopInfo.BackgroundImage = Image.FromFile(path + "\\images\\切图\\首页\\详细.jpg");
 
-
             this.UnVisibleAllPanels();
             this.InitTimer();
 
@@ -173,9 +173,6 @@ namespace ECouponsPrinter
 
             this.Panel_ShopInfo.Visible = true;
             ShowShopInfo();
-
-            //            this.Panel_ShopInfo.BringToFront();
-            //            this.Panel_ShopInfo.SendToBack();
         }
 
         #endregion
@@ -546,7 +543,7 @@ namespace ECouponsPrinter
         {
             string[] tradeName = GetTradeName();
             int tradeNum = tradeName.Length;
-            Point[] p = CaculatePosition(tradeNum,'c');
+            Point[] p = CaculatePosition(tradeNum, 'c');
             int width = p[p.Length - 1].X;
             int height = p[p.Length - 1].Y;
             int curNum = tradeNum / 2 + tradeNum % 2 == 0 ? 0 : 1;
@@ -620,6 +617,23 @@ namespace ECouponsPrinter
         private void Button_NearShop_MouseUp(object sender, MouseEventArgs e)
         {
             this.Button_NearShop.BackgroundImage = Image.FromFile(path + "\\images\\切图\\首页\\周边商家.jpg");
+
+            //切换
+            int y = this.VerticalScroll.Value;
+            this.Panel_NearShop.Location = new System.Drawing.Point(0, 95 - y);
+
+            InitNearShopData();
+            Thread.Sleep(20);
+            //准备工作
+            this.UnVisibleAllPanels();
+            this.InitTimer();
+
+            //显示必要的按钮
+            this.Button_LastCouponsPage.Visible = true;
+            this.Button_NextCouponsPage.Visible = true;
+
+            this.Panel_NearShop.Visible = true;
+            ShowNearShop();
         }
         #endregion
 
@@ -793,6 +807,7 @@ namespace ECouponsPrinter
             this.Panel_Shop.Visible = false;
             this.Panel_MyInfo.Visible = false;
             this.Panel_Coupons.Visible = false;
+            this.Panel_NearShop.Visible = false;
 
             return null;
         }
@@ -1392,7 +1407,7 @@ namespace ECouponsPrinter
             this.InitTimer();
 
             int y = this.VerticalScroll.Value;
-            this.Panel_ShopInfo.Location = new System.Drawing.Point(0, 142 - y);
+            this.Panel_ShopInfo.Location = new System.Drawing.Point(0, 95 - y);
 
             InitShopInfoData(LP_stype[curNumType - 1][num + (tPage1 - 1) * 12 - 1].id);
             Thread.Sleep(20);
@@ -1403,7 +1418,7 @@ namespace ECouponsPrinter
 
         #endregion
 
-        #region 优惠劵数据处理
+        #region 优惠劵和VIP专区数据处理
 
         /// <summary>
         /// 加载商家页面的数据
@@ -1651,6 +1666,133 @@ namespace ECouponsPrinter
 
         #endregion
 
+        #region 周边商家数据处理
+        private void InitNearShopData()
+        {
+            DownloadInfo di = new DownloadInfo();
+            string[] aryStrShopId = di.ShopAround();
+            MyMsgBox mb = new MyMsgBox();
+
+            if (aryStrShopId.Length == 0)
+            {
+                mb.ShowMsg("没有数据！", 2);
+                return;
+            }
+
+            if (LP_stype != null)
+            {
+                for (int i = 0; i < LP_stype.Length; i++)
+                {
+                    if (LP_stype[i] != null)
+                    {
+                        LP_stype[i].Clear();
+                    }
+                }
+            }
+            LP_stype = new List<PicInfo>[1];
+            LP_stype[0] = FindShopById(aryStrShopId);       
+        }
+
+        private void ShowNearShop()
+        {
+            curPage = 1;
+            curType = 0;
+            theShopNum = 0;
+            ShowNearShopPicture();
+        }
+
+        private void ShowNearShopPicture()
+        {
+            String controlName = "";        //显示小优惠劵的控件的Name
+            Panel container = null;         //现在正在操作的Panel容器的对象
+            int perNum = 0;                 //每页显示小优惠劵的控件的数量
+            List<PicInfo> LP_temp = null;
+
+            controlName = "PB_NearShop";
+            container = Panel_NearShop;
+            perNum = 24;
+            LP_temp = LP_stype[0];
+
+
+            count = LP_temp.Count;
+            totalPage = count / perNum + (count % perNum == 0 ? 0 : 1);
+            //    MessageBox.Show(totalPage.ToString());
+            if (curPage == totalPage)
+            {
+                curPageShowCount = count % (perNum + 1);
+            }
+            else
+                curPageShowCount = perNum;
+
+            if (curPageShowCount > 0)
+                for (int i = 0; i < perNum; i++)
+                {
+                    String name = controlName + (i + 1);
+                    PictureBox temp = null;
+
+                    if ((temp = (PictureBox)GetControl(name, container)) != null)
+                    {
+                        if ((i) < (curPageShowCount))
+                        {
+                            if (temp.Visible.CompareTo(true) != 0)
+                                temp.Visible = true;
+                        }
+                        else
+                        {
+                            //     MessageBox.Show(temp.Visible.ToString());
+
+                            if (temp.Visible.CompareTo(false) != 0)
+                                temp.Visible = false;
+                        }
+                    }
+                }
+            if (LP_temp.Count != 0)
+            {
+                PB_NearShop_Top.Image = new Bitmap(Image.FromFile(LP_temp[(curPage - 1) * 24].lpath), 760, 407);
+            }
+
+            for (int i = 0; i < curPageShowCount; i++)
+            {
+                String name = controlName + (i + 1);
+                PictureBox temp = null;
+                if ((temp = (PictureBox)GetControl(name, container)) != null)
+                {
+                    temp.Image = LP_temp[i + perNum * (curPage - 1)].image;
+                }
+            }
+        }
+
+        private void ChangeNearShopPicture(object sender, EventArgs e)
+        {
+            PictureBox pb = sender as PictureBox;
+
+            String name = pb.Name;
+            //   MessageBox.Show(name.Length.ToString());
+            String numstr = "1";
+            int num = 1;
+
+            if (name.Length == 12)
+            {
+                numstr = name.Substring(11, 1);
+                num = (numstr[0] - '0');
+            }
+
+            if (name.Length == 13)
+            {
+                numstr = name.Substring(11, 2);
+                num = (numstr[0] - '0') * 10 + (numstr[1] - '0');
+            }
+
+            theShopNum = num - 1;
+            //      MessageBox.Show(num.ToString());
+
+            PB_NearShop_Top.Image.Dispose();
+
+            PB_NearShop_Top.Image = new Bitmap(Image.FromFile(LP_stype[0][num - 1 + (curPage - 1) * 24].lpath), 761, 389);
+        }
+
+        #endregion
+
         #region 优惠卷弹出页面数据处理
         private CouponPicInfo InitCouponPopData(String strid)
         {
@@ -1860,6 +2002,28 @@ namespace ECouponsPrinter
             return temp;
         }
 
+        /// <summary>
+        /// 根据商家ID来查询并返回商家对象
+        /// </summary>
+        /// <param name="id">需要查找的商家的ID</param>
+        /// <returns>返回查找到的商家对象</returns>
+        private List<PicInfo> FindShopById(String[] id)
+        {
+            List<PicInfo> temp = new List<PicInfo>();
+
+            String[] shopId = id;
+            foreach (String tempId in shopId)
+            {
+                foreach (PicInfo pi in LP_shop)
+                {
+                    if (pi.id == tempId)
+                    {
+                        temp.Add(pi);
+                    }
+                }
+            }
+            return temp;
+        }
 
         /// <summary>
         /// 收藏和打印半透明Label的时间处理
@@ -2034,9 +2198,15 @@ namespace ECouponsPrinter
             catch (Exception e)
             {
             }
-            return null;    
+            return null;
         }
 
+        /// <summary>
+        /// 计算优惠劵和VIP页面动态生成的类别按钮的Position
+        /// </summary>
+        /// <param name="num">需要计算的按钮的个数</param>
+        /// <param name="type">计算的类别('v'代表VIP页面, 'c'代表优惠劵页面)</param>
+        /// <returns></returns>
         private Point[] CaculatePosition(int num, char type)
         {
             Point[] p = new Point[num + 1];
@@ -2243,7 +2413,7 @@ namespace ECouponsPrinter
         private void Btn_NewCouponList_Click(object sender, EventArgs e)
         {
             MyMsgBox mb = new MyMsgBox();
-            try 
+            try
             {
                 String time = DateTime.Now.ToString("yyyy-M-d H:m:s");
                 string strSql = "select top 24 strId from t_bz_coupon where #" + time + "#>dtActiveTime and #" + time + "#< dtExpireTime order by dtActiveTime desc";
@@ -2258,7 +2428,7 @@ namespace ECouponsPrinter
                         strId += reader.GetString(0) + ",";
                     }
                 }
-                LP_ctype[0] = FindCouponById(strId.Substring(0,strId.Length-1).Split(','));
+                LP_ctype[0] = FindCouponById(strId.Substring(0, strId.Length - 1).Split(','));
                 curPage = 1;
                 curType = 0;
                 theCouponNum = 0;
@@ -2266,11 +2436,11 @@ namespace ECouponsPrinter
                 ShowCoupon();
 
             }
-            catch(Exception e1)
+            catch (Exception e1)
             {
-                mb.ShowMsg(e1.Message+"\n正在修复", 2);
+                mb.ShowMsg(e1.Message + "\n正在修复", 2);
             }
-            
+
         }
 
         private void Btn_Rank_Click(object sender, EventArgs e)
@@ -2325,6 +2495,30 @@ namespace ECouponsPrinter
                 mb.ShowMsg(e1.Message + "\n正在修复", 2);
             }
         }
+
+        private void Button_NearShopInfo_MouseDown(object sender, MouseEventArgs e)
+        {
+            this.Btn_NearShopInfo.BackgroundImage = Image.FromFile(path + "\\images\\切图\\首页\\详细_1.jpg");
+        }
+
+        private void Button_NearShopInfo_MouseUp(object sender, MouseEventArgs e)
+        {            
+            this.Btn_NearShopInfo.BackgroundImage = Image.FromFile(path + "\\images\\切图\\首页\\详细.jpg");
+    
+            this.UnVisibleAllPanels();
+            this.InitTimer();
+
+            int y = this.VerticalScroll.Value;
+            this.Panel_ShopInfo.Location = new System.Drawing.Point(0, 95 - y);
+
+            InitShopInfoData(LP_stype[0][(curPage-1)*24 + theShopNum].id);
+            Thread.Sleep(20);
+
+            this.Panel_ShopInfo.Visible = true;
+            ShowShopInfo();
+        }
+
+        
 
     }
 }
