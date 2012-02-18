@@ -169,7 +169,7 @@ namespace ECouponsPrinter
 
             if (!bConnectedDevice)
             {
-        //        MessageBox.Show("Not connect to device!!", "error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        //      MessageBox.Show("Not connect to device!!", "error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return null;
             }
 
