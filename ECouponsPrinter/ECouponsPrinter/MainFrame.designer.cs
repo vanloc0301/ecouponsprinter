@@ -198,6 +198,9 @@
             this.Label_NearShopName = new System.Windows.Forms.Label();
             this.LoginText = new System.Windows.Forms.TextBox();
             this.SCardTimer = new System.Windows.Forms.Timer(this.components);
+            this.Btn_Rank = new System.Windows.Forms.Button();
+            this.Btn_NewCouponList = new System.Windows.Forms.Button();
+            this.Btn_Rec = new System.Windows.Forms.Button();
             this.Panel_Top.SuspendLayout();
             this.Panel_Bottom.SuspendLayout();
             this.Panel_Home.SuspendLayout();
@@ -1725,6 +1728,9 @@
             this.Panel_Coupons.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("Panel_Coupons.BackgroundImage")));
             this.Panel_Coupons.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.Panel_Coupons.CausesValidation = false;
+            this.Panel_Coupons.Controls.Add(this.Btn_Rec);
+            this.Panel_Coupons.Controls.Add(this.Btn_NewCouponList);
+            this.Panel_Coupons.Controls.Add(this.Btn_Rank);
             this.Panel_Coupons.Controls.Add(this.Coupon_Print);
             this.Panel_Coupons.Controls.Add(this.Coupon_Fav);
             this.Panel_Coupons.Controls.Add(this.PB_Coupon_Right);
@@ -1773,7 +1779,8 @@
             // 
             // PB_Coupon_Right
             // 
-            this.PB_Coupon_Right.Image = ((System.Drawing.Image)(resources.GetObject("PB_Coupon_Right.Image")));
+            this.PB_Coupon_Right.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("PB_Coupon_Right.BackgroundImage")));
+            this.PB_Coupon_Right.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.PB_Coupon_Right.Location = new System.Drawing.Point(686, 456);
             this.PB_Coupon_Right.Name = "PB_Coupon_Right";
             this.PB_Coupon_Right.Size = new System.Drawing.Size(72, 489);
@@ -1784,7 +1791,8 @@
             // 
             // PB_Coupon_Left
             // 
-            this.PB_Coupon_Left.Image = ((System.Drawing.Image)(resources.GetObject("PB_Coupon_Left.Image")));
+            this.PB_Coupon_Left.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("PB_Coupon_Left.BackgroundImage")));
+            this.PB_Coupon_Left.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.PB_Coupon_Left.Location = new System.Drawing.Point(11, 456);
             this.PB_Coupon_Left.Margin = new System.Windows.Forms.Padding(0);
             this.PB_Coupon_Left.Name = "PB_Coupon_Left";
@@ -2227,6 +2235,54 @@
             this.SCardTimer.Interval = 500;
             this.SCardTimer.Tick += new System.EventHandler(this.SCardTimer_Tick);
             // 
+            // Btn_Rank
+            // 
+            this.Btn_Rank.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("Btn_Rank.BackgroundImage")));
+            this.Btn_Rank.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.Btn_Rank.FlatAppearance.BorderSize = 0;
+            this.Btn_Rank.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.Btn_Rank.Font = new System.Drawing.Font("宋体", 20F, System.Drawing.FontStyle.Bold);
+            this.Btn_Rank.ForeColor = System.Drawing.Color.White;
+            this.Btn_Rank.Location = new System.Drawing.Point(15, 950);
+            this.Btn_Rank.Name = "Btn_Rank";
+            this.Btn_Rank.Size = new System.Drawing.Size(230, 52);
+            this.Btn_Rank.TabIndex = 53;
+            this.Btn_Rank.Text = "排行榜";
+            this.Btn_Rank.UseVisualStyleBackColor = true;
+            this.Btn_Rank.Click += new System.EventHandler(this.Btn_Rank_Click);
+            // 
+            // Btn_NewCouponList
+            // 
+            this.Btn_NewCouponList.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("Btn_NewCouponList.BackgroundImage")));
+            this.Btn_NewCouponList.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.Btn_NewCouponList.FlatAppearance.BorderSize = 0;
+            this.Btn_NewCouponList.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.Btn_NewCouponList.Font = new System.Drawing.Font("宋体", 20F, System.Drawing.FontStyle.Bold);
+            this.Btn_NewCouponList.ForeColor = System.Drawing.Color.White;
+            this.Btn_NewCouponList.Location = new System.Drawing.Point(265, 951);
+            this.Btn_NewCouponList.Name = "Btn_NewCouponList";
+            this.Btn_NewCouponList.Size = new System.Drawing.Size(230, 52);
+            this.Btn_NewCouponList.TabIndex = 53;
+            this.Btn_NewCouponList.Text = "最新发布";
+            this.Btn_NewCouponList.UseVisualStyleBackColor = true;
+            this.Btn_NewCouponList.Click += new System.EventHandler(this.Btn_NewCouponList_Click);
+            // 
+            // Btn_Rec
+            // 
+            this.Btn_Rec.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("Btn_Rec.BackgroundImage")));
+            this.Btn_Rec.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.Btn_Rec.FlatAppearance.BorderSize = 0;
+            this.Btn_Rec.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.Btn_Rec.Font = new System.Drawing.Font("宋体", 20F, System.Drawing.FontStyle.Bold);
+            this.Btn_Rec.ForeColor = System.Drawing.Color.White;
+            this.Btn_Rec.Location = new System.Drawing.Point(511, 951);
+            this.Btn_Rec.Name = "Btn_Rec";
+            this.Btn_Rec.Size = new System.Drawing.Size(230, 52);
+            this.Btn_Rec.TabIndex = 53;
+            this.Btn_Rec.Text = "推  荐";
+            this.Btn_Rec.UseVisualStyleBackColor = true;
+            this.Btn_Rec.Click += new System.EventHandler(this.Btn_Rec_Click);
+            // 
             // MainFrame
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -2549,6 +2605,9 @@
         private System.Windows.Forms.Label MyInfo_Bottom_Print;
         private Marquee.UserControl1 Label_ScrollText;
         private System.Windows.Forms.Label Coupon_Print;
+        private System.Windows.Forms.Button Btn_Rank;
+        private System.Windows.Forms.Button Btn_Rec;
+        private System.Windows.Forms.Button Btn_NewCouponList;
 
     }
 }
