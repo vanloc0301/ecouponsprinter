@@ -1464,7 +1464,10 @@ namespace ECouponsPrinter
             else
                 curPageShowCount = perNum;
 
-            PB_Coupon_Top.Image = new Bitmap(Image.FromFile(lp[(curPage - 1) * 12].lpath), 760, 433);
+            if (lp.Count != 0)
+            {
+                PB_Coupon_Top.Image = new Bitmap(Image.FromFile(lp[(curPage - 1) * 12].lpath), 760, 433);
+            }
 
             if (curPageShowCount > 0)
                 for (int i = 0; i < perNum; i++)
