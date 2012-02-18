@@ -80,7 +80,6 @@ namespace ECouponsPrinter
                 port = 2;
                 baud = 19200;
                 
-
                 status = rf_init_com(port, baud);
                 if (0 == status)
                 {
@@ -89,10 +88,8 @@ namespace ECouponsPrinter
                 }
                 else
                 {
-                    string strError;
-                    strError = "Connect device failed";
-                    
-                    MessageBox.Show(strError, "error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                     string strError = "Connect device failed";                
+           //         MessageBox.Show(strError, "error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
                 
@@ -172,7 +169,7 @@ namespace ECouponsPrinter
 
             if (!bConnectedDevice)
             {
-                MessageBox.Show("Not connect to device!!", "error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        //        MessageBox.Show("Not connect to device!!", "error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return null;
             }
 
