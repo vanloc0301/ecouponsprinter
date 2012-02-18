@@ -2378,8 +2378,20 @@ namespace ECouponsPrinter
             {
                 if (keyData.Equals(Keys.Enter))
                 {
-                    if (!UserLogin(LoginText.Text))
+                    String cardtext = ""; ;
+                    int i = 0, j = 0;
+
+                    for (i = 0; i < LoginText.Text.Length;i++ )
                     {
+                        if (LoginText.Text[i] >= '0' && LoginText.Text[i] <= '9')
+                        {
+                            cardtext += LoginText.Text[i].ToString();
+                            j++;
+                        }                   
+                    }
+                    
+                    if (!UserLogin(cardtext))
+                    {                      
                         isFirstKey = true;
                     }
                 }
