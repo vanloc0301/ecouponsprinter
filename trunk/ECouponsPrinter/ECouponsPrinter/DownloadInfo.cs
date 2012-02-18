@@ -368,8 +368,8 @@ namespace ECouponsPrinter
 
         private void updateShop(XmlNode xnShop)
         {
-            String strId, strBizName, strShopName, strTrade, strAddr, strIntro, strSmallImg, strSmallImgOld = "", strLargeImg, strLargeImgOld = "";
-            getShopProps(xnShop, out strId, out strBizName, out strShopName, out strTrade, out strAddr, out strIntro, out strSmallImg, out strLargeImg);
+            String strId, strBizName, strShopName, strTrade, strAddr, strIntro, strSmallImg, strSmallImgOld = "", strLargeImg, strLargeImgOld = "", intType="0";
+            getShopProps(xnShop, out strId, out strBizName, out strShopName, out strTrade, out strAddr, out strIntro, out strSmallImg, out strLargeImg, out intType);
             //查询文件
             string strSql = "select strSmallImg,strLargeImg from t_bz_shop where strId='" + strId + "'";
             AccessCmd cmd = new AccessCmd();
@@ -395,16 +395,16 @@ namespace ECouponsPrinter
             if (strLargeImg.Length > 0)
                 createImg("shop", strLargeImg);
             //写入数据库
-            strSql = "update t_bz_shop set strBizName='" + strBizName + "',strShopName='" + strShopName + "',strTrade='" + strTrade + "',strAddr='" + strAddr + 
-                "',strIntro='" + strIntro + "',strSmallImg='" + strSmallImg + "',strLargeImg='" + strLargeImg + "' where strId='" + strId + "'";
+            strSql = "update t_bz_shop set strBizName='" + strBizName + "',strShopName='" + strShopName + "',strTrade='" + strTrade + "',strAddr='" + strAddr +
+                "',strIntro='" + strIntro + "',strSmallImg='" + strSmallImg + "',strLargeImg='" + strLargeImg + "',intType=" + intType + " where strId='" + strId + "'";
             cmd.ExecuteNonQuery(strSql);
             cmd.Close();
         }
 
         private void addShop(XmlNode xnShop)
         {
-            String strId, strBizName, strShopName, strTrade, strAddr, strIntro, strSmallImg, strLargeImg;
-            getShopProps(xnShop, out strId, out strBizName, out strShopName, out strTrade, out strAddr, out strIntro, out strSmallImg, out strLargeImg);
+            String strId, strBizName, strShopName, strTrade, strAddr, strIntro, strSmallImg, strLargeImg, intType;
+            getShopProps(xnShop, out strId, out strBizName, out strShopName, out strTrade, out strAddr, out strIntro, out strSmallImg, out strLargeImg, out intType);
             //创建文件
             if (strSmallImg.Length > 0)
                 createImg("shop", strSmallImg);
@@ -412,8 +412,8 @@ namespace ECouponsPrinter
                 createImg("shop", strLargeImg);
             //写入数据库
             AccessCmd cmd = new AccessCmd();
-            string strSql = "insert into t_bz_shop(strId,strBizName,strShopName,strTrade,strAddr,strIntro,strSmallImg,strLargeImg) values('" + strId + "','" + strBizName + "','" + strShopName +
-                "','" + strTrade + "','" + strAddr + "','" + strIntro + "','" + strSmallImg + "','" + strLargeImg + "')";
+            string strSql = "insert into t_bz_shop(strId,strBizName,strShopName,strTrade,strAddr,strIntro,strSmallImg,strLargeImg,intType) values('" + strId + "','" + strBizName + "','" + 
+                strShopName + "','" + strTrade + "','" + strAddr + "','" + strIntro + "','" + strSmallImg + "','" + strLargeImg + "'," + intType + ")";
             cmd.ExecuteNonQuery(strSql);
             cmd.Close();
         }
@@ -434,8 +434,8 @@ namespace ECouponsPrinter
             fs.Close();
         }
 
-        private static void getShopProps(XmlNode xnShop, out String strId, out String strBizName, out String strShopName, out String strTrade, out String strAddr, 
-            out String strIntro, out String strSmallImg, out String strLargeImg)
+        private static void getShopProps(XmlNode xnShop, out String strId, out String strBizName, out String strShopName, out String strTrade, out String strAddr,
+            out String strIntro, out String strSmallImg, out String strLargeImg, out String intType)
         {
             XmlElement xeShop = (XmlElement)xnShop;
             strId = xeShop.GetElementsByTagName("strId").Item(0).InnerText.Trim();
@@ -446,6 +446,7 @@ namespace ECouponsPrinter
             strIntro = xeShop.GetElementsByTagName("strIntro").Item(0).InnerText.Trim();
             strSmallImg = xeShop.GetElementsByTagName("strSmallImg").Item(0).InnerText.Trim();
             strLargeImg = xeShop.GetElementsByTagName("strLargeImg").Item(0).InnerText.Trim();
+            intType = xeShop.GetElementsByTagName("intType").Item(0).InnerText.Trim();
         }
 
         private static void getCouponProps(XmlNode xnCoupon, out string strId, out string strName, out string dtActiveTime, out string dtExpireTime, out string strShopId,
