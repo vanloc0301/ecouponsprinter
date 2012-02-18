@@ -48,7 +48,7 @@ namespace ECouponsPrinter
             this.Panel_ShopInfo.GetType().GetProperty("DoubleBuffered", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic).SetValue(Panel_ShopInfo, true, null);
             this.Panel_MyInfo.GetType().GetProperty("DoubleBuffered", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic).SetValue(Panel_MyInfo, true, null);
             this.Panel_Home.GetType().GetProperty("DoubleBuffered", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic).SetValue(Panel_Home, true, null);
-           // 根据分辨率作出调整
+            // 根据分辨率作出调整
             //Size size = SystemInformation.PrimaryMonitorSize;
             //int width = size.Width;
             //int height = size.Height;
@@ -521,17 +521,19 @@ namespace ECouponsPrinter
         {
             int tradeNum = GetTradeNum();
             Point[] p = CaculatePosition(tradeNum);
-
+            int width = p[p.Length - 1].X;
+            int height = p[p.Length - 1].Y;
+            int curNum = tradeNum / 2 + tradeNum % 2 == 0 ? 0 : 1;
             Btn_Coupon_Type = new Button[tradeNum];
             for (int i = 0; i < tradeNum; i++)
             {
-                  this.Btn_Coupon_Type[i].BackgroundImage = Image.FromFile(path + "\\images\\切图\\优惠券二级\\Shoptype.jpg");
+                this.Btn_Coupon_Type[i].BackgroundImage = Image.FromFile(path + "\\images\\切图\\优惠券二级\\Shoptype.jpg");
                 this.Btn_Coupon_Type[i].BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
                 this.Btn_Coupon_Type[i].FlatAppearance.BorderSize = 0;
                 this.Btn_Coupon_Type[i].FlatStyle = System.Windows.Forms.FlatStyle.Flat;
                 this.Btn_Coupon_Type[i].Location = p[i];
                 this.Btn_Coupon_Type[i].Name = "Btn_Coupon_Type" + (i + 1);
-                this.Btn_Coupon_Type[i].Size = new System.Drawing.Size(247, 79);
+                this.Btn_Coupon_Type[i].Size = new System.Drawing.Size(width, height);
                 this.Btn_Coupon_Type[i].TabIndex = 49;
                 this.Btn_Coupon_Type[i].UseVisualStyleBackColor = true;
                 this.Btn_Coupon_Type[i].MouseDown += new System.Windows.Forms.MouseEventHandler(this.Button_ShopType_MouseDown);
@@ -1404,7 +1406,6 @@ namespace ECouponsPrinter
         {
             PictureBox pb = sender as PictureBox;
 
-
             String name = pb.Name;
             String numstr = null;
             int num = 1;
@@ -1927,7 +1928,7 @@ namespace ECouponsPrinter
         /// 获取商家种类的个数
         /// </summary>
         /// <returns>返回商家种类的个数</returns>
-        private int GetTradeNum()
+        private int GetTradeName()
         {
             string strSql = "SELECT count(*) FROM [select distinct strTrade from t_bz_shop]";
             AccessCmd cmd = new AccessCmd();
@@ -1945,7 +1946,6 @@ namespace ECouponsPrinter
             }
 
             return tradeNum;
-
         }
 
         private Point[] CaculatePosition(int num)
@@ -1954,13 +1954,16 @@ namespace ECouponsPrinter
             int rowNum = num / 2 + ((num % 2 == 0) ? 0 : 1);
             int width = (768 - (rowNum + 1) * 5) / rowNum;
 
-            for (int j = 0; j < 2; j++)
+            for (int i = 0; i < rowNum; i++)
             {
-                for (int i = 0; i < rowNum; i++)
-                {
-                    p[j * rowNum + i] = new Point(5 * (i + 1) + width * i, 976 + j * 10);
-                }
+                p[i] = new Point(5 * (i + 1) + width * i, 976);
             }
+
+            for (int i = 0; i < num - rowNum; i++)
+            {
+                p[rowNum + i] = new Point(5 * (i + 1) + width * i, 1065);
+            }
+
             p[num] = new Point(width, 79);
 
             return p;

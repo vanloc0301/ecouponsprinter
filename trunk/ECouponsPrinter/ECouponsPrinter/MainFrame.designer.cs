@@ -2185,7 +2185,7 @@
             // 
             this.PB_NearShop_Top.Location = new System.Drawing.Point(3, 12);
             this.PB_NearShop_Top.Name = "PB_NearShop_Top";
-            this.PB_NearShop_Top.Size = new System.Drawing.Size(761, 384);
+            this.PB_NearShop_Top.Size = new System.Drawing.Size(761, 385);
             this.PB_NearShop_Top.TabIndex = 12;
             this.PB_NearShop_Top.TabStop = false;
             // 
