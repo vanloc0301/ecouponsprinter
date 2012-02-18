@@ -2302,7 +2302,6 @@
             this.LoginText.Name = "LoginText";
             this.LoginText.Size = new System.Drawing.Size(97, 21);
             this.LoginText.TabIndex = 71;
-            this.LoginText.Visible = false;
             // 
             // SCardTimer
             // 
