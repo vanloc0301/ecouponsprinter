@@ -181,5 +181,24 @@ namespace ECouponsPrinter
                 MessageBox.Show(strCouponIds);
             }
         }
+
+        private void button12_Click(object sender, EventArgs e)
+        {
+            DownloadInfo di = new DownloadInfo();
+            string[] aryStrShopId = di.ShopAround();
+            if (aryStrShopId.Length == 0)
+            {
+                MessageBox.Show("没有数据！");
+            }
+            else
+            {
+                string strShopIds = "";
+                for (int i = 0; i < aryStrShopId.Length; i++)
+                {
+                    strShopIds += aryStrShopId[i] + ",";
+                }
+                MessageBox.Show(strShopIds);
+            }
+        }
     }
 }
