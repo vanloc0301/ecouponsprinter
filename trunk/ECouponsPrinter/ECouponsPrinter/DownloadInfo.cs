@@ -508,7 +508,6 @@ namespace ECouponsPrinter
 
         internal string[] CouponTop()
         {
-            //下载参数信息
             request.OpenRequest(GlobalVariables.StrServerUrl + "/servlet/CouponTop?strTerminalNo=" + GlobalVariables.StrTerminalNo, "");
             string strXml = request.HtmlDocument;
             if (strXml.IndexOf("<coupons>") > 0)
@@ -522,6 +521,28 @@ namespace ECouponsPrinter
                     aryCouponId[i] = xnl.Item(i).InnerText.Trim();
                 }
                 return aryCouponId;
+            }
+            else
+            {
+                return new string[0];
+            }
+        }
+
+        internal string[] ShopAround()
+        {
+            request.OpenRequest(GlobalVariables.StrServerUrl + "/servlet/ShopAround?strTerminalNo=" + GlobalVariables.StrTerminalNo, "");
+            string strXml = request.HtmlDocument;
+            if (strXml.IndexOf("<shops>") > 0)
+            {
+                XmlDocument doc = new XmlDocument();
+                doc.LoadXml(strXml);
+                XmlNodeList xnl = doc.GetElementsByTagName("shop");
+                string[] aryShopId = new string[xnl.Count];
+                for (int i = 0; i < xnl.Count; i++)
+                {
+                    aryShopId[i] = xnl.Item(i).FirstChild.InnerText.Trim();
+                }
+                return aryShopId;
             }
             else
             {
