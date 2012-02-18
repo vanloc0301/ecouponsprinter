@@ -22,6 +22,7 @@ namespace ECouponsPrinter
             request.OpenRequest(GlobalVariables.StrServerUrl + "/servlet/ShopDownload?strTerminalNo=" + GlobalVariables.StrTerminalNo, "");
             XmlDocument doc = new XmlDocument();
             string strXml = request.HtmlDocument;
+            MessageBox.Show(strXml);
             if (strXml.IndexOf("<shops>") > 0)
             {
                 doc.LoadXml(strXml);
@@ -56,6 +57,7 @@ namespace ECouponsPrinter
             //下载优惠券信息
             request.OpenRequest(GlobalVariables.StrServerUrl + "/servlet/CouponDownload?strTerminalNo=" + GlobalVariables.StrTerminalNo, "");
             strXml = request.HtmlDocument;
+            MessageBox.Show(strXml);
             if (strXml.IndexOf("<coupons>") > 0)
             {
                 doc.LoadXml(strXml);
@@ -90,6 +92,7 @@ namespace ECouponsPrinter
             //下载广告信息
             request.OpenRequest(GlobalVariables.StrServerUrl + "/servlet/AdDownload?strTerminalNo=" + GlobalVariables.StrTerminalNo, "");
             strXml = request.HtmlDocument;
+            MessageBox.Show(strXml);
             if (strXml.IndexOf("<ads>") > 0)
             {
                 doc.LoadXml(strXml);
