@@ -354,12 +354,12 @@ namespace ECouponsPrinter
         #region "左箭头"和"右箭头"事件处理
         private void Button_CouponsLeft_MouseDown(object sender, MouseEventArgs e)
         {
-            PB_Coupon_Left.Image = Image.FromFile(path + "\\images\\切图\\优惠券二级\\left_1.jpg");
+            PB_Coupon_Left.BackgroundImage = Image.FromFile(path + "\\images\\切图\\优惠券二级\\left_1.jpg");
         }
 
         private void Button_CouponsLeft_MouseUp(object sender, MouseEventArgs e)
         {
-            PB_Coupon_Left.Image = Image.FromFile(path + "\\images\\切图\\优惠券二级\\left.jpg");
+            PB_Coupon_Left.BackgroundImage = Image.FromFile(path + "\\images\\切图\\优惠券二级\\left.jpg");
 
             if (curPage > 1)
             {
@@ -370,12 +370,12 @@ namespace ECouponsPrinter
 
         private void Button_CouponsRight_MouseDown(object sender, MouseEventArgs e)
         {
-            this.PB_Coupon_Right.Image = Image.FromFile(path + "\\images\\切图\\优惠券二级\\right_1.jpg");
+            this.PB_Coupon_Right.BackgroundImage = Image.FromFile(path + "\\images\\切图\\优惠券二级\\right_1.jpg");
         }
 
         private void Button_CouponsRight_MouseUp(object sender, MouseEventArgs e)
         {
-            this.PB_Coupon_Right.Image = Image.FromFile(path + "\\images\\切图\\优惠券二级\\right.jpg");
+            this.PB_Coupon_Right.BackgroundImage = Image.FromFile(path + "\\images\\切图\\优惠券二级\\right.jpg");
 
             if (curPage < totalPage)
             {
@@ -509,35 +509,65 @@ namespace ECouponsPrinter
 
             //取消不必要的按钮
             this.Button_LastCouponsPage.Visible = false;
-
             this.Button_NextCouponsPage.Visible = false;
+
+            //显示必要的按钮
+            this.Btn_Rank.Visible = true;
+            this.Btn_Rec.Visible = true;
+            this.Btn_NewCouponList.Visible = true;
+
+            InitCouponButton();
+            ShowCouponCommonBtn();
             this.Panel_Coupons.Visible = true;
             ShowCoupon();
 
             //         Thread.Sleep(100);
         }
 
+        private void InitCouponButton()
+        {
+            if (Btn_Coupon_Type != null)
+            {
+                for (int i = 0; i < Btn_Coupon_Type.Length; i++)
+                {
+                    Panel_Coupons.Controls.Remove(Btn_Coupon_Type[i]);
+                    Btn_Coupon_Type[i].Dispose();
+                }
+                Btn_Coupon_Type = null;
+            }
+        }
+
+
+
+        /// <summary>
+        /// 显示优惠劵页面下面的类别按钮
+        /// </summary>
         private void ShowCouponCommonBtn()
         {
-            int tradeNum = GetTradeNum();
-            Point[] p = CaculatePosition(tradeNum);
+            string[] tradeName = GetTradeName();
+            int tradeNum = tradeName.Length;
+            Point[] p = CaculatePosition(tradeNum,'c');
             int width = p[p.Length - 1].X;
             int height = p[p.Length - 1].Y;
             int curNum = tradeNum / 2 + tradeNum % 2 == 0 ? 0 : 1;
             Btn_Coupon_Type = new Button[tradeNum];
             for (int i = 0; i < tradeNum; i++)
             {
-                this.Btn_Coupon_Type[i].BackgroundImage = Image.FromFile(path + "\\images\\切图\\优惠券二级\\Shoptype.jpg");
-                this.Btn_Coupon_Type[i].BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-                this.Btn_Coupon_Type[i].FlatAppearance.BorderSize = 0;
-                this.Btn_Coupon_Type[i].FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-                this.Btn_Coupon_Type[i].Location = p[i];
-                this.Btn_Coupon_Type[i].Name = "Btn_Coupon_Type" + (i + 1);
-                this.Btn_Coupon_Type[i].Size = new System.Drawing.Size(width, height);
-                this.Btn_Coupon_Type[i].TabIndex = 49;
-                this.Btn_Coupon_Type[i].UseVisualStyleBackColor = true;
-                this.Btn_Coupon_Type[i].MouseDown += new System.Windows.Forms.MouseEventHandler(this.Button_ShopType_MouseDown);
-                this.Btn_Coupon_Type[i].MouseUp += new System.Windows.Forms.MouseEventHandler(this.Button_ShopType_MouseUp);
+                Btn_Coupon_Type[i] = new Button();
+                Btn_Coupon_Type[i].BackgroundImage = Image.FromFile(path + "\\images\\切图\\优惠券二级\\Shoptype.jpg");
+                Btn_Coupon_Type[i].BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+                Btn_Coupon_Type[i].FlatAppearance.BorderSize = 0;
+                Btn_Coupon_Type[i].FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+                Btn_Coupon_Type[i].Location = p[i];
+                Btn_Coupon_Type[i].Name = "Btn_Coupon_Type" + (i + 1);
+                Btn_Coupon_Type[i].Text = tradeName[i];
+                Btn_Coupon_Type[i].Font = new Font("宋体", 30F, FontStyle.Bold);
+                Btn_Coupon_Type[i].ForeColor = Color.White;
+                Btn_Coupon_Type[i].Size = new System.Drawing.Size(width, height);
+                Btn_Coupon_Type[i].UseVisualStyleBackColor = true;
+                Btn_Coupon_Type[i].MouseDown += new System.Windows.Forms.MouseEventHandler(this.Button_ShopType_MouseDown);
+                Btn_Coupon_Type[i].MouseUp += new System.Windows.Forms.MouseEventHandler(this.Button_ShopType_MouseUp);
+                Panel_Coupons.Controls.Add(Btn_Coupon_Type[i]);
             }
         }
 
@@ -602,6 +632,60 @@ namespace ECouponsPrinter
         private void Button_VIP_MouseUp(object sender, MouseEventArgs e)
         {
             this.Button_Vip.BackgroundImage = Image.FromFile(path + "\\images\\切图\\首页\\VIP专区.jpg");
+
+            //切换
+            int y = this.VerticalScroll.Value;
+            this.Panel_Coupons.Location = new System.Drawing.Point(0, 95 - y);
+
+            InitCouponData("1");
+            Thread.Sleep(20);
+            //准备工作
+            this.UnVisibleAllPanels();
+            this.InitTimer();
+
+            //取消不必要的按钮
+            this.Button_LastCouponsPage.Visible = false;
+            this.Button_NextCouponsPage.Visible = false;
+            this.Btn_Rank.Visible = false;
+            this.Btn_Rec.Visible = false;
+            this.Btn_NewCouponList.Visible = false;
+
+            InitCouponButton();
+            ShowCouponVipBtn();
+            this.Panel_Coupons.Visible = true;
+            ShowCoupon();
+        }
+
+        /// <summary>
+        /// 显示VIP优惠劵页面下面的类别按钮
+        /// </summary>
+        private void ShowCouponVipBtn()
+        {
+            string[] tradeName = GetTradeName();
+            int tradeNum = tradeName.Length;
+            Point[] p = CaculatePosition(tradeNum, 'v');
+            int width = p[p.Length - 1].X;
+            int height = p[p.Length - 1].Y;
+            int curNum = tradeNum / 2 + tradeNum % 2 == 0 ? 0 : 1;
+            Btn_Coupon_Type = new Button[tradeNum];
+            for (int i = 0; i < tradeNum; i++)
+            {
+                Btn_Coupon_Type[i] = new Button();
+                Btn_Coupon_Type[i].BackgroundImage = Image.FromFile(path + "\\images\\切图\\优惠券二级\\Shoptype.jpg");
+                Btn_Coupon_Type[i].BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+                Btn_Coupon_Type[i].FlatAppearance.BorderSize = 0;
+                Btn_Coupon_Type[i].FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+                Btn_Coupon_Type[i].Location = p[i];
+                Btn_Coupon_Type[i].Name = "Btn_Coupon_Type" + (i + 1);
+                Btn_Coupon_Type[i].Text = tradeName[i];
+                Btn_Coupon_Type[i].Font = new Font("宋体", 30F, FontStyle.Bold);
+                Btn_Coupon_Type[i].ForeColor = Color.White;
+                Btn_Coupon_Type[i].Size = new System.Drawing.Size(width, height);
+                Btn_Coupon_Type[i].UseVisualStyleBackColor = true;
+                Btn_Coupon_Type[i].MouseDown += new System.Windows.Forms.MouseEventHandler(this.Button_ShopType_MouseDown);
+                Btn_Coupon_Type[i].MouseUp += new System.Windows.Forms.MouseEventHandler(this.Button_ShopType_MouseUp);
+                Panel_Coupons.Controls.Add(Btn_Coupon_Type[i]);
+            }
         }
 
         #endregion
@@ -1776,6 +1860,7 @@ namespace ECouponsPrinter
             return temp;
         }
 
+
         /// <summary>
         /// 收藏和打印半透明Label的时间处理
         /// </summary>
@@ -1928,44 +2013,54 @@ namespace ECouponsPrinter
         /// 获取商家种类的个数
         /// </summary>
         /// <returns>返回商家种类的个数</returns>
-        private int GetTradeName()
+        private string[] GetTradeName()
         {
-            string strSql = "SELECT count(*) FROM [select distinct strTrade from t_bz_shop]";
-            AccessCmd cmd = new AccessCmd();
-            OleDbDataReader reader = cmd.ExecuteReader(strSql);
-
-            int tradeNum = 0;
-            if (reader.Read())
+            try
             {
-                tradeNum = reader.GetInt32(0);
-            }
+                string strSql = "select distinct strTrade from t_bz_shop";
+                AccessCmd cmd = new AccessCmd();
+                OleDbDataReader reader = cmd.ExecuteReader(strSql);
 
-            if (tradeNum > 9)
+                String tradeName = "";
+                while (reader.Read())
+                {
+                    tradeName += reader.GetString(0) + ",";
+                    count++;
+                }
+                reader.Close();
+                cmd.Close();
+                return tradeName.Substring(0, tradeName.Length - 1).Split(',');
+            }
+            catch (Exception e)
             {
-                tradeNum = 9;
             }
-
-            return tradeNum;
+            return null;    
         }
 
-        private Point[] CaculatePosition(int num)
+        private Point[] CaculatePosition(int num, char type)
         {
             Point[] p = new Point[num + 1];
             int rowNum = num / 2 + ((num % 2 == 0) ? 0 : 1);
             int width = (768 - (rowNum + 1) * 5) / rowNum;
+            int pa = 1026, pb = 1095, pheight = 60;
+            if (type == 'v')
+            {
+                pa = 966;
+                pb = 1070;
+                pheight = 89;
+            }
 
             for (int i = 0; i < rowNum; i++)
             {
-                p[i] = new Point(5 * (i + 1) + width * i, 976);
+                p[i] = new Point(5 * (i + 1) + width * i, pa);
             }
 
             for (int i = 0; i < num - rowNum; i++)
             {
-                p[rowNum + i] = new Point(5 * (i + 1) + width * i, 1065);
+                p[rowNum + i] = new Point(5 * (i + 1) + width * i, pb);
             }
 
-            p[num] = new Point(width, 79);
-
+            p[num] = new Point(width, pheight);
             return p;
 
         }
@@ -2143,6 +2238,92 @@ namespace ECouponsPrinter
                 ErrorLog.log(ep);
             }
             this.Timer_DownloadInfo.Start();
+        }
+
+        private void Btn_NewCouponList_Click(object sender, EventArgs e)
+        {
+            MyMsgBox mb = new MyMsgBox();
+            try 
+            {
+                String time = DateTime.Now.ToString("yyyy-M-d H:m:s");
+                string strSql = "select top 24 strId from t_bz_coupon where #" + time + "#>dtActiveTime and #" + time + "#< dtExpireTime order by dtActiveTime desc";
+                AccessCmd cmd = new AccessCmd();
+                OleDbDataReader reader = cmd.ExecuteReader(strSql);
+
+                String strId = "";
+                while (reader.Read())
+                {
+                    if (!reader.IsDBNull(0))
+                    {
+                        strId += reader.GetString(0) + ",";
+                    }
+                }
+                LP_ctype[0] = FindCouponById(strId.Substring(0,strId.Length-1).Split(','));
+                curPage = 1;
+                curType = 0;
+                theCouponNum = 0;
+
+                ShowCoupon();
+
+            }
+            catch(Exception e1)
+            {
+                mb.ShowMsg(e1.Message+"\n正在修复", 2);
+            }
+            
+        }
+
+        private void Btn_Rank_Click(object sender, EventArgs e)
+        {
+            DownloadInfo di = new DownloadInfo();
+            string[] aryStrCouponId = di.CouponTop();
+            MyMsgBox mb = new MyMsgBox();
+
+            if (aryStrCouponId.Length == 0)
+            {
+                mb.ShowMsg("排行榜暂时无数据!", 2);
+                return;
+            }
+
+            LP_ctype[0] = FindCouponById(aryStrCouponId);
+            curPage = 1;
+            curType = 0;
+            theCouponNum = 0;
+
+            ShowCoupon();
+
+        }
+
+        private void Btn_Rec_Click(object sender, EventArgs e)
+        {
+            MyMsgBox mb = new MyMsgBox();
+            try
+            {
+                String time = DateTime.Now.ToString("yyyy-M-d H:m:s");
+                string strSql = "select top 24 strId from t_bz_coupon where intRecommend=1 order by dtActiveTime desc";
+                AccessCmd cmd = new AccessCmd();
+                OleDbDataReader reader = cmd.ExecuteReader(strSql);
+
+                String strId = "";
+                while (reader.Read())
+                {
+                    if (!reader.IsDBNull(0))
+                    {
+                        strId += reader.GetString(0) + ",";
+                    }
+                }
+                LP_ctype[0] = FindCouponById(strId.Substring(0, strId.Length - 1).Split(','));
+                curPage = 1;
+                curType = 0;
+                theCouponNum = 0;
+
+                ShowCoupon();
+
+            }
+            catch (Exception e1)
+            {
+                mb.ShowMsg(e1.Message + "\n正在修复", 2);
+            }
         }
 
     }
