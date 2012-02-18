@@ -2488,7 +2488,6 @@ namespace ECouponsPrinter
         private void Timer_DownloadInfo_Tick(object sender, EventArgs e)
         {
             this.Timer_DownloadInfo.Stop();
-            //     MessageBox.Show("begin download info");
             try
             {
                 //下载信息
@@ -2498,7 +2497,9 @@ namespace ECouponsPrinter
                 //同步数据
                 this.InitData();
                 this.Timer_DownloadInfo.Interval = GlobalVariables.IntRefreshSec * 1000;
-                //         MessageBox.Show("下载信息成功");
+                //上传消费记录
+                UploadInfo ui = new UploadInfo();
+                ui.CouponPrint();
             }
             catch (Exception ep)
             {

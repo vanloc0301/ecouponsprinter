@@ -28,11 +28,11 @@ namespace ECouponsPrinter
 
         public bool CouponPrint()
         {
+            AccessCmd cmd = new AccessCmd();
             try
             {
                 //读取数据库
                 string strSql = "select * from t_bz_coupon_print";
-                AccessCmd cmd = new AccessCmd();
                 OleDbDataReader reader = cmd.ExecuteReader(strSql);
                 StringBuilder sbPrintInfo = new StringBuilder();
                 StringBuilder sbId = new StringBuilder();
@@ -52,7 +52,6 @@ namespace ECouponsPrinter
                         strPrintInfo, "");
                     XmlDocument doc = new XmlDocument();
                     string strXml = request.HtmlDocument;
-                    form1.setText(strXml);
                     doc.LoadXml(strXml);
                     string strReturn = doc.GetElementsByTagName("return").Item(0).InnerText.Trim();
                     if (strReturn.Equals("OK"))
@@ -62,13 +61,15 @@ namespace ECouponsPrinter
                         cmd.ExecuteNonQuery(strSql);
                     }
                 }
-                cmd.Close();
                 return true;
             }
             catch (Exception e)
             {
-          //      MessageBox.Show(e.StackTrace);
                 return false;
+            }
+            finally
+            {
+                cmd.Close();
             }
         }
 
