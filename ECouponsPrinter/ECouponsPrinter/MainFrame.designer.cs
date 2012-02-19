@@ -199,8 +199,6 @@
             this.PB_NearShop_Top = new System.Windows.Forms.PictureBox();
             this.Btn_NearShopInfo = new System.Windows.Forms.Button();
             this.Label_NearShopName = new System.Windows.Forms.Label();
-            this.LoginText = new System.Windows.Forms.TextBox();
-            this.SCardTimer = new System.Windows.Forms.Timer(this.components);
             this.Panel_Top.SuspendLayout();
             this.Panel_Bottom.SuspendLayout();
             this.Panel_Home.SuspendLayout();
@@ -348,7 +346,7 @@
             this.Label_ScrollText.Direction = Marquee.UserControl1.EnumDirection.Left;
             this.Label_ScrollText.Font = new System.Drawing.Font("宋体", 30F, System.Drawing.FontStyle.Bold);
             this.Label_ScrollText.ForeColor = System.Drawing.Color.White;
-            this.Label_ScrollText.Location = new System.Drawing.Point(22, 14);
+            this.Label_ScrollText.Location = new System.Drawing.Point(24, 15);
             this.Label_ScrollText.Name = "Label_ScrollText";
             this.Label_ScrollText.Padding = new System.Windows.Forms.Padding(0, 15, 0, 0);
             this.Label_ScrollText.scrollamount = 1;
@@ -2296,18 +2294,6 @@
             this.Label_NearShopName.Text = "商家名称";
             this.Label_NearShopName.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // LoginText
-            // 
-            this.LoginText.Location = new System.Drawing.Point(656, 1333);
-            this.LoginText.Name = "LoginText";
-            this.LoginText.Size = new System.Drawing.Size(97, 21);
-            this.LoginText.TabIndex = 71;
-            // 
-            // SCardTimer
-            // 
-            this.SCardTimer.Interval = 500;
-            this.SCardTimer.Tick += new System.EventHandler(this.SCardTimer_Tick);
-            // 
             // MainFrame
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -2320,7 +2306,6 @@
             this.Controls.Add(this.Panel_ShopInfo);
             this.Controls.Add(this.Panel_MyInfo);
             this.Controls.Add(this.Panel_Shop);
-            this.Controls.Add(this.LoginText);
             this.Controls.Add(this.Panel_Bottom);
             this.Controls.Add(this.Panel_Top);
             this.DoubleBuffered = true;
@@ -2457,7 +2442,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.PB_NearShop13)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PB_NearShop_Top)).EndInit();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -2619,8 +2603,6 @@
         private System.Windows.Forms.PictureBox PB_NearShop1;
         private System.Windows.Forms.Button Button_NearShop;
         private System.Windows.Forms.Button Button_Vip;
-        private System.Windows.Forms.TextBox LoginText;
-        private System.Windows.Forms.Timer SCardTimer;
         private System.Windows.Forms.Label Home_Fav;
         private System.Windows.Forms.Label Home_Print;
         private System.Windows.Forms.Label ShopInfo_Print;
