@@ -90,10 +90,7 @@ namespace ECouponsPrinter
                 {
                      string strError = "Connect device failed";                
            //         MessageBox.Show(strError, "error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-
-                
-            
+                }     
         }
 
         public bool InitType(char type)
@@ -183,7 +180,7 @@ namespace ECouponsPrinter
                     break;
                 else
                 {
-                    rf_beep(icdev, 30);
+                    rf_beep(icdev, 10);
                 }
 
                 status = rf_anticoll(icdev, bcnt, pSnr, ref len);//返回卡的序列号
