@@ -906,7 +906,7 @@ namespace ECouponsPrinter
 
         #region 数据处理和图片绑定
 
-        #region 加载所有小图信息
+        #region 加载所有初始化信息
 
         /// <summary>
         /// 预加载所有的图片信息
