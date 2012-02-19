@@ -74,6 +74,7 @@ namespace ECouponsPrinter
 
             if (isFirstKey)
             {
+                this.LoginText.Text = "";
                 if (msg.Msg == WM_KEYDOWN | msg.Msg == WM_SYSKEYDOWN)
                 {
                     LoginText.Focus();

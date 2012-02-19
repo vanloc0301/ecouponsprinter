@@ -10,6 +10,7 @@ using System.Threading;
 using System.IO;
 using System.Data.OleDb;
 using System.Runtime.InteropServices;
+using Marquee;
 
 namespace ECouponsPrinter
 {
@@ -18,7 +19,7 @@ namespace ECouponsPrinter
         private String path = System.Windows.Forms.Application.StartupPath;  //应用程序当前路径
         private static int CountDownNumber = GlobalVariables.WindowWaitTime;
         private string _stringScrollText = GlobalVariables.MarqueeText;
-        private Thread th;
+        private Thread th, marquee;
 
         //-----------------------------------------------------------------------------
         private List<PicInfo> LP_shop;
@@ -808,9 +809,11 @@ namespace ECouponsPrinter
             this.FormBorderStyle = FormBorderStyle.None;
             this.WindowState = FormWindowState.Maximized;
 
-            //加载走马灯
-            this.Label_ScrollText.strContent = _stringScrollText;
-            this.Label_ScrollText.Start();
+            //加载走马灯线程
+            marquee = new Thread(new ThreadStart(LoadMarquee));
+            marquee.Start();
+            //this.Label_ScrollText.strContent = _stringScrollText;
+            //this.Label_ScrollText.Start();
 
             //加载计时器
             this.Timer_Countdown.Enabled = true;
@@ -2490,6 +2493,22 @@ namespace ECouponsPrinter
 
         #endregion
 
+        #region 走马灯线程
+        private void LoadMarquee()
+        {
+            UserControl1 Label_ScrollText = new UserControl1();
+            String dtime = DateTime.Now.ToString("H:m:s");
+            string strSql = "select * from t_bz_advertisement where int Type=3 and #"+dtime+"#>=dtStartTime and #"+dtime+"#<dtEndTime";
+            AccessCmd cmd = new AccessCmd();
+            OleDbDataReader reader = cmd.ExecuteReader(strSql);
+
+            
+        }
+        #endregion
+
+        /// <summary>
+        /// 加载屏蔽窗口
+        /// </summary>
         private void TranslateMain()
         {
             TranslateForm tf = new TranslateForm();
