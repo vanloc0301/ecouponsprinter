@@ -19,6 +19,7 @@ namespace ECouponsPrinter
         {
             InitializeComponent();
             this.FormBorderStyle = FormBorderStyle.None;
+            this.TopMost = true;
         }
 
         private void TranslateClick(object sender, EventArgs e)
@@ -193,11 +194,12 @@ namespace ECouponsPrinter
             this.SCardStart();
         }
 
-        private void label1_DoubleClick(object sender, EventArgs e)
+        private void LabelOption_DoubleClick(object sender, EventArgs e)
         {
             Option op = new Option();
             op.Location = new Point(100, 30);
-            op.ShowDialog();
+            op.TopMost = true;
+            op.Show();
         }
 
     }

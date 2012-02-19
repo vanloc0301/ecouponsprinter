@@ -826,9 +826,9 @@ namespace ECouponsPrinter
 
             //加载半透明的Label
             this.OnLoadLabelStyle(90, Color.White);
-            ShowHome();   
+            ShowHome();
 
-            ////展开遮罩窗体
+            //展开遮罩窗体
             Thread.Sleep(100);
             th = new Thread(new ThreadStart(TranslateMain));
             th.Start();
@@ -1273,10 +1273,26 @@ namespace ECouponsPrinter
                 }
             }
 
-            LP_stype = new List<PicInfo>[3];
-            LP_stype[0] = FindShopByTrade("1");
-            LP_stype[1] = FindShopByTrade("2");
-            LP_stype[2] = FindShopByTrade("3");
+            string[] trade = GetTradeName();
+
+            if (trade.Length != 0)
+            {
+                if (trade.Length > 3)
+                {
+                    LP_stype = new List<PicInfo>[3];
+                    LP_stype[0] = FindShopByTrade(trade[0]);
+                    LP_stype[1] = FindShopByTrade(trade[1]);
+                    LP_stype[2] = FindShopByTrade(trade[2]);
+                }
+                else
+                {
+                    LP_stype = new List<PicInfo>[trade.Length];
+                    for (int i = 0; i < trade.Length; i++)
+                    {
+                        LP_stype[i] = FindShopByTrade(trade[i]);
+                    }
+                }
+            }
 
             tPage1 = 1;
             tPage2 = 1;
@@ -1378,9 +1394,20 @@ namespace ECouponsPrinter
         /// </summary>
         private void ShowShop()
         {
-            ShowShopPart((int)part.up);         //显示商家页面的上面部分
-            ShowShopPart((int)part.middle);     //显示商家页面的中间部分
-            ShowShopPart((int)part.bottom);         //显示商家页面的下面部分
+            string[] trade = GetTradeName();
+
+            if (LP_stype[0] != null && LP_stype[0].Count > 0)
+            {
+                ShowShopPart((int)part.up);         //显示商家页面的上面部分
+            }
+            if (LP_stype[1] != null && LP_stype[1].Count > 0)
+            {
+                ShowShopPart((int)part.middle);     //显示商家页面的中间部分
+            }
+            if (LP_stype[2] != null && LP_stype[2].Count > 0)
+            {
+                ShowShopPart((int)part.bottom);         //显示商家页面的下面部分
+            }
         }
 
         /// <summary>
@@ -2455,7 +2482,7 @@ namespace ECouponsPrinter
             TranslateForm tf = new TranslateForm();
             tf.Location = new Point(0, 0);
             tf.Size = new Size(768, 1366);
-            tf.Show();
+            tf.ShowDialog();
         }
 
         #endregion
