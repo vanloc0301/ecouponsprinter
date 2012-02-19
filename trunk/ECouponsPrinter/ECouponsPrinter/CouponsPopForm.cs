@@ -188,10 +188,18 @@ namespace ECouponsPrinter
 
         private void DoWork()
         {
-            pd.Print();
-            UploadInfo ui = new UploadInfo();
-            ui.CouponPrint();
-
+            try
+            {
+                pd.Print();
+                UploadInfo ui = new UploadInfo();
+                ui.CouponPrint();
+            }
+            catch (Exception e)
+            {
+                MyMsgBox mb = new MyMsgBox();
+                mb.ShowMsg("打印出错！暂时停止服务", 2);
+                return;
+            }
             for (int i = 0; i <= 100; i += 1)
             {
                 wait.SetProgressBarPositionP(i);//设置进度条当前位置
