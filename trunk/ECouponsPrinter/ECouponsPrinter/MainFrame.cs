@@ -404,7 +404,7 @@ namespace ECouponsPrinter
                 type = 'v';
             }
 
-            InitCouponData(GetTradeName()[tradeNum],type);
+            InitCouponData(GetTradeName()[tradeNum], type);
             ShowCoupon();
         }
 
@@ -469,6 +469,13 @@ namespace ECouponsPrinter
         {
             this.Button_ShopPage.BackgroundImage = Image.FromFile(path + "\\images\\切图\\首页\\商家.jpg");
 
+            if (LP_shop == null || LP_shop.Count == 0)
+            {
+                MyMsgBox mb = new MyMsgBox();
+                mb.ShowMsg("暂无商家信息", 2);
+                return;
+            }
+
             //取消不必要的按钮
             this.Button_LastCouponsPage.Visible = false;
             this.Button_NextCouponsPage.Visible = false;
@@ -505,7 +512,13 @@ namespace ECouponsPrinter
             int y = this.VerticalScroll.Value;
             this.Panel_Coupons.Location = new System.Drawing.Point(0, 95 - y);
 
-            InitCouponData(GetTradeName()[0],'c');
+            if (GetTradeName() == null)
+            {
+                MyMsgBox mb = new MyMsgBox();
+                mb.ShowMsg("暂无优惠劵信息！", 2);
+                return;
+            }
+            InitCouponData(GetTradeName()[0], 'c');
             Thread.Sleep(20);
             //准备工作
             this.UnVisibleAllPanels();
@@ -589,6 +602,13 @@ namespace ECouponsPrinter
         {
             this.Button_MyInfoPage.BackgroundImage = Image.FromFile(path + "\\images\\切图\\首页\\我的专区.jpg");
 
+            if (!GlobalVariables.isUserLogin)
+            {
+                MyMsgBox mb = new MyMsgBox();
+                mb.ShowMsg("您还未登录！", 2);
+                return;
+            }
+
             //准备工作
             this.UnVisibleAllPanels();
             this.InitTimer();
@@ -629,7 +649,11 @@ namespace ECouponsPrinter
             int y = this.VerticalScroll.Value;
             this.Panel_NearShop.Location = new System.Drawing.Point(0, 95 - y);
 
-            InitNearShopData();
+            if (!InitNearShopData())
+            {
+                MyMsgBox mb = new MyMsgBox();
+                mb.ShowMsg("暂无周边商家信息！", 2);
+            }
             Thread.Sleep(20);
             //准备工作
             this.UnVisibleAllPanels();
@@ -658,9 +682,14 @@ namespace ECouponsPrinter
             int y = this.VerticalScroll.Value;
             this.Panel_Coupons.Location = new System.Drawing.Point(0, 95 - y);
 
-            string[] treadeName = GetTradeName();
+            if (GetTradeName() == null)
+            {
+                MyMsgBox mb = new MyMsgBox();
+                mb.ShowMsg("暂无VIP优惠劵信息！", 2);
+                return;
+            }
 
-            InitCouponData(GetTradeName()[0],'v');
+            InitCouponData(GetTradeName()[0], 'v');
             if (LP_ctype[0] == null || LP_ctype[0].Count == 0)
             {
                 MyMsgBox mb = new MyMsgBox();
@@ -682,7 +711,7 @@ namespace ECouponsPrinter
 
             InitCouponButton();
 
-            
+
             ShowCouponVipBtn();
             this.Panel_Coupons.Visible = true;
             ShowCoupon();
@@ -1058,12 +1087,19 @@ namespace ECouponsPrinter
         /// </summary>
         private void ShowHomeTopPicure()
         {
-            //    MessageBox.Show(curType.ToString());  
-
-            Label_ShopName.Text = LP_shop[curType].name;
-
+            //    MessageBox.Show(curType.ToString()); 
             if (LP_shop.Count > 0)
             {
+                if (LP_shop[curType].name != null)
+                {
+                    Label_ShopName.Text = LP_shop[curType].name;
+                }
+                else
+                {
+                    Label_ShopName.Text = "暂无商家";
+                }
+
+
                 PB_Home_Up.Image = new Bitmap(Image.FromFile(LP_shop[curType].lpath), 761, 384);
             }
         }
@@ -1366,10 +1402,10 @@ namespace ECouponsPrinter
             }
             else
             {
-                curPageShowCount = perNum;
+                curPageShowCount = 0;
             }
 
-            if (curPageShowCount > 0)
+            if (curPageShowCount >= 0)
                 for (int i = 0; i < perNum; i++)
                 {
                     String name = controlName + (i + 1);
@@ -1411,7 +1447,6 @@ namespace ECouponsPrinter
             //   MessageBox.Show(name.Length.ToString());
             String numstr = "1";
             int num = 1;
-
             if (name.Length == 15)
             {
                 numstr = name.Substring(14, 1);
@@ -1428,17 +1463,25 @@ namespace ECouponsPrinter
 
             int curNumType = name.Substring(12, 1)[0] - '0';
 
-            this.UnVisibleAllPanels();
-            this.InitTimer();
+            if (LP_stype[curNumType - 1].Count > 0)
+            {
+                this.UnVisibleAllPanels();
+                this.InitTimer();
 
-            int y = this.VerticalScroll.Value;
-            this.Panel_ShopInfo.Location = new System.Drawing.Point(0, 95 - y);
+                int y = this.VerticalScroll.Value;
+                this.Panel_ShopInfo.Location = new System.Drawing.Point(0, 95 - y);
 
-            InitShopInfoData(LP_stype[curNumType - 1][num + (tPage1 - 1) * 12 - 1].id);
-            Thread.Sleep(20);
+                InitShopInfoData(LP_stype[curNumType - 1][num + (tPage1 - 1) * 12 - 1].id);
+                Thread.Sleep(20);
 
-            this.Panel_ShopInfo.Visible = true;
-            ShowShopInfo();
+                this.Panel_ShopInfo.Visible = true;
+                ShowShopInfo();
+            }
+            else
+            {
+                MyMsgBox mb = new MyMsgBox();
+                mb.ShowMsg("无此商家信息", 2);
+            }
         }
 
         #endregion
@@ -1450,6 +1493,10 @@ namespace ECouponsPrinter
         /// </summary>
         private void InitCouponData(String trade, char type)
         {
+            if (trade == null)
+            {
+                return;
+            }
             if (LP_ctype != null)
             {
                 for (int i = 0; i < LP_ctype.Length; i++)
@@ -1462,6 +1509,7 @@ namespace ECouponsPrinter
             }
 
             LP_ctype = new List<CouponPicInfo>[1];
+            
             LP_ctype[0] = FindCouponByTrade(trade);
             if (type == 'v')
             {
@@ -1628,14 +1676,21 @@ namespace ECouponsPrinter
                 controlName = "PB_MyInfo_Fav";
                 lp = LP_ctype[0];
                 curPage = cPage1;
-                PB_MyInfo_Fav.Image = new Bitmap(Image.FromFile(lp[(curPage - 1) * 6].lpath), 734, 366);
+                if (lp.Count != 0)
+                {
+                    PB_MyInfo_Fav.Image = new Bitmap(Image.FromFile(lp[(curPage - 1) * 6].lpath), 734, 366);
+                }
+
             }
             else
             {
                 controlName = "PB_MyInfo_His";
                 lp = LP_ctype[1];
                 curPage = cPage2;
-                PB_MyInfo_His.Image = new Bitmap(Image.FromFile(lp[(curPage - 1) * 6].lpath), 734, 366);
+                if (lp.Count != 0)
+                {
+                    PB_MyInfo_His.Image = new Bitmap(Image.FromFile(lp[(curPage - 1) * 6].lpath), 734, 366);
+                }
             }
 
             count = lp.Count;
@@ -1653,7 +1708,7 @@ namespace ECouponsPrinter
             else
                 curPageShowCount = 0;
 
-            if (curPageShowCount > 0)
+            if (curPageShowCount >= 0)
                 for (int i = 0; i < perNum; i++)
                 {
                     String name = controlName + (i + 1);
@@ -1675,15 +1730,16 @@ namespace ECouponsPrinter
                     }
                 }
 
-
-
-            for (int i = 0; i < curPageShowCount; i++)
+            if (lp.Count > 0)
             {
-                String name = controlName + (i + 1);
-                PictureBox temp = null;
-                if ((temp = (PictureBox)GetControl(name, container)) != null)
+                for (int i = 0; i < curPageShowCount; i++)
                 {
-                    temp.Image = lp[i + perNum * (curPage - 1)].image;
+                    String name = controlName + (i + 1);
+                    PictureBox temp = null;
+                    if ((temp = (PictureBox)GetControl(name, container)) != null)
+                    {
+                        temp.Image = lp[i + perNum * (curPage - 1)].image;
+                    }
                 }
             }
         }
@@ -1712,7 +1768,7 @@ namespace ECouponsPrinter
         #endregion
 
         #region 周边商家数据处理
-        private void InitNearShopData()
+        private bool InitNearShopData()
         {
             if (LP_stype != null)
             {
@@ -1732,14 +1788,14 @@ namespace ECouponsPrinter
             LP_stype = new List<PicInfo>[1];
             if (aryStrShopId.Length == 0)
             {
-                mb.ShowMsg("没有数据！", 2);
-                LP_stype[0] = new List<PicInfo>(); 
-                return;
+                LP_stype[0] = new List<PicInfo>();
+                return false;
             }
             else
             {
                 LP_stype[0] = FindShopById(aryStrShopId);
             }
+            return true;
         }
 
         private void ShowNearShop()
@@ -1802,17 +1858,26 @@ namespace ECouponsPrinter
                 }
             if (LP_temp.Count != 0)
             {
-                PB_NearShop_Top.Image = new Bitmap(Image.FromFile(LP_temp[(curPage - 1) * 24].lpath), 760, 407);            
+                PB_NearShop_Top.Image = new Bitmap(Image.FromFile(LP_temp[(curPage - 1) * 24].lpath), 760, 407);
 
-            for (int i = 0; i < curPageShowCount; i++)
-            {
-                String name = controlName + (i + 1);
-                PictureBox temp = null;
-                if ((temp = (PictureBox)GetControl(name, container)) != null)
+                if (LP_temp[(curPage - 1) * 24].name != null)
                 {
-                    temp.Image = LP_temp[i + perNum * (curPage - 1)].image;
+                    Label_NearShopName.Text = LP_temp[(curPage - 1) * 24].name;
                 }
-            }
+                else
+                {
+                    Label_NearShopName.Text = "暂无此商家";
+                }
+
+                for (int i = 0; i < curPageShowCount; i++)
+                {
+                    String name = controlName + (i + 1);
+                    PictureBox temp = null;
+                    if ((temp = (PictureBox)GetControl(name, container)) != null)
+                    {
+                        temp.Image = LP_temp[i + perNum * (curPage - 1)].image;
+                    }
+                }
             }
         }
 
@@ -2115,44 +2180,72 @@ namespace ECouponsPrinter
             Label lb = sender as Label;
             int type = 1;        //0表示收藏，非0表示打印
 
+            
             String id = null;
             switch (lb.Name)
             {
                 case "Home_Fav":
                     type = 0;
-                    id = LP_coupon[(curPage - 1) * 12 + theCouponNum].id;
+                    if (LP_coupon.Count > 0)
+                    {
+                        id = LP_coupon[(curPage - 1) * 12 + theCouponNum].id;
+                    }
                     break;
                 case "Home_Print":
                     type = 1;
-                    id = LP_coupon[(curPage - 1) * 12 + theCouponNum].id;
+                    if (LP_coupon.Count > 0)
+                    {
+                        id = LP_coupon[(curPage - 1) * 12 + theCouponNum].id;
+                    }
                     break;
                 case "ShopInfo_Fav":
                     type = 0;
-                    id = LP_ctype[0][(curPage - 1) * 6 + theCouponNum].id;
+                    if (LP_ctype[0].Count > 0)
+                    {
+                        id = LP_ctype[0][(curPage - 1) * 6 + theCouponNum].id;
+                    }
                     break;
                 case "ShopInfo_Print":
                     type = 1;
-                    id = LP_ctype[0][(curPage - 1) * 6 + theCouponNum].id;
+                    if (LP_ctype[0].Count > 0)
+                    {
+                        id = LP_ctype[0][(curPage - 1) * 6 + theCouponNum].id;
+                    }
                     break;
                 case "Coupon_Fav":
                     type = 0;
-                    id = LP_ctype[0][(curPage - 1) * 12 + theCouponNum].id;
+                    if (LP_ctype[0].Count > 0)
+                    {
+                        id = LP_ctype[0][(curPage - 1) * 12 + theCouponNum].id;
+                    }
                     break;
                 case "Coupon_Print":
                     type = 1;
-                    id = LP_ctype[0][(curPage - 1) * 12 + theCouponNum].id;
+                    if (LP_ctype[0].Count > 0)
+                    {
+                        id = LP_ctype[0][(curPage - 1) * 12 + theCouponNum].id;
+                    }
                     break;
                 case "MyInfo_Top_Print":
                     type = 1;
-                    id = LP_ctype[0][(curPage - 1) * 6 + theCouponNum].id;
+                    if (LP_ctype[0].Count > 0)
+                    {
+                        id = LP_ctype[0][(curPage - 1) * 6 + theCouponNum].id;
+                    }
                     break;
                 case "Myinfo_Bottom_Fav":
                     type = 0;
-                    id = LP_ctype[1][(curPage - 1) * 6 + theCouponNum].id;
+                    if (LP_ctype[1].Count > 0)
+                    {
+                        id = LP_ctype[1][(curPage - 1) * 6 + theCouponNum].id;
+                    }
                     break;
                 case "Myinfo_Bottom_Print":
                     type = 1;
-                    id = LP_ctype[1][(curPage - 1) * 6 + theCouponNum].id;
+                    if (LP_ctype[1].Count > 0)
+                    {
+                        id = LP_ctype[1][(curPage - 1) * 6 + theCouponNum].id;
+                    }
                     break;
                 default: break;
             }
@@ -2273,7 +2366,14 @@ namespace ECouponsPrinter
                 }
                 reader.Close();
                 cmd.Close();
-                return tradeName.Substring(0, tradeName.Length - 1).Split(',');
+                if (tradeName != "")
+                {
+                    return tradeName.Substring(0, tradeName.Length - 1).Split(',');
+                }
+                else
+                {
+                    return null;
+                }
             }
             catch (Exception e)
             {
@@ -2381,13 +2481,13 @@ namespace ECouponsPrinter
                     String cardtext = ""; ;
                     int i = 0, j = 0;
 
-                    for (i = 0; i < LoginText.Text.Length;i++ )
+                    for (i = 0; i < LoginText.Text.Length; i++)
                     {
                         if (LoginText.Text[i] >= '0' && LoginText.Text[i] <= '9')
                         {
                             cardtext += LoginText.Text[i].ToString();
                             j++;
-                        }                   
+                        }
                     }
 
                     if (!UserLogin(cardtext))
@@ -2600,7 +2700,7 @@ namespace ECouponsPrinter
         }
 
         private void Button_NearShopInfo_MouseUp(object sender, MouseEventArgs e)
-        {            
+        {
             this.Btn_NearShopInfo.BackgroundImage = Image.FromFile(path + "\\images\\切图\\首页\\详细.jpg");
 
             this.InitTimer();
@@ -2620,13 +2720,13 @@ namespace ECouponsPrinter
             int y = this.VerticalScroll.Value;
             this.Panel_ShopInfo.Location = new System.Drawing.Point(0, 95 - y);
 
-            
+
 
             this.Panel_ShopInfo.Visible = true;
             ShowShopInfo();
         }
 
-        
+
 
     }
 }
