@@ -1396,18 +1396,9 @@ namespace ECouponsPrinter
         {
             string[] trade = GetTradeName();
 
-            if (LP_stype[0] != null && LP_stype[0].Count > 0)
-            {
-                ShowShopPart((int)part.up);         //显示商家页面的上面部分
-            }
-            if (LP_stype[1] != null && LP_stype[1].Count > 0)
-            {
-                ShowShopPart((int)part.middle);     //显示商家页面的中间部分
-            }
-            if (LP_stype[2] != null && LP_stype[2].Count > 0)
-            {
-                ShowShopPart((int)part.bottom);         //显示商家页面的下面部分
-            }
+            ShowShopPart((int)part.up);         //显示商家页面的上面部分         
+            ShowShopPart((int)part.middle);     //显示商家页面的中间部分          
+            ShowShopPart((int)part.bottom);         //显示商家页面的下面部分
         }
 
         /// <summary>
@@ -1424,23 +1415,45 @@ namespace ECouponsPrinter
             if (type == 1)
             {
                 controlName = "PB_Shop_type1_";
-                lp = LP_stype[0];
+                if (LP_stype.Length >= 1)
+                {
+                    if (LP_stype[0] != null && LP_stype[0].Count > 0)
+                    {
+                        lp = LP_stype[0];
+                    }
+                }
                 curPage = tPage1;
             }
             else if (type == 2)
             {
                 controlName = "PB_Shop_type2_";
-                lp = LP_stype[1];
+                if (LP_stype.Length >= 2)
+                {
+                    if (LP_stype[1] != null && LP_stype[1].Count > 0)
+                    {
+                        lp = LP_stype[1];
+                    }
+                }
                 curPage = tPage2;
             }
             else
             {
                 controlName = "PB_Shop_type3_";
-                lp = LP_stype[2];
+                if (LP_stype.Length >= 3)
+                {
+                    if (LP_stype[2] != null && LP_stype[2].Count > 0)
+                    {
+                        lp = LP_stype[2];
+                    }
+                }
                 curPage = tPage3;
             }
 
-            count = lp.Count;
+            if (lp == null)
+                count = 0;
+            else
+                count = lp.Count;
+
             totalPage = count / perNum + (count % perNum == 0 ? 0 : 1);
             //    MessageBox.Show(totalPage.ToString());
             if (count != 0)
