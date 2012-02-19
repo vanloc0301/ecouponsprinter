@@ -836,13 +836,36 @@ namespace ECouponsPrinter
             //启动射频卡检测程序
             this.SCardStart();
 
-            //展开遮罩窗体
-            Thread.Sleep(100);
-            th = new Thread(new ThreadStart(TranslateMain));
-            th.Start();
+            ////展开遮罩窗体
+            //Thread.Sleep(100);
+            //th = new Thread(new ThreadStart(TranslateMain));
+            //th.Start();
 
         }
         #endregion
+        const int WM_LBUTTONDOWN = 0x0201;
+        const int WM_LBUTTONUP = 0x0202;
+        const int WM_LBUTTONDBLCLK = 0x0203;
+
+        protected override void WndProc(ref System.Windows.Forms.Message m)
+        {
+            //ToDo:根据m.Msg来处理你要的按键
+            if (m.Msg == WM_LBUTTONDOWN || m.Msg == WM_LBUTTONDBLCLK)
+            {
+                MyMsgBox mb = new MyMsgBox();
+                mb.ShowMsg("请您先刷卡！", 1);
+
+                if (!GlobalVariables.isUserLogin)
+                {
+                    //MyMsgBox mb = new MyMsgBox();
+                    //mb.ShowMsg("请您先刷卡！", 1);
+                    return;
+                }
+            }
+
+            base.WndProc(ref m);
+        }
+
 
         #region 初始化倒计时
         private void InitTimer()
@@ -1517,7 +1540,7 @@ namespace ECouponsPrinter
             }
 
             LP_ctype = new List<CouponPicInfo>[1];
-            
+
             LP_ctype[0] = FindCouponByTrade(trade);
             if (type == 'v')
             {
@@ -2188,7 +2211,7 @@ namespace ECouponsPrinter
             Label lb = sender as Label;
             int type = 1;        //0表示收藏，非0表示打印
 
-            
+
             String id = null;
             switch (lb.Name)
             {
@@ -2744,11 +2767,11 @@ namespace ECouponsPrinter
 
         private void MainFrame_Closing(object sender, FormClosingEventArgs e)
         {
-            if (th.IsAlive)
-            {
-                th.Abort();
-                th.Join();
-            }
+            //if (th.IsAlive)
+            //{
+            //    th.Abort();
+            //    th.Join();
+            //}
         }
 
 
