@@ -13,7 +13,14 @@ namespace ECouponsPrinter
         private String _id = null;          //图片代表的商家或优惠劵的id
         private String _trade = null;       //类别
         private Image _image = null;        //预加载的图片
-        private String _name;
+        private String _name = null;
+        private int _intType;
+
+        public int intType
+        {
+            get { return _intType; }
+            set { _intType = value; }
+        }
 
         public String lpath
         {

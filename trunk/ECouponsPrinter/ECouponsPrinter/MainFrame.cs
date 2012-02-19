@@ -553,8 +553,6 @@ namespace ECouponsPrinter
             }
         }
 
-
-
         /// <summary>
         /// 显示优惠劵页面下面的类别按钮
         /// </summary>
@@ -926,7 +924,7 @@ namespace ECouponsPrinter
 
                 String lPath, sPath, name, id, trade, shopid;
                 double flaPrice;
-                int intVip;
+                int intVip, intType;
 
                 while (reader.Read())
                 {
@@ -962,6 +960,9 @@ namespace ECouponsPrinter
                     {
                         pi.trade = trade;
                     }
+
+                    intType = reader.GetInt32(10);
+                    pi.intType = intType;
 
                     LP_shop.Add(pi);
                 }
@@ -1091,12 +1092,51 @@ namespace ECouponsPrinter
         /// <summary>
         /// 加载首页的数据
         /// </summary>
-        private void InitHomeData()
+        private bool InitHomeData()
         {
-            //暂时不需要做任何事  
+            if(LP_stype != null && LP_stype.Length != 0)
+            {
+                for(int i = 0;i<LP_stype.Length;i++)
+                {
+                    if(LP_stype[i] != null && LP_stype[i].Count >0)
+                    {
+                        LP_stype[i].Clear();
+                    }
+                }
+            }
+
+            if (LP_shop == null || LP_shop.Count == 0)
+            {
+                return false;
+            }
+         
+            LP_stype = new List<PicInfo>[1];
+            LP_stype[0] = FindShopByIntType(1);
+
+            if (LP_ctype != null && LP_ctype.Length != 0)
+            {
+                for (int i = 0; i < LP_ctype.Length; i++)
+                {
+                    if (LP_ctype[i] != null && LP_ctype[i].Count > 0)
+                    {
+                        LP_ctype[i].Clear();
+                    }
+                }
+            }
+
+            if (LP_coupon == null || LP_coupon.Count == 0)
+            {
+                return false;
+            }
+
+            LP_ctype = new List<CouponPicInfo>[1];
+            LP_ctype[0] = FindRecCoupon();
+      
             curPage = 1;
             curType = 0;
             theCouponNum = 0;
+
+            return true;
         }
 
         /// <summary>
@@ -1106,8 +1146,22 @@ namespace ECouponsPrinter
         {
             curPage = 1;
             curType = 0;
-            ShowHomeTopPicure();
-            ShowBottomPicure();
+
+            if (LP_stype != null)
+            {
+                if (LP_stype[0] != null && LP_stype[0].Count > 0)
+                {
+                    ShowHomeTopPicure();
+                }
+            }
+
+            if (LP_ctype != null)
+            {
+                if (LP_ctype[0] != null && LP_ctype[0].Count > 0)
+                {
+                    ShowBottomPicure();
+                }
+            }
         }
 
         /// <summary>
@@ -1116,19 +1170,18 @@ namespace ECouponsPrinter
         private void ShowHomeTopPicure()
         {
             //    MessageBox.Show(curType.ToString()); 
-            if (LP_shop.Count > 0)
+            if (LP_stype[0].Count > 0)
             {
-                if (LP_shop[curType].name != null)
+                if (LP_stype[0][curType].name != null)
                 {
-                    Label_ShopName.Text = LP_shop[curType].name;
+                    Label_ShopName.Text = LP_stype[0][curType].name;
                 }
                 else
                 {
                     Label_ShopName.Text = "暂无商家";
                 }
 
-
-                PB_Home_Up.Image = new Bitmap(Image.FromFile(LP_shop[curType].lpath), 761, 384);
+                PB_Home_Up.Image = new Bitmap(Image.FromFile(LP_stype[0][curType].lpath), 761, 384);
             }
         }
 
@@ -1163,7 +1216,7 @@ namespace ECouponsPrinter
 
             PB_Home_Down.Image.Dispose();
 
-            PB_Home_Down.Image = new Bitmap(Image.FromFile(LP_coupon[num - 1 + (curPage - 1) * 12].lpath), 761, 389);
+            PB_Home_Down.Image = new Bitmap(Image.FromFile(LP_ctype[0][num - 1 + (curPage - 1) * 12].lpath), 761, 389);
 
         }
 
@@ -2038,7 +2091,7 @@ namespace ECouponsPrinter
                 controlName = "PB_Home_Bottom";
                 container = Panel_Home;
                 perNum = 12;
-                LP_temp = LP_coupon;
+                LP_temp = LP_ctype[0];
             }
 
             count = LP_temp.Count;
@@ -2221,6 +2274,31 @@ namespace ECouponsPrinter
             return temp;
         }
 
+        /// <summary>
+        /// 查找并返回所有推荐的商家
+        /// </summary>
+        /// <param name="p"></param>
+        /// <returns></returns>
+        private List<PicInfo> FindShopByIntType(int intType)
+        {
+            List<PicInfo> temp = new List<PicInfo>();
+
+            foreach (PicInfo pi in LP_shop)
+            {
+                if (pi.intType == intType)
+                {
+                    temp.Add(pi);
+                }
+            }
+
+            return temp;
+        }
+
+        /// <summary>
+        /// 从指定优惠劵List中查找VIP优惠劵
+        /// </summary>
+        /// <param name="lp">待查找的优惠劵List</param>
+        /// <returns>查找出的VIP优惠劵List</returns>
         private List<CouponPicInfo> FindVipCoupon(List<CouponPicInfo> lp)
         {
             List<CouponPicInfo> temp = new List<CouponPicInfo>();
@@ -2237,6 +2315,40 @@ namespace ECouponsPrinter
 
             return temp;
         }
+
+        /// <summary>
+        /// 查找推荐优惠劵
+        /// </summary>
+        /// <returns>返回查找到的优惠劵List</returns>
+        private List<CouponPicInfo> FindRecCoupon()
+        {
+            MyMsgBox mb = new MyMsgBox();
+            List<CouponPicInfo> temp = null;
+            try
+            {
+                String time = DateTime.Now.ToString("yyyy-M-d H:m:s");
+                string strSql = "select top 24 strId from t_bz_coupon where intRecommend=1 order by dtActiveTime desc";
+                AccessCmd cmd = new AccessCmd();
+                OleDbDataReader reader = cmd.ExecuteReader(strSql);
+
+                String strId = "";
+                while (reader.Read())
+                {
+                    if (!reader.IsDBNull(0))
+                    {
+                        strId += reader.GetString(0) + ",";
+                    }
+                }
+                temp = FindCouponById(strId.Substring(0, strId.Length - 1).Split(','));
+                return temp;
+            }
+            catch (Exception e1)
+            {
+                mb.ShowMsg(e1.Message + "\n正在修复", 2);
+                return new List<CouponPicInfo>();
+            }
+        }
+
 
         /// <summary>
         /// 收藏和打印半透明Label的时间处理
@@ -2484,7 +2596,7 @@ namespace ECouponsPrinter
         }
 
         #endregion
-        
+
         #endregion
 
         #region 走马灯线程
@@ -2534,7 +2646,7 @@ namespace ECouponsPrinter
                 }
                 Thread.Sleep(1800 * 1000);
             }
-            
+
         }
         #endregion
 
@@ -2638,35 +2750,12 @@ namespace ECouponsPrinter
         }
 
         private void Btn_Rec_Click(object sender, EventArgs e)
-        {
-            MyMsgBox mb = new MyMsgBox();
-            try
-            {
-                String time = DateTime.Now.ToString("yyyy-M-d H:m:s");
-                string strSql = "select top 24 strId from t_bz_coupon where intRecommend=1 order by dtActiveTime desc";
-                AccessCmd cmd = new AccessCmd();
-                OleDbDataReader reader = cmd.ExecuteReader(strSql);
-
-                String strId = "";
-                while (reader.Read())
-                {
-                    if (!reader.IsDBNull(0))
-                    {
-                        strId += reader.GetString(0) + ",";
-                    }
-                }
-                LP_ctype[0] = FindCouponById(strId.Substring(0, strId.Length - 1).Split(','));
+        {           
+                LP_ctype[0] = FindRecCoupon();
                 curPage = 1;
                 curType = 0;
                 theCouponNum = 0;
-
                 ShowCoupon();
-
-            }
-            catch (Exception e1)
-            {
-                mb.ShowMsg(e1.Message + "\n正在修复", 2);
-            }
         }
 
         private void Button_NearShopInfo_MouseDown(object sender, MouseEventArgs e)
