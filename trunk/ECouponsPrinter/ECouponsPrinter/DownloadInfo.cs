@@ -202,9 +202,12 @@ namespace ECouponsPrinter
                     createImg("ad", aryFile[i]);
                 }
             }
-            //写入数据库
-            strSql = "update t_bz_advertisement set strName='" + strName + "',intType=" + intType + ",strContent='" + strContent + "',dtStartTime='" + dtStartTime +
-                "',dtEndTime='" + dtEndTime + "' where strId='" + strId + "'";
+            //写入数据库（先删除、后增加，保证之前已有的信息可下载）
+            strSql = "delete from t_bz_advertisement where strId='" + strId + "'";
+            cmd.ExecuteNonQuery(strSql);
+            strSql = "insert into t_bz_advertisement(strId,strName,intType,strContent,dtStartTime,dtEndTime) values('" + strId + "','" + strName + "'," + intType +
+                ",'" + strContent + "','" + dtStartTime + "','" + dtEndTime + "')";
+            MessageBox.Show(strSql);
             cmd.ExecuteNonQuery(strSql);
             cmd.Close();
         }
@@ -308,10 +311,12 @@ namespace ECouponsPrinter
                 createImg("coupon", strLargeImg);
             if (strPrintImg.Length > 0)
                 createImg("coupon", strPrintImg);
-            //写入数据库
-            strSql = "update t_bz_coupon set strName='" + strName + "',dtActiveTime='" + dtActiveTime + "',dtExpireTime='" + dtExpireTime + "',strShopId='" + strShopId +
-                "',intVip=" + intVip + ",intRecommend=" + intRecommend + ",flaPrice=" + flaPrice + ",strSmallImg='" + strSmallImg + "',strLargeImg='" + strLargeImg +
-                "',strPrintImg='" + strPrintImg + "' where strId='" + strId + "'";
+            //写入数据库（先删除、后增加，保证之前已有的信息可下载）
+            strSql = "delete from t_bz_coupon where strId='" + strId + "'";
+            cmd.ExecuteNonQuery(strSql);
+            strSql = "insert into t_bz_coupon(strId,strName,dtActiveTime,dtExpireTime,strShopId,intVip,intRecommend,flaPrice,strSmallImg,strLargeImg,strPrintImg) " +
+                "values('" + strId + "','" + strName + "','" + dtActiveTime + "','" + dtExpireTime + "','" + strShopId + "'," + intVip + "," + intRecommend + "," + flaPrice +
+                ",'" + strSmallImg + "','" + strLargeImg + "','" + strPrintImg + "')";
             cmd.ExecuteNonQuery(strSql);
             cmd.Close();
         }
@@ -397,9 +402,11 @@ namespace ECouponsPrinter
                 createImg("shop", strSmallImg);
             if (strLargeImg.Length > 0)
                 createImg("shop", strLargeImg);
-            //写入数据库
-            strSql = "update t_bz_shop set strBizName='" + strBizName + "',strShopName='" + strShopName + "',strTrade='" + strTrade + "',strAddr='" + strAddr +
-                "',strIntro='" + strIntro + "',strSmallImg='" + strSmallImg + "',strLargeImg='" + strLargeImg + "',intType=" + intType + " where strId='" + strId + "'";
+            //写入数据库（先删除、后增加，保证之前已有的信息可下载）
+            strSql = "delete from t_bz_shop where strId='" + strId + "'";
+            cmd.ExecuteNonQuery(strSql);
+            strSql = "insert into t_bz_shop(strId,strBizName,strShopName,strTrade,strAddr,strIntro,strSmallImg,strLargeImg,intType) values('" + strId + "','" + strBizName + "','" +
+                strShopName + "','" + strTrade + "','" + strAddr + "','" + strIntro + "','" + strSmallImg + "','" + strLargeImg + "'," + intType + ")";
             cmd.ExecuteNonQuery(strSql);
             cmd.Close();
         }
