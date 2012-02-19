@@ -18,6 +18,7 @@ namespace ECouponsPrinter
         private String path = System.Windows.Forms.Application.StartupPath;  //应用程序当前路径
         private static int CountDownNumber = GlobalVariables.WindowWaitTime;
         private string _stringScrollText = GlobalVariables.MarqueeText;
+        private Thread th;
 
         //-----------------------------------------------------------------------------
         private List<PicInfo> LP_shop;
@@ -36,6 +37,8 @@ namespace ECouponsPrinter
         Member m = new Member();
         private SCard sc;
         enum part { up = 1, middle = 2, bottom = 3 };
+
+
 
         public MainFrame()
         {
@@ -832,6 +835,11 @@ namespace ECouponsPrinter
 
             //启动射频卡检测程序
             this.SCardStart();
+
+            //展开遮罩窗体
+            Thread.Sleep(100);
+            th = new Thread(new ThreadStart(TranslateMain));
+            th.Start();
 
         }
         #endregion
@@ -2577,6 +2585,14 @@ namespace ECouponsPrinter
 
         #endregion
 
+        private void TranslateMain()
+        {
+            TranslateForm tf = new TranslateForm();
+            tf.Location = new Point(0, 0);
+            tf.TopMost = true;
+            tf.ShowDialog();
+        }
+
         #endregion
 
         private void button1_Click(object sender, EventArgs e)
@@ -2724,6 +2740,15 @@ namespace ECouponsPrinter
 
             this.Panel_ShopInfo.Visible = true;
             ShowShopInfo();
+        }
+
+        private void MainFrame_Closing(object sender, FormClosingEventArgs e)
+        {
+            if (th.IsAlive)
+            {
+                th.Abort();
+                th.Join();
+            }
         }
 
 
