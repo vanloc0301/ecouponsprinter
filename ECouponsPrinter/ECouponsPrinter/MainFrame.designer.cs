@@ -2313,7 +2313,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
-            this.ClientSize = new System.Drawing.Size(786, 742);
+            this.ClientSize = new System.Drawing.Size(803, 742);
             this.Controls.Add(this.Panel_Coupons);
             this.Controls.Add(this.Panel_NearShop);
             this.Controls.Add(this.Panel_Home);
@@ -2329,6 +2329,7 @@
             this.Load += new System.EventHandler(this.MainFrame_Load);
             this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Button_Coupon_NextPage_MouseUp);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Button_Coupon_NextPage_MouseDown);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainFrame_Closing);
             this.Panel_Top.ResumeLayout(false);
             this.Panel_Bottom.ResumeLayout(false);
             this.Panel_Home.ResumeLayout(false);
