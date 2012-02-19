@@ -2314,8 +2314,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(786, 742);
-            this.Controls.Add(this.Panel_NearShop);
             this.Controls.Add(this.Panel_Coupons);
+            this.Controls.Add(this.Panel_NearShop);
             this.Controls.Add(this.Panel_Home);
             this.Controls.Add(this.Panel_ShopInfo);
             this.Controls.Add(this.Panel_MyInfo);
