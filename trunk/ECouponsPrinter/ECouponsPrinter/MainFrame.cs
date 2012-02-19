@@ -2484,27 +2484,66 @@ namespace ECouponsPrinter
         }
 
         #endregion
+        
+        #endregion
+
+        #region 走马灯线程
+        /// <summary>
+        /// 走马灯线程函数
+        /// </summary>
+        private void LoadMarquee()
+        {
+            while (true)
+            {
+                String dtime = DateTime.Now.ToString("H:m:s");
+                string strSql = "select * from t_bz_advertisement where intType=3 and #" + dtime + "#>=dtStartTime and #" + dtime + "#<dtEndTime";
+                AccessCmd cmd = new AccessCmd();
+                OleDbDataReader reader = cmd.ExecuteReader(strSql);
+
+                string strText = "";
+                if (reader.Read())
+                {
+                    if (!reader.IsDBNull(3))
+                    {
+                        strText = reader.GetString(3);
+                    }
+                }
+
+                if (strText != "")
+                {
+                    if (Label_ScrollText.InvokeRequired)
+                    {
+                        this.Label_ScrollText.Invoke((MethodInvoker)delegate
+                        {
+                            this.Label_ScrollText.Stop();
+                            this.Label_ScrollText.strContent = strText;
+                            this.Label_ScrollText.Start();
+                        }, null);
+                    }
+                    else
+                    {
+                        this.Label_ScrollText.Stop();
+                        this.Label_ScrollText.strContent = strText;
+                        this.Label_ScrollText.Start();
+                    }
+                }
+                else
+                {
+                    MyMsgBox mb = new MyMsgBox();
+                    mb.ShowMsg("走马灯文本为空！", 2);
+                }
+                Thread.Sleep(1800 * 1000);
+            }
+            
+        }
+        #endregion
 
         private void Label_Countdown_Click(object sender, EventArgs e)
         {
             Form1 form1 = new Form1();
             form1.Show();
         }
-
-        #endregion
-
-        #region 走马灯线程
-        private void LoadMarquee()
-        {
-            UserControl1 Label_ScrollText = new UserControl1();
-            String dtime = DateTime.Now.ToString("H:m:s");
-            string strSql = "select * from t_bz_advertisement where int Type=3 and #"+dtime+"#>=dtStartTime and #"+dtime+"#<dtEndTime";
-            AccessCmd cmd = new AccessCmd();
-            OleDbDataReader reader = cmd.ExecuteReader(strSql);
-
-            
-        }
-        #endregion
+        #region 加载屏蔽窗口
 
         /// <summary>
         /// 加载屏蔽窗口
@@ -2516,6 +2555,8 @@ namespace ECouponsPrinter
             tf.Size = new Size(768, 1366);
             tf.ShowDialog();
         }
+
+        #endregion
 
         #endregion
 
@@ -2662,11 +2703,16 @@ namespace ECouponsPrinter
 
         private void MainFrame_Closing(object sender, FormClosingEventArgs e)
         {
-            //if (th.IsAlive)
-            //{
-            //    th.Abort();
-            //    th.Join();
-            //}
+            if (th.IsAlive)
+            {
+                th.Abort();
+                th.Join();
+            }
+            if (marquee.IsAlive)
+            {
+                marquee.Abort();
+                marquee.Join();
+            }
         }
 
 
