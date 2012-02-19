@@ -49,11 +49,11 @@
             // label1
             // 
             this.label1.BackColor = System.Drawing.Color.Transparent;
-            this.label1.Location = new System.Drawing.Point(46, 245);
+            this.label1.Location = new System.Drawing.Point(3, 9);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(639, 443);
+            this.label1.Size = new System.Drawing.Size(134, 56);
             this.label1.TabIndex = 3;
-            this.label1.DoubleClick += new System.EventHandler(this.label1_DoubleClick);
+            this.label1.DoubleClick += new System.EventHandler(this.LabelOption_DoubleClick);
             // 
             // TranslateForm
             // 
