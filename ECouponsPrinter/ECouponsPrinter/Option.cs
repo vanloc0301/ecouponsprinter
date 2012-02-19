@@ -37,7 +37,7 @@ namespace ECouponsPrinter
 
         private void Option_Load(object sender, EventArgs e)
         {
-       //     this.Location = new Point(150, 40);        
+            this.Location = new Point(150, 100);        
         }
 
         private void Option_FromClosing(object sender, FormClosingEventArgs e)

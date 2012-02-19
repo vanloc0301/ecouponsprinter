@@ -31,6 +31,7 @@
             this.components = new System.ComponentModel.Container();
             this.SCardTimer = new System.Windows.Forms.Timer(this.components);
             this.LoginText = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // SCardTimer
@@ -45,12 +46,22 @@
             this.LoginText.Size = new System.Drawing.Size(97, 21);
             this.LoginText.TabIndex = 2;
             // 
+            // label1
+            // 
+            this.label1.BackColor = System.Drawing.Color.Transparent;
+            this.label1.Location = new System.Drawing.Point(46, 245);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(639, 443);
+            this.label1.TabIndex = 3;
+            this.label1.DoubleClick += new System.EventHandler(this.label1_DoubleClick);
+            // 
             // TranslateForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(768, 746);
             this.ControlBox = false;
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.LoginText);
             this.Name = "TranslateForm";
             this.Opacity = 0.01;
@@ -67,5 +78,6 @@
 
         private System.Windows.Forms.Timer SCardTimer;
         private System.Windows.Forms.TextBox LoginText;
+        private System.Windows.Forms.Label label1;
     }
 }

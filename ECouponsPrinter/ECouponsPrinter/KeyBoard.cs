@@ -194,7 +194,7 @@ namespace ECouponsPrinter
 
         private void KeyBoard_Load(object sender, EventArgs e)
         {
-            this.StartPosition = FormStartPosition.CenterScreen;
+            this.Location = new Point(10, 450);
         }
 
     }

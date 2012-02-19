@@ -14,13 +14,11 @@ namespace ECouponsPrinter
     {
         private SCard sc;
         private static bool isFirstKey = true;
-        Member m = new Member();
 
         public TranslateForm()
         {
             InitializeComponent();
             this.FormBorderStyle = FormBorderStyle.None;
-            this.WindowState = FormWindowState.Maximized;
         }
 
         private void TranslateClick(object sender, EventArgs e)
@@ -148,7 +146,7 @@ namespace ECouponsPrinter
         private bool UserLogin(string userid)
         {
             UploadInfo ui = new UploadInfo();
-            m = ui.MemberAuth(userid);
+            Member m = ui.MemberAuth(userid);
             MyMsgBox mb = new MyMsgBox();
             if (m == null)
             {
@@ -165,6 +163,8 @@ namespace ECouponsPrinter
                         mb.ShowMsg("登录成功！", 2);
                         GlobalVariables.isUserLogin = true;
                         GlobalVariables.LoginUserId = userid;
+                        GlobalVariables.M = m;
+                        this.Close();
                         return true;
                     }
                     else
@@ -178,6 +178,8 @@ namespace ECouponsPrinter
                     mb.ShowMsg("登录成功！", 2);
                     GlobalVariables.isUserLogin = true;
                     GlobalVariables.LoginUserId = userid;
+                    GlobalVariables.M = m;
+                    this.Close();
                     return true;
                 }
             }
@@ -188,7 +190,14 @@ namespace ECouponsPrinter
         private void TranslateForm_Load(object sender, EventArgs e)
         {
             //启动射频卡检测程序
-                this.SCardStart();
+            this.SCardStart();
+        }
+
+        private void label1_DoubleClick(object sender, EventArgs e)
+        {
+            Option op = new Option();
+            op.Location = new Point(100, 30);
+            op.ShowDialog();
         }
 
     }

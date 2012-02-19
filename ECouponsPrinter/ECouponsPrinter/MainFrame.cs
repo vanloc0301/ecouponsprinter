@@ -35,8 +35,6 @@ namespace ECouponsPrinter
         //-----------------------------------------------------------------------------     
         enum part { up = 1, middle = 2, bottom = 3 };
 
-
-
         public MainFrame()
         {
             InitializeComponent();
@@ -63,7 +61,7 @@ namespace ECouponsPrinter
             //设置定时刷新时钟
             this.Timer_DownloadInfo.Stop();
             this.Timer_DownloadInfo.Interval = GlobalVariables.IntRefreshSec * 1000;
-            //     this.Timer_DownloadInfo.Start();
+            this.Timer_DownloadInfo.Start();
 
         }
 
@@ -1650,7 +1648,7 @@ namespace ECouponsPrinter
         private void InitMyInfoData()
         {
             MyMsgBox mb = new MyMsgBox();
-            if (m == null)
+            if (GlobalVariables.M == null)
             {
                 mb.ShowMsg("下载用户信息失败！", 2);
                 return;
@@ -1670,8 +1668,8 @@ namespace ECouponsPrinter
 
             LP_ctype = new List<CouponPicInfo>[2];
 
-            LP_ctype[0] = FindCouponById(m.AryFavourite);
-            LP_ctype[1] = FindCouponById(m.AryHistory);
+            LP_ctype[0] = FindCouponById(GlobalVariables.M.AryFavourite);
+            LP_ctype[1] = FindCouponById(GlobalVariables.M.AryHistory);
 
             cPage1 = 1;
             cPage2 = 1;
@@ -2456,17 +2454,11 @@ namespace ECouponsPrinter
         {
             TranslateForm tf = new TranslateForm();
             tf.Location = new Point(0, 0);
-            tf.TopMost = true;
-            tf.ShowDialog();
+            tf.Size = new Size(768, 1366);
+            tf.Show();
         }
 
         #endregion
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            Form3 f3 = new Form3();
-            f3.Show();
-        }
 
         private void Timer_DownloadInfo_Tick(object sender, EventArgs e)
         {
