@@ -12,7 +12,7 @@ namespace ECouponsPrinter
 {
     public partial class check : Form
     {
-        private static int TickNum = 10;
+        private static int TickNum = 30;
         public static String id;
         private String checkCode;
         Thread th;
@@ -69,7 +69,7 @@ namespace ECouponsPrinter
             th = new Thread(new ThreadStart(sendMes));
             th.Start();
             this.Reget.Enabled = false;
-            TickNum = 10;
+            TickNum = 30;
             this.getCode.Start();
         }
 

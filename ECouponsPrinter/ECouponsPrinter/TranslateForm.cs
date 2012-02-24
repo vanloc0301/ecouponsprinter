@@ -163,9 +163,9 @@ namespace ECouponsPrinter
                 {
                     Login login = new Login(userid);
                     login.TopMost = true;
-            //        login.TopLevel = false;
+                    this.Visible = false;
            //         this.Controls.Add(login);
-                    if (DialogResult.Yes == login.ShowDialog(null))
+                    if (DialogResult.Yes == login.ShowDialog(par))
                     {
                         mb.ShowMsg("登录成功！", 2);
                         GlobalVariables.isUserLogin = true;
@@ -177,7 +177,7 @@ namespace ECouponsPrinter
                     else
                     {
                         mb.ShowMsg("登录失败！\n请先绑定手机！", 2);
-                   //     this.Visible = true;
+                        this.Visible = true;
                         return false;
                     }               
                 }
