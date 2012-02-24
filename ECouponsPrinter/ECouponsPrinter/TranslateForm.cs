@@ -14,12 +14,14 @@ namespace ECouponsPrinter
     {
         private SCard sc;
         private static bool isFirstKey = true;
+        private Form par;
 
-        public TranslateForm()
+        public TranslateForm(Form parent)
         {
             InitializeComponent();
             this.FormBorderStyle = FormBorderStyle.None;
             this.TopMost = true;
+            par = parent;
         }
 
         private void TranslateClick(object sender, EventArgs e)
@@ -161,23 +163,23 @@ namespace ECouponsPrinter
                 {
                     Login login = new Login(userid);
                     login.TopMost = true;
-                    this.Hide();
-                    if (DialogResult.Yes == login.ShowDialog(this))
+            //        login.TopLevel = false;
+           //         this.Controls.Add(login);
+                    if (DialogResult.Yes == login.ShowDialog(null))
                     {
                         mb.ShowMsg("登录成功！", 2);
                         GlobalVariables.isUserLogin = true;
                         GlobalVariables.LoginUserId = userid;
-                        GlobalVariables.M = m;
+                        GlobalVariables.M = m;                    
                         this.Close();
                         return true;
                     }
                     else
                     {
                         mb.ShowMsg("登录失败！\n请先绑定手机！", 2);
-                        this.Show();
+                   //     this.Visible = true;
                         return false;
-                    }
-                    
+                    }               
                 }
                 else
                 {

@@ -163,7 +163,6 @@ namespace ECouponsPrinter
                 KeyBoard kb = new KeyBoard(this.phone, this.code, null);
                 this.kb = kb;
                 kb.Show();
-                kb.TopMost = true;
                 GlobalVariables.isKeyBoardExist = true;
             }
         }
