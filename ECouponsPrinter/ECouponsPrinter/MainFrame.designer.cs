@@ -2269,8 +2269,10 @@
             this.DoubleBuffered = true;
             this.Name = "MainFrame";
             this.Text = "MainFrame";
+            this.Deactivate += new System.EventHandler(this.MainFrame_Deactivate);
             this.Load += new System.EventHandler(this.MainFrame_Load);
             this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Button_Coupon_NextPage_MouseUp);
+            this.Leave += new System.EventHandler(this.MainFrame_Leave);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Button_Coupon_NextPage_MouseDown);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainFrame_Closing);
             this.Panel_Top.ResumeLayout(false);
