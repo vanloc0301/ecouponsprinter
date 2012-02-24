@@ -140,7 +140,5 @@ namespace ECouponsPrinter
             this.Label_Warning.Text = "";
         }
 
-
-
     }
 }

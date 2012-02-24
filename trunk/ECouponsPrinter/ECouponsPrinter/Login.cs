@@ -17,11 +17,13 @@ namespace ECouponsPrinter
         private String checkCode;
         Thread th;
         String loginId;
+        private KeyBoard kb = null;
 
         public Login(String id)
         {
             InitializeComponent();
             loginId = id;
+            GlobalVariables.isKeyBoardExist = false;
         }
 
         private void CodeTimer_Tick(object sender, EventArgs e)
@@ -113,7 +115,6 @@ namespace ECouponsPrinter
             {
                 info.Text = "通讯错误";
             }
-
         }
 
         private void sendMes()
@@ -152,6 +153,27 @@ namespace ECouponsPrinter
             else
             {
                 this.info.Text = "您的验证码输入错误!";
+            }
+        }
+
+        private void ShowKeyBoard(object sender, EventArgs e)
+        {
+            if (!GlobalVariables.isKeyBoardExist)
+            {
+                KeyBoard kb = new KeyBoard(this.phone, this.code, null);
+                this.kb = kb;
+                kb.Show();
+                kb.TopMost = true;
+                GlobalVariables.isKeyBoardExist = true;
+            }
+        }
+
+        private void Login_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (GlobalVariables.isKeyBoardExist)
+            {
+                this.kb.Close();
+                GlobalVariables.isKeyBoardExist = false;
             }
         }
     }

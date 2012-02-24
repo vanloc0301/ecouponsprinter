@@ -15,6 +15,8 @@ namespace ECouponsPrinter
     {
         private String path = System.Windows.Forms.Application.StartupPath;
         private TextBox id, pwd, url;
+        IntPtr hWnd;
+
         public KeyBoard(TextBox id, TextBox pwd, TextBox url)
         {
             InitializeComponent();
@@ -23,6 +25,15 @@ namespace ECouponsPrinter
             this.id = id;
             this.pwd = pwd;
             this.url = url;
+
+            if (url == null)
+            {
+                hWnd = FindWindow(null, "Login");
+            }
+            else
+            {
+                hWnd = FindWindow(null, "Option");
+            }
         }
 
         private const int WS_EX_TOOLWINDOW = 0x00000080;
@@ -53,8 +64,6 @@ namespace ECouponsPrinter
 
         [DllImport("user32")]
         static extern int SetForegroundWindow(IntPtr hwnd);
-
-        IntPtr hWnd = FindWindow(null, "Option");
         
 
         #region 定义键盘按键事件的代码

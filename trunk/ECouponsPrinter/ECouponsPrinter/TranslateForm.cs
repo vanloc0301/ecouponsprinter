@@ -160,7 +160,9 @@ namespace ECouponsPrinter
                 if (m.StrMobileNo.Length == 0)
                 {
                     Login login = new Login(userid);
-                    if (DialogResult.Yes == login.ShowDialog())
+                    login.TopMost = true;
+                    this.Hide();
+                    if (DialogResult.Yes == login.ShowDialog(this))
                     {
                         mb.ShowMsg("登录成功！", 2);
                         GlobalVariables.isUserLogin = true;
@@ -171,9 +173,11 @@ namespace ECouponsPrinter
                     }
                     else
                     {
-                        mb.ShowMsg("登录失败！/n请先绑定手机！", 2);
+                        mb.ShowMsg("登录失败！\n请先绑定手机！", 2);
+                        this.Show();
                         return false;
                     }
+                    
                 }
                 else
                 {

@@ -98,7 +98,6 @@
             this.PB_Shop_type3_7 = new System.Windows.Forms.PictureBox();
             this.PB_Shop_type3_2 = new System.Windows.Forms.PictureBox();
             this.PB_Shop_type3_1 = new System.Windows.Forms.PictureBox();
-            this.Label_Shop_Type3 = new System.Windows.Forms.Label();
             this.PB_Shop_type2_12 = new System.Windows.Forms.PictureBox();
             this.PB_Shop_type2_6 = new System.Windows.Forms.PictureBox();
             this.PB_Shop_type2_11 = new System.Windows.Forms.PictureBox();
@@ -111,11 +110,9 @@
             this.PB_Shop_type2_7 = new System.Windows.Forms.PictureBox();
             this.PB_Shop_type2_2 = new System.Windows.Forms.PictureBox();
             this.PB_Shop_type2_1 = new System.Windows.Forms.PictureBox();
-            this.Label_Shop_Type2 = new System.Windows.Forms.Label();
             this.PB_Shop_type1_12 = new System.Windows.Forms.PictureBox();
             this.PB_Shop_type1_3 = new System.Windows.Forms.PictureBox();
             this.PB_Shop_type1_6 = new System.Windows.Forms.PictureBox();
-            this.Label_Shop_Type1 = new System.Windows.Forms.Label();
             this.PB_Shop_type1_11 = new System.Windows.Forms.PictureBox();
             this.PB_Shop_type1_1 = new System.Windows.Forms.PictureBox();
             this.PB_Shop_type1_5 = new System.Windows.Forms.PictureBox();
@@ -952,7 +949,6 @@
             this.Panel_Shop.Controls.Add(this.PB_Shop_type3_7);
             this.Panel_Shop.Controls.Add(this.PB_Shop_type3_2);
             this.Panel_Shop.Controls.Add(this.PB_Shop_type3_1);
-            this.Panel_Shop.Controls.Add(this.Label_Shop_Type3);
             this.Panel_Shop.Controls.Add(this.PB_Shop_type2_12);
             this.Panel_Shop.Controls.Add(this.PB_Shop_type2_6);
             this.Panel_Shop.Controls.Add(this.PB_Shop_type2_11);
@@ -965,11 +961,9 @@
             this.Panel_Shop.Controls.Add(this.PB_Shop_type2_7);
             this.Panel_Shop.Controls.Add(this.PB_Shop_type2_2);
             this.Panel_Shop.Controls.Add(this.PB_Shop_type2_1);
-            this.Panel_Shop.Controls.Add(this.Label_Shop_Type2);
             this.Panel_Shop.Controls.Add(this.PB_Shop_type1_12);
             this.Panel_Shop.Controls.Add(this.PB_Shop_type1_3);
             this.Panel_Shop.Controls.Add(this.PB_Shop_type1_6);
-            this.Panel_Shop.Controls.Add(this.Label_Shop_Type1);
             this.Panel_Shop.Controls.Add(this.PB_Shop_type1_11);
             this.Panel_Shop.Controls.Add(this.PB_Shop_type1_1);
             this.Panel_Shop.Controls.Add(this.PB_Shop_type1_5);
@@ -1172,18 +1166,6 @@
             this.PB_Shop_type3_1.TabStop = false;
             this.PB_Shop_type3_1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.ChangeShopPic);
             // 
-            // Label_Shop_Type3
-            // 
-            this.Label_Shop_Type3.Font = new System.Drawing.Font("宋体", 40F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.Label_Shop_Type3.ForeColor = System.Drawing.Color.White;
-            this.Label_Shop_Type3.Image = ((System.Drawing.Image)(resources.GetObject("Label_Shop_Type3.Image")));
-            this.Label_Shop_Type3.Location = new System.Drawing.Point(2, 808);
-            this.Label_Shop_Type3.Margin = new System.Windows.Forms.Padding(0);
-            this.Label_Shop_Type3.Name = "Label_Shop_Type3";
-            this.Label_Shop_Type3.Size = new System.Drawing.Size(192, 50);
-            this.Label_Shop_Type3.TabIndex = 57;
-            this.Label_Shop_Type3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
             // PB_Shop_type2_12
             // 
             this.PB_Shop_type2_12.Location = new System.Drawing.Point(636, 627);
@@ -1304,18 +1286,6 @@
             this.PB_Shop_type2_1.TabStop = false;
             this.PB_Shop_type2_1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.ChangeShopPic);
             // 
-            // Label_Shop_Type2
-            // 
-            this.Label_Shop_Type2.Font = new System.Drawing.Font("宋体", 40F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.Label_Shop_Type2.ForeColor = System.Drawing.Color.White;
-            this.Label_Shop_Type2.Image = ((System.Drawing.Image)(resources.GetObject("Label_Shop_Type2.Image")));
-            this.Label_Shop_Type2.Location = new System.Drawing.Point(2, 418);
-            this.Label_Shop_Type2.Margin = new System.Windows.Forms.Padding(0);
-            this.Label_Shop_Type2.Name = "Label_Shop_Type2";
-            this.Label_Shop_Type2.Size = new System.Drawing.Size(192, 50);
-            this.Label_Shop_Type2.TabIndex = 44;
-            this.Label_Shop_Type2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
             // PB_Shop_type1_12
             // 
             this.PB_Shop_type1_12.Location = new System.Drawing.Point(638, 236);
@@ -1345,18 +1315,6 @@
             this.PB_Shop_type1_6.TabIndex = 38;
             this.PB_Shop_type1_6.TabStop = false;
             this.PB_Shop_type1_6.MouseUp += new System.Windows.Forms.MouseEventHandler(this.ChangeShopPic);
-            // 
-            // Label_Shop_Type1
-            // 
-            this.Label_Shop_Type1.Font = new System.Drawing.Font("宋体", 40F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.Label_Shop_Type1.ForeColor = System.Drawing.Color.White;
-            this.Label_Shop_Type1.Image = ((System.Drawing.Image)(resources.GetObject("Label_Shop_Type1.Image")));
-            this.Label_Shop_Type1.Location = new System.Drawing.Point(2, 27);
-            this.Label_Shop_Type1.Margin = new System.Windows.Forms.Padding(0);
-            this.Label_Shop_Type1.Name = "Label_Shop_Type1";
-            this.Label_Shop_Type1.Size = new System.Drawing.Size(192, 50);
-            this.Label_Shop_Type1.TabIndex = 31;
-            this.Label_Shop_Type1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // PB_Shop_type1_11
             // 
@@ -2300,12 +2258,12 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(803, 742);
+            this.Controls.Add(this.Panel_Shop);
+            this.Controls.Add(this.Panel_MyInfo);
             this.Controls.Add(this.Panel_Coupons);
             this.Controls.Add(this.Panel_NearShop);
             this.Controls.Add(this.Panel_Home);
             this.Controls.Add(this.Panel_ShopInfo);
-            this.Controls.Add(this.Panel_MyInfo);
-            this.Controls.Add(this.Panel_Shop);
             this.Controls.Add(this.Panel_Bottom);
             this.Controls.Add(this.Panel_Top);
             this.DoubleBuffered = true;
@@ -2486,7 +2444,6 @@
         private System.Windows.Forms.PictureBox PB_Shop_type3_7;
         private System.Windows.Forms.PictureBox PB_Shop_type3_2;
         private System.Windows.Forms.PictureBox PB_Shop_type3_1;
-        private System.Windows.Forms.Label Label_Shop_Type3;
         private System.Windows.Forms.PictureBox PB_Shop_type2_12;
         private System.Windows.Forms.PictureBox PB_Shop_type2_6;
         private System.Windows.Forms.PictureBox PB_Shop_type2_11;
@@ -2499,11 +2456,9 @@
         private System.Windows.Forms.PictureBox PB_Shop_type2_7;
         private System.Windows.Forms.PictureBox PB_Shop_type2_2;
         private System.Windows.Forms.PictureBox PB_Shop_type2_1;
-        private System.Windows.Forms.Label Label_Shop_Type2;
         private System.Windows.Forms.PictureBox PB_Shop_type1_12;
         private System.Windows.Forms.PictureBox PB_Shop_type1_3;
         private System.Windows.Forms.PictureBox PB_Shop_type1_6;
-        private System.Windows.Forms.Label Label_Shop_Type1;
         private System.Windows.Forms.PictureBox PB_Shop_type1_11;
         private System.Windows.Forms.PictureBox PB_Shop_type1_1;
         private System.Windows.Forms.PictureBox PB_Shop_type1_5;
