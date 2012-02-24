@@ -57,6 +57,7 @@
             this.phone.Name = "phone";
             this.phone.Size = new System.Drawing.Size(256, 46);
             this.phone.TabIndex = 1;
+            this.phone.Enter += new System.EventHandler(this.ShowKeyBoard);
             // 
             // code
             // 
@@ -65,6 +66,7 @@
             this.code.Name = "code";
             this.code.Size = new System.Drawing.Size(145, 46);
             this.code.TabIndex = 2;
+            this.code.Enter += new System.EventHandler(this.ShowKeyBoard);
             // 
             // label2
             // 
@@ -149,6 +151,7 @@
             this.Controls.Add(this.label1);
             this.Name = "Login";
             this.Text = "Login";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Login_FormClosing);
             this.ResumeLayout(false);
             this.PerformLayout();
 
