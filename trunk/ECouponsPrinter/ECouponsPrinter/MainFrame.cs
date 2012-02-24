@@ -2580,7 +2580,6 @@ namespace ECouponsPrinter
             }
             else
                 return;
-
         }
 
         /// <summary>
@@ -2755,6 +2754,7 @@ namespace ECouponsPrinter
             Form1 form1 = new Form1();
             form1.Show();
         }
+
         #region 加载屏蔽窗口
 
         /// <summary>

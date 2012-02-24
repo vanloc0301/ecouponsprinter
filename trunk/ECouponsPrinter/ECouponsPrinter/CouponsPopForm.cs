@@ -10,6 +10,7 @@ using System.Security.Cryptography;
 using System.Globalization;
 using System.Drawing.Printing;
 using System.Threading;
+using System.Data.OleDb;
 
 namespace ECouponsPrinter
 {
@@ -20,6 +21,7 @@ namespace ECouponsPrinter
         PrintDocument pd = new PrintDocument();
         Image printimage = null;
         Wait wait;
+        string MD5code;
 
         public CouponsPopForm(CouponPicInfo info)
         {
@@ -32,7 +34,7 @@ namespace ECouponsPrinter
             pd.BeginPrint += new PrintEventHandler(pd_BeginPrint);
             pd.EndPrint += new PrintEventHandler(pd_EndPrint);
             pd.PrintPage += new PrintPageEventHandler(pd_PrintPage);
-            pd.DocumentName = "优惠劵";
+            pd.DocumentName = "coupon";
             this.Height = 780;
         }
 
@@ -68,18 +70,18 @@ namespace ECouponsPrinter
                 if (info.ShowDialog() == DialogResult.Yes)
                 {
                     check check = new check(pi.flaPrice, pi.id);
-                         
+
                     if (check.ShowDialog() == DialogResult.Yes)
                     {
                         try
-                        {              
+                        {
                             wait = new Wait();
                             new System.Threading.Thread(DoWork).Start();//开启一个线程更新form2的进度条
                             wait.ShowDialog();//现实form2，模式对话框
                         }
                         catch (Exception e1)
                         {
-                            
+
                         }
                     }
                 }
@@ -98,7 +100,7 @@ namespace ECouponsPrinter
                     }
                     catch (Exception e1)
                     {
-                  //      MessageBox.Show(e1.Message);
+                        //      MessageBox.Show(e1.Message);
                     }
                 }
             }
@@ -114,7 +116,8 @@ namespace ECouponsPrinter
             this.Height = 780;
 
             this.PB_Couponpop.Image = Image.FromFile(pi.lpath);
-            this.Code.Text = "验证码：" + this.ReturnCode();
+            MD5code = this.ReturnCode();
+            this.Code.Text = "验证码：" + MD5code;
         }
 
         public String ReturnCode()
@@ -126,7 +129,7 @@ namespace ECouponsPrinter
 
             MD5str += GlobalVariables.LoginUserId + pi.id + time;
             String pwdCode = StrToMD5(MD5str);
-            MessageBox.Show(pwdCode);
+            //          MessageBox.Show(pwdCode);
 
             return (pwdCode.Substring(0, 4) + pwdCode.Substring(pwdCode.Length - 4, 4));
 
@@ -190,17 +193,65 @@ namespace ECouponsPrinter
         {
             try
             {
-                pd.Print();
-                UploadInfo ui = new UploadInfo();
-                ui.CouponPrint();
+                printQueue pq = new printQueue();
+                Dictionary<string, int> myprinter;
+
+                if(pq.CanelAllPrintJob() == false)
+                {
+                    MyMsgBox mb = new MyMsgBox();
+                    mb.ShowMsg("打印纸已用尽！打印机暂停服务1！", 1);
+                    wait.CloseScrollBar();
+                    return;
+                }
+
+                myprinter = pq.GetAllPrinterQueues();
+                if (0 == myprinter["Microsoft Office Document Image Writer"])
+                {
+                    pd.Print();
+                    myprinter = pq.GetAllPrinterQueues();
+                    if (myprinter["Microsoft Office Document Image Writer"] == 0)
+                    {
+                        MyMsgBox mb = new MyMsgBox();
+                        mb.ShowMsg("打印纸已用尽！打印机暂停服务2！", 1);
+                        wait.CloseScrollBar();
+                        return;                
+                    }
+
+                    for (int i = 0; i <= 10; i += 1)
+                    {
+                        wait.SetProgressBarPositionP(i);//设置进度条当前位置
+                        System.Threading.Thread.Sleep(100);//sleep一下减缓进度条进度，实际代码中，此处应该是实际的工作
+                    }
+
+                    myprinter = pq.GetAllPrinterQueues();
+                    if (myprinter["Microsoft Office Document Image Writer"] == 0)
+                    {
+                        int tempId = TimeSpan.Parse(DateTime.Now.ToString("HH:mm:ss")).Milliseconds;
+                     //   long tempId = DateTime.Now.Ticks;
+
+                        string strSql = "insert into t_bz_coupon_print values(" + tempId + ","+GlobalVariables.LoginUserId+","+pi.id+","+DateTime.Now.ToString("yyyy-M-d H:m:s")+","+MD5code+")";
+                        AccessCmd cmd = new AccessCmd();
+                        cmd.ExecuteNonQuery(strSql);
+                      
+                        cmd.Close();
+                    }
+                }
+                else
+                {
+                    MyMsgBox mb = new MyMsgBox();
+                    mb.ShowMsg("打印纸已用尽！打印机暂停服务3！", 1);
+                    wait.CloseScrollBar();
+                    return;
+                }            
             }
             catch (Exception e)
             {
                 MyMsgBox mb = new MyMsgBox();
                 mb.ShowMsg("打印出错！暂时停止服务", 2);
+                wait.CloseScrollBar();
                 return;
             }
-            for (int i = 0; i <= 100; i += 1)
+            for (int i = 70; i <= 100; i += 1)
             {
                 wait.SetProgressBarPositionP(i);//设置进度条当前位置
                 System.Threading.Thread.Sleep(50);//sleep一下减缓进度条进度，实际代码中，此处应该是实际的工作

@@ -55,6 +55,10 @@
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.Management" />
+    <Reference Include="System.Printing">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
     <Reference Include="System.Xml.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
@@ -96,6 +100,7 @@
       <DependentUpon>MyMsgBox.cs</DependentUpon>
     </Compile>
     <Compile Include="PicInfo.cs" />
+    <Compile Include="printQueue.cs" />
     <Compile Include="SCard.cs" />
     <Compile Include="TranslateForm.cs">
       <SubType>Form</SubType>
