@@ -2762,10 +2762,20 @@ namespace ECouponsPrinter
         /// </summary>
         private void TranslateMain()
         {
-            TranslateForm tf = new TranslateForm();
+            TranslateForm tf = new TranslateForm(this);
             tf.Location = new Point(0, 0);
             tf.Size = new Size(768, 1366);
-            tf.ShowDialog();
+            if (this.InvokeRequired)
+            {
+                this.Invoke((MethodInvoker)delegate
+                {
+                    tf.ShowDialog(this);
+                }, null);
+            }
+            else
+            {
+                tf.ShowDialog(this);
+            }
         }
 
         #endregion
