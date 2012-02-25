@@ -95,6 +95,8 @@ namespace ECouponsPrinter
                             cmd.ExecuteNonQuery("insert into t_bz_terminal_param(strId,strParamName,strParamValue) values('" + 99 + "','strTerminalNo','" + this.ID.Text.Trim() + "')");
                             cmd.ExecuteNonQuery("insert into t_bz_terminal_param(strId,strParamName,strParamValue) values('" + 99 + "','strServerUrl','" + this.URL.Text.Trim() + "')");
                             cmd.Close();
+                            GlobalVariables.StrTerminalNo = this.ID.Text.Trim();
+                            GlobalVariables.StrServerUrl = this.URL.Text.Trim();
                             this.Label_Warning.Text = "操作成功！";
                         }
                     }
