@@ -250,7 +250,7 @@ namespace ECouponsPrinter
             catch (Exception e)
             {
                 MyMsgBox mb = new MyMsgBox();
-                mb.ShowMsg("打印出错！暂时停止服务", 2);
+                mb.ShowMsg("打印出错！暂时停止服务\n"+e.Message+"\n"+e.StackTrace, 2);
                 wait.CloseScrollBar();
                 return;
             }
