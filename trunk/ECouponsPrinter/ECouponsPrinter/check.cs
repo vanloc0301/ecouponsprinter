@@ -56,6 +56,13 @@ namespace ECouponsPrinter
                 this.error.Text ="短信发送失败！请稍后重试。";
                 return;
             }
+            if (strReturn.Equals("balance_error"))
+            {
+                MyMsgBox mb = new MyMsgBox();
+                mb.ShowMsg("对不起，您的余额不足！\n请及时充值", 2) ;
+                this.Close();
+            }
+
         }
 
         private void Reget_Click(object sender, EventArgs e)
