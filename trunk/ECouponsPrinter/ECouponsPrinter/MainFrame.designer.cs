@@ -196,7 +196,7 @@
             this.PB_NearShop_Top = new System.Windows.Forms.PictureBox();
             this.Btn_NearShopInfo = new System.Windows.Forms.Button();
             this.Label_NearShopName = new System.Windows.Forms.Label();
-            this.panel1 = new System.Windows.Forms.Panel();
+            this.Panel_Ad = new System.Windows.Forms.Panel();
             this.Panel_Top.SuspendLayout();
             this.Panel_Bottom.SuspendLayout();
             this.Panel_Home.SuspendLayout();
@@ -329,7 +329,6 @@
             // 
             this.Panel_Top.BackColor = System.Drawing.SystemColors.Control;
             this.Panel_Top.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("Panel_Top.BackgroundImage")));
-            this.Panel_Top.Controls.Add(this.panel1);
             this.Panel_Top.Controls.Add(this.Label_ScrollText);
             this.Panel_Top.Controls.Add(this.Label_Option);
             this.Panel_Top.Controls.Add(this.Label_Countdown);
@@ -2254,19 +2253,24 @@
             this.Label_NearShopName.Text = "商家名称";
             this.Label_NearShopName.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // panel1
+            // Panel_Ad
             // 
-            this.panel1.Location = new System.Drawing.Point(0, 95);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(768, 1173);
-            this.panel1.TabIndex = 19;
+            this.Panel_Ad.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.Panel_Ad.Location = new System.Drawing.Point(0, 95);
+            this.Panel_Ad.Name = "Panel_Ad";
+            this.Panel_Ad.Size = new System.Drawing.Size(768, 1173);
+            this.Panel_Ad.TabIndex = 19;
+            this.Panel_Ad.Visible = false;
+            this.Panel_Ad.VisibleChanged += new System.EventHandler(this.Panel_Ad_VisibleChanged);
+            this.Panel_Ad.Click += new System.EventHandler(this.Panel_Ad_Click);
             // 
             // MainFrame
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
-            this.ClientSize = new System.Drawing.Size(803, 742);
+            this.ClientSize = new System.Drawing.Size(820, 742);
+            this.Controls.Add(this.Panel_Ad);
             this.Controls.Add(this.Panel_Shop);
             this.Controls.Add(this.Panel_MyInfo);
             this.Controls.Add(this.Panel_Coupons);
@@ -2580,7 +2584,7 @@
         private System.Windows.Forms.Button Btn_Rank;
         private System.Windows.Forms.Button Btn_Rec;
         private System.Windows.Forms.Button Btn_NewCouponList;
-        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Panel Panel_Ad;
 
     }
 }
