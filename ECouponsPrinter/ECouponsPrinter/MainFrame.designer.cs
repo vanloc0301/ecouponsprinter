@@ -196,6 +196,7 @@
             this.PB_NearShop_Top = new System.Windows.Forms.PictureBox();
             this.Btn_NearShopInfo = new System.Windows.Forms.Button();
             this.Label_NearShopName = new System.Windows.Forms.Label();
+            this.panel1 = new System.Windows.Forms.Panel();
             this.Panel_Top.SuspendLayout();
             this.Panel_Bottom.SuspendLayout();
             this.Panel_Home.SuspendLayout();
@@ -328,6 +329,7 @@
             // 
             this.Panel_Top.BackColor = System.Drawing.SystemColors.Control;
             this.Panel_Top.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("Panel_Top.BackgroundImage")));
+            this.Panel_Top.Controls.Add(this.panel1);
             this.Panel_Top.Controls.Add(this.Label_ScrollText);
             this.Panel_Top.Controls.Add(this.Label_Option);
             this.Panel_Top.Controls.Add(this.Label_Countdown);
@@ -2252,6 +2254,13 @@
             this.Label_NearShopName.Text = "商家名称";
             this.Label_NearShopName.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // panel1
+            // 
+            this.panel1.Location = new System.Drawing.Point(0, 95);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(768, 1173);
+            this.panel1.TabIndex = 19;
+            // 
             // MainFrame
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -2571,6 +2580,7 @@
         private System.Windows.Forms.Button Btn_Rank;
         private System.Windows.Forms.Button Btn_Rec;
         private System.Windows.Forms.Button Btn_NewCouponList;
+        private System.Windows.Forms.Panel panel1;
 
     }
 }
