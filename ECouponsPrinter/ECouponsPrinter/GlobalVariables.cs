@@ -10,7 +10,7 @@ namespace ECouponsPrinter
     {
         private static bool _isKeyBoardExist = false;           //判断是否已经生成键盘
         private static bool _isUserLogin = false;               //判断是否有用户登录
-        private static int _WindowWaitTime = 30;                //未登录时,屏幕无操作超过此时间,自动开始播放广告
+        private static int _WindowWaitTime = 10;                //未登录时,屏幕无操作超过此时间,自动开始播放广告
         private static int _UserWaitTime = 30;                  //登录后，屏幕无操作超过此时间,自动注销用户登录信息,并返回首页
         private static String _MarqueeText = "欢迎使用本系统";  //走马灯的文字
         private static Member _M = null;
