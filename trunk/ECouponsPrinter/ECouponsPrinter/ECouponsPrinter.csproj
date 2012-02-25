@@ -100,6 +100,7 @@
       <DependentUpon>MyMsgBox.cs</DependentUpon>
     </Compile>
     <Compile Include="PicInfo.cs" />
+    <Compile Include="PrintFactory.cs" />
     <Compile Include="printQueue.cs" />
     <Compile Include="SCard.cs" />
     <Compile Include="TranslateForm.cs">
