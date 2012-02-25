@@ -220,7 +220,7 @@ namespace ECouponsPrinter
                         return;                
                     }
 
-                    for (int i = 0; i <= 10; i += 1)
+                    for (int i = 0; i <= 70; i += 1)
                     {
                         wait.SetProgressBarPositionP(i);//设置进度条当前位置
                         System.Threading.Thread.Sleep(100);//sleep一下减缓进度条进度，实际代码中，此处应该是实际的工作
@@ -254,6 +254,7 @@ namespace ECouponsPrinter
                 wait.CloseScrollBar();
                 return;
             }
+
             for (int i = 70; i <= 100; i += 1)
             {
                 wait.SetProgressBarPositionP(i);//设置进度条当前位置
