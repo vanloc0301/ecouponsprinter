@@ -10,9 +10,6 @@ namespace ECouponsPrinter
 {
     class printQueue
     {
-
-        public 
-
         public Dictionary<string, int> GetAllPrinterQueues()
         {
             Dictionary<string, int> TempDict = new Dictionary<string, int>();
