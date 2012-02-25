@@ -11,6 +11,7 @@ using System.Globalization;
 using System.Drawing.Printing;
 using System.Threading;
 using System.Data.OleDb;
+using Text;
 
 namespace ECouponsPrinter
 {
@@ -195,6 +196,8 @@ namespace ECouponsPrinter
             {
                 printQueue pq = new printQueue();
                 Dictionary<string, int> myprinter;
+                string defaultPrinterName = Printer.GetDeaultPrinterName();
+         //       MessageBox.Show(defaultPrinterName);
 
                 if(pq.CanelAllPrintJob() == false)
                 {
@@ -205,11 +208,11 @@ namespace ECouponsPrinter
                 }
 
                 myprinter = pq.GetAllPrinterQueues();
-                if (0 == myprinter["Microsoft Office Document Image Writer"])
+                if (0 == myprinter[defaultPrinterName])
                 {
                     pd.Print();
                     myprinter = pq.GetAllPrinterQueues();
-                    if (myprinter["Microsoft Office Document Image Writer"] == 0)
+                    if (myprinter[defaultPrinterName] == 0)
                     {
                         MyMsgBox mb = new MyMsgBox();
                         mb.ShowMsg("打印纸已用尽！打印机暂停服务2！", 1);
@@ -224,7 +227,7 @@ namespace ECouponsPrinter
                     }
 
                     myprinter = pq.GetAllPrinterQueues();
-                    if (myprinter["Microsoft Office Document Image Writer"] == 0)
+                    if (myprinter[defaultPrinterName] == 0)
                     {
                         int tempId = TimeSpan.Parse(DateTime.Now.ToString("HH:mm:ss")).Milliseconds;
                      //   long tempId = DateTime.Now.Ticks;
