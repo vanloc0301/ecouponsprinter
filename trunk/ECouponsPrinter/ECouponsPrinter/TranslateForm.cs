@@ -15,22 +15,32 @@ namespace ECouponsPrinter
         private SCard sc;
         private static bool isFirstKey = true;
         private Form par;
+        private Panel Home;
 
-        public TranslateForm(Form parent)
+        public TranslateForm(Form parent, Panel home)
         {
             InitializeComponent();
             this.FormBorderStyle = FormBorderStyle.None;
             this.TopMost = true;
             par = parent;
+            Home = home;
         }
 
         private void TranslateClick(object sender, EventArgs e)
         {
-            if (!GlobalVariables.isUserLogin)
+            if (Home.Visible == true)
             {
-                MyMsgBox mb = new MyMsgBox();
-                mb.ShowMsg("请您先刷卡！", 1);
-                return;
+                if (!GlobalVariables.isUserLogin)
+                {
+                    MyMsgBox mb = new MyMsgBox();
+                    mb.ShowMsg("请您先刷卡！", 1);
+                    return;
+                }
+            }
+            else
+            {
+                this.DialogResult = DialogResult.No;
+                this.Close();
             }
         }
 
@@ -80,7 +90,6 @@ namespace ECouponsPrinter
                 if (msg.Msg == WM_KEYDOWN | msg.Msg == WM_SYSKEYDOWN)
                 {
                     LoginText.Focus();
-
                     isFirstKey = false;
                 }
             }
@@ -164,13 +173,14 @@ namespace ECouponsPrinter
                     Login login = new Login(userid);
                     login.TopMost = true;
                     this.Visible = false;
-           //         this.Controls.Add(login);
+                    //         this.Controls.Add(login);
                     if (DialogResult.Yes == login.ShowDialog(par))
                     {
                         mb.ShowMsg("登录成功！", 2);
                         GlobalVariables.isUserLogin = true;
                         GlobalVariables.LoginUserId = userid;
-                        GlobalVariables.M = m;                    
+                        GlobalVariables.M = m;
+                        this.DialogResult = DialogResult.Yes;
                         this.Close();
                         return true;
                     }
@@ -179,7 +189,7 @@ namespace ECouponsPrinter
                         mb.ShowMsg("登录失败！\n请先绑定手机！", 2);
                         this.Visible = true;
                         return false;
-                    }               
+                    }
                 }
                 else
                 {
@@ -187,6 +197,7 @@ namespace ECouponsPrinter
                     GlobalVariables.isUserLogin = true;
                     GlobalVariables.LoginUserId = userid;
                     GlobalVariables.M = m;
+                    this.DialogResult = DialogResult.Yes;
                     this.Close();
                     return true;
                 }
