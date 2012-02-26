@@ -861,6 +861,10 @@ namespace ECouponsPrinter
             th = new Thread(new ThreadStart(TranslateMain));
             th.Start();
 
+            //加载广告线程
+            AdThread = new Thread(new ThreadStart(RefreshAd));
+            AdThread.Start();
+
         }
         #endregion
 
@@ -930,7 +934,7 @@ namespace ECouponsPrinter
                 int y = this.VerticalScroll.Value;
                 this.Panel_Ad.Location = new System.Drawing.Point(0, 95 - y);
                 this.Panel_Ad.Visible = true;
-                
+
             }
             else
             {
@@ -2731,6 +2735,8 @@ namespace ECouponsPrinter
                         }
                     }
                 }
+                reader.Close();
+                cmd.Close();
 
                 if (strText == "")
                 {
@@ -2777,12 +2783,12 @@ namespace ECouponsPrinter
             tf.Size = new Size(768, 1366);
             DialogResult dr = DialogResult.No;
 
-            while (dr.CompareTo(DialogResult.No) == 0 )
+            while (dr.CompareTo(DialogResult.No) == 0)
             {
                 if (this.InvokeRequired)
                 {
                     this.Invoke((MethodInvoker)delegate
-                    {                    
+                    {
                         dr = tf.ShowDialog(this);
 
                         if (dr.CompareTo(DialogResult.Yes) != 0)
@@ -2804,7 +2810,7 @@ namespace ECouponsPrinter
                             this.Panel_Home.Visible = true;
                             this.ShowHome();
                         }
-                //        dr = tf.ShowDialog(this);
+                        //        dr = tf.ShowDialog(this);
 
                     }, null);
                 }
@@ -2831,7 +2837,7 @@ namespace ECouponsPrinter
                         this.Panel_Home.Visible = true;
                         this.ShowHome();
                     }
-                }        
+                }
             }
         }
 
@@ -2880,6 +2886,9 @@ namespace ECouponsPrinter
                         strId += reader.GetString(0) + ",";
                     }
                 }
+
+                reader.Close();
+                cmd.Close();
                 if (strId != "")
                 {
                     LP_ctype[0] = FindCouponById(strId.Substring(0, strId.Length - 1).Split(','));
@@ -2971,9 +2980,15 @@ namespace ECouponsPrinter
                 marquee.Abort();
                 marquee.Join();
             }
+
+            if (AdThread.IsAlive)
+            {
+                AdThread.Abort();
+                AdThread.Join();
+            }
         }
 
-        #region 显示广告
+        #region 广告数据处理
 
         private Bitmap MyBitmap;
         private AxWMPLib.AxWindowsMediaPlayer Ad_MediaPlayer1, Ad_MediaPlayer2;
@@ -2981,8 +2996,162 @@ namespace ECouponsPrinter
         List<string> Ad_str;
         List<int> Ad_type;
         Thread PicThread = null;
+        Thread AdThread = null;
         int speed = 4, showType = 1;
         bool showContinue = true;
+
+        private void RefreshAd()
+        {
+            string time = DateTime.Now.ToString("H:m:s");
+            string strSql = "select * from t_bz_advertisement where #" + time + "#>=dtStartTime And #" + time + "#<dtEndTime And intType=1 or intType=2";
+            AccessCmd cmd = new AccessCmd();
+            OleDbDataReader reader = cmd.ExecuteReader(strSql);
+
+            Ad_type = new List<int>();
+            Ad_str = new List<string>();
+
+            while (reader.Read())
+            {
+                Ad_type.Add(reader.GetInt32(2));
+                Ad_str.Add(reader.GetString(3));
+            }
+
+            reader.Close();
+            cmd.Close();
+
+            if (Panel_Ad.Visible)
+            {
+                if (this.Panel_Ad.InvokeRequired)
+                {
+                    this.Panel_Ad.Invoke((MethodInvoker)delegate
+                    {
+                        Panel_Ad.Visible = false;
+                        Thread.Sleep(100);
+                        Panel_Ad.Visible = true;
+                    }, null);
+                }
+                else
+                {
+                    Panel_Ad.Visible = false;
+                    Thread.Sleep(100);
+                    Panel_Ad.Visible = true;
+                }
+            }
+            Thread.Sleep(60000 * 5);
+        }
+
+        private void ShowAd()
+        {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainFrame));
+            if (Ad_type.Count == 1)
+            {
+                if (Ad_type[0] == 1)
+                {
+                    Ad_MediaPlayer1 = new AxWMPLib.AxWindowsMediaPlayer();
+                    ((System.ComponentModel.ISupportInitialize)(Ad_MediaPlayer1)).BeginInit();
+                    Ad_MediaPlayer1.Enabled = true;
+                    Ad_MediaPlayer1.Location = new System.Drawing.Point(13, 49);
+                    Ad_MediaPlayer1.Name = "Ad_MediaPlayer1";
+                    Ad_MediaPlayer1.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("Ad_MediaPlayer.OcxState")));
+                    Ad_MediaPlayer1.Size = new System.Drawing.Size(745, 440);
+                    Panel_Ad.Controls.Add(Ad_MediaPlayer1);
+                    ((System.ComponentModel.ISupportInitialize)(Ad_MediaPlayer1)).EndInit();
+                    Ad_MediaPlayer1.uiMode = "none";
+
+                    showType = 1;
+                }
+                else
+                {
+                    Ad_Panel1 = new Panel();
+                    Ad_Panel1.Location = new System.Drawing.Point(13, 49);
+                    Ad_Panel1.Name = "Ad_Panel1";
+                    Ad_Panel1.Size = new System.Drawing.Size(745, 440);
+                    Panel_Ad.Controls.Add(Ad_Panel1);
+                    showType = 2;
+                }
+            }
+
+            if (Ad_type.Count == 2)
+            {
+                if (Ad_type[0] == 1)
+                {
+                    Ad_MediaPlayer1 = new AxWMPLib.AxWindowsMediaPlayer();
+                    ((System.ComponentModel.ISupportInitialize)(Ad_MediaPlayer1)).BeginInit();
+                    Ad_MediaPlayer1.Enabled = true;
+                    Ad_MediaPlayer1.Location = new System.Drawing.Point(13, 49);
+                    Ad_MediaPlayer1.Name = "Ad_MediaPlayer1";
+                    Ad_MediaPlayer1.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("Ad_MediaPlayer.OcxState")));
+                    Ad_MediaPlayer1.Size = new System.Drawing.Size(745, 440);
+                    Panel_Ad.Controls.Add(Ad_MediaPlayer1);
+                    ((System.ComponentModel.ISupportInitialize)(Ad_MediaPlayer1)).EndInit();
+                    Ad_MediaPlayer1.uiMode = "none";
+
+                    showType = 1;
+
+                }
+                else
+                {
+                    Ad_Panel1 = new Panel();
+                    Ad_Panel1.Location = new System.Drawing.Point(13, 659);
+                    Ad_Panel1.Name = "Ad_Panel1";
+                    Ad_Panel1.Size = new System.Drawing.Size(745, 440);
+                    Panel_Ad.Controls.Add(Ad_Panel1);
+
+                    showType = 2;
+                }
+
+                if (Ad_type[1] == 1)
+                {
+                    int y;
+                    if (showType == 1)
+                        y = 659;
+                    else
+                        y = 49;
+
+                    Ad_MediaPlayer2 = new AxWMPLib.AxWindowsMediaPlayer();
+                    ((System.ComponentModel.ISupportInitialize)(Ad_MediaPlayer2)).BeginInit();
+                    Ad_MediaPlayer2.Enabled = true;
+                    Ad_MediaPlayer2.Location = new System.Drawing.Point(13, y);
+                    Ad_MediaPlayer2.Name = "Ad_MediaPlayer2";
+                    Ad_MediaPlayer2.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("Ad_MediaPlayer.OcxState")));
+                    Ad_MediaPlayer2.Size = new System.Drawing.Size(745, 440);
+                    Panel_Ad.Controls.Add(Ad_MediaPlayer2);
+                    ((System.ComponentModel.ISupportInitialize)(Ad_MediaPlayer2)).EndInit();
+                    Ad_MediaPlayer2.uiMode = "none";
+
+                    if (showType == 1)
+                        showType = 3;
+                    else
+                        showType = 4;
+                }
+                else
+                {
+                    int y;
+                    if (showType == 1)
+                        y = 659;
+                    else
+                        y = 49;
+
+                    Ad_Panel2 = new Panel();
+                    Ad_Panel2.Location = new System.Drawing.Point(13, y);
+                    Ad_Panel2.Name = "Ad_Panel2";
+                    Ad_Panel2.Size = new System.Drawing.Size(745, 440);
+                    Panel_Ad.Controls.Add(Ad_Panel2);
+
+                    if (showType == 1)
+                        showType = 5;
+                    else
+                        showType = 6;
+                }
+            }
+
+            if (Ad_str != null && Ad_str.Count != 0)
+            {
+                showContinue = true;
+                PicThread = new Thread(new ThreadStart(doAnimate));
+                PicThread.Start();
+            }
+        }
 
         private void Panel_Ad_VisibleChanged(object sender, EventArgs e)
         {
@@ -3007,147 +3176,29 @@ namespace ECouponsPrinter
                 }
                 if (PicThread != null)
                 {
-                    if (PicThread.IsAlive)
+                    try
                     {
-                        PicThread.Abort();
-                        PicThread.Join();
+                        if (PicThread.IsAlive)
+                        {
+                            PicThread.Abort();
+                            PicThread.Join();
+                        }
                     }
+                    catch(Exception)
+                    {}
                 }
             }
 
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainFrame));
             if (Panel_Ad.Visible == true)
             {
-                string time = DateTime.Now.ToString("H:m:s");
-
-                string strSql = "select * from t_bz_advertisement where #" + time + "#>=dtStartTime And #" + time + "#<dtEndTime And intType=1 or intType=2";
-                AccessCmd cmd = new AccessCmd();
-                OleDbDataReader reader = cmd.ExecuteReader(strSql);
-
-                Ad_type = new List<int>();
-                Ad_str = new List<string>();
-
-                while (reader.Read())
-                {
-                    Ad_type.Add(reader.GetInt32(2));
-                    Ad_str.Add(reader.GetString(3));
-                }
-
-                if (Ad_type.Count == 1)
-                {
-                    if (Ad_type[0] == 1)
-                    {
-                        Ad_MediaPlayer1 = new AxWMPLib.AxWindowsMediaPlayer();
-                        ((System.ComponentModel.ISupportInitialize)(Ad_MediaPlayer1)).BeginInit();
-                        Ad_MediaPlayer1.Enabled = true;
-                        Ad_MediaPlayer1.Location = new System.Drawing.Point(13, 49);
-                        Ad_MediaPlayer1.Name = "Ad_MediaPlayer1";
-                        Ad_MediaPlayer1.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("Ad_MediaPlayer.OcxState")));
-                        Ad_MediaPlayer1.Size = new System.Drawing.Size(745, 440);
-                        Panel_Ad.Controls.Add(Ad_MediaPlayer1);
-                        ((System.ComponentModel.ISupportInitialize)(Ad_MediaPlayer1)).EndInit();
-                        Ad_MediaPlayer1.uiMode = "none";
-
-                        showType = 1;
-                    }
-                    else
-                    {
-                        Ad_Panel1 = new Panel();
-                        Ad_Panel1.Location = new System.Drawing.Point(13, 49);
-                        Ad_Panel1.Name = "Ad_Panel1";
-                        Ad_Panel1.Size = new System.Drawing.Size(745, 440);
-                        Panel_Ad.Controls.Add(Ad_Panel1);
-                        showType = 2;
-                    }
-                }
-
-                if (Ad_type.Count == 2)
-                {
-                    if (Ad_type[0] == 1)
-                    {
-                        Ad_MediaPlayer1 = new AxWMPLib.AxWindowsMediaPlayer();
-                        ((System.ComponentModel.ISupportInitialize)(Ad_MediaPlayer1)).BeginInit();
-                        Ad_MediaPlayer1.Enabled = true;
-                        Ad_MediaPlayer1.Location = new System.Drawing.Point(13, 49);
-                        Ad_MediaPlayer1.Name = "Ad_MediaPlayer1";
-                        Ad_MediaPlayer1.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("Ad_MediaPlayer.OcxState")));
-                        Ad_MediaPlayer1.Size = new System.Drawing.Size(745, 440);
-                        Panel_Ad.Controls.Add(Ad_MediaPlayer1);
-                        ((System.ComponentModel.ISupportInitialize)(Ad_MediaPlayer1)).EndInit();
-                        Ad_MediaPlayer1.uiMode = "none";
-
-                        showType = 1;
-
-                    }
-                    else
-                    {
-                        Ad_Panel1 = new Panel();
-                        Ad_Panel1.Location = new System.Drawing.Point(13, 659);
-                        Ad_Panel1.Name = "Ad_Panel1";
-                        Ad_Panel1.Size = new System.Drawing.Size(745, 440);
-                        Panel_Ad.Controls.Add(Ad_Panel1);
-
-                        showType = 2;
-                    }
-
-                    if (Ad_type[1] == 1)
-                    {
-                        int y;
-                        if (showType == 1)
-                            y = 659;
-                        else
-                            y = 49;
-
-                        Ad_MediaPlayer2 = new AxWMPLib.AxWindowsMediaPlayer();
-                        ((System.ComponentModel.ISupportInitialize)(Ad_MediaPlayer2)).BeginInit();
-                        Ad_MediaPlayer2.Enabled = true;
-                        Ad_MediaPlayer2.Location = new System.Drawing.Point(13, y);
-                        Ad_MediaPlayer2.Name = "Ad_MediaPlayer2";
-                        Ad_MediaPlayer2.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("Ad_MediaPlayer.OcxState")));
-                        Ad_MediaPlayer2.Size = new System.Drawing.Size(745, 440);
-                        Panel_Ad.Controls.Add(Ad_MediaPlayer2);
-                        ((System.ComponentModel.ISupportInitialize)(Ad_MediaPlayer2)).EndInit();
-                        Ad_MediaPlayer2.uiMode = "none";
-
-                        if (showType == 1)
-                            showType = 3;
-                        else
-                            showType = 4;
-                    }
-                    else
-                    {
-                        int y;
-                        if (showType == 1)
-                            y = 659;
-                        else
-                            y = 49;
-
-                        Ad_Panel2 = new Panel();
-                        Ad_Panel2.Location = new System.Drawing.Point(13, y);
-                        Ad_Panel2.Name = "Ad_Panel2";
-                        Ad_Panel2.Size = new System.Drawing.Size(745, 440);
-                        Panel_Ad.Controls.Add(Ad_Panel2);
-
-                        if (showType == 1)
-                            showType = 5;
-                        else
-                            showType = 6;
-                    }
-                }
-
-                if (Ad_str != null && Ad_str.Count != 0)
-                {
-                    showContinue = true;
-                    PicThread = new Thread(new ThreadStart(doAnimate));
-                    PicThread.Start();
-                }
+                ShowAd();
             }
         }
 
         private void doAnimate()
         {
             string[] Ad_Picture, Ad_Picture1;
-            int i,j,num;
+            int i, j, num;
             Random rand;
 
             switch (showType)
