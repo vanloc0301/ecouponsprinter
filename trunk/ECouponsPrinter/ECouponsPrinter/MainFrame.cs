@@ -2777,7 +2777,7 @@ namespace ECouponsPrinter
             tf.Size = new Size(768, 1366);
             DialogResult dr = DialogResult.No;
 
-            while (dr.CompareTo(DialogResult.Yes) != 0)
+            while (dr.CompareTo(DialogResult.No) == 0 )
             {
                 if (this.InvokeRequired)
                 {
@@ -3409,9 +3409,6 @@ namespace ECouponsPrinter
             this.InitHomeData();
             this.Panel_Home.Visible = true;
             this.ShowHome();
-
-            th = new Thread(new ThreadStart(TranslateMain));
-            th.Start();
         }
     }
 }
