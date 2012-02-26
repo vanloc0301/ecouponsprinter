@@ -31,7 +31,6 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainFrame));
             this.Panel_Top = new System.Windows.Forms.Panel();
-            this.Label_ScrollText = new Marquee.UserControl1(this.components);
             this.Label_Option = new System.Windows.Forms.Label();
             this.Label_Countdown = new System.Windows.Forms.Label();
             this.Panel_Bottom = new System.Windows.Forms.Panel();
@@ -329,7 +328,6 @@
             // 
             this.Panel_Top.BackColor = System.Drawing.SystemColors.Control;
             this.Panel_Top.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("Panel_Top.BackgroundImage")));
-            this.Panel_Top.Controls.Add(this.Label_ScrollText);
             this.Panel_Top.Controls.Add(this.Label_Option);
             this.Panel_Top.Controls.Add(this.Label_Countdown);
             this.Panel_Top.Location = new System.Drawing.Point(0, 0);
@@ -337,21 +335,6 @@
             this.Panel_Top.Name = "Panel_Top";
             this.Panel_Top.Size = new System.Drawing.Size(768, 101);
             this.Panel_Top.TabIndex = 0;
-            // 
-            // Label_ScrollText
-            // 
-            this.Label_ScrollText.BackColor = System.Drawing.Color.Transparent;
-            this.Label_ScrollText.Direction = Marquee.UserControl1.EnumDirection.Left;
-            this.Label_ScrollText.Font = new System.Drawing.Font("宋体", 30F, System.Drawing.FontStyle.Bold);
-            this.Label_ScrollText.ForeColor = System.Drawing.Color.White;
-            this.Label_ScrollText.Location = new System.Drawing.Point(24, 15);
-            this.Label_ScrollText.Name = "Label_ScrollText";
-            this.Label_ScrollText.Padding = new System.Windows.Forms.Padding(0, 15, 0, 0);
-            this.Label_ScrollText.scrollamount = 1;
-            this.Label_ScrollText.scrolldelay = 15;
-            this.Label_ScrollText.Size = new System.Drawing.Size(511, 73);
-            this.Label_ScrollText.strContent = "";
-            this.Label_ScrollText.TabIndex = 18;
             // 
             // Label_Option
             // 
@@ -2269,7 +2252,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
-            this.ClientSize = new System.Drawing.Size(820, 742);
+            this.ClientSize = new System.Drawing.Size(837, 742);
             this.Controls.Add(this.Panel_Ad);
             this.Controls.Add(this.Panel_Shop);
             this.Controls.Add(this.Panel_MyInfo);
@@ -2579,7 +2562,6 @@
         private System.Windows.Forms.Label MyInfo_Top_Print;
         private System.Windows.Forms.Label MyInfo_Bottom_Fav;
         private System.Windows.Forms.Label MyInfo_Bottom_Print;
-        private Marquee.UserControl1 Label_ScrollText;
         private System.Windows.Forms.Label Coupon_Print;
         private System.Windows.Forms.Button Btn_Rank;
         private System.Windows.Forms.Button Btn_Rec;

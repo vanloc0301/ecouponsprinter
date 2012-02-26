@@ -835,8 +835,8 @@ namespace ECouponsPrinter
             this.WindowState = FormWindowState.Maximized;
 
             //加载走马灯线程
-      //      marquee = new Thread(new ThreadStart(LoadMarquee));
-      //      marquee.Start();
+                  marquee = new Thread(new ThreadStart(LoadMarquee));
+                  marquee.Start();
             //this.Label_ScrollText.strContent = _stringScrollText;
             //this.Label_ScrollText.Start();
 
@@ -893,7 +893,7 @@ namespace ECouponsPrinter
         //}
         #endregion
 
-        #region 初始化倒计时
+        #region 初始化广告倒计时
         private void InitTimer()
         {
             this.Timer_Countdown.Stop();
@@ -919,7 +919,7 @@ namespace ECouponsPrinter
 
         #endregion
 
-        #region 计时器事件
+        #region 广告计时器事件
 
         private void Timer_Countdown_Tick(object sender, EventArgs e)
         {
@@ -2712,11 +2712,38 @@ namespace ECouponsPrinter
         #endregion
 
         #region 走马灯线程
+
+        UserControl1 Label_ScrollText;
         /// <summary>
         /// 走马灯线程函数
         /// </summary>
         private void LoadMarquee()
         {
+            Label_ScrollText = new UserControl1();
+            Label_ScrollText.BackColor = System.Drawing.Color.Transparent;
+            Label_ScrollText.Direction = Marquee.UserControl1.EnumDirection.Left;
+            Label_ScrollText.Font = new System.Drawing.Font("宋体", 30F, System.Drawing.FontStyle.Bold);
+            Label_ScrollText.ForeColor = System.Drawing.Color.White;
+            Label_ScrollText.Location = new System.Drawing.Point(24, 15);
+            Label_ScrollText.Name = "Label_ScrollText";
+            Label_ScrollText.Padding = new System.Windows.Forms.Padding(0, 15, 0, 0);
+            Label_ScrollText.scrollamount = 1;
+            Label_ScrollText.scrolldelay = 15;
+            Label_ScrollText.Size = new System.Drawing.Size(511, 73);
+            Label_ScrollText.strContent = "";
+
+            if (Panel_Top.InvokeRequired)
+            {
+                Panel_Top.Invoke((MethodInvoker)delegate
+                {
+                    Panel_Top.Controls.Add(Label_ScrollText);
+                }, null);
+            }
+            else
+            {
+                Panel_Top.Controls.Add(Label_ScrollText);
+            }
+
             while (true)
             {
                 String dtime = DateTime.Now.ToString("H:m:s");
@@ -2791,26 +2818,30 @@ namespace ECouponsPrinter
                     {
                         dr = tf.ShowDialog(this);
 
-                        if (dr.CompareTo(DialogResult.Yes) != 0)
+                        if (dr.CompareTo(DialogResult.Yes) == 0)
                         {
-                            this.UnVisibleAllPanels();
-                            showContinue = false;
-
-                            this.InitTimer();
-
-                            //显示隐藏按钮
-                            this.Button_LastCouponsPage.Visible = true;
-                            this.Button_NextCouponsPage.Visible = true;
-
-                            //切换
-                            int y = this.VerticalScroll.Value;
-                            this.Panel_Home.Location = new System.Drawing.Point(0, 95 - y);
-
-                            this.InitHomeData();
-                            this.Panel_Home.Visible = true;
-                            this.ShowHome();
+                            if (GlobalVariables.isUserLogin == true)
+                            {
+                                this.Timer_Countdown.Enabled = false;
+                            }
                         }
-                        //        dr = tf.ShowDialog(this);
+
+                        this.UnVisibleAllPanels();
+                        showContinue = false;
+
+                        this.InitTimer();
+
+                        //显示隐藏按钮
+                        this.Button_LastCouponsPage.Visible = true;
+                        this.Button_NextCouponsPage.Visible = true;
+
+                        //切换
+                        int y = this.VerticalScroll.Value;
+                        this.Panel_Home.Location = new System.Drawing.Point(0, 95 - y);
+
+                        this.InitHomeData();
+                        this.Panel_Home.Visible = true;
+                        this.ShowHome();
 
                     }, null);
                 }
@@ -3184,8 +3215,8 @@ namespace ECouponsPrinter
                             PicThread.Join();
                         }
                     }
-                    catch(Exception)
-                    {}
+                    catch (Exception)
+                    { }
                 }
             }
 
