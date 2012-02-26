@@ -196,6 +196,7 @@
             this.PB_NearShop_Top = new System.Windows.Forms.PictureBox();
             this.Btn_NearShopInfo = new System.Windows.Forms.Button();
             this.Label_NearShopName = new System.Windows.Forms.Label();
+            this.Panel_Ad = new System.Windows.Forms.Panel();
             this.Panel_Top.SuspendLayout();
             this.Panel_Bottom.SuspendLayout();
             this.Panel_Home.SuspendLayout();
@@ -2252,12 +2253,22 @@
             this.Label_NearShopName.Text = "商家名称";
             this.Label_NearShopName.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // Panel_Ad
+            // 
+            this.Panel_Ad.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.Panel_Ad.Location = new System.Drawing.Point(0, 101);
+            this.Panel_Ad.Name = "Panel_Ad";
+            this.Panel_Ad.Size = new System.Drawing.Size(768, 1265);
+            this.Panel_Ad.TabIndex = 71;
+            this.Panel_Ad.VisibleChanged += new System.EventHandler(this.Panel_Ad_VisibleChanged);
+            // 
             // MainFrame
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(854, 742);
+            this.Controls.Add(this.Panel_Ad);
             this.Controls.Add(this.Panel_Shop);
             this.Controls.Add(this.Panel_MyInfo);
             this.Controls.Add(this.Panel_Coupons);
@@ -2571,6 +2582,7 @@
         private System.Windows.Forms.Button Btn_Rec;
         private System.Windows.Forms.Button Btn_NewCouponList;
         private Marquee.UserControl1 Label_ScrollText;
+        private System.Windows.Forms.Panel Panel_Ad;
 
     }
 }
