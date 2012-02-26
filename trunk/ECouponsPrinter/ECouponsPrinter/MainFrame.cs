@@ -835,8 +835,8 @@ namespace ECouponsPrinter
             this.WindowState = FormWindowState.Maximized;
 
             //加载走马灯线程
-            marquee = new Thread(new ThreadStart(LoadMarquee));
-            marquee.Start();
+      //      marquee = new Thread(new ThreadStart(LoadMarquee));
+      //      marquee.Start();
             //this.Label_ScrollText.strContent = _stringScrollText;
             //this.Label_ScrollText.Start();
 

@@ -2258,7 +2258,7 @@
             this.Panel_Ad.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.Panel_Ad.Location = new System.Drawing.Point(0, 95);
             this.Panel_Ad.Name = "Panel_Ad";
-            this.Panel_Ad.Size = new System.Drawing.Size(768, 1173);
+            this.Panel_Ad.Size = new System.Drawing.Size(768, 1265);
             this.Panel_Ad.TabIndex = 19;
             this.Panel_Ad.Visible = false;
             this.Panel_Ad.VisibleChanged += new System.EventHandler(this.Panel_Ad_VisibleChanged);
