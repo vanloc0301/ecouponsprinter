@@ -924,12 +924,13 @@ namespace ECouponsPrinter
             if (CountDownNumber == 0)
             {
                 this.Timer_Countdown.Enabled = false;
-                th.Interrupt();
+
                 this.UnVisibleAllPanels();
                 //切换
                 int y = this.VerticalScroll.Value;
                 this.Panel_Ad.Location = new System.Drawing.Point(0, 95 - y);
                 this.Panel_Ad.Visible = true;
+                
             }
             else
             {
@@ -2771,19 +2772,66 @@ namespace ECouponsPrinter
         /// </summary>
         private void TranslateMain()
         {
-            TranslateForm tf = new TranslateForm(this);
+            TranslateForm tf = new TranslateForm(this, this.Panel_Home);
             tf.Location = new Point(0, 0);
             tf.Size = new Size(768, 1366);
-            if (this.InvokeRequired)
+            DialogResult dr = DialogResult.No;
+
+            while (dr.CompareTo(DialogResult.Yes) != 0)
             {
-                this.Invoke((MethodInvoker)delegate
+                if (this.InvokeRequired)
                 {
-                    tf.ShowDialog(this);
-                }, null);
-            }
-            else
-            {
-                tf.ShowDialog(this);
+                    this.Invoke((MethodInvoker)delegate
+                    {                    
+                        dr = tf.ShowDialog(this);
+
+                        if (dr.CompareTo(DialogResult.Yes) != 0)
+                        {
+                            this.UnVisibleAllPanels();
+                            showContinue = false;
+
+                            this.InitTimer();
+
+                            //显示隐藏按钮
+                            this.Button_LastCouponsPage.Visible = true;
+                            this.Button_NextCouponsPage.Visible = true;
+
+                            //切换
+                            int y = this.VerticalScroll.Value;
+                            this.Panel_Home.Location = new System.Drawing.Point(0, 95 - y);
+
+                            this.InitHomeData();
+                            this.Panel_Home.Visible = true;
+                            this.ShowHome();
+                        }
+                //        dr = tf.ShowDialog(this);
+
+                    }, null);
+                }
+                else
+                {
+                    dr = tf.ShowDialog(this);
+
+                    if (dr.CompareTo(DialogResult.Yes) != 0)
+                    {
+                        this.UnVisibleAllPanels();
+                        showContinue = false;
+
+                        this.InitTimer();
+
+                        //显示隐藏按钮
+                        this.Button_LastCouponsPage.Visible = true;
+                        this.Button_NextCouponsPage.Visible = true;
+
+                        //切换
+                        int y = this.VerticalScroll.Value;
+                        this.Panel_Home.Location = new System.Drawing.Point(0, 95 - y);
+
+                        this.InitHomeData();
+                        this.Panel_Home.Visible = true;
+                        this.ShowHome();
+                    }
+                }        
             }
         }
 
@@ -2918,11 +2966,6 @@ namespace ECouponsPrinter
 
         private void MainFrame_Closing(object sender, FormClosingEventArgs e)
         {
-            if (th.IsAlive)
-            {
-                th.Abort();
-                th.Join();
-            }
             if (marquee.IsAlive)
             {
                 marquee.Abort();
@@ -2977,7 +3020,7 @@ namespace ECouponsPrinter
             {
                 string time = DateTime.Now.ToString("H:m:s");
 
-                string strSql = "select * from t_bz_advertisement where #" + time + "#>=dtStartTime And #" + time + "#<dtEndTime";
+                string strSql = "select * from t_bz_advertisement where #" + time + "#>=dtStartTime And #" + time + "#<dtEndTime And intType=1 or intType=2";
                 AccessCmd cmd = new AccessCmd();
                 OleDbDataReader reader = cmd.ExecuteReader(strSql);
 
@@ -3091,9 +3134,13 @@ namespace ECouponsPrinter
                             showType = 6;
                     }
                 }
-                showContinue = true;
-                PicThread = new Thread(new ThreadStart(doAnimate));
-                PicThread.Start();
+
+                if (Ad_str != null && Ad_str.Count != 0)
+                {
+                    showContinue = true;
+                    PicThread = new Thread(new ThreadStart(doAnimate));
+                    PicThread.Start();
+                }
             }
         }
 
@@ -3349,11 +3396,6 @@ namespace ECouponsPrinter
             this.UnVisibleAllPanels();
             showContinue = false;
 
-            if (PicThread != null)
-            {
-                PicThread.Abort();
-                PicThread.Join();
-            }
             this.InitTimer();
 
             //显示隐藏按钮
@@ -3367,6 +3409,9 @@ namespace ECouponsPrinter
             this.InitHomeData();
             this.Panel_Home.Visible = true;
             this.ShowHome();
+
+            th = new Thread(new ThreadStart(TranslateMain));
+            th.Start();
         }
     }
 }
