@@ -587,7 +587,6 @@ namespace Text
             {
                 const int PRINTER_ACCESS_USE = 0x00000008;
                 const int PRINTER_ACCESS_ADMINISTER = 0x00000004;
-                const int FORM_PRINTER = 0x00000002;
 
                 structPrinterDefaults defaults = new structPrinterDefaults();
                 defaults.pDatatype = null;
