@@ -927,7 +927,7 @@ namespace ECouponsPrinter
                 tf.Visible = false;
                 Ad ad = new Ad(tf);
                 ad.Size = new Size(768, 1265);
-                ad.Location = new Point(0, 200);
+                ad.Location = new Point(0, 0);
                 ad.ShowDialog();
                 tf.Visible = true;
             }
