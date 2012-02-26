@@ -43,14 +43,13 @@ namespace ECouponsPrinter
             InitializeComponent();
             Application.EnableVisualStyles();
             this.SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.AllPaintingInWmPaint, true);
-            this.SetStyle(ControlStyles.UserPaint, true);
             this.Panel_Shop.GetType().GetProperty("DoubleBuffered", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic).SetValue(Panel_Shop, true, null);
             this.Panel_Coupons.GetType().GetProperty("DoubleBuffered", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic).SetValue(Panel_Coupons, true, null);
             this.Panel_ShopInfo.GetType().GetProperty("DoubleBuffered", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic).SetValue(Panel_ShopInfo, true, null);
             this.Panel_MyInfo.GetType().GetProperty("DoubleBuffered", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic).SetValue(Panel_MyInfo, true, null);
             this.Panel_Home.GetType().GetProperty("DoubleBuffered", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic).SetValue(Panel_Home, true, null);
             this.Panel_NearShop.GetType().GetProperty("DoubleBuffered", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic).SetValue(Panel_NearShop, true, null);
-            this.Panel_Ad.GetType().GetProperty("DoubleBuffered", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic).SetValue(Panel_Ad, true, null);
+            
             // 根据分辨率作出调整
             //Size size = SystemInformation.PrimaryMonitorSize;
             //int width = size.Width;
@@ -835,8 +834,8 @@ namespace ECouponsPrinter
             this.WindowState = FormWindowState.Maximized;
 
             //加载走马灯线程
-                  marquee = new Thread(new ThreadStart(LoadMarquee));
-                  marquee.Start();
+            marquee = new Thread(new ThreadStart(LoadMarquee));
+            marquee.Start();
             //this.Label_ScrollText.strContent = _stringScrollText;
             //this.Label_ScrollText.Start();
 
@@ -860,11 +859,6 @@ namespace ECouponsPrinter
             Thread.Sleep(100);
             th = new Thread(new ThreadStart(TranslateMain));
             th.Start();
-
-            //加载广告线程
-            AdThread = new Thread(new ThreadStart(RefreshAd));
-            AdThread.Start();
-
         }
         #endregion
 
@@ -912,7 +906,6 @@ namespace ECouponsPrinter
             this.Panel_MyInfo.Visible = false;
             this.Panel_Coupons.Visible = false;
             this.Panel_NearShop.Visible = false;
-            this.Panel_Ad.Visible = false;
 
             return null;
         }
@@ -931,10 +924,12 @@ namespace ECouponsPrinter
 
                 this.UnVisibleAllPanels();
                 //切换
-                int y = this.VerticalScroll.Value;
-                this.Panel_Ad.Location = new System.Drawing.Point(0, 95 - y);
-                this.Panel_Ad.Visible = true;
-
+                tf.Visible = false;
+                Ad ad = new Ad(tf);
+                ad.Size = new Size(768, 1265);
+                ad.Location = new Point(0, 200);
+                ad.ShowDialog();
+                tf.Visible = true;
             }
             else
             {
@@ -2713,36 +2708,11 @@ namespace ECouponsPrinter
 
         #region 走马灯线程
 
-        UserControl1 Label_ScrollText;
         /// <summary>
         /// 走马灯线程函数
         /// </summary>
         private void LoadMarquee()
         {
-            Label_ScrollText = new UserControl1();
-            Label_ScrollText.BackColor = System.Drawing.Color.Transparent;
-            Label_ScrollText.Direction = Marquee.UserControl1.EnumDirection.Left;
-            Label_ScrollText.Font = new System.Drawing.Font("宋体", 30F, System.Drawing.FontStyle.Bold);
-            Label_ScrollText.ForeColor = System.Drawing.Color.White;
-            Label_ScrollText.Location = new System.Drawing.Point(24, 15);
-            Label_ScrollText.Name = "Label_ScrollText";
-            Label_ScrollText.Padding = new System.Windows.Forms.Padding(0, 15, 0, 0);
-            Label_ScrollText.scrollamount = 1;
-            Label_ScrollText.scrolldelay = 15;
-            Label_ScrollText.Size = new System.Drawing.Size(511, 73);
-            Label_ScrollText.strContent = "";
-
-            if (Panel_Top.InvokeRequired)
-            {
-                Panel_Top.Invoke((MethodInvoker)delegate
-                {
-                    Panel_Top.Controls.Add(Label_ScrollText);
-                }, null);
-            }
-            else
-            {
-                Panel_Top.Controls.Add(Label_ScrollText);
-            }
 
             while (true)
             {
@@ -2799,13 +2769,13 @@ namespace ECouponsPrinter
         }
 
         #region 加载屏蔽窗口
-
+        TranslateForm tf;
         /// <summary>
         /// 加载屏蔽窗口
         /// </summary>
         private void TranslateMain()
         {
-            TranslateForm tf = new TranslateForm(this, this.Panel_Home);
+            tf = new TranslateForm(this);
             tf.Location = new Point(0, 0);
             tf.Size = new Size(768, 1366);
             DialogResult dr = DialogResult.No;
@@ -2827,8 +2797,6 @@ namespace ECouponsPrinter
                         }
 
                         this.UnVisibleAllPanels();
-                        showContinue = false;
-
                         this.InitTimer();
 
                         //显示隐藏按钮
@@ -2848,26 +2816,29 @@ namespace ECouponsPrinter
                 else
                 {
                     dr = tf.ShowDialog(this);
-
-                    if (dr.CompareTo(DialogResult.Yes) != 0)
+                    if (dr.CompareTo(DialogResult.Yes) == 0)
                     {
-                        this.UnVisibleAllPanels();
-                        showContinue = false;
-
-                        this.InitTimer();
-
-                        //显示隐藏按钮
-                        this.Button_LastCouponsPage.Visible = true;
-                        this.Button_NextCouponsPage.Visible = true;
-
-                        //切换
-                        int y = this.VerticalScroll.Value;
-                        this.Panel_Home.Location = new System.Drawing.Point(0, 95 - y);
-
-                        this.InitHomeData();
-                        this.Panel_Home.Visible = true;
-                        this.ShowHome();
+                        if (GlobalVariables.isUserLogin == true)
+                        {
+                            this.Timer_Countdown.Enabled = false;
+                        }
                     }
+
+                    this.UnVisibleAllPanels();
+                    this.InitTimer();
+
+                    //显示隐藏按钮
+                    this.Button_LastCouponsPage.Visible = true;
+                    this.Button_NextCouponsPage.Visible = true;
+
+                    //切换
+                    int y = this.VerticalScroll.Value;
+                    this.Panel_Home.Location = new System.Drawing.Point(0, 95 - y);
+
+                    this.InitHomeData();
+                    this.Panel_Home.Visible = true;
+                    this.ShowHome();
+
                 }
             }
         }
@@ -3012,485 +2983,6 @@ namespace ECouponsPrinter
                 marquee.Join();
             }
 
-            if (AdThread.IsAlive)
-            {
-                AdThread.Abort();
-                AdThread.Join();
-            }
-        }
-
-        #region 广告数据处理
-
-        private Bitmap MyBitmap;
-        private AxWMPLib.AxWindowsMediaPlayer Ad_MediaPlayer1, Ad_MediaPlayer2;
-        Panel Ad_Panel1, Ad_Panel2;
-        List<string> Ad_str;
-        List<int> Ad_type;
-        Thread PicThread = null;
-        Thread AdThread = null;
-        int speed = 4, showType = 1;
-        bool showContinue = true;
-
-        private void RefreshAd()
-        {
-            string time = DateTime.Now.ToString("H:m:s");
-            string strSql = "select * from t_bz_advertisement where #" + time + "#>=dtStartTime And #" + time + "#<dtEndTime And intType=1 or intType=2";
-            AccessCmd cmd = new AccessCmd();
-            OleDbDataReader reader = cmd.ExecuteReader(strSql);
-
-            Ad_type = new List<int>();
-            Ad_str = new List<string>();
-
-            while (reader.Read())
-            {
-                Ad_type.Add(reader.GetInt32(2));
-                Ad_str.Add(reader.GetString(3));
-            }
-
-            reader.Close();
-            cmd.Close();
-
-            if (Panel_Ad.Visible)
-            {
-                if (this.Panel_Ad.InvokeRequired)
-                {
-                    this.Panel_Ad.Invoke((MethodInvoker)delegate
-                    {
-                        Panel_Ad.Visible = false;
-                        Thread.Sleep(100);
-                        Panel_Ad.Visible = true;
-                    }, null);
-                }
-                else
-                {
-                    Panel_Ad.Visible = false;
-                    Thread.Sleep(100);
-                    Panel_Ad.Visible = true;
-                }
-            }
-            Thread.Sleep(60000 * 5);
-        }
-
-        private void ShowAd()
-        {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainFrame));
-            if (Ad_type.Count == 1)
-            {
-                if (Ad_type[0] == 1)
-                {
-                    Ad_MediaPlayer1 = new AxWMPLib.AxWindowsMediaPlayer();
-                    ((System.ComponentModel.ISupportInitialize)(Ad_MediaPlayer1)).BeginInit();
-                    Ad_MediaPlayer1.Enabled = true;
-                    Ad_MediaPlayer1.Location = new System.Drawing.Point(13, 49);
-                    Ad_MediaPlayer1.Name = "Ad_MediaPlayer1";
-                    Ad_MediaPlayer1.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("Ad_MediaPlayer.OcxState")));
-                    Ad_MediaPlayer1.Size = new System.Drawing.Size(745, 440);
-                    Panel_Ad.Controls.Add(Ad_MediaPlayer1);
-                    ((System.ComponentModel.ISupportInitialize)(Ad_MediaPlayer1)).EndInit();
-                    Ad_MediaPlayer1.uiMode = "none";
-
-                    showType = 1;
-                }
-                else
-                {
-                    Ad_Panel1 = new Panel();
-                    Ad_Panel1.Location = new System.Drawing.Point(13, 49);
-                    Ad_Panel1.Name = "Ad_Panel1";
-                    Ad_Panel1.Size = new System.Drawing.Size(745, 440);
-                    Panel_Ad.Controls.Add(Ad_Panel1);
-                    showType = 2;
-                }
-            }
-
-            if (Ad_type.Count == 2)
-            {
-                if (Ad_type[0] == 1)
-                {
-                    Ad_MediaPlayer1 = new AxWMPLib.AxWindowsMediaPlayer();
-                    ((System.ComponentModel.ISupportInitialize)(Ad_MediaPlayer1)).BeginInit();
-                    Ad_MediaPlayer1.Enabled = true;
-                    Ad_MediaPlayer1.Location = new System.Drawing.Point(13, 49);
-                    Ad_MediaPlayer1.Name = "Ad_MediaPlayer1";
-                    Ad_MediaPlayer1.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("Ad_MediaPlayer.OcxState")));
-                    Ad_MediaPlayer1.Size = new System.Drawing.Size(745, 440);
-                    Panel_Ad.Controls.Add(Ad_MediaPlayer1);
-                    ((System.ComponentModel.ISupportInitialize)(Ad_MediaPlayer1)).EndInit();
-                    Ad_MediaPlayer1.uiMode = "none";
-
-                    showType = 1;
-
-                }
-                else
-                {
-                    Ad_Panel1 = new Panel();
-                    Ad_Panel1.Location = new System.Drawing.Point(13, 659);
-                    Ad_Panel1.Name = "Ad_Panel1";
-                    Ad_Panel1.Size = new System.Drawing.Size(745, 440);
-                    Panel_Ad.Controls.Add(Ad_Panel1);
-
-                    showType = 2;
-                }
-
-                if (Ad_type[1] == 1)
-                {
-                    int y;
-                    if (showType == 1)
-                        y = 659;
-                    else
-                        y = 49;
-
-                    Ad_MediaPlayer2 = new AxWMPLib.AxWindowsMediaPlayer();
-                    ((System.ComponentModel.ISupportInitialize)(Ad_MediaPlayer2)).BeginInit();
-                    Ad_MediaPlayer2.Enabled = true;
-                    Ad_MediaPlayer2.Location = new System.Drawing.Point(13, y);
-                    Ad_MediaPlayer2.Name = "Ad_MediaPlayer2";
-                    Ad_MediaPlayer2.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("Ad_MediaPlayer.OcxState")));
-                    Ad_MediaPlayer2.Size = new System.Drawing.Size(745, 440);
-                    Panel_Ad.Controls.Add(Ad_MediaPlayer2);
-                    ((System.ComponentModel.ISupportInitialize)(Ad_MediaPlayer2)).EndInit();
-                    Ad_MediaPlayer2.uiMode = "none";
-
-                    if (showType == 1)
-                        showType = 3;
-                    else
-                        showType = 4;
-                }
-                else
-                {
-                    int y;
-                    if (showType == 1)
-                        y = 659;
-                    else
-                        y = 49;
-
-                    Ad_Panel2 = new Panel();
-                    Ad_Panel2.Location = new System.Drawing.Point(13, y);
-                    Ad_Panel2.Name = "Ad_Panel2";
-                    Ad_Panel2.Size = new System.Drawing.Size(745, 440);
-                    Panel_Ad.Controls.Add(Ad_Panel2);
-
-                    if (showType == 1)
-                        showType = 5;
-                    else
-                        showType = 6;
-                }
-            }
-
-            if (Ad_str != null && Ad_str.Count != 0)
-            {
-                showContinue = true;
-                PicThread = new Thread(new ThreadStart(doAnimate));
-                PicThread.Start();
-            }
-        }
-
-        private void Panel_Ad_VisibleChanged(object sender, EventArgs e)
-        {
-            if (Panel_Ad.Visible == false)
-            {
-                showContinue = false;
-                if (Ad_Panel1 != null)
-                {
-                    Ad_Panel1.Dispose();
-                }
-                if (Ad_Panel2 != null)
-                {
-                    Ad_Panel2.Dispose();
-                }
-                if (Ad_MediaPlayer1 != null)
-                {
-                    Ad_MediaPlayer1.Dispose();
-                }
-                if (Ad_MediaPlayer2 != null)
-                {
-                    Ad_MediaPlayer2.Dispose();
-                }
-                if (PicThread != null)
-                {
-                    try
-                    {
-                        if (PicThread.IsAlive)
-                        {
-                            PicThread.Abort();
-                            PicThread.Join();
-                        }
-                    }
-                    catch (Exception)
-                    { }
-                }
-            }
-
-            if (Panel_Ad.Visible == true)
-            {
-                ShowAd();
-            }
-        }
-
-        private void doAnimate()
-        {
-            string[] Ad_Picture, Ad_Picture1;
-            int i, j, num;
-            Random rand;
-
-            switch (showType)
-            {
-                case 1:
-                    Ad_MediaPlayer1.URL = path + @"\ad\" + Ad_str[0];
-                    Ad_MediaPlayer1.Ctlcontrols.play();
-                    break;
-                case 2:
-                    Ad_Picture = Ad_str[0].Split(',');
-                    MyBitmap = new Bitmap(Image.FromFile(path + "\\ad\\" + Ad_Picture[0]), 745, 440);
-                    i = 1;
-                    while (showContinue)
-                    {
-                        rand = new Random();
-                        num = rand.Next(0, 100);
-                        if (num % 2 == 0)
-                        {
-                            doAnimateType1(Ad_Panel1);
-                        }
-                        else
-                        {
-                            doAnimateType2(Ad_Panel1);
-                        }
-
-                        if (i == Ad_Picture.Length - 1)
-                        {
-                            i = 0;
-                        }
-                        MyBitmap = new Bitmap(Image.FromFile(path + "\\ad\\" + Ad_Picture[i++]), 745, 440);
-                        Thread.Sleep(1000 * 3);
-                    }
-                    break;
-                case 3:
-                    Ad_MediaPlayer1.URL = path + @"\ad\" + Ad_str[0];
-                    Ad_MediaPlayer1.Ctlcontrols.play();
-
-                    Ad_MediaPlayer2.URL = path + @"\ad\" + Ad_str[1];
-                    Ad_MediaPlayer2.Ctlcontrols.play();
-                    break;
-
-                case 4:
-                    Ad_MediaPlayer2.URL = path + @"\ad\" + Ad_str[1];
-                    Ad_MediaPlayer2.Ctlcontrols.play();
-
-                    Ad_Picture = Ad_str[0].Split(',');
-                    MyBitmap = new Bitmap(Image.FromFile(path + "\\ad\\" + Ad_Picture[0]), 745, 440);
-                    i = 1;
-                    while (showContinue)
-                    {
-                        rand = new Random();
-                        num = rand.Next(0, 100);
-                        if (num % 2 == 0)
-                        {
-                            doAnimateType1(Ad_Panel1);
-                        }
-                        else
-                        {
-                            doAnimateType2(Ad_Panel1);
-                        }
-
-                        if (i == Ad_Picture.Length - 1)
-                        {
-                            i = 0;
-                        }
-                        MyBitmap = new Bitmap(Image.FromFile(path + "\\ad\\" + Ad_Picture[i++]), 745, 440);
-                        Thread.Sleep(1000 * 3);
-                    }
-
-                    break;
-                case 5:
-                    Ad_MediaPlayer1.URL = path + @"\ad\" + Ad_str[0];
-                    Ad_MediaPlayer1.Ctlcontrols.play();
-
-                    Ad_Picture = Ad_str[1].Split(',');
-                    MyBitmap = new Bitmap(Image.FromFile(path + "\\ad\\" + Ad_Picture[0]), 745, 440);
-                    i = 1;
-                    while (showContinue)
-                    {
-                        rand = new Random();
-                        num = rand.Next(0, 100);
-                        if (num % 2 == 0)
-                        {
-                            doAnimateType1(Ad_Panel2);
-                        }
-                        else
-                        {
-                            doAnimateType2(Ad_Panel2);
-                        }
-
-                        if (i == Ad_Picture.Length - 1)
-                        {
-                            i = 0;
-                        }
-                        MyBitmap = new Bitmap(Image.FromFile(path + "\\ad\\" + Ad_Picture[i++]), 745, 440);
-                        Thread.Sleep(1000 * 3);
-                    }
-                    break;
-                case 6:
-                    Ad_Picture = Ad_str[0].Split(',');
-                    MyBitmap = new Bitmap(Image.FromFile(path + "\\ad\\" + Ad_Picture[0]), 745, 440);
-                    Ad_Picture1 = Ad_str[1].Split(',');
-                    MyBitmap = new Bitmap(Image.FromFile(path + "\\ad\\" + Ad_Picture1[0]), 745, 440);
-                    i = j = 1;
-                    while (showContinue)
-                    {
-                        rand = new Random();
-                        num = rand.Next(0, 100);
-                        if (num % 2 == 0)
-                        {
-                            doAnimateType1(Ad_Panel1);
-                        }
-                        else
-                        {
-                            doAnimateType2(Ad_Panel1);
-                        }
-
-                        if (i == Ad_Picture.Length - 1)
-                        {
-                            i = 0;
-                        }
-                        MyBitmap = new Bitmap(Image.FromFile(path + "\\ad\\" + Ad_Picture[i++]), 745, 440);
-                        Thread.Sleep(1000 * 3);
-
-                        num = rand.Next(0, 100);
-                        if (num % 2 == 0)
-                        {
-                            doAnimateType1(Ad_Panel2);
-                        }
-                        else
-                        {
-                            doAnimateType2(Ad_Panel2);
-                        }
-
-                        if (j == Ad_Picture1.Length - 1)
-                        {
-                            j = 0;
-                        }
-                        MyBitmap = new Bitmap(Image.FromFile(path + "\\ad\\" + Ad_Picture1[j++]), 745, 440);
-                        Thread.Sleep(1000 * 3);
-                    }
-                    break;
-                default: return;
-            }
-        }
-
-        private void doAnimateType1(Panel p)
-        {
-            Graphics g = null;
-            Bitmap bitmapTop = null, bitmapBottom = null;
-            try
-            {
-                int width = p.Width;//图像宽度  
-                int height = p.Height;//图像高度  
-                g = p.CreateGraphics();
-
-                //g.Clear(Color.Gray);
-                bitmapBottom = new Bitmap(width, speed, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
-                bitmapTop = new Bitmap(width, speed, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
-
-                int x = 0, x1 = 0, x2 = height - 1;
-                while (x < height)
-                {
-                    for (int t = 0; t < speed; t++)
-                    {
-                        for (int i = 0; i <= width - 1; i++)
-                        {
-                            bitmapTop.SetPixel(i, t, MyBitmap.GetPixel(i, x1));
-                        }
-                        x1++;
-                        x++;
-                    }
-                    g.DrawImage(bitmapTop, 0, x1 - speed);
-                    for (int t = 0; t < speed; t++)
-                    {
-                        for (int i = 0; i <= width - 1; i++)
-                        {
-                            bitmapBottom.SetPixel(i, speed - 1 - t, MyBitmap.GetPixel(i, x2));
-                        }
-                        x2--;
-                        x++;
-                    }
-                    g.DrawImage(bitmapBottom, 0, x2);
-                    System.Threading.Thread.Sleep(5);
-                }
-                //        MessageBox.Show("x1:" + x1.ToString() + ";x2:" + x2.ToString()+";x:"+x);
-            }
-            catch (Exception ex)
-            {
-                g.Dispose();
-            }
-        }
-
-        private void doAnimateType2(Panel p)
-        {
-            Graphics g = null;
-            Bitmap bitmapTop = null, bitmapBottom = null;
-            try
-            {
-                int width = p.Width;//图像宽度  
-                int height = p.Height;//图像高度  
-                g = p.CreateGraphics();
-                g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
-                //g.Clear(Color.Gray);
-                bitmapBottom = new Bitmap(width, height, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
-                bitmapTop = new Bitmap(speed, height, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
-
-                int x = 0, x1 = 0, x2 = width - 1;
-                while (x < width)
-                {
-                    for (int t = 0; t < speed; t++)
-                    {
-                        for (int i = 0; i <= height - 1; i++)
-                        {
-                            bitmapTop.SetPixel(t, i, MyBitmap.GetPixel(x1, i));
-                        }
-                        x1++;
-                        x++;
-                    }
-                    g.DrawImage(bitmapTop, x1 - speed, 0);
-                    for (int t = 0; t < speed; t++)
-                    {
-                        for (int i = 0; i <= height - 1; i++)
-                        {
-                            bitmapBottom.SetPixel(speed - 1 - t, i, MyBitmap.GetPixel(x2, i));
-                        }
-                        x2--;
-                        x++;
-                    }
-                    g.DrawImage(bitmapBottom, x2, 0);
-                    System.Threading.Thread.Sleep(5);
-                }
-                //            MessageBox.Show("x1:" + x1.ToString() + ";x2:" + x2.ToString()+";x:"+x);
-            }
-            catch (Exception ex)
-            {
-                g.Dispose();
-            }
-        }
-
-        #endregion
-
-        private void Panel_Ad_Click(object sender, EventArgs e)
-        {
-            //准备工作
-            this.UnVisibleAllPanels();
-            showContinue = false;
-
-            this.InitTimer();
-
-            //显示隐藏按钮
-            this.Button_LastCouponsPage.Visible = true;
-            this.Button_NextCouponsPage.Visible = true;
-
-            //切换
-            int y = this.VerticalScroll.Value;
-            this.Panel_Home.Location = new System.Drawing.Point(0, 95 - y);
-
-            this.InitHomeData();
-            this.Panel_Home.Visible = true;
-            this.ShowHome();
         }
     }
 }

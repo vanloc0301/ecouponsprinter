@@ -31,6 +31,7 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainFrame));
             this.Panel_Top = new System.Windows.Forms.Panel();
+            this.Label_ScrollText = new Marquee.UserControl1(this.components);
             this.Label_Option = new System.Windows.Forms.Label();
             this.Label_Countdown = new System.Windows.Forms.Label();
             this.Panel_Bottom = new System.Windows.Forms.Panel();
@@ -195,7 +196,6 @@
             this.PB_NearShop_Top = new System.Windows.Forms.PictureBox();
             this.Btn_NearShopInfo = new System.Windows.Forms.Button();
             this.Label_NearShopName = new System.Windows.Forms.Label();
-            this.Panel_Ad = new System.Windows.Forms.Panel();
             this.Panel_Top.SuspendLayout();
             this.Panel_Bottom.SuspendLayout();
             this.Panel_Home.SuspendLayout();
@@ -328,6 +328,7 @@
             // 
             this.Panel_Top.BackColor = System.Drawing.SystemColors.Control;
             this.Panel_Top.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("Panel_Top.BackgroundImage")));
+            this.Panel_Top.Controls.Add(this.Label_ScrollText);
             this.Panel_Top.Controls.Add(this.Label_Option);
             this.Panel_Top.Controls.Add(this.Label_Countdown);
             this.Panel_Top.Location = new System.Drawing.Point(0, 0);
@@ -335,6 +336,21 @@
             this.Panel_Top.Name = "Panel_Top";
             this.Panel_Top.Size = new System.Drawing.Size(768, 101);
             this.Panel_Top.TabIndex = 0;
+            // 
+            // Label_ScrollText
+            // 
+            this.Label_ScrollText.BackColor = System.Drawing.Color.Transparent;
+            this.Label_ScrollText.Direction = Marquee.UserControl1.EnumDirection.Left;
+            this.Label_ScrollText.Font = new System.Drawing.Font("宋体", 30F, System.Drawing.FontStyle.Bold);
+            this.Label_ScrollText.ForeColor = System.Drawing.Color.White;
+            this.Label_ScrollText.Location = new System.Drawing.Point(24, 12);
+            this.Label_ScrollText.Name = "Label_ScrollText";
+            this.Label_ScrollText.Padding = new System.Windows.Forms.Padding(0, 15, 0, 0);
+            this.Label_ScrollText.scrollamount = 1;
+            this.Label_ScrollText.scrolldelay = 15;
+            this.Label_ScrollText.Size = new System.Drawing.Size(511, 73);
+            this.Label_ScrollText.strContent = "";
+            this.Label_ScrollText.TabIndex = 18;
             // 
             // Label_Option
             // 
@@ -2236,24 +2252,12 @@
             this.Label_NearShopName.Text = "商家名称";
             this.Label_NearShopName.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // Panel_Ad
-            // 
-            this.Panel_Ad.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.Panel_Ad.Location = new System.Drawing.Point(0, 95);
-            this.Panel_Ad.Name = "Panel_Ad";
-            this.Panel_Ad.Size = new System.Drawing.Size(768, 1265);
-            this.Panel_Ad.TabIndex = 19;
-            this.Panel_Ad.Visible = false;
-            this.Panel_Ad.VisibleChanged += new System.EventHandler(this.Panel_Ad_VisibleChanged);
-            this.Panel_Ad.Click += new System.EventHandler(this.Panel_Ad_Click);
-            // 
             // MainFrame
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
-            this.ClientSize = new System.Drawing.Size(837, 742);
-            this.Controls.Add(this.Panel_Ad);
+            this.ClientSize = new System.Drawing.Size(854, 742);
             this.Controls.Add(this.Panel_Shop);
             this.Controls.Add(this.Panel_MyInfo);
             this.Controls.Add(this.Panel_Coupons);
@@ -2566,7 +2570,7 @@
         private System.Windows.Forms.Button Btn_Rank;
         private System.Windows.Forms.Button Btn_Rec;
         private System.Windows.Forms.Button Btn_NewCouponList;
-        private System.Windows.Forms.Panel Panel_Ad;
+        private Marquee.UserControl1 Label_ScrollText;
 
     }
 }
