@@ -2762,7 +2762,7 @@ namespace ECouponsPrinter
         /// </summary>
         private void TranslateMain()
         {
-            tf = new TranslateForm(this,Panel_Home);
+            tf = new TranslateForm(this, Panel_Home);
             tf.Location = new Point(0, 0);
             tf.Size = new Size(768, 1366);
             DialogResult dr = DialogResult.No;
@@ -2918,13 +2918,13 @@ namespace ECouponsPrinter
                     catch (Exception)
                     { }
                 }
-                
+
             }
 
             if (Panel_Ad.Visible == true)
             {
                 string time = DateTime.Now.ToString("H:m:s");
-                string strSql = "select * from t_bz_advertisement where #" + time + "#>=dtStartTime And #" + time + "#<dtEndTime And intType=1 or intType=2";
+                string strSql = "select * from t_bz_advertisement where #" + time + "#>=dtStartTime And #" + time + "#<dtEndTime And (intType=1 or intType=2)";
                 AccessCmd cmd = new AccessCmd();
                 OleDbDataReader reader = cmd.ExecuteReader(strSql);
 
@@ -3084,7 +3084,7 @@ namespace ECouponsPrinter
                         {
                             i = 0;
                         }
-                        
+
                         MyBitmap = new Bitmap(Image.FromFile(path + "\\ad\\" + Ad_Picture[i++]), 745, 440);
                         Thread.Sleep(1000 * 3);
                     }
@@ -3301,21 +3301,19 @@ namespace ECouponsPrinter
                 marquee.Join();
             }
 
-            if (AdThread != null)
+            try
             {
-                try
+                if (AdThread.IsAlive)
                 {
-                    if (AdThread.IsAlive)
-                    {
-                        AdThread.Abort();
-                        AdThread.Join();
-                    }
+                    AdThread.Abort();
+                    AdThread.Join();
                 }
-                catch (Exception)
-                { }
             }
-
+            catch (Exception)
+            { }
         }
+
+
 
     }
 }
