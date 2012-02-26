@@ -15,33 +15,25 @@ namespace ECouponsPrinter
         private SCard sc;
         private static bool isFirstKey = true;
         private Form par;
-        private Panel Home;
 
-        public TranslateForm(Form parent, Panel home)
+        public TranslateForm(Form parent)
         {
             InitializeComponent();
             this.FormBorderStyle = FormBorderStyle.None;
             this.TopMost = true;
             par = parent;
-            Home = home;
         }
 
         private void TranslateClick(object sender, EventArgs e)
         {
-            if (Home.Visible == true)
+
+            if (!GlobalVariables.isUserLogin)
             {
-                if (!GlobalVariables.isUserLogin)
-                {
-                    MyMsgBox mb = new MyMsgBox();
-                    mb.ShowMsg("请您先刷卡！", 1);
-                    return;
-                }
+                MyMsgBox mb = new MyMsgBox();
+                mb.ShowMsg("请您先刷卡！", 1);
+                return;
             }
-            else
-            {
-                this.DialogResult = DialogResult.No;
-                this.Close();
-            }
+
         }
 
         #region 磁卡检测处理
