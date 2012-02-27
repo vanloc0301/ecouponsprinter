@@ -2871,7 +2871,6 @@ namespace ECouponsPrinter
                     Ad_str.Add(reader.GetString(3));
                 }
 
-                MessageBox.Show(Ad_type.Count.ToString());
                 reader.Close();
                 cmd.Close();
 
