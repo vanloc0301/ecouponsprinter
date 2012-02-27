@@ -2780,6 +2780,7 @@ namespace ECouponsPrinter
                             if (GlobalVariables.isUserLogin == true)
                             {
                                 this.Timer_Countdown.Enabled = false;
+                              
                             }
                         }
 
@@ -2836,7 +2837,6 @@ namespace ECouponsPrinter
 
         #region 广告数据处理
 
-        private Bitmap MyBitmap;
         private AxWMPLib.AxWindowsMediaPlayer Ad_MediaPlayer1, Ad_MediaPlayer2;
         PictureBox Ad_PB1, Ad_PB2;
         List<string> Ad_str;
@@ -2881,7 +2881,7 @@ namespace ECouponsPrinter
                     ShowAd();
                 }
             }
-            Thread.Sleep(60000 * 5);
+            Thread.Sleep(1000 * 15);
         }
 
         private void Panel_Ad_VisibleChanged(object sender, EventArgs e)
@@ -3066,6 +3066,7 @@ namespace ECouponsPrinter
         {
             string[] Ad_Picture, Ad_Picture1;
             int i, j;
+            FileStream pFileStream;
 
             switch (showType)
             {
@@ -3075,17 +3076,18 @@ namespace ECouponsPrinter
                     break;
                 case 2:
                     Ad_Picture = Ad_str[0].Split(',');
-                    MyBitmap = new Bitmap(Image.FromFile(path + "\\ad\\" + Ad_Picture[0]), 745, 440);
-                    i = 1;
+                    i = 0;
                     while (showContinue)
                     {
-                        Ad_PB1.Image = MyBitmap;
-                        if (i == Ad_Picture.Length - 1)
+                        if (i >= Ad_Picture.Length - 1)
                         {
                             i = 0;
                         }
 
-                        MyBitmap = new Bitmap(Image.FromFile(path + "\\ad\\" + Ad_Picture[i++]), 745, 440);
+                        pFileStream = new FileStream(path + "\\ad\\" + Ad_Picture[i], FileMode.Open, FileAccess.Read);
+                        Ad_PB1.Image = Image.FromStream(pFileStream);
+                        pFileStream.Close();
+                        pFileStream.Dispose(); 
                         Thread.Sleep(1000 * 3);
                     }
                     break;
@@ -3102,16 +3104,17 @@ namespace ECouponsPrinter
                     Ad_MediaPlayer2.Ctlcontrols.play();
 
                     Ad_Picture = Ad_str[0].Split(',');
-                    MyBitmap = new Bitmap(Image.FromFile(path + "\\ad\\" + Ad_Picture[0]), 745, 440);
-                    i = 1;
+                    i = 0;
                     while (showContinue)
                     {
-                        Ad_PB1.Image = MyBitmap;
-                        if (i == Ad_Picture.Length - 1)
+                        if (i >= Ad_Picture.Length - 1)
                         {
                             i = 0;
                         }
-                        MyBitmap = new Bitmap(Image.FromFile(path + "\\ad\\" + Ad_Picture[i++]), 745, 440);
+                        pFileStream = new FileStream(path + "\\ad\\" + Ad_Picture[i], FileMode.Open, FileAccess.Read);
+                        Ad_PB1.Image = Image.FromStream(pFileStream);
+                        pFileStream.Close();
+                        pFileStream.Dispose(); 
                         Thread.Sleep(1000 * 3);
                     }
 
@@ -3119,43 +3122,50 @@ namespace ECouponsPrinter
                 case 5:
                     Ad_MediaPlayer1.URL = path + @"\ad\" + Ad_str[0];
                     Ad_MediaPlayer1.Ctlcontrols.play();
-
-                    Ad_Picture = Ad_str[1].Split(',');
-                    MyBitmap = new Bitmap(Image.FromFile(path + "\\ad\\" + Ad_Picture[0]), 745, 440);
-                    i = 1;
+                    Ad_Picture = Ad_str[1].Split(',');                 
+                    i = 0;
                     while (showContinue)
                     {
-                        Ad_PB2.Image = MyBitmap;
-                        if (i == Ad_Picture.Length - 1)
+                        if (i >= Ad_Picture.Length - 1)
                         {
                             i = 0;
                         }
-                        MyBitmap = new Bitmap(Image.FromFile(path + "\\ad\\" + Ad_Picture[i++]), 745, 440);
+
+                        pFileStream = new FileStream(path + "\\ad\\" + Ad_Picture[i], FileMode.Open, FileAccess.Read);
+                        Ad_PB2.Image = Image.FromStream(pFileStream);
+                        pFileStream.Close();
+                        pFileStream.Dispose(); 
+                                        
                         Thread.Sleep(1000 * 3);
                     }
                     break;
                 case 6:
                     Ad_Picture = Ad_str[0].Split(',');
-                    MyBitmap = new Bitmap(Image.FromFile(path + "\\ad\\" + Ad_Picture[0]), 745, 440);
                     Ad_Picture1 = Ad_str[1].Split(',');
-                    Bitmap MyBitmap1 = new Bitmap(Image.FromFile(path + "\\ad\\" + Ad_Picture1[0]), 745, 440);
-                    i = j = 1;
+                    i = j = 0;
                     while (showContinue)
                     {
-                        Ad_PB1.Image = MyBitmap;
-                        if (i == Ad_Picture.Length - 1)
+                        if (i >= Ad_Picture.Length - 1)
                         {
                             i = 0;
                         }
-                        MyBitmap = new Bitmap(Image.FromFile(path + "\\ad\\" + Ad_Picture[i++]), 745, 440);
+
+                        pFileStream = new FileStream(path + "\\ad\\" + Ad_Picture[i], FileMode.Open, FileAccess.Read);
+                        Ad_PB1.Image = Image.FromStream(pFileStream);
+                        pFileStream.Close();
+                        pFileStream.Dispose(); 
+                      
                         Thread.Sleep(1000 * 3);
 
-                        if (j == Ad_Picture1.Length - 1)
+                        if (j >= Ad_Picture1.Length - 1)
                         {
                             j = 0;
                         }
-                        Ad_PB2.Image = MyBitmap1;
-                        MyBitmap1 = new Bitmap(Image.FromFile(path + "\\ad\\" + Ad_Picture1[j++]), 745, 440);
+                        pFileStream = new FileStream(path + "\\ad\\" + Ad_Picture1[i], FileMode.Open, FileAccess.Read);
+                        Ad_PB2.Image = Image.FromStream(pFileStream);
+                        pFileStream.Close();
+                        pFileStream.Dispose(); 
+
                         Thread.Sleep(1000 * 3);
                     }
                     break;
