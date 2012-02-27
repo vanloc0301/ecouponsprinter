@@ -848,6 +848,10 @@ namespace ECouponsPrinter
             Thread.Sleep(100);
             th = new Thread(new ThreadStart(TranslateMain));
             th.Start();
+
+            //加载广告线程
+            AdThread = new Thread(new ThreadStart(RefreshAd));
+            AdThread.Start();
         }
         #endregion
 
@@ -2780,15 +2784,15 @@ namespace ECouponsPrinter
                             if (GlobalVariables.isUserLogin == true)
                             {
                                 this.Timer_Countdown.Enabled = false;
-                              
+
                             }
                         }
 
                         this.UnVisibleAllPanels();
-                      //  if (dr.CompareTo(DialogResult.Yes) != 0)
-                     //   {
-                            this.InitTimer();
-                     //   }
+                        //  if (dr.CompareTo(DialogResult.Yes) != 0)
+                        //   {
+                        this.InitTimer();
+                        //   }
 
                         //显示隐藏按钮
                         this.Button_LastCouponsPage.Visible = true;
@@ -2851,40 +2855,84 @@ namespace ECouponsPrinter
 
         private void RefreshAd()
         {
-            string time = DateTime.Now.ToString("H:m:s");
-            string strSql = "select * from t_bz_advertisement where #" + time + "#>=dtStartTime And #" + time + "#<dtEndTime And (intType=1 or intType=2)";
-            AccessCmd cmd = new AccessCmd();
-            OleDbDataReader reader = cmd.ExecuteReader(strSql);
-
-            Ad_type = new List<int>();
-            Ad_str = new List<string>();
-
-            while (reader.Read())
+            while (true)
             {
-                Ad_type.Add(reader.GetInt32(2));
-                Ad_str.Add(reader.GetString(3));
-            }
+                string time = DateTime.Now.ToString("H:m:s");
+                string strSql = "select * from t_bz_advertisement where #" + time + "#>=dtStartTime And #" + time + "#<dtEndTime And (intType=1 or intType=2)";
+                AccessCmd cmd = new AccessCmd();
+                OleDbDataReader reader = cmd.ExecuteReader(strSql);
 
-            reader.Close();
-            cmd.Close();
+                Ad_type = new List<int>();
+                Ad_str = new List<string>();
 
-            if (Panel_Ad.Visible == true)
-            {
-                if (this.Panel_Ad.InvokeRequired)
+                while (reader.Read())
                 {
-                    this.Panel_Ad.Invoke((MethodInvoker)delegate
+                    Ad_type.Add(reader.GetInt32(2));
+                    Ad_str.Add(reader.GetString(3));
+                }
+
+                MessageBox.Show(Ad_type.Count.ToString());
+                reader.Close();
+                cmd.Close();
+
+                if (Panel_Ad.Visible == true)
+                {
+                    if (this.Panel_Ad.InvokeRequired)
                     {
+                        this.Panel_Ad.Invoke((MethodInvoker)delegate
+                        {
+
+                            showContinue = false;
+                            if (Ad_PB1 != null)
+                            {
+                                Ad_PB1.Dispose();
+                            }
+                            if (Ad_PB2 != null)
+                            {
+                                Ad_PB2.Dispose();
+                            }
+                            if (Ad_MediaPlayer1 != null)
+                            {
+                                Ad_MediaPlayer1.close();
+                                Ad_MediaPlayer1.Dispose();
+                            }
+                            if (Ad_MediaPlayer2 != null)
+                            {
+                                Ad_MediaPlayer2.close();
+                                Ad_MediaPlayer2.Dispose();
+                            }
+                            Panel_Ad.Controls.Clear();
+                            ShowAd();
+                        }, null);
+                    }
+                    else
+                    {
+
+                        showContinue = false;
+                        if (Ad_PB1 != null)
+                        {
+                            Ad_PB1.Dispose();
+                        }
+                        if (Ad_PB2 != null)
+                        {
+                            Ad_PB2.Dispose();
+                        }
+                        if (Ad_MediaPlayer1 != null)
+                        {
+                            Ad_MediaPlayer1.close();
+                            Ad_MediaPlayer1.Dispose();
+                        }
+                        if (Ad_MediaPlayer2 != null)
+                        {
+                            Ad_MediaPlayer2.close();
+                            Ad_MediaPlayer2.Dispose();
+                        }
                         Panel_Ad.Controls.Clear();
                         ShowAd();
-                    }, null);
+                    }
                 }
-                else
-                {
-                    Panel_Ad.Controls.Clear();
-                    ShowAd();
-                }
+                Thread.Sleep(1000 * 15);
             }
-            Thread.Sleep(1000 * 15);
         }
 
         private void Panel_Ad_VisibleChanged(object sender, EventArgs e)
@@ -2902,10 +2950,12 @@ namespace ECouponsPrinter
                 }
                 if (Ad_MediaPlayer1 != null)
                 {
+                    Ad_MediaPlayer1.close();
                     Ad_MediaPlayer1.Dispose();
                 }
                 if (Ad_MediaPlayer2 != null)
                 {
+                    Ad_MediaPlayer2.close();
                     Ad_MediaPlayer2.Dispose();
                 }
                 if (PicThread != null)
@@ -3058,6 +3108,15 @@ namespace ECouponsPrinter
 
             if (Ad_str != null && Ad_str.Count != 0)
             {
+                if (PicThread != null)
+                {
+                    if (PicThread.IsAlive)
+                    {
+                        PicThread.Abort();
+                        PicThread.Join();
+                    }
+                }
+
                 showContinue = true;
                 PicThread = new Thread(new ThreadStart(doAnimate));
                 PicThread.Start();
@@ -3089,7 +3148,7 @@ namespace ECouponsPrinter
                         pFileStream = new FileStream(path + "\\ad\\" + Ad_Picture[i++], FileMode.Open, FileAccess.Read);
                         Ad_PB1.Image = Image.FromStream(pFileStream);
                         pFileStream.Close();
-                        pFileStream.Dispose(); 
+                        pFileStream.Dispose();
                         Thread.Sleep(1000 * 3);
                     }
                     break;
@@ -3116,7 +3175,7 @@ namespace ECouponsPrinter
                         pFileStream = new FileStream(path + "\\ad\\" + Ad_Picture[i++], FileMode.Open, FileAccess.Read);
                         Ad_PB1.Image = Image.FromStream(pFileStream);
                         pFileStream.Close();
-                        pFileStream.Dispose(); 
+                        pFileStream.Dispose();
                         Thread.Sleep(1000 * 3);
                     }
 
@@ -3124,7 +3183,7 @@ namespace ECouponsPrinter
                 case 5:
                     Ad_MediaPlayer1.URL = path + @"\ad\" + Ad_str[0];
                     Ad_MediaPlayer1.Ctlcontrols.play();
-                    Ad_Picture = Ad_str[1].Split(',');                 
+                    Ad_Picture = Ad_str[1].Split(',');
                     i = 0;
                     while (showContinue)
                     {
@@ -3136,8 +3195,8 @@ namespace ECouponsPrinter
                         pFileStream = new FileStream(path + "\\ad\\" + Ad_Picture[i++], FileMode.Open, FileAccess.Read);
                         Ad_PB2.Image = Image.FromStream(pFileStream);
                         pFileStream.Close();
-                        pFileStream.Dispose(); 
-                                        
+                        pFileStream.Dispose();
+
                         Thread.Sleep(1000 * 3);
                     }
                     break;
@@ -3155,8 +3214,8 @@ namespace ECouponsPrinter
                         pFileStream = new FileStream(path + "\\ad\\" + Ad_Picture[i++], FileMode.Open, FileAccess.Read);
                         Ad_PB1.Image = Image.FromStream(pFileStream);
                         pFileStream.Close();
-                        pFileStream.Dispose(); 
-                      
+                        pFileStream.Dispose();
+
                         Thread.Sleep(1000 * 3);
 
                         if (j > Ad_Picture1.Length - 1)
@@ -3166,7 +3225,7 @@ namespace ECouponsPrinter
                         pFileStream = new FileStream(path + "\\ad\\" + Ad_Picture1[i++], FileMode.Open, FileAccess.Read);
                         Ad_PB2.Image = Image.FromStream(pFileStream);
                         pFileStream.Close();
-                        pFileStream.Dispose(); 
+                        pFileStream.Dispose();
 
                         Thread.Sleep(1000 * 3);
                     }
