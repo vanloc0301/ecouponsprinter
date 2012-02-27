@@ -498,7 +498,7 @@ namespace ECouponsPrinter
                 doc.LoadXml(strXml);
                 //删除原纪录
                 AccessCmd cmd = new AccessCmd();
-                string strSql = "delete from t_bz_terminal_param";
+                string strSql = "delete from t_bz_terminal_param where strParamName<>'strTerminalNo' and strParamName<>'strServerUrl'";
                 cmd.ExecuteNonQuery(strSql);
                 //增加新纪录
                 XmlNodeList xnl = doc.GetElementsByTagName("param");
