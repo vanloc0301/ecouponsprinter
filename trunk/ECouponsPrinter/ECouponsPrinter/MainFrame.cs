@@ -430,6 +430,111 @@ namespace ECouponsPrinter
 
         #endregion
 
+        private void Btn_NewCouponList_Click(object sender, EventArgs e)
+        {
+            MyMsgBox mb = new MyMsgBox();
+            try
+            {
+                String time = DateTime.Now.ToString("yyyy/M/d H:m:s");
+                string strSql = "select top 24 strId from t_bz_coupon where #" + time + "#>dtActiveTime and #" + time + "#< dtExpireTime order by dtActiveTime desc";
+                AccessCmd cmd = new AccessCmd();
+                OleDbDataReader reader = cmd.ExecuteReader(strSql);
+
+                String strId = "";
+                while (reader.Read())
+                {
+                    if (!reader.IsDBNull(0))
+                    {
+                        strId += reader.GetString(0) + ",";
+                    }
+                }
+
+                reader.Close();
+                cmd.Close();
+                if (strId != "")
+                {
+                    LP_ctype[0] = FindCouponById(strId.Substring(0, strId.Length - 1).Split(','));
+                }
+                else
+                {
+                    LP_ctype[0] = new List<CouponPicInfo>();
+                }
+                curPage = 1;
+                curType = 0;
+                theCouponNum = 0;
+
+                ShowCoupon();
+
+            }
+            catch (Exception e1)
+            {
+                mb.ShowMsg(e1.Message + "\n正在修复", 1);
+            }
+
+        }
+
+        private void Btn_Rank_Click(object sender, EventArgs e)
+        {
+            DownloadInfo di = new DownloadInfo();
+            string[] aryStrCouponId = di.CouponTop();
+            MyMsgBox mb = new MyMsgBox();
+
+            if (aryStrCouponId.Length == 0)
+            {
+                mb.ShowMsg("排行榜暂时无数据!", 2);
+                return;
+            }
+
+            LP_ctype[0] = FindCouponById(aryStrCouponId);
+            curPage = 1;
+            curType = 0;
+            theCouponNum = 0;
+
+            ShowCoupon();
+
+        }
+
+        private void Btn_Rec_Click(object sender, EventArgs e)
+        {
+            LP_ctype[0] = FindRecCoupon();
+            curPage = 1;
+            curType = 0;
+            theCouponNum = 0;
+            ShowCoupon();
+        }
+
+        private void Button_NearShopInfo_MouseDown(object sender, MouseEventArgs e)
+        {
+            this.Btn_NearShopInfo.BackgroundImage = Image.FromFile(path + "\\images\\切图\\首页\\详细_1.jpg");
+        }
+
+        private void Button_NearShopInfo_MouseUp(object sender, MouseEventArgs e)
+        {
+            this.Btn_NearShopInfo.BackgroundImage = Image.FromFile(path + "\\images\\切图\\首页\\详细.jpg");
+
+            this.InitTimer();
+            if (LP_stype[0] != null && LP_stype[0].Count > 0)
+            {
+                InitShopInfoData(LP_stype[0][(curPage - 1) * 24 + theShopNum].id);
+            }
+            else
+            {
+                MyMsgBox mb = new MyMsgBox();
+                mb.ShowMsg("没有信息！", 2);
+                return;
+            }
+            Thread.Sleep(20);
+
+            this.UnVisibleAllPanels();
+            int y = this.VerticalScroll.Value;
+            this.Panel_ShopInfo.Location = new System.Drawing.Point(0, 95 - y);
+
+
+
+            this.Panel_ShopInfo.Visible = true;
+            ShowShopInfo();
+        }
+
         #endregion
 
         #endregion
@@ -927,6 +1032,151 @@ namespace ECouponsPrinter
                 CountDownNumber--;
             }
         }
+
+        #endregion
+
+        #region 走马灯线程
+
+        /// <summary>
+        /// 走马灯线程函数
+        /// </summary>
+        private void LoadMarquee()
+        {
+
+            while (true)
+            {
+                String dtime = DateTime.Now.ToString("H:m:s");
+                string strSql = "select * from t_bz_advertisement where intType=3 and #" + dtime + "#>=dtStartTime and #" + dtime + "#<dtEndTime";
+                AccessCmd cmd = new AccessCmd();
+                OleDbDataReader reader = cmd.ExecuteReader(strSql);
+
+                string strText = "";
+                if (reader != null)
+                {
+                    if (reader.Read())
+                    {
+                        if (!reader.IsDBNull(3))
+                        {
+                            strText = reader.GetString(3);
+                        }
+                    }
+                }
+                reader.Close();
+                cmd.Close();
+
+                if (strText == "")
+                {
+                    strText = "此处广告未招租，有意向请拨打" + GlobalVariables.StrPhone;
+                }
+
+                if (Label_ScrollText.InvokeRequired)
+                {
+                    this.Label_ScrollText.Invoke((MethodInvoker)delegate
+                    {
+                        this.Label_ScrollText.Stop();
+                        this.Label_ScrollText.strContent = strText;
+                        this.Label_ScrollText.Start();
+                    }, null);
+                }
+                else
+                {
+                    this.Label_ScrollText.Stop();
+                    this.Label_ScrollText.strContent = strText;
+                    this.Label_ScrollText.Start();
+                }
+
+                Thread.Sleep(1800 * 1000);
+            }
+
+        }
+        #endregion
+
+        private void Label_Countdown_Click(object sender, EventArgs e)
+        {
+            Form1 form1 = new Form1();
+            form1.Show();
+        }
+
+        #region 加载屏蔽窗口
+        TranslateForm tf;
+        /// <summary>
+        /// 加载屏蔽窗口
+        /// </summary>
+        private void TranslateMain()
+        {
+            tf = new TranslateForm(this, Panel_Home);
+            tf.Location = new Point(0, 0);
+            tf.Size = new Size(768, 1366);
+            DialogResult dr = DialogResult.No;
+
+            while (dr.CompareTo(DialogResult.No) == 0)
+            {
+                if (this.InvokeRequired)
+                {
+                    this.Invoke((MethodInvoker)delegate
+                    {
+                        dr = tf.ShowDialog(this);
+
+                        if (dr.CompareTo(DialogResult.Yes) == 0)
+                        {
+                            if (GlobalVariables.isUserLogin == true)
+                            {
+                                this.Timer_Countdown.Enabled = false;
+
+                            }
+                        }
+
+                        this.UnVisibleAllPanels();
+                        //  if (dr.CompareTo(DialogResult.Yes) != 0)
+                        //   {
+                        this.InitTimer();
+                        //   }
+
+                        //显示隐藏按钮
+                        this.Button_LastCouponsPage.Visible = true;
+                        this.Button_NextCouponsPage.Visible = true;
+
+                        //切换
+                        int y = this.VerticalScroll.Value;
+                        this.Panel_Home.Location = new System.Drawing.Point(0, 95 - y);
+
+                        this.InitHomeData();
+                        this.Panel_Home.Visible = true;
+                        this.ShowHome();
+
+                    }, null);
+                }
+                else
+                {
+                    dr = tf.ShowDialog(this);
+                    if (dr.CompareTo(DialogResult.Yes) == 0)
+                    {
+                        if (GlobalVariables.isUserLogin == true)
+                        {
+                            this.Timer_Countdown.Enabled = false;
+                        }
+                    }
+
+                    this.UnVisibleAllPanels();
+                    this.InitTimer();
+
+                    //显示隐藏按钮
+                    this.Button_LastCouponsPage.Visible = true;
+                    this.Button_NextCouponsPage.Visible = true;
+
+                    //切换
+                    int y = this.VerticalScroll.Value;
+                    this.Panel_Home.Location = new System.Drawing.Point(0, 95 - y);
+
+                    this.InitHomeData();
+                    this.Panel_Home.Visible = true;
+                    this.ShowHome();
+
+                }
+            }
+        }
+
+        #endregion
 
         #endregion
 
@@ -2697,151 +2947,6 @@ namespace ECouponsPrinter
 
         #endregion
 
-        #region 走马灯线程
-
-        /// <summary>
-        /// 走马灯线程函数
-        /// </summary>
-        private void LoadMarquee()
-        {
-
-            while (true)
-            {
-                String dtime = DateTime.Now.ToString("H:m:s");
-                string strSql = "select * from t_bz_advertisement where intType=3 and #" + dtime + "#>=dtStartTime and #" + dtime + "#<dtEndTime";
-                AccessCmd cmd = new AccessCmd();
-                OleDbDataReader reader = cmd.ExecuteReader(strSql);
-
-                string strText = "";
-                if (reader != null)
-                {
-                    if (reader.Read())
-                    {
-                        if (!reader.IsDBNull(3))
-                        {
-                            strText = reader.GetString(3);
-                        }
-                    }
-                }
-                reader.Close();
-                cmd.Close();
-
-                if (strText == "")
-                {
-                    strText = "此处广告未招租，有意向请拨打" + GlobalVariables.StrPhone;
-                }
-
-                if (Label_ScrollText.InvokeRequired)
-                {
-                    this.Label_ScrollText.Invoke((MethodInvoker)delegate
-                    {
-                        this.Label_ScrollText.Stop();
-                        this.Label_ScrollText.strContent = strText;
-                        this.Label_ScrollText.Start();
-                    }, null);
-                }
-                else
-                {
-                    this.Label_ScrollText.Stop();
-                    this.Label_ScrollText.strContent = strText;
-                    this.Label_ScrollText.Start();
-                }
-
-                Thread.Sleep(1800 * 1000);
-            }
-
-        }
-        #endregion
-
-        private void Label_Countdown_Click(object sender, EventArgs e)
-        {
-            Form1 form1 = new Form1();
-            form1.Show();
-        }
-
-        #region 加载屏蔽窗口
-        TranslateForm tf;
-        /// <summary>
-        /// 加载屏蔽窗口
-        /// </summary>
-        private void TranslateMain()
-        {
-            tf = new TranslateForm(this, Panel_Home);
-            tf.Location = new Point(0, 0);
-            tf.Size = new Size(768, 1366);
-            DialogResult dr = DialogResult.No;
-
-            while (dr.CompareTo(DialogResult.No) == 0)
-            {
-                if (this.InvokeRequired)
-                {
-                    this.Invoke((MethodInvoker)delegate
-                    {
-                        dr = tf.ShowDialog(this);
-
-                        if (dr.CompareTo(DialogResult.Yes) == 0)
-                        {
-                            if (GlobalVariables.isUserLogin == true)
-                            {
-                                this.Timer_Countdown.Enabled = false;
-
-                            }
-                        }
-
-                        this.UnVisibleAllPanels();
-                        //  if (dr.CompareTo(DialogResult.Yes) != 0)
-                        //   {
-                        this.InitTimer();
-                        //   }
-
-                        //显示隐藏按钮
-                        this.Button_LastCouponsPage.Visible = true;
-                        this.Button_NextCouponsPage.Visible = true;
-
-                        //切换
-                        int y = this.VerticalScroll.Value;
-                        this.Panel_Home.Location = new System.Drawing.Point(0, 95 - y);
-
-                        this.InitHomeData();
-                        this.Panel_Home.Visible = true;
-                        this.ShowHome();
-
-                    }, null);
-                }
-                else
-                {
-                    dr = tf.ShowDialog(this);
-                    if (dr.CompareTo(DialogResult.Yes) == 0)
-                    {
-                        if (GlobalVariables.isUserLogin == true)
-                        {
-                            this.Timer_Countdown.Enabled = false;
-                        }
-                    }
-
-                    this.UnVisibleAllPanels();
-                    this.InitTimer();
-
-                    //显示隐藏按钮
-                    this.Button_LastCouponsPage.Visible = true;
-                    this.Button_NextCouponsPage.Visible = true;
-
-                    //切换
-                    int y = this.VerticalScroll.Value;
-                    this.Panel_Home.Location = new System.Drawing.Point(0, 95 - y);
-
-                    this.InitHomeData();
-                    this.Panel_Home.Visible = true;
-                    this.ShowHome();
-
-                }
-            }
-        }
-
-        #endregion
-
-        #endregion
-
         #region 广告数据处理
 
         private AxWMPLib.AxWindowsMediaPlayer Ad_MediaPlayer1, Ad_MediaPlayer2;
@@ -2882,32 +2987,40 @@ namespace ECouponsPrinter
                         {
 
                             showContinue = false;
+
                             if (Ad_PB1 != null)
                             {
+                                Panel_Ad.Controls.Remove(Ad_PB1);
                                 Ad_PB1.Dispose();
                             }
                             if (Ad_PB2 != null)
                             {
+                                Panel_Ad.Controls.Remove(Ad_PB2);
                                 Ad_PB2.Dispose();
                             }
                             if (Ad_MediaPlayer1 != null)
                             {
+                                Panel_Ad.Controls.Remove(Ad_MediaPlayer1);
                                 Ad_MediaPlayer1.close();
                                 Ad_MediaPlayer1.Dispose();
                             }
                             if (Ad_MediaPlayer2 != null)
                             {
+                                Panel_Ad.Controls.Remove(Ad_MediaPlayer2);
                                 Ad_MediaPlayer2.close();
                                 Ad_MediaPlayer2.Dispose();
                             }
-                            Panel_Ad.Controls.Clear();
+
                             ShowAd();
                         }, null);
                     }
                     else
                     {
-
                         showContinue = false;
+                        Panel_Ad.Controls.Remove(Ad_PB1);
+                        Panel_Ad.Controls.Remove(Ad_PB2);
+                        Panel_Ad.Controls.Remove(Ad_MediaPlayer1);
+                        Panel_Ad.Controls.Remove(Ad_MediaPlayer2);
                         if (Ad_PB1 != null)
                         {
                             Ad_PB1.Dispose();
@@ -3007,10 +3120,10 @@ namespace ECouponsPrinter
                     Ad_MediaPlayer1 = new AxWMPLib.AxWindowsMediaPlayer();
                     ((System.ComponentModel.ISupportInitialize)(Ad_MediaPlayer1)).BeginInit();
                     Ad_MediaPlayer1.Enabled = true;
-                    Ad_MediaPlayer1.Location = new System.Drawing.Point(13, 49);
+                    Ad_MediaPlayer1.Location = new System.Drawing.Point(0, 0);
                     Ad_MediaPlayer1.Name = "Ad_MediaPlayer1";
                     Ad_MediaPlayer1.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("Ad_MediaPlayer.OcxState")));
-                    Ad_MediaPlayer1.Size = new System.Drawing.Size(745, 440);
+                    Ad_MediaPlayer1.Size = new System.Drawing.Size(768, 576);
 
                     Panel_Ad.Controls.Add(Ad_MediaPlayer1);
                     ((System.ComponentModel.ISupportInitialize)(Ad_MediaPlayer1)).EndInit();
@@ -3022,9 +3135,9 @@ namespace ECouponsPrinter
                 else
                 {
                     Ad_PB1 = new PictureBox();
-                    Ad_PB1.Location = new System.Drawing.Point(13, 49);
+                    Ad_PB1.Location = new System.Drawing.Point(0, 0);
                     Ad_PB1.Name = "Ad_PB1";
-                    Ad_PB1.Size = new System.Drawing.Size(745, 440);
+                    Ad_PB1.Size = new System.Drawing.Size(768, 576);
                     Panel_Ad.Controls.Add(Ad_PB1);
                     showType = 2;
                 }
@@ -3037,10 +3150,10 @@ namespace ECouponsPrinter
                     Ad_MediaPlayer1 = new AxWMPLib.AxWindowsMediaPlayer();
                     ((System.ComponentModel.ISupportInitialize)(Ad_MediaPlayer1)).BeginInit();
                     Ad_MediaPlayer1.Enabled = true;
-                    Ad_MediaPlayer1.Location = new System.Drawing.Point(13, 49);
+                    Ad_MediaPlayer1.Location = new System.Drawing.Point(0, 0);
                     Ad_MediaPlayer1.Name = "Ad_MediaPlayer1";
                     Ad_MediaPlayer1.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("Ad_MediaPlayer.OcxState")));
-                    Ad_MediaPlayer1.Size = new System.Drawing.Size(745, 440);
+                    Ad_MediaPlayer1.Size = new System.Drawing.Size(768, 576);
                     Panel_Ad.Controls.Add(Ad_MediaPlayer1);
                     ((System.ComponentModel.ISupportInitialize)(Ad_MediaPlayer1)).EndInit();
                     Ad_MediaPlayer1.uiMode = "none";
@@ -3051,9 +3164,9 @@ namespace ECouponsPrinter
                 else
                 {
                     Ad_PB1 = new PictureBox();
-                    Ad_PB1.Location = new System.Drawing.Point(13, 659);
+                    Ad_PB1.Location = new System.Drawing.Point(0, 680);
                     Ad_PB1.Name = "Ad_PB1";
-                    Ad_PB1.Size = new System.Drawing.Size(745, 440);
+                    Ad_PB1.Size = new System.Drawing.Size(768, 576);
                     Panel_Ad.Controls.Add(Ad_PB1);
 
                     showType = 2;
@@ -3063,17 +3176,17 @@ namespace ECouponsPrinter
                 {
                     int y;
                     if (showType == 1)
-                        y = 659;
+                        y = 680;
                     else
-                        y = 49;
+                        y = 0;
 
                     Ad_MediaPlayer2 = new AxWMPLib.AxWindowsMediaPlayer();
                     ((System.ComponentModel.ISupportInitialize)(Ad_MediaPlayer2)).BeginInit();
                     Ad_MediaPlayer2.Enabled = true;
-                    Ad_MediaPlayer2.Location = new System.Drawing.Point(13, y);
+                    Ad_MediaPlayer2.Location = new System.Drawing.Point(0, y);
                     Ad_MediaPlayer2.Name = "Ad_MediaPlayer2";
                     Ad_MediaPlayer2.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("Ad_MediaPlayer.OcxState")));
-                    Ad_MediaPlayer2.Size = new System.Drawing.Size(745, 440);
+                    Ad_MediaPlayer2.Size = new System.Drawing.Size(768, 576);
                     Panel_Ad.Controls.Add(Ad_MediaPlayer2);
                     ((System.ComponentModel.ISupportInitialize)(Ad_MediaPlayer2)).EndInit();
                     Ad_MediaPlayer2.uiMode = "none";
@@ -3088,14 +3201,14 @@ namespace ECouponsPrinter
                 {
                     int y;
                     if (showType == 1)
-                        y = 659;
+                        y = 680;
                     else
-                        y = 49;
+                        y = 0;
 
                     Ad_PB2 = new PictureBox();
-                    Ad_PB2.Location = new System.Drawing.Point(13, y);
+                    Ad_PB2.Location = new System.Drawing.Point(0, y);
                     Ad_PB2.Name = "Ad_PB2";
-                    Ad_PB2.Size = new System.Drawing.Size(745, 440);
+                    Ad_PB2.Size = new System.Drawing.Size(768, 576);
                     Panel_Ad.Controls.Add(Ad_PB2);
 
                     if (showType == 1)
@@ -3258,125 +3371,30 @@ namespace ECouponsPrinter
             this.Timer_DownloadInfo.Start();
         }
 
-        private void Btn_NewCouponList_Click(object sender, EventArgs e)
-        {
-            MyMsgBox mb = new MyMsgBox();
-            try
-            {
-                String time = DateTime.Now.ToString("yyyy/M/d H:m:s");
-                string strSql = "select top 24 strId from t_bz_coupon where #" + time + "#>dtActiveTime and #" + time + "#< dtExpireTime order by dtActiveTime desc";
-                AccessCmd cmd = new AccessCmd();
-                OleDbDataReader reader = cmd.ExecuteReader(strSql);
-
-                String strId = "";
-                while (reader.Read())
-                {
-                    if (!reader.IsDBNull(0))
-                    {
-                        strId += reader.GetString(0) + ",";
-                    }
-                }
-
-                reader.Close();
-                cmd.Close();
-                if (strId != "")
-                {
-                    LP_ctype[0] = FindCouponById(strId.Substring(0, strId.Length - 1).Split(','));
-                }
-                else
-                {
-                    LP_ctype[0] = new List<CouponPicInfo>();
-                }
-                curPage = 1;
-                curType = 0;
-                theCouponNum = 0;
-
-                ShowCoupon();
-
-            }
-            catch (Exception e1)
-            {
-                mb.ShowMsg(e1.Message + "\n正在修复", 1);
-            }
-
-        }
-
-        private void Btn_Rank_Click(object sender, EventArgs e)
-        {
-            DownloadInfo di = new DownloadInfo();
-            string[] aryStrCouponId = di.CouponTop();
-            MyMsgBox mb = new MyMsgBox();
-
-            if (aryStrCouponId.Length == 0)
-            {
-                mb.ShowMsg("排行榜暂时无数据!", 2);
-                return;
-            }
-
-            LP_ctype[0] = FindCouponById(aryStrCouponId);
-            curPage = 1;
-            curType = 0;
-            theCouponNum = 0;
-
-            ShowCoupon();
-
-        }
-
-        private void Btn_Rec_Click(object sender, EventArgs e)
-        {
-            LP_ctype[0] = FindRecCoupon();
-            curPage = 1;
-            curType = 0;
-            theCouponNum = 0;
-            ShowCoupon();
-        }
-
-        private void Button_NearShopInfo_MouseDown(object sender, MouseEventArgs e)
-        {
-            this.Btn_NearShopInfo.BackgroundImage = Image.FromFile(path + "\\images\\切图\\首页\\详细_1.jpg");
-        }
-
-        private void Button_NearShopInfo_MouseUp(object sender, MouseEventArgs e)
-        {
-            this.Btn_NearShopInfo.BackgroundImage = Image.FromFile(path + "\\images\\切图\\首页\\详细.jpg");
-
-            this.InitTimer();
-            if (LP_stype[0] != null && LP_stype[0].Count > 0)
-            {
-                InitShopInfoData(LP_stype[0][(curPage - 1) * 24 + theShopNum].id);
-            }
-            else
-            {
-                MyMsgBox mb = new MyMsgBox();
-                mb.ShowMsg("没有信息！", 2);
-                return;
-            }
-            Thread.Sleep(20);
-
-            this.UnVisibleAllPanels();
-            int y = this.VerticalScroll.Value;
-            this.Panel_ShopInfo.Location = new System.Drawing.Point(0, 95 - y);
-
-
-
-            this.Panel_ShopInfo.Visible = true;
-            ShowShopInfo();
-        }
-
         private void MainFrame_Closing(object sender, FormClosingEventArgs e)
         {
-            if (marquee.IsAlive)
-            {
-                marquee.Abort();
-                marquee.Join();
-            }
-
             try
             {
+                if (marquee.IsAlive)
+                {
+                    marquee.Abort();
+                    marquee.Join();
+                }
+
+
                 if (AdThread.IsAlive)
                 {
                     AdThread.Abort();
                     AdThread.Join();
+                }
+
+                if (th != null)
+                {
+                    if (th.IsAlive)
+                    {
+                        th.Abort();
+                        th.Join();
+                    }
                 }
             }
             catch (Exception)

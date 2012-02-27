@@ -197,6 +197,7 @@
             this.Btn_NearShopInfo = new System.Windows.Forms.Button();
             this.Label_NearShopName = new System.Windows.Forms.Label();
             this.Panel_Ad = new System.Windows.Forms.Panel();
+            this.Label_AdClick = new System.Windows.Forms.Label();
             this.Panel_Top.SuspendLayout();
             this.Panel_Bottom.SuspendLayout();
             this.Panel_Home.SuspendLayout();
@@ -323,6 +324,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.PB_NearShop14)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PB_NearShop13)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PB_NearShop_Top)).BeginInit();
+            this.Panel_Ad.SuspendLayout();
             this.SuspendLayout();
             // 
             // Panel_Top
@@ -2256,11 +2258,24 @@
             // Panel_Ad
             // 
             this.Panel_Ad.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.Panel_Ad.Controls.Add(this.Label_AdClick);
             this.Panel_Ad.Location = new System.Drawing.Point(0, 101);
             this.Panel_Ad.Name = "Panel_Ad";
             this.Panel_Ad.Size = new System.Drawing.Size(768, 1265);
             this.Panel_Ad.TabIndex = 71;
             this.Panel_Ad.VisibleChanged += new System.EventHandler(this.Panel_Ad_VisibleChanged);
+            // 
+            // Label_AdClick
+            // 
+            this.Label_AdClick.AutoSize = true;
+            this.Label_AdClick.Font = new System.Drawing.Font("宋体", 30F, System.Drawing.FontStyle.Bold);
+            this.Label_AdClick.ForeColor = System.Drawing.Color.White;
+            this.Label_AdClick.Location = new System.Drawing.Point(42, 600);
+            this.Label_AdClick.Name = "Label_AdClick";
+            this.Label_AdClick.Size = new System.Drawing.Size(618, 40);
+            this.Label_AdClick.TabIndex = 0;
+            this.Label_AdClick.Text = "点击屏幕             退出广告";
+            this.Label_AdClick.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // MainFrame
             // 
@@ -2410,6 +2425,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.PB_NearShop14)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PB_NearShop13)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PB_NearShop_Top)).EndInit();
+            this.Panel_Ad.ResumeLayout(false);
+            this.Panel_Ad.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -2583,6 +2600,7 @@
         private System.Windows.Forms.Button Btn_NewCouponList;
         private Marquee.UserControl1 Label_ScrollText;
         private System.Windows.Forms.Panel Panel_Ad;
+        private System.Windows.Forms.Label Label_AdClick;
 
     }
 }
