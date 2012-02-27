@@ -2785,7 +2785,10 @@ namespace ECouponsPrinter
                         }
 
                         this.UnVisibleAllPanels();
-                        this.InitTimer();
+                      //  if (dr.CompareTo(DialogResult.Yes) != 0)
+                     //   {
+                            this.InitTimer();
+                     //   }
 
                         //显示隐藏按钮
                         this.Button_LastCouponsPage.Visible = true;
@@ -2989,7 +2992,6 @@ namespace ECouponsPrinter
                     Ad_MediaPlayer1.Name = "Ad_MediaPlayer1";
                     Ad_MediaPlayer1.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("Ad_MediaPlayer.OcxState")));
                     Ad_MediaPlayer1.Size = new System.Drawing.Size(745, 440);
-
                     Panel_Ad.Controls.Add(Ad_MediaPlayer1);
                     ((System.ComponentModel.ISupportInitialize)(Ad_MediaPlayer1)).EndInit();
                     Ad_MediaPlayer1.uiMode = "none";
@@ -3079,12 +3081,12 @@ namespace ECouponsPrinter
                     i = 0;
                     while (showContinue)
                     {
-                        if (i >= Ad_Picture.Length - 1)
+                        if (i > Ad_Picture.Length - 1)
                         {
                             i = 0;
                         }
 
-                        pFileStream = new FileStream(path + "\\ad\\" + Ad_Picture[i], FileMode.Open, FileAccess.Read);
+                        pFileStream = new FileStream(path + "\\ad\\" + Ad_Picture[i++], FileMode.Open, FileAccess.Read);
                         Ad_PB1.Image = Image.FromStream(pFileStream);
                         pFileStream.Close();
                         pFileStream.Dispose(); 
@@ -3107,11 +3109,11 @@ namespace ECouponsPrinter
                     i = 0;
                     while (showContinue)
                     {
-                        if (i >= Ad_Picture.Length - 1)
+                        if (i > Ad_Picture.Length - 1)
                         {
                             i = 0;
                         }
-                        pFileStream = new FileStream(path + "\\ad\\" + Ad_Picture[i], FileMode.Open, FileAccess.Read);
+                        pFileStream = new FileStream(path + "\\ad\\" + Ad_Picture[i++], FileMode.Open, FileAccess.Read);
                         Ad_PB1.Image = Image.FromStream(pFileStream);
                         pFileStream.Close();
                         pFileStream.Dispose(); 
@@ -3126,12 +3128,12 @@ namespace ECouponsPrinter
                     i = 0;
                     while (showContinue)
                     {
-                        if (i >= Ad_Picture.Length - 1)
+                        if (i > Ad_Picture.Length - 1)
                         {
                             i = 0;
                         }
 
-                        pFileStream = new FileStream(path + "\\ad\\" + Ad_Picture[i], FileMode.Open, FileAccess.Read);
+                        pFileStream = new FileStream(path + "\\ad\\" + Ad_Picture[i++], FileMode.Open, FileAccess.Read);
                         Ad_PB2.Image = Image.FromStream(pFileStream);
                         pFileStream.Close();
                         pFileStream.Dispose(); 
@@ -3145,23 +3147,23 @@ namespace ECouponsPrinter
                     i = j = 0;
                     while (showContinue)
                     {
-                        if (i >= Ad_Picture.Length - 1)
+                        if (i > Ad_Picture.Length - 1)
                         {
                             i = 0;
                         }
 
-                        pFileStream = new FileStream(path + "\\ad\\" + Ad_Picture[i], FileMode.Open, FileAccess.Read);
+                        pFileStream = new FileStream(path + "\\ad\\" + Ad_Picture[i++], FileMode.Open, FileAccess.Read);
                         Ad_PB1.Image = Image.FromStream(pFileStream);
                         pFileStream.Close();
                         pFileStream.Dispose(); 
                       
                         Thread.Sleep(1000 * 3);
 
-                        if (j >= Ad_Picture1.Length - 1)
+                        if (j > Ad_Picture1.Length - 1)
                         {
                             j = 0;
                         }
-                        pFileStream = new FileStream(path + "\\ad\\" + Ad_Picture1[i], FileMode.Open, FileAccess.Read);
+                        pFileStream = new FileStream(path + "\\ad\\" + Ad_Picture1[i++], FileMode.Open, FileAccess.Read);
                         Ad_PB2.Image = Image.FromStream(pFileStream);
                         pFileStream.Close();
                         pFileStream.Dispose(); 
