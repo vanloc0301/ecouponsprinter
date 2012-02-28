@@ -36,7 +36,8 @@ namespace ECouponsPrinter
         private Label[] Label_Shop_Type;
         private string[] tradeName;
 
-        //-----------------------------------------------------------------------------     
+        //-----------------------------------------------------------------------------   
+        string[] buttonName = { };
         enum part { up = 1, middle = 2, bottom = 3 };
 
         public MainFrame()
@@ -73,19 +74,15 @@ namespace ECouponsPrinter
         }
 
         #region 处理界面点击事件
-        private void MainFrame_Click(object sender, EventArgs e)
+        private void MainFrame_MouseHover(object sender, EventArgs e)
         {
-            Label temp = sender as Label;
-            if (temp.Name == "Label_Countdown")
-            {
-                return;
-            }
             InitUserQuitTime();
         }
 
         private void CatchAllClickEvent(Control ctl)
         {
-            ctl.MouseClick += new MouseEventHandler(MainFrame_Click);
+
+            ctl.MouseHover += new EventHandler(MainFrame_MouseHover);
 
             if (ctl.Controls != null)
             {
@@ -1386,7 +1383,7 @@ namespace ECouponsPrinter
                         lPath = reader.GetString(9);
                         if (lPath != "" && lPath != null)
                         {
-                            pi.lpath = path + "\\coupon\\" + lPath;                            
+                            pi.lpath = path + "\\coupon\\" + lPath;
                         }
                     }
                     else
@@ -1459,7 +1456,7 @@ namespace ECouponsPrinter
                         intVip = reader.GetInt32(5);
                         pi.vip = intVip;
                     }
-                    else 
+                    else
                     {
                         pi.vip = 0;
                     }
@@ -1618,7 +1615,7 @@ namespace ECouponsPrinter
                 PB_Home_Up.Image = new Bitmap(Image.FromStream(pFileStream), 761, 384);
                 pFileStream.Close();
                 pFileStream.Dispose();
-                
+
             }
         }
 
@@ -2113,7 +2110,6 @@ namespace ECouponsPrinter
             if (LP_stype[curNumType - 1].Count > 0)
             {
                 this.UnVisibleAllPanels();
-                this.InitTimer();
 
                 int y = this.VerticalScroll.Value;
                 this.Panel_ShopInfo.Location = new System.Drawing.Point(0, 95 - y);
@@ -2163,6 +2159,11 @@ namespace ECouponsPrinter
                 LP_ctype[0] = FindVipCoupon(LP_ctype[0]);
             }
 
+            if (LP_ctype[0] == null)
+            {
+                LP_ctype[0] = new List<CouponPicInfo>();
+            }
+
             curPage = 1;
             curType = 0;
             theCouponNum = 0;
@@ -2198,6 +2199,7 @@ namespace ECouponsPrinter
 
             if (lp.Count != 0)
             {
+
                 PB_Coupon_Top.Image = new Bitmap(Image.FromFile(lp[(curPage - 1) * 12].lpath), 760, 433);
             }
             else
@@ -3592,12 +3594,7 @@ namespace ECouponsPrinter
             }
         }
 
-        private void MainFrame_MouseClick(object sender, MouseEventArgs e)
-        {
-            InitUserQuitTime();
-        }
-
-
+        
 
     }
 }
