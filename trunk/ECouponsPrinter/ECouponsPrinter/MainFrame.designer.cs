@@ -2291,7 +2291,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
-            this.ClientSize = new System.Drawing.Size(939, 742);
+            this.ClientSize = new System.Drawing.Size(956, 742);
             this.Controls.Add(this.Panel_Bottom);
             this.Controls.Add(this.Panel_Home);
             this.Controls.Add(this.Panel_Ad);
@@ -2306,7 +2306,7 @@
             this.Text = "MainFrame";
             this.Load += new System.EventHandler(this.MainFrame_Load);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainFrame_Closing);
-            this.MouseHover += new System.EventHandler(this.MainFrame_MouseHover);
+            this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.MainFrame_MouseMove);
             this.Panel_Top.ResumeLayout(false);
             this.Panel_Bottom.ResumeLayout(false);
             this.Panel_Home.ResumeLayout(false);
