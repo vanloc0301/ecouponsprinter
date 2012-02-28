@@ -118,6 +118,7 @@ namespace ECouponsPrinter
                     {
                         this.SCardTimer.Stop();
                         this.SCardTimer.Enabled = false;
+                        this.Close();
                     }
                 }
             }
@@ -138,7 +139,7 @@ namespace ECouponsPrinter
         private void SCardTimer_Tick(object sender, EventArgs e)
         {
             string cardNo = "";
-            SCard.light(0x0000, 2);
+            SCard.light(0x0000, 3);
             if ((cardNo = sc.searchCard()) == null)
             {
                 SCard.light(0x0000, 0);
@@ -182,17 +183,16 @@ namespace ECouponsPrinter
                 if (m.StrMobileNo.Length == 0)
                 {
                     Login login = new Login(userid);
+                    login.Location = new Point(30, 50);
                     login.TopMost = true;
                     this.Visible = false;
                     //         this.Controls.Add(login);
                     if (DialogResult.Yes == login.ShowDialog(par))
                     {
-                        mb.ShowMsg("登录成功！", 2);
                         GlobalVariables.isUserLogin = true;
                         GlobalVariables.LoginUserId = userid;
                         GlobalVariables.M = m;
                         this.DialogResult = DialogResult.Yes;
-                        this.Close();
                         return true;
                     }
                     else
@@ -209,7 +209,6 @@ namespace ECouponsPrinter
                     GlobalVariables.LoginUserId = userid;
                     GlobalVariables.M = m;
                     this.DialogResult = DialogResult.Yes;
-                    this.Close();
                     return true;
                 }
             }
