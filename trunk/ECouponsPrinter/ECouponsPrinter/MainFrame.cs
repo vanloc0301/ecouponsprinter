@@ -75,6 +75,11 @@ namespace ECouponsPrinter
         #region 处理界面点击事件
         private void MainFrame_Click(object sender, EventArgs e)
         {
+            Label temp = sender as Label;
+            if (temp.Name == "Label_Countdown")
+            {
+                return;
+            }
             InitUserQuitTime();
         }
 
@@ -89,7 +94,7 @@ namespace ECouponsPrinter
             }
         }
 
-        #endregion 处理界面点击事件      
+        #endregion 处理界面点击事件
 
         //private void ChangeControl(Control c, float widthRatio, float heightRatio)
         //{
@@ -187,7 +192,6 @@ namespace ECouponsPrinter
             this.Button_ShopInfo.BackgroundImage = Image.FromFile(path + "\\images\\切图\\首页\\详细.jpg");
 
             this.UnVisibleAllPanels();
-            this.InitTimer();
 
             int y = this.VerticalScroll.Value;
             this.Panel_ShopInfo.Location = new System.Drawing.Point(0, 95 - y);
@@ -742,7 +746,6 @@ namespace ECouponsPrinter
 
             //准备工作
             this.UnVisibleAllPanels();
-            this.InitTimer();
 
             //取消不必要的按钮
             this.Button_LastCouponsPage.Visible = false;
@@ -788,7 +791,6 @@ namespace ECouponsPrinter
             Thread.Sleep(20);
             //准备工作
             this.UnVisibleAllPanels();
-            this.InitTimer();
 
             //显示必要的按钮
             this.Button_LastCouponsPage.Visible = true;
@@ -831,7 +833,6 @@ namespace ECouponsPrinter
 
             //准备工作
             this.UnVisibleAllPanels();
-            this.InitTimer();
 
             //取消不必要的按钮
             this.Button_LastCouponsPage.Visible = false;
@@ -1027,7 +1028,6 @@ namespace ECouponsPrinter
 
         private void Timer_Countdown_Tick(object sender, EventArgs e)
         {
-            this.Label_Countdown.Text = CountDownNumber.ToString();
             if (CountDownNumber == 0)
             {
                 this.Timer_Countdown.Stop();
@@ -1104,7 +1104,7 @@ namespace ECouponsPrinter
         {
             this.Timer_UserQuit.Enabled = true;
             this.Timer_UserQuit.Stop();
-            UserQuitTime = GlobalVariables.UserWaitTime;         
+            UserQuitTime = GlobalVariables.UserWaitTime;
             this.Label_Countdown.Font = new Font("Microsoft Sans Serif", 35, FontStyle.Bold);
             this.Label_Countdown.ForeColor = Color.Red;
             this.Label_Countdown.Text = UserQuitTime.ToString() + "  退出";
@@ -1194,7 +1194,7 @@ namespace ECouponsPrinter
 
             InitTimer();
             th = new Thread(new ThreadStart(TranslateMain));
-            th.Start();        
+            th.Start();
         }
 
         private void Label_Countdown_DoubleClick(object sender, EventArgs e)
@@ -1386,8 +1386,12 @@ namespace ECouponsPrinter
                         lPath = reader.GetString(9);
                         if (lPath != "" && lPath != null)
                         {
-                            pi.lpath = path + "\\coupon\\" + lPath;
+                            pi.lpath = path + "\\coupon\\" + lPath;                            
                         }
+                    }
+                    else
+                    {
+                        pi.lpath = path + "\\coupon\\null.jpg";
                     }
 
                     if (!reader.IsDBNull(8))
@@ -1396,8 +1400,15 @@ namespace ECouponsPrinter
                         if (sPath != "" && sPath != null)
                         {
                             pi.spath = path + "\\coupon\\" + sPath;
-                            pi.image = new Bitmap(Image.FromFile(pi.spath), 119, 124);
+                            pFileStream = new FileStream(pi.spath, FileMode.Open, FileAccess.Read);
+                            pi.image = new Bitmap(Image.FromStream(pFileStream), 119, 124);
+                            pFileStream.Close();
+                            pFileStream.Dispose();
                         }
+                    }
+                    else
+                    {
+                        pi.spath = path + "\\coupon\\null.jpg";
                     }
 
                     if (!reader.IsDBNull(1))
@@ -1407,6 +1418,10 @@ namespace ECouponsPrinter
                         {
                             pi.name = name;
                         }
+                    }
+                    else
+                    {
+                        pi.name = "null";
                     }
 
                     if (!reader.IsDBNull(0))
@@ -1443,14 +1458,20 @@ namespace ECouponsPrinter
                     {
                         intVip = reader.GetInt32(5);
                         pi.vip = intVip;
-
+                    }
+                    else 
+                    {
+                        pi.vip = 0;
                     }
 
                     if (!reader.IsDBNull(7))
                     {
                         flaPrice = reader.GetDouble(7);
                         pi.flaPrice = flaPrice;
-
+                    }
+                    else
+                    {
+                        pi.flaPrice = 0;
                     }
 
                     LP_coupon.Add(pi);
@@ -1489,7 +1510,6 @@ namespace ECouponsPrinter
                 reader.Close();
                 cmd.Close();
 
-                //    if(LP_shop
             }
             catch (Exception e)
             {
@@ -1581,6 +1601,7 @@ namespace ECouponsPrinter
         /// </summary>
         private void ShowHomeTopPicure()
         {
+            FileStream pFileStream;
             //    MessageBox.Show(curType.ToString()); 
             if (LP_stype[0].Count > 0)
             {
@@ -1593,7 +1614,11 @@ namespace ECouponsPrinter
                     Label_ShopName.Text = "暂无商家";
                 }
 
-                PB_Home_Up.Image = new Bitmap(Image.FromFile(LP_stype[0][curType].lpath), 761, 384);
+                pFileStream = new FileStream(LP_stype[0][curType].lpath, FileMode.Open, FileAccess.Read);
+                PB_Home_Up.Image = new Bitmap(Image.FromStream(pFileStream), 761, 384);
+                pFileStream.Close();
+                pFileStream.Dispose();
+                
             }
         }
 
@@ -1605,7 +1630,7 @@ namespace ECouponsPrinter
         private void ChangeHomePicture(object sender, MouseEventArgs e)
         {
             PictureBox pb = sender as PictureBox;
-
+            FileStream pFileStream;
             String name = pb.Name;
             //   MessageBox.Show(name.Length.ToString());
             String numstr = "1";
@@ -1626,10 +1651,10 @@ namespace ECouponsPrinter
             theCouponNum = num - 1;
             //      MessageBox.Show(num.ToString());
 
-            PB_Home_Down.Image.Dispose();
-
-            PB_Home_Down.Image = new Bitmap(Image.FromFile(LP_ctype[0][num - 1 + (curPage - 1) * 12].lpath), 761, 389);
-
+            pFileStream = new FileStream(LP_ctype[0][num - 1 + (curPage - 1) * 12].lpath, FileMode.Open, FileAccess.Read);
+            PB_Home_Down.Image = new Bitmap(Image.FromStream(pFileStream), 761, 389);
+            pFileStream.Close();
+            pFileStream.Dispose();
         }
 
         #endregion
@@ -1655,6 +1680,7 @@ namespace ECouponsPrinter
             string strSql = "select * from t_bz_shop where strId ='" + shopid + "'";
             AccessCmd cmd = new AccessCmd();
             OleDbDataReader reader = cmd.ExecuteReader(strSql);
+            FileStream pFileStream;
 
             String lPath, name, address, info, id = null;
 
@@ -1665,7 +1691,10 @@ namespace ECouponsPrinter
                 lPath = reader.GetString(9);
                 if (lPath != "" && lPath != null)
                 {
-                    PB_ShopInfo_Shop.Image = new Bitmap(Image.FromFile(path + "\\shop\\" + lPath), 760, 397);
+                    pFileStream = new FileStream(path + "\\shop\\" + lPath, FileMode.Open, FileAccess.Read);
+                    PB_ShopInfo_Shop.Image = new Bitmap(Image.FromStream(pFileStream), 760, 397);
+                    pFileStream.Close();
+                    pFileStream.Dispose();
                 }
 
                 name = reader.GetString(1);
@@ -1676,18 +1705,25 @@ namespace ECouponsPrinter
 
                 id = reader.GetString(0);
 
-                address = reader.GetString(4);
-                if (address != "" && address != null)
+                if (!reader.IsDBNull(4))
                 {
-                    Label_ShopInfo_Address.Text = "地址: " + address;
+                    address = reader.GetString(4);
+                    if (address != "" && address != null)
+                    {
+                        Label_ShopInfo_Address.Text = "地址: " + address;
+                    }
                 }
 
-                info = reader.GetString(7);
-                if (info != "" && info != null)
+                if (!reader.IsDBNull(7))
                 {
-                    Label_ShopInfo_Detail.Text = "简介: " + info;
+                    info = reader.GetString(7);
+                    if (info != "" && info != null)
+                    {
+                        Label_ShopInfo_Detail.Text = "简介: " + info;
+                    }
                 }
             }
+
             LP_ctype[0] = FindCouponByShopId(id);
             if (LP_ctype[0] == null)
             {
@@ -1707,12 +1743,10 @@ namespace ECouponsPrinter
         /// </summary>
         private void ShowShopInfo()
         {
-            if (PB_ShopInfo_Coupons.Image != null)
-            {
-                PB_ShopInfo_Coupons.Image = null;
-            }
-
-            PB_ShopInfo_Coupons.Image = new Bitmap(Image.FromFile(LP_ctype[0][0].lpath), 760, 407);
+            FileStream pFileStream = new FileStream(LP_ctype[0][0].lpath, FileMode.Open, FileAccess.Read);
+            PB_ShopInfo_Coupons.Image = new Bitmap(Image.FromStream(pFileStream), 760, 407);
+            pFileStream.Close();
+            pFileStream.Dispose();
 
             ShowBottomPicure();
         }
@@ -1736,9 +1770,10 @@ namespace ECouponsPrinter
 
             theCouponNum = num - 1;
 
-            PB_ShopInfo_Coupons.Image.Dispose();
-
-            PB_ShopInfo_Coupons.Image = new Bitmap(Image.FromFile(LP_ctype[0][num - 1 + (curPage - 1) * 6].lpath), 760, 407);
+            FileStream pFileStream = new FileStream(LP_ctype[0][num - 1 + (curPage - 1) * 6].lpath, FileMode.Open, FileAccess.Read);
+            PB_ShopInfo_Coupons.Image = new Bitmap(Image.FromStream(pFileStream), 760, 407);
+            pFileStream.Close();
+            pFileStream.Dispose();
         }
 
         #endregion
@@ -1768,8 +1803,22 @@ namespace ECouponsPrinter
                 {
                     LP_stype = new List<PicInfo>[3];
                     LP_stype[0] = FindShopByTrade(trade[0]);
+                    if (LP_stype[0] == null)
+                    {
+                        LP_stype[0] = new List<PicInfo>();
+                    }
+
                     LP_stype[1] = FindShopByTrade(trade[1]);
+                    if (LP_stype[1] == null)
+                    {
+                        LP_stype[1] = new List<PicInfo>();
+                    }
+
                     LP_stype[2] = FindShopByTrade(trade[2]);
+                    if (LP_stype[2] == null)
+                    {
+                        LP_stype[2] = new List<PicInfo>();
+                    }
                 }
                 else
                 {
@@ -1777,6 +1826,10 @@ namespace ECouponsPrinter
                     for (int i = 0; i < trade.Length; i++)
                     {
                         LP_stype[i] = FindShopByTrade(trade[i]);
+                        if (LP_stype[i] == null)
+                        {
+                            LP_stype[i] = new List<PicInfo>();
+                        }
                     }
                 }
             }
@@ -3544,7 +3597,7 @@ namespace ECouponsPrinter
             InitUserQuitTime();
         }
 
-        
+
 
     }
 }
