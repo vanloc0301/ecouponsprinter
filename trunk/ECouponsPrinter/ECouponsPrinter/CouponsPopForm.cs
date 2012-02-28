@@ -77,8 +77,8 @@ namespace ECouponsPrinter
                         try
                         {
                             wait = new Wait();
-                            new System.Threading.Thread(DoWork).Start();//开启一个线程更新form2的进度条
-                            wait.ShowDialog();//现实form2，模式对话框
+                            new System.Threading.Thread(DoWork).Start();
+                            wait.ShowDialog();
                         }
                         catch (Exception e1)
                         {
@@ -96,8 +96,8 @@ namespace ECouponsPrinter
                     try
                     {
                         wait = new Wait();
-                        new System.Threading.Thread(DoWork).Start();//开启一个线程更新form2的进度条
-                        wait.ShowDialog();//现实form2，模式对话框
+                        new System.Threading.Thread(DoWork).Start();
+                        wait.ShowDialog();
                     }
                     catch (Exception e1)
                     {

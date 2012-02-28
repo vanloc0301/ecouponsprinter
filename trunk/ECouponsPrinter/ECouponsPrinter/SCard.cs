@@ -22,6 +22,9 @@ namespace ECouponsPrinter
         static extern int rf_ClosePort();
 
         [DllImport("MasterRD.dll")]
+        static extern int rf_light(short icdev, byte color);
+
+        [DllImport("MasterRD.dll")]
         static extern int rf_antenna_sta(short icdev, byte mode);
 
         [DllImport("MasterRD.dll")]
@@ -172,7 +175,7 @@ namespace ECouponsPrinter
 
             pSnr = Marshal.AllocHGlobal(1024);
 
-            for (int i = 0; i < 2; i++)
+            for (int i = 0; i < 1; i++)
             {
                 Sleep(20);
                 status = rf_request(icdev, mode, ref TagType);//搜寻所有的卡
@@ -185,11 +188,16 @@ namespace ECouponsPrinter
 
                 status = rf_anticoll(icdev, bcnt, pSnr, ref len);//返回卡的序列号
                 if (status != 0)
+                {
+                    MessageBox.Show("返回卡的序列号错误!");
                     continue;
-
+                }
                 status = rf_select(icdev, pSnr, len, ref size);//锁定一张ISO14443-3 TYPE_A 卡
                 if (status != 0)
+                {
+                    MessageBox.Show("锁定卡时发生错误!");
                     continue;
+                }
 
                 byte[] szBytes = new byte[len + 1];
                 string str = Marshal.PtrToStringAnsi(pSnr);
@@ -204,6 +212,11 @@ namespace ECouponsPrinter
 
             Marshal.FreeHGlobal(pSnr);
             return cardNo;
+        }
+
+        public static int light(short icdev, byte color)
+        {
+            return rf_light(icdev, color);
         }
 
     }

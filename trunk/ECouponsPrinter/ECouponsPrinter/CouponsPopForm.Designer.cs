@@ -54,17 +54,17 @@
             this.Panel_Background.Location = new System.Drawing.Point(0, 0);
             this.Panel_Background.Margin = new System.Windows.Forms.Padding(0);
             this.Panel_Background.Name = "Panel_Background";
-            this.Panel_Background.Size = new System.Drawing.Size(436, 768);
+            this.Panel_Background.Size = new System.Drawing.Size(374, 768);
             this.Panel_Background.TabIndex = 2;
             // 
             // Code
             // 
-            this.Code.BackColor = System.Drawing.Color.Transparent;
+            this.Code.BackColor = System.Drawing.Color.White;
             this.Code.Font = new System.Drawing.Font("宋体", 30F, System.Drawing.FontStyle.Bold);
-            this.Code.ForeColor = System.Drawing.Color.White;
-            this.Code.Location = new System.Drawing.Point(6, 602);
+            this.Code.ForeColor = System.Drawing.Color.Black;
+            this.Code.Location = new System.Drawing.Point(6, 594);
             this.Code.Name = "Code";
-            this.Code.Size = new System.Drawing.Size(424, 82);
+            this.Code.Size = new System.Drawing.Size(360, 90);
             this.Code.TabIndex = 4;
             this.Code.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
@@ -81,7 +81,7 @@
             this.Button_Close.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("Button_Close.BackgroundImage")));
             this.Button_Close.FlatAppearance.BorderSize = 0;
             this.Button_Close.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Button_Close.Location = new System.Drawing.Point(219, 694);
+            this.Button_Close.Location = new System.Drawing.Point(199, 695);
             this.Button_Close.Margin = new System.Windows.Forms.Padding(0);
             this.Button_Close.Name = "Button_Close";
             this.Button_Close.Size = new System.Drawing.Size(137, 63);
@@ -95,7 +95,7 @@
             this.Button_Print.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("Button_Print.BackgroundImage")));
             this.Button_Print.FlatAppearance.BorderSize = 0;
             this.Button_Print.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Button_Print.Location = new System.Drawing.Point(67, 694);
+            this.Button_Print.Location = new System.Drawing.Point(47, 695);
             this.Button_Print.Margin = new System.Windows.Forms.Padding(0);
             this.Button_Print.Name = "Button_Print";
             this.Button_Print.Size = new System.Drawing.Size(137, 63);
@@ -106,10 +106,9 @@
             // 
             // PB_Couponpop
             // 
-            this.PB_Couponpop.Image = ((System.Drawing.Image)(resources.GetObject("PB_Couponpop.Image")));
-            this.PB_Couponpop.Location = new System.Drawing.Point(6, 95);
+            this.PB_Couponpop.Location = new System.Drawing.Point(6, 94);
             this.PB_Couponpop.Name = "PB_Couponpop";
-            this.PB_Couponpop.Size = new System.Drawing.Size(425, 497);
+            this.PB_Couponpop.Size = new System.Drawing.Size(360, 500);
             this.PB_Couponpop.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.PB_Couponpop.TabIndex = 1;
             this.PB_Couponpop.TabStop = false;
@@ -117,12 +116,12 @@
             // Label_Top
             // 
             this.Label_Top.BackColor = System.Drawing.Color.Transparent;
-            this.Label_Top.Font = new System.Drawing.Font("宋体", 32F, System.Drawing.FontStyle.Bold);
+            this.Label_Top.Font = new System.Drawing.Font("宋体", 25F, System.Drawing.FontStyle.Bold);
             this.Label_Top.ForeColor = System.Drawing.Color.White;
-            this.Label_Top.Location = new System.Drawing.Point(135, 9);
+            this.Label_Top.Location = new System.Drawing.Point(130, 9);
             this.Label_Top.Margin = new System.Windows.Forms.Padding(0);
             this.Label_Top.Name = "Label_Top";
-            this.Label_Top.Size = new System.Drawing.Size(298, 70);
+            this.Label_Top.Size = new System.Drawing.Size(231, 70);
             this.Label_Top.TabIndex = 0;
             this.Label_Top.Text = "0551-6868668";
             this.Label_Top.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -132,7 +131,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
-            this.ClientSize = new System.Drawing.Size(436, 746);
+            this.ClientSize = new System.Drawing.Size(390, 746);
             this.Controls.Add(this.Panel_Background);
             this.Name = "CouponsPopForm";
             this.Text = "CouponsPopForm";

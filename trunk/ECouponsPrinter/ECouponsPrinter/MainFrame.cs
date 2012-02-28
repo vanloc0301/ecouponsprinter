@@ -18,6 +18,7 @@ namespace ECouponsPrinter
     {
         private String path = System.Windows.Forms.Application.StartupPath;  //应用程序当前路径
         private static int CountDownNumber = GlobalVariables.WindowWaitTime;
+        private static int UserQuitTime = GlobalVariables.UserWaitTime;
         private string _stringScrollText = GlobalVariables.MarqueeText;
         private Thread th, marquee;
 
@@ -66,7 +67,29 @@ namespace ECouponsPrinter
             this.Timer_DownloadInfo.Interval = GlobalVariables.IntRefreshSec * 1000;
             this.Timer_DownloadInfo.Start();
 
+            //为所有控件加上点击事件
+            CatchAllClickEvent(this);
+
         }
+
+        #region 处理界面点击事件
+        private void MainFrame_Click(object sender, EventArgs e)
+        {
+            InitUserQuitTime();
+        }
+
+        private void CatchAllClickEvent(Control ctl)
+        {
+            ctl.MouseClick += new MouseEventHandler(MainFrame_Click);
+
+            if (ctl.Controls != null)
+            {
+                foreach (Control ctl1 in ctl.Controls)
+                    CatchAllClickEvent(ctl1);
+            }
+        }
+
+        #endregion 处理界面点击事件      
 
         //private void ChangeControl(Control c, float widthRatio, float heightRatio)
         //{
@@ -549,7 +572,6 @@ namespace ECouponsPrinter
 
             //准备工作
             this.UnVisibleAllPanels();
-            this.InitTimer();
 
             //显示隐藏按钮
             this.Button_LastCouponsPage.Visible = true;
@@ -599,7 +621,6 @@ namespace ECouponsPrinter
 
             //准备工作
             this.UnVisibleAllPanels();
-            this.InitTimer();
 
             this.Panel_Shop.Visible = true;
 
@@ -635,7 +656,6 @@ namespace ECouponsPrinter
             Thread.Sleep(20);
             //准备工作
             this.UnVisibleAllPanels();
-            this.InitTimer();
 
             //取消不必要的按钮
             this.Button_LastCouponsPage.Visible = false;
@@ -985,16 +1005,6 @@ namespace ECouponsPrinter
         //}
         #endregion
 
-        #region 初始化广告倒计时
-        private void InitTimer()
-        {
-            this.Timer_Countdown.Stop();
-            CountDownNumber = 10;
-            this.Timer_Countdown.Start();
-        }
-
-        #endregion
-
         #region 初始化所有panel,将它们的visible设置为false
         private Panel UnVisibleAllPanels()
         {
@@ -1011,16 +1021,17 @@ namespace ECouponsPrinter
 
         #endregion
 
+        #region 广告
+
         #region 广告计时器事件
 
         private void Timer_Countdown_Tick(object sender, EventArgs e)
         {
             this.Label_Countdown.Text = CountDownNumber.ToString();
-
             if (CountDownNumber == 0)
             {
+                this.Timer_Countdown.Stop();
                 this.Timer_Countdown.Enabled = false;
-
                 this.UnVisibleAllPanels();
                 //切换
                 int y = this.VerticalScroll.Value;
@@ -1033,6 +1044,74 @@ namespace ECouponsPrinter
             }
         }
 
+        #endregion
+
+        #region 初始化广告倒计时
+        private void InitTimer()
+        {
+            this.Timer_Countdown.Enabled = true;
+            this.Timer_Countdown.Stop();
+            CountDownNumber = GlobalVariables.WindowWaitTime;
+            this.Timer_Countdown.Start();
+        }
+
+        #endregion
+        #endregion
+
+        #region 用户操作倒计时
+
+        /// <summary>
+        /// 倒计时事件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Timer_UserQuit_Tick(object sender, EventArgs e)
+        {
+            this.Label_Countdown.Text = UserQuitTime.ToString("D2") + "  退出";
+            if (UserQuitTime == 0)
+            {
+                this.Timer_UserQuit.Stop();
+                this.Timer_UserQuit.Enabled = false;
+
+                if (th != null)
+                {
+                    if (th.IsAlive)
+                    {
+                        th.Abort();
+                        th.Join();
+                    }
+                }
+
+                this.Label_Countdown.Font = new Font("Microsoft Sans Serif", 25, FontStyle.Bold);
+                this.Label_Countdown.ForeColor = Color.White;
+                this.Label_Countdown.Text = "请先刷卡";
+                GlobalVariables.isUserLogin = false;
+
+                InitTimer();
+                th = new Thread(new ThreadStart(TranslateMain));
+                th.Start();
+            }
+            else
+            {
+                UserQuitTime--;
+            }
+        }
+
+        /// <summary>
+        /// 初始化用户等待倒计时
+        /// </summary>
+        private void InitUserQuitTime()
+        {
+            this.Timer_UserQuit.Enabled = true;
+            this.Timer_UserQuit.Stop();
+            UserQuitTime = GlobalVariables.UserWaitTime;         
+            this.Label_Countdown.Font = new Font("Microsoft Sans Serif", 35, FontStyle.Bold);
+            this.Label_Countdown.ForeColor = Color.Red;
+            this.Label_Countdown.Text = UserQuitTime.ToString() + "  退出";
+            UserQuitTime--;
+            this.Timer_UserQuit.Start();
+
+        }
         #endregion
 
         #region 走马灯线程
@@ -1091,10 +1170,36 @@ namespace ECouponsPrinter
         }
         #endregion
 
+        /// <summary>
+        /// 用户等待无操作Timer
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Label_Countdown_Click(object sender, EventArgs e)
         {
-            Form1 form1 = new Form1();
-            form1.Show();
+            this.Timer_UserQuit.Stop();
+            this.Timer_UserQuit.Enabled = false;
+            if (th != null)
+            {
+                if (th.IsAlive)
+                {
+                    th.Abort();
+                    th.Join();
+                }
+            }
+            this.Label_Countdown.Font = new Font("Microsoft Sans Serif", 25, FontStyle.Bold);
+            this.Label_Countdown.ForeColor = Color.White;
+            this.Label_Countdown.Text = "请先刷卡";
+            GlobalVariables.isUserLogin = false;
+
+            InitTimer();
+            th = new Thread(new ThreadStart(TranslateMain));
+            th.Start();        
+        }
+
+        private void Label_Countdown_DoubleClick(object sender, EventArgs e)
+        {
+
         }
 
         #region 加载屏蔽窗口
@@ -1121,16 +1226,18 @@ namespace ECouponsPrinter
                         {
                             if (GlobalVariables.isUserLogin == true)
                             {
+                                this.Timer_Countdown.Stop();
                                 this.Timer_Countdown.Enabled = false;
-
+                                this.Label_Countdown.Text = "";
+                                InitUserQuitTime();
                             }
                         }
 
                         this.UnVisibleAllPanels();
-                        //  if (dr.CompareTo(DialogResult.Yes) != 0)
-                        //   {
-                        this.InitTimer();
-                        //   }
+                        if (dr.CompareTo(DialogResult.Yes) != 0)
+                        {
+                            this.InitTimer();
+                        }
 
                         //显示隐藏按钮
                         this.Button_LastCouponsPage.Visible = true;
@@ -1153,12 +1260,18 @@ namespace ECouponsPrinter
                     {
                         if (GlobalVariables.isUserLogin == true)
                         {
+                            this.Timer_Countdown.Stop();
                             this.Timer_Countdown.Enabled = false;
+                            this.Label_Countdown.Text = "";
+                            InitUserQuitTime();
                         }
                     }
 
                     this.UnVisibleAllPanels();
-                    this.InitTimer();
+                    if (dr.CompareTo(DialogResult.Yes) != 0)
+                    {
+                        this.InitTimer();
+                    }
 
                     //显示隐藏按钮
                     this.Button_LastCouponsPage.Visible = true;
@@ -1195,6 +1308,7 @@ namespace ECouponsPrinter
                 string strSql = "select * from t_bz_shop";
                 AccessCmd cmd = new AccessCmd();
                 OleDbDataReader reader = cmd.ExecuteReader(strSql);
+                FileStream pFileStream;
                 LP_shop = new List<PicInfo>();
 
                 String lPath, sPath, name, id, trade, shopid;
@@ -1205,17 +1319,34 @@ namespace ECouponsPrinter
                 {
                     PicInfo pi = new PicInfo();
 
-                    lPath = reader.GetString(9);
-                    if (lPath != "" && lPath != null)
+                    if (!reader.IsDBNull(9))
                     {
-                        pi.lpath = path + "\\shop\\" + lPath;
+                        lPath = reader.GetString(9);
+                        if (lPath != "" && lPath != null)
+                        {
+                            pi.lpath = path + "\\shop\\" + lPath;
+                        }
+                    }
+                    else
+                    {
+                        pi.lpath = path + "\\shop\\null.jpg";
                     }
 
-                    sPath = reader.GetString(8);
-                    if (sPath != "" && sPath != null)
+                    if (reader.IsDBNull(8))
                     {
-                        pi.spath = path + "\\shop\\" + sPath;
-                        pi.image = new Bitmap(Image.FromFile(pi.spath), 119, 138);
+                        sPath = reader.GetString(8);
+                        if (sPath != "" && sPath != null)
+                        {
+                            pi.spath = path + "\\shop\\" + sPath;
+                            pFileStream = new FileStream(pi.spath, FileMode.Open, FileAccess.Read);
+                            pi.image = new Bitmap(Image.FromStream(pFileStream), 119, 138);
+                            pFileStream.Close();
+                            pFileStream.Dispose();
+                        }
+                    }
+                    else
+                    {
+                        pi.spath = path + "\\shop\\null.jpg";
                     }
 
                     id = reader.GetString(0);
@@ -3348,6 +3479,11 @@ namespace ECouponsPrinter
 
         #endregion
 
+        /// <summary>
+        /// 定时刷新
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Timer_DownloadInfo_Tick(object sender, EventArgs e)
         {
             this.Timer_DownloadInfo.Stop();
@@ -3397,11 +3533,18 @@ namespace ECouponsPrinter
                     }
                 }
             }
-            catch (Exception)
-            { }
+            catch (Exception e1)
+            {
+                ErrorLog.log(e1);
+            }
         }
 
+        private void MainFrame_MouseClick(object sender, MouseEventArgs e)
+        {
+            InitUserQuitTime();
+        }
 
+        
 
     }
 }
