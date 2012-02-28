@@ -114,6 +114,7 @@ namespace ECouponsPrinter
             else
             {
                 info.Text = "通讯错误";
+                this.Close();
             }
         }
 
@@ -161,6 +162,7 @@ namespace ECouponsPrinter
             if (!GlobalVariables.isKeyBoardExist)
             {
                 KeyBoard kb = new KeyBoard(this.phone, this.code, null);
+                kb.Location = new Point(0, 600);
                 this.kb = kb;
                 kb.Show();
                 GlobalVariables.isKeyBoardExist = true;
