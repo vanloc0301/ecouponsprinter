@@ -78,11 +78,12 @@ namespace ECouponsPrinter
                         {
                             wait = new Wait();
                             new System.Threading.Thread(DoWork).Start();
+                            Thread.Sleep(500);
                             wait.ShowDialog();
                         }
                         catch (Exception e1)
                         {
-
+                            ErrorLog.log(e1);
                         }
                     }
                 }
@@ -101,7 +102,7 @@ namespace ECouponsPrinter
                     }
                     catch (Exception e1)
                     {
-                        //      MessageBox.Show(e1.Message);
+                        ErrorLog.log(e1);
                     }
                 }
             }
@@ -117,8 +118,12 @@ namespace ECouponsPrinter
             this.Height = 780;
 
             this.PB_Couponpop.Image = Image.FromFile(pi.lpath);
-            MD5code = this.ReturnCode();
-            this.Code.Text = "验证码：" + MD5code;
+
+            if (pi.flaPrice != 0)
+            {
+                MD5code = this.ReturnCode();
+                this.Code.Text = "验证码：" + MD5code;
+            }
         }
 
         public String ReturnCode()
