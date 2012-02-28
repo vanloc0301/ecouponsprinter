@@ -115,7 +115,7 @@ namespace ECouponsPrinter
             }
             catch (Exception e)
             {
-                MessageBox.Show(e.Message + "\n" + e.StackTrace);
+                //MessageBox.Show(e.Message + "\n" + e.StackTrace);
                 return null;
             }
         }
