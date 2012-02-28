@@ -2305,6 +2305,7 @@
             this.Name = "MainFrame";
             this.Text = "MainFrame";
             this.Load += new System.EventHandler(this.MainFrame_Load);
+            this.MouseEnter += new System.EventHandler(this.MainFrame_MouseEnter);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainFrame_Closing);
             this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.MainFrame_MouseMove);
             this.Panel_Top.ResumeLayout(false);
