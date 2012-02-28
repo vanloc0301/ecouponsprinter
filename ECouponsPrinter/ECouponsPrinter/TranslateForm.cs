@@ -137,20 +137,30 @@ namespace ECouponsPrinter
 
         private void SCardTimer_Tick(object sender, EventArgs e)
         {
-            if (sc.searchCard() == null)
+            string cardNo = "";
+            SCard.light(0x0000, 2);
+            if ((cardNo = sc.searchCard()) == null)
             {
+                SCard.light(0x0000, 0);
                 return;
             }
             else
             {
-                string cardNo = sc.searchCard();
-                if (UserLogin(cardNo))
+                this.SCardTimer.Stop();
+                this.SCardTimer.Enabled = false;
+                if (!UserLogin(cardNo))
                 {
-                    this.SCardTimer.Stop();
-                    this.SCardTimer.Enabled = false;
+                    SCard.light(0x0000, 0);
+                    this.SCardTimer.Enabled = true;
+                    this.SCardTimer.Start();
+                    return;
                 }
                 else
-                    return;
+                {
+                    SCard.light(0x0000, 1);
+                    this.DialogResult = DialogResult.Yes;
+                    this.Close();
+                }
             }
         }
 

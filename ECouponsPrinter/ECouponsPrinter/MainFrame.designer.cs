@@ -198,6 +198,7 @@
             this.Label_NearShopName = new System.Windows.Forms.Label();
             this.Panel_Ad = new System.Windows.Forms.Panel();
             this.Label_AdClick = new System.Windows.Forms.Label();
+            this.Timer_UserQuit = new System.Windows.Forms.Timer(this.components);
             this.Panel_Top.SuspendLayout();
             this.Panel_Bottom.SuspendLayout();
             this.Panel_Home.SuspendLayout();
@@ -351,7 +352,7 @@
             this.Label_ScrollText.Padding = new System.Windows.Forms.Padding(0, 15, 0, 0);
             this.Label_ScrollText.scrollamount = 1;
             this.Label_ScrollText.scrolldelay = 15;
-            this.Label_ScrollText.Size = new System.Drawing.Size(511, 73);
+            this.Label_ScrollText.Size = new System.Drawing.Size(510, 73);
             this.Label_ScrollText.strContent = "";
             this.Label_ScrollText.TabIndex = 18;
             // 
@@ -367,7 +368,7 @@
             // 
             // Label_Countdown
             // 
-            this.Label_Countdown.Font = new System.Drawing.Font("Microsoft Sans Serif", 40F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.Label_Countdown.Font = new System.Drawing.Font("Microsoft Sans Serif", 25F, System.Drawing.FontStyle.Bold);
             this.Label_Countdown.ForeColor = System.Drawing.Color.White;
             this.Label_Countdown.Image = ((System.Drawing.Image)(resources.GetObject("Label_Countdown.Image")));
             this.Label_Countdown.Location = new System.Drawing.Point(550, 8);
@@ -375,7 +376,10 @@
             this.Label_Countdown.Name = "Label_Countdown";
             this.Label_Countdown.Size = new System.Drawing.Size(206, 81);
             this.Label_Countdown.TabIndex = 1;
-            this.Label_Countdown.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.Label_Countdown.Text = "请先刷卡";
+            this.Label_Countdown.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.Label_Countdown.UseMnemonic = false;
+            this.Label_Countdown.DoubleClick += new System.EventHandler(this.Label_Countdown_DoubleClick);
             this.Label_Countdown.Click += new System.EventHandler(this.Label_Countdown_Click);
             // 
             // Panel_Bottom
@@ -2277,12 +2281,17 @@
             this.Label_AdClick.Text = "点击屏幕             退出广告";
             this.Label_AdClick.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
+            // Timer_UserQuit
+            // 
+            this.Timer_UserQuit.Interval = 1000;
+            this.Timer_UserQuit.Tick += new System.EventHandler(this.Timer_UserQuit_Tick);
+            // 
             // MainFrame
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
-            this.ClientSize = new System.Drawing.Size(854, 742);
+            this.ClientSize = new System.Drawing.Size(905, 742);
             this.Controls.Add(this.Panel_Ad);
             this.Controls.Add(this.Panel_Shop);
             this.Controls.Add(this.Panel_MyInfo);
@@ -2296,8 +2305,7 @@
             this.Name = "MainFrame";
             this.Text = "MainFrame";
             this.Load += new System.EventHandler(this.MainFrame_Load);
-            this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Button_Coupon_NextPage_MouseUp);
-            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Button_Coupon_NextPage_MouseDown);
+            this.MouseClick += new System.Windows.Forms.MouseEventHandler(this.MainFrame_MouseClick);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainFrame_Closing);
             this.Panel_Top.ResumeLayout(false);
             this.Panel_Bottom.ResumeLayout(false);
@@ -2601,6 +2609,7 @@
         private Marquee.UserControl1 Label_ScrollText;
         private System.Windows.Forms.Panel Panel_Ad;
         private System.Windows.Forms.Label Label_AdClick;
+        private System.Windows.Forms.Timer Timer_UserQuit;
 
     }
 }
