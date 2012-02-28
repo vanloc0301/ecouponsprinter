@@ -187,12 +187,28 @@ namespace ECouponsPrinter
 
         private void pd_PrintPage(Object sender, PrintPageEventArgs e)
         {
+            Graphics g = e.Graphics;
             float pi = (float)3.78;
             double bi = (595.00 / 425.00) * 58 * pi;
             float width = (float)58 * pi;
             float height = (float)bi;
+           
+            pd.DefaultPageSettings.PaperSize.Height = Convert.ToInt16(height);//您可以修改pagesize的大小               
+            pd.DefaultPageSettings.PaperSize.Width = Convert.ToInt16(width);
 
-            e.Graphics.DrawImage(printimage, new RectangleF(0, 0, width, height));
+        //    e.Graphics.DrawImage(printimage, new RectangleF(0, 0, width, height));
+            g.DrawString("鑫九天公司", new Font("宋体", 20), Brushes.Black, 10, 20);
+            g.DrawString("123456778668", new Font("宋体", 20), Brushes.Black, 10, 50);
+            g.DrawString("123456778668", new Font("宋体", 20), Brushes.Black, 10, 80);
+            g.DrawString("鑫九天公司", new Font("宋体", 20), Brushes.Black, 10, 110);
+            g.DrawString("123456778668", new Font("宋体", 20), Brushes.Black, 10, 140);
+            g.DrawString("123456778668", new Font("宋体", 20), Brushes.Black, 10, 170);
+            g.DrawString("鑫九天公司", new Font("宋体", 20), Brushes.Black, 10, 200);
+            g.DrawString("123456778668", new Font("宋体", 20), Brushes.Black, 10, 230);
+            g.DrawString("123456778668", new Font("宋体", 20), Brushes.Black, 10, 260);
+            g.DrawString("2010-11-12 13:13:13", new Font("宋体", 10), Brushes.Black, 10, 300); 
+
+       //     e.Graphics.DrawImage(printimage, new RectangleF(0, 0, width, height));
         }
 
         private void DoWork()
