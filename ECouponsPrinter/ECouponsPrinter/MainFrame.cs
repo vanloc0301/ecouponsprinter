@@ -74,7 +74,8 @@ namespace ECouponsPrinter
         }
 
         #region 处理界面点击事件
-        private void MainFrame_MouseHover(object sender, EventArgs e)
+
+        private void MainFrame_MouseMove(object sender, MouseEventArgs e)
         {
             InitUserQuitTime();
         }
@@ -82,7 +83,7 @@ namespace ECouponsPrinter
         private void CatchAllClickEvent(Control ctl)
         {
 
-            ctl.MouseHover += new EventHandler(MainFrame_MouseHover);
+            ctl.MouseMove += new MouseEventHandler(MainFrame_MouseMove);
 
             if (ctl.Controls != null)
             {
@@ -3593,6 +3594,8 @@ namespace ECouponsPrinter
                 ErrorLog.log(e1);
             }
         }
+
+
 
         
 
