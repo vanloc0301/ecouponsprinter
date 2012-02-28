@@ -821,12 +821,6 @@ namespace ECouponsPrinter
             }
 
             InitCouponData(GetTradeName()[0], 'v');
-            if (LP_ctype[0] == null || LP_ctype[0].Count == 0)
-            {
-                MyMsgBox mb = new MyMsgBox();
-                mb.ShowMsg("暂无VIP优惠劵信息！", 2);
-                return;
-            }
             Thread.Sleep(20);
 
             //准备工作
@@ -1371,7 +1365,8 @@ namespace ECouponsPrinter
                     LP_shop.Add(pi);
                 }
 
-                strSql = "select * from t_bz_coupon order by strShopId asc";
+                string date = DateTime.Now.ToString("yyyy-M-d H:mm:ss");
+                strSql = "select * from t_bz_coupon where #"+date+"#>=dtActiveTime and #"+date+"#<dtExpireTime";
                 reader = cmd.ExecuteReader(strSql);
                 LP_coupon = new List<CouponPicInfo>();
 
