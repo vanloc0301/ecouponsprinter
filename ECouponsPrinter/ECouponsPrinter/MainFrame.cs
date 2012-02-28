@@ -75,9 +75,20 @@ namespace ECouponsPrinter
 
         #region 处理界面点击事件
 
-        private void MainFrame_MouseMove(object sender, MouseEventArgs e)
+        private void MainFrame_MouseEnter(object sender, EventArgs e)
         {
             InitUserQuitTime();
+        }
+
+        Point mPos = new Point(0, 0);
+        private void MainFrame_MouseMove(object sender, MouseEventArgs e)
+        {
+            if ((e.Location.X != mPos.X) || (e.Location.Y != mPos.Y))
+            {
+                InitUserQuitTime();
+            }
+
+            mPos = e.Location;
         }
 
         private void CatchAllClickEvent(Control ctl)
@@ -1366,7 +1377,7 @@ namespace ECouponsPrinter
                 }
 
                 string date = DateTime.Now.ToString("yyyy-M-d H:mm:ss");
-                strSql = "select * from t_bz_coupon where #"+date+"#>=dtActiveTime and #"+date+"#<dtExpireTime";
+                strSql = "select * from t_bz_coupon where #" + date + "#>=dtActiveTime and #" + date + "#<dtExpireTime";
                 reader = cmd.ExecuteReader(strSql);
                 LP_coupon = new List<CouponPicInfo>();
 
@@ -3589,10 +3600,6 @@ namespace ECouponsPrinter
                 ErrorLog.log(e1);
             }
         }
-
-
-
-        
 
     }
 }
