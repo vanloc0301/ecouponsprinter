@@ -438,7 +438,6 @@ namespace ECouponsPrinter
                             printNum = reader.GetInt32(0);
                         }
 
-                        MessageBox.Show("上限：" + GlobalVariables.IntCouponPrint + "\n当前：" + printNum);
                         if (printNum >= GlobalVariables.IntCouponPrint)
                         {
                             UploadInfo ui = new UploadInfo();
@@ -446,6 +445,12 @@ namespace ECouponsPrinter
                         }
                         reader.Close();
                         cmd.Close();
+
+                        for (int i = 70; i <= 100; i += 1)
+                        {
+                            wait.SetProgressBarPositionP(i);//设置进度条当前位置
+                            System.Threading.Thread.Sleep(50);//sleep一下减缓进度条进度，实际代码中，此处应该是实际的工作
+                        }
                     }
                 }
                 else
@@ -461,13 +466,7 @@ namespace ECouponsPrinter
                 ErrorLog.log(e);
                 wait.CloseScrollBar();
                 return;
-            }
-
-            for (int i = 70; i <= 100; i += 1)
-            {
-                wait.SetProgressBarPositionP(i);//设置进度条当前位置
-                System.Threading.Thread.Sleep(50);//sleep一下减缓进度条进度，实际代码中，此处应该是实际的工作
-            }
+            }           
         }
     }
 }
