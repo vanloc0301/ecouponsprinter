@@ -2904,7 +2904,7 @@ namespace ECouponsPrinter
             }
             catch (Exception e1)
             {
-                mb.ShowMsg(e1.Message + "\n正在修复", 2);
+              //  mb.ShowMsg(e1.Message + "\n正在修复", 2);
                 return new List<CouponPicInfo>();
             }
         }
@@ -2927,7 +2927,7 @@ namespace ECouponsPrinter
                     type = 0;
                     if (LP_coupon.Count > 0)
                     {
-                        pi = LP_coupon[(curPage - 1) * 12 + theCouponNum];
+                        pi = LP_ctype[0][(curPage - 1) * 12 + theCouponNum];
                         id = pi.id;
                     }
                     break;
@@ -2935,7 +2935,7 @@ namespace ECouponsPrinter
                     type = 1;
                     if (LP_coupon.Count > 0)
                     {
-                        pi = LP_coupon[(curPage - 1) * 12 + theCouponNum];
+                        pi = LP_ctype[0][(curPage - 1) * 12 + theCouponNum];
                         id = pi.id;
                     }
                     break;
