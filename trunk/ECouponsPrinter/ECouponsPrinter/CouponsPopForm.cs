@@ -419,10 +419,10 @@ namespace ECouponsPrinter
                     myprinter = pq.GetAllPrinterQueues();
                     if (myprinter[defaultPrinterName] == 0)
                     {
-                        int tempId = TimeSpan.Parse(DateTime.Now.ToString("HH:mm:ss")).Milliseconds;
+                        string tempId = DateTime.Now.ToString("yyyyMMddHHmmss");
                         //   long tempId = DateTime.Now.Ticks;
 
-                        string strSql = "insert into t_bz_coupon_print values(" + tempId + ",'" + GlobalVariables.LoginUserId + "','" + pi.id + "',#" + DateTime.Now.ToString("yyyy-M-d H:m:s") + "#,'" + MD5code + "')";
+                        string strSql = "insert into t_bz_coupon_print values('" + tempId + "','" + GlobalVariables.LoginUserId + "','" + pi.id + "',#" + DateTime.Now.ToString("yyyy-M-d H:m:s") + "#,'" + MD5code + "')";
                         AccessCmd cmd = new AccessCmd();
                     //    MessageBox.Show(strSql);
                         cmd.ExecuteNonQuery(strSql);
