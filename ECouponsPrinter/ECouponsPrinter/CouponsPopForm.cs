@@ -360,12 +360,12 @@ namespace ECouponsPrinter
             g.DrawLine(p, new Point(0, y), new Point(220, y));
             y += 5;
 
-      //      if (pi.flaPrice != 0)
-      //      {
-                g.DrawString("2133213123123123", new Font("Microsoft JhengHei", 13, FontStyle.Bold), Brushes.Black, 16, y);
+            if (pi.flaPrice != 0)
+            {
+                g.DrawString(Code.Text, new Font("Microsoft JhengHei", 13, FontStyle.Bold), Brushes.Black, 16, y);
                 y += 30;
                 g.DrawLine(p, new Point(0, y), new Point(220, y));
-      //      }
+            }
 
             g.DrawString(bottomText, new Font("微软雅黑", 13, FontStyle.Bold), Brushes.Black, 15, 480);
             g.DrawString(GlobalVariables.StrPhone, new Font("微软雅黑", 12, FontStyle.Bold), Brushes.Black, 27, 500);
@@ -424,8 +424,7 @@ namespace ECouponsPrinter
 
                         string strSql = "insert into t_bz_coupon_print values(" + tempId + ",'" + GlobalVariables.LoginUserId + "','" + pi.id + "',#" + DateTime.Now.ToString("yyyy-M-d H:m:s") + "#,'" + MD5code + "')";
                         AccessCmd cmd = new AccessCmd();
-                        MyMsgBox mb = new MyMsgBox();
-                        mb.ShowMsg(strSql, 3);
+                    //    MessageBox.Show(strSql);
                         cmd.ExecuteNonQuery(strSql);
                         strSql = "update t_bz_print_total set intPrintTotal=intPrintTotal+1";
                         cmd.ExecuteNonQuery(strSql);
