@@ -656,11 +656,9 @@ namespace ECouponsPrinter
 
             //准备工作
             this.UnVisibleAllPanels();
-
             this.Panel_Shop.Visible = true;
 
             InitShopData();
-
             ShowShop();
         }
 
@@ -744,7 +742,7 @@ namespace ECouponsPrinter
                 Btn_Coupon_Type[i].Location = p[i];
                 Btn_Coupon_Type[i].Name = "Btn_Coupon_Type" + (i + 1);
                 Btn_Coupon_Type[i].Text = tradeName[i];
-                Btn_Coupon_Type[i].Font = new Font("宋体", 30F, FontStyle.Bold);
+                Btn_Coupon_Type[i].Font = new Font("宋体", 20F, FontStyle.Bold);
                 Btn_Coupon_Type[i].ForeColor = Color.White;
                 Btn_Coupon_Type[i].Size = new System.Drawing.Size(width, height);
                 Btn_Coupon_Type[i].UseVisualStyleBackColor = true;
@@ -898,7 +896,7 @@ namespace ECouponsPrinter
                 Btn_Coupon_Type[i].Location = p[i];
                 Btn_Coupon_Type[i].Name = "Btn_Coupon_Type" + (i + 1);
                 Btn_Coupon_Type[i].Text = tradeName[i];
-                Btn_Coupon_Type[i].Font = new Font("宋体", 30F, FontStyle.Bold);
+                Btn_Coupon_Type[i].Font = new Font("宋体", 20F, FontStyle.Bold);
                 Btn_Coupon_Type[i].ForeColor = Color.White;
                 Btn_Coupon_Type[i].Size = new System.Drawing.Size(width, height);
                 Btn_Coupon_Type[i].UseVisualStyleBackColor = true;
@@ -1979,7 +1977,6 @@ namespace ECouponsPrinter
             for (int i = 0; i < num; i++)
             {
                 this.Label_Shop_Type[i] = new Label();
-
                 this.Label_Shop_Type[i].Font = new System.Drawing.Font("宋体", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
                 this.Label_Shop_Type[i].ForeColor = System.Drawing.Color.White;
                 this.Label_Shop_Type[i].Image = Image.FromFile(path + @"\images\切图\商家二级\商家类别.jpg");
@@ -2004,7 +2001,7 @@ namespace ECouponsPrinter
 
             int num = name.Substring(15, 1)[0] - '0';
 
-            LP_stype[num % 3] = FindShopByTrade(tradeName[num - 1]);
+            LP_stype[(num-1) % 3] = FindShopByTrade(tradeName[num - 1]);
 
             ShowShopPart(num % 3);
         }
