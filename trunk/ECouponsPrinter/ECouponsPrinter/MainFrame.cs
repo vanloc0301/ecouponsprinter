@@ -3201,6 +3201,14 @@ namespace ECouponsPrinter
                 reader.Close();
                 cmd.Close();
 
+                MyMsgBox mb = new MyMsgBox();
+                string[] temp = "";
+                foreach(string index in Ad_str)
+                {
+                    temp += index;
+                }
+                mb.ShowMsg(temp, 5);
+
                 if (Panel_Ad.Visible == true)
                 {
                     if (this.Panel_Ad.InvokeRequired)
@@ -3232,6 +3240,7 @@ namespace ECouponsPrinter
                                 Ad_MediaPlayer2.Dispose();
                             }
                             Panel_Ad.Controls.Clear();
+                            Panel_Ad.Controls.Add(Label_AdClick);
                             ShowAd();
                         }, null);
                     }
@@ -3261,6 +3270,7 @@ namespace ECouponsPrinter
                             Ad_MediaPlayer2.Dispose();
                         }
                         Panel_Ad.Controls.Clear();
+                        Panel_Ad.Controls.Add(Label_AdClick);
                         ShowAd();
                     }
                 }

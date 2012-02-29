@@ -35,27 +35,27 @@ namespace ECouponsPrinter
                     {
                         this.Info.Text = "正在上传您的消费信息.......";
                     }
+                }
 
-                    if (this.prcBar.InvokeRequired)
-                    {
-                        this.prcBar.Invoke((MethodInvoker)delegate
-                        {
-                            prcBar.Increment(currentPosition - prcBar.Value);
-                        }, null);
-                    }
-                    else
+                if (this.prcBar.InvokeRequired)
+                {
+                    this.prcBar.Invoke((MethodInvoker)delegate
                     {
                         prcBar.Increment(currentPosition - prcBar.Value);
-                    }
+                    }, null);
                 }
                 else
                 {
-                    this.prcBar.Value = prcBar.Maximum;
-                    Thread.Sleep(1000);
-                    this.Info.Text = "操作成功！";
-                    Thread.Sleep(1000);
-                    this.Close();
+                    prcBar.Increment(currentPosition - prcBar.Value);
                 }
+            }
+            else
+            {
+                this.prcBar.Value = prcBar.Maximum;
+                Thread.Sleep(1000);
+                this.Info.Text = "操作成功！";
+                Thread.Sleep(1000);
+                this.Close();
             }
         }
 
