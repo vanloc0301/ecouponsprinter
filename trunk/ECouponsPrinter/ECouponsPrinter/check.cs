@@ -27,8 +27,8 @@ namespace ECouponsPrinter
             GlobalVariables.isKeyBoardExist = false;
             this.Notice.Text = "您即将进行交易的金额为:  " + _price + "  元";
             this.getCode.Enabled = true;
-            this.getCode.Start();       
-
+            this.getCode.Start();
+            TickNum = 30;
             th = new Thread(new ThreadStart(sendMes));
             th.Start();
         }

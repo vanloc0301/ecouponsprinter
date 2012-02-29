@@ -203,7 +203,7 @@ namespace ECouponsPrinter
 
         private void KeyBoard_Load(object sender, EventArgs e)
         {
-            this.Location = new Point(10, 450);
+            this.Location = new Point(10, 600);
         }
 
     }
