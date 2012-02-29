@@ -117,7 +117,7 @@ namespace ECouponsPrinter
 
             this.PB_Couponpop.Image = new Bitmap(pi.image, 110, 70);
 
-            string strSql = "select * from t_bz_coupon where strId='" + pi.id+"'";
+            string strSql = "select * from t_bz_coupon where strId='" + pi.id + "'";
             AccessCmd cmd = new AccessCmd();
             OleDbDataReader reader = cmd.ExecuteReader(strSql);
 
@@ -223,7 +223,7 @@ namespace ECouponsPrinter
 
         public void pd_EndPrint(Object sender, PrintEventArgs e)
         {
-         //   printimage.Dispose();
+            //   printimage.Dispose();
             pd.Dispose();
         }
 
@@ -238,6 +238,8 @@ namespace ECouponsPrinter
         private void pd_PrintPage(Object sender, PrintPageEventArgs e)
         {
             Graphics g = e.Graphics;
+            Pen p = new Pen(Brushes.Black);
+            p.DashStyle = System.Drawing.Drawing2D.DashStyle.Dot;
             //float pi = (float)3.78;
             //double bi = (1000 / 425.00) * 58 * pi;
             //float width = (float)58 * pi;
@@ -264,7 +266,7 @@ namespace ECouponsPrinter
 
                 if (line >= 13)
                 {
-                    g.DrawString(perStr, new Font("宋体", 20,FontStyle.Bold), Brushes.Black, 5, y);
+                    g.DrawString(perStr, new Font("宋体", 18,FontStyle.Bold), Brushes.Black, 5, y);
                     y += 25;
                     line = 0;
                     perStr = "";
@@ -273,18 +275,20 @@ namespace ECouponsPrinter
             }
             if (perStr != "")
             {
-                g.DrawString(perStr, new Font("宋体", 20, FontStyle.Bold), Brushes.Black, 5, y);
+                g.DrawString(perStr, new Font("宋体", 18, FontStyle.Bold), Brushes.Black, 5, y);
                 y += 25;
                 line = 0;
                 perStr = "";
             }
 
-            y += 20;
+            y += 15;
+            g.DrawLine(p, new Point(0, y), new Point(220, y));
+            y += 15;
             foreach (char word in Instruction)
             {
-                if(word == '\n')
+                if(word == '\n' && perStr != "")
                 {
-                    g.DrawString(perStr, new Font("宋体", 12), Brushes.Black, 5, y);
+                    g.DrawString(perStr, new Font("宋体", 10), Brushes.Black, 5, y);
                     y += 17;
                     line = 0;
                     perStr = "";
@@ -300,7 +304,7 @@ namespace ECouponsPrinter
 
                 if (line >= 24)
                 {
-                    g.DrawString(perStr, new Font("宋体", 12), Brushes.Black, 5, y);
+                    g.DrawString(perStr, new Font("宋体", 10), Brushes.Black, 5, y);
                     y += 17;
                     line = 0;
                     perStr = "";
@@ -309,20 +313,23 @@ namespace ECouponsPrinter
             }
             if (perStr != "")
             {
-                g.DrawString(perStr, new Font("宋体", 12), Brushes.Black, 5, y);
+                g.DrawString(perStr, new Font("宋体", 10), Brushes.Black, 5, y);
                 y += 17;
                 line = 0;
                 perStr = "";
             }
-
+            y += 15;
+            g.DrawLine(p, new Point(0, y), new Point(220, y));
             y += 20;
             if (pi.flaPrice != 0)
             {             
-                g.DrawString(Code.Text, new Font("Microsoft JhengHei", 16, FontStyle.Bold), Brushes.Black, 20, y);              
+                g.DrawString(Code.Text, new Font("Microsoft JhengHei", 13, FontStyle.Bold), Brushes.Black, 20, y);
+                y += 15;
+                g.DrawLine(p, new Point(0,y),new Point(220,y));
             }
-
-            g.DrawString(bottomText, new Font("微软雅黑", 17, FontStyle.Bold), Brushes.Black, 20, 380);
-            g.DrawString(GlobalVariables.StrPhone, new Font("微软雅黑", 16, FontStyle.Bold), Brushes.Black, 20, 425);
+            
+            g.DrawString(bottomText, new Font("微软雅黑", 13, FontStyle.Bold), Brushes.Black, 10, 380);
+            g.DrawString(GlobalVariables.StrPhone, new Font("微软雅黑", 12, FontStyle.Bold), Brushes.Black, 22, 415);
 
             //     e.Graphics.DrawImage(printimage, new RectangleF(0, 0, width, height));
         }
