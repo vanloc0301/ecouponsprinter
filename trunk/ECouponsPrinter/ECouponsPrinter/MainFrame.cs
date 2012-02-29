@@ -997,8 +997,8 @@ namespace ECouponsPrinter
 
             //展开遮罩窗体
             Thread.Sleep(100);
-            //th = new Thread(new ThreadStart(TranslateMain));
-            //th.Start();
+            th = new Thread(new ThreadStart(TranslateMain));
+            th.Start();
 
             //加载广告线程
             AdThread = new Thread(new ThreadStart(RefreshAd));
