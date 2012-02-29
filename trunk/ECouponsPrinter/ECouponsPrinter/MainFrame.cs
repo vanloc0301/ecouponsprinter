@@ -1359,7 +1359,7 @@ namespace ECouponsPrinter
                         pi.lpath = path + "\\shop\\null.jpg";
                     }
 
-                    if (reader.IsDBNull(8))
+                    if (!reader.IsDBNull(8))
                     {
                         sPath = reader.GetString(8);
                         if (sPath != "" && sPath != null)
@@ -1980,7 +1980,7 @@ namespace ECouponsPrinter
             {
                 this.Label_Shop_Type[i] = new Label();
 
-                this.Label_Shop_Type[i].Font = new System.Drawing.Font("宋体", 30F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+                this.Label_Shop_Type[i].Font = new System.Drawing.Font("宋体", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
                 this.Label_Shop_Type[i].ForeColor = System.Drawing.Color.White;
                 this.Label_Shop_Type[i].Image = Image.FromFile(path + @"\images\切图\商家二级\商家类别.jpg");
                 this.Label_Shop_Type[i].Location = new System.Drawing.Point(3 + i / 3 * 183, 28 + i % 3 * 391);
@@ -1990,6 +1990,7 @@ namespace ECouponsPrinter
                 this.Label_Shop_Type[i].Size = new System.Drawing.Size(180, 50);
                 this.Label_Shop_Type[i].TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
                 this.Label_Shop_Type[i].Click += new EventHandler(ShopTypeTitle_Click);
+                this.Label_Shop_Type[i].MouseMove += new MouseEventHandler(MainFrame_MouseMove);
                 this.Panel_Shop.Controls.Add(this.Label_Shop_Type[i]);
                 this.Label_Shop_Type[i].Show();
 
