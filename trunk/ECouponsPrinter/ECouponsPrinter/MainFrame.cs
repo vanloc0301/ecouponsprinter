@@ -400,6 +400,28 @@ namespace ECouponsPrinter
 
         #endregion
 
+        #region 去除收藏夹中重复的优惠劵ID
+        private void RemoveDuplicate()
+        {
+            string[] FavId = GlobalVariables.M.AryFavourite;
+            string list = ",";
+            string temp = "";
+
+            foreach (string id in FavId)
+            {
+                temp = "," + id + ",";
+                if (!list.Contains(temp))
+                {
+                    list += id + ",";
+                }
+            }
+
+            GlobalVariables.M.AryFavourite = list.Substring(1, list.Length - 2).Split(',');
+            MessageBox.Show(list.Substring(1, list.Length - 2));
+        }
+
+        #endregion 去除收藏夹中重复的优惠劵ID
+
         #endregion
 
         #region 优惠劵二级
@@ -764,6 +786,8 @@ namespace ECouponsPrinter
             int y = this.VerticalScroll.Value;
             this.Panel_MyInfo.Location = new System.Drawing.Point(0, 95 - y);
 
+            //去重操作
+            RemoveDuplicate();
             InitMyInfoData();
 
             this.Panel_MyInfo.Visible = true;
@@ -3007,6 +3031,11 @@ namespace ECouponsPrinter
                             {
                                 mb.ShowMsg("收藏成功！", 2);
                                 string[] str = new string[(GlobalVariables.M.AryFavourite.Length + 1)];
+                                int i =0;
+                                foreach (string favid in GlobalVariables.M.AryFavourite)
+                                {
+                                    str[i++] = favid;
+                                }
                                 str[GlobalVariables.M.AryFavourite.Length] = id;
                                 GlobalVariables.M.AryFavourite = str;
                             }
