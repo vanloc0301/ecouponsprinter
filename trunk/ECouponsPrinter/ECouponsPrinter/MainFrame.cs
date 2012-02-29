@@ -417,7 +417,7 @@ namespace ECouponsPrinter
             }
 
             GlobalVariables.M.AryFavourite = list.Substring(1, list.Length - 2).Split(',');
-      //      MessageBox.Show(list.Substring(1, list.Length - 2));
+            //      MessageBox.Show(list.Substring(1, list.Length - 2));
         }
 
         #endregion 去除收藏夹中重复的优惠劵ID
@@ -2001,7 +2001,7 @@ namespace ECouponsPrinter
 
             int num = name.Substring(15, 1)[0] - '0';
 
-            LP_stype[(num-1) % 3] = FindShopByTrade(tradeName[num - 1]);
+            LP_stype[(num - 1) % 3] = FindShopByTrade(tradeName[num - 1]);
 
             ShowShopPart(num % 3);
         }
@@ -2901,7 +2901,7 @@ namespace ECouponsPrinter
             }
             catch (Exception e1)
             {
-              //  mb.ShowMsg(e1.Message + "\n正在修复", 2);
+                //  mb.ShowMsg(e1.Message + "\n正在修复", 2);
                 return new List<CouponPicInfo>();
             }
         }
@@ -2994,7 +2994,7 @@ namespace ECouponsPrinter
                     break;
                 default: pi = null; id = null; break;
             }
-        
+
             MyMsgBox mb = new MyMsgBox();
 
             if (id != null)
@@ -3031,7 +3031,7 @@ namespace ECouponsPrinter
                             {
                                 mb.ShowMsg("收藏成功！", 2);
                                 string[] str = new string[(GlobalVariables.M.AryFavourite.Length + 1)];
-                                int i =0;
+                                int i = 0;
                                 foreach (string favid in GlobalVariables.M.AryFavourite)
                                 {
                                     str[i++] = favid;
@@ -3201,13 +3201,13 @@ namespace ECouponsPrinter
                 reader.Close();
                 cmd.Close();
 
-                MyMsgBox mb = new MyMsgBox();
-                string[] temp = "";
-                foreach(string index in Ad_str)
-                {
-                    temp += index;
-                }
-                mb.ShowMsg(temp, 5);
+                //MyMsgBox mb = new MyMsgBox();
+                //string temp = "";
+                //foreach (string index in Ad_str)
+                //{
+                //    temp += index;
+                //}
+                //mb.ShowMsg(temp, 5);
 
                 if (Panel_Ad.Visible == true)
                 {
@@ -3565,7 +3565,7 @@ namespace ECouponsPrinter
                         {
                             j = 0;
                         }
-                        pFileStream = new FileStream(path + "\\ad\\" + Ad_Picture1[i++], FileMode.Open, FileAccess.Read);
+                        pFileStream = new FileStream(path + "\\ad\\" + Ad_Picture1[j++], FileMode.Open, FileAccess.Read);
                         Ad_PB2.Image = Image.FromStream(pFileStream);
                         pFileStream.Close();
                         pFileStream.Dispose();
