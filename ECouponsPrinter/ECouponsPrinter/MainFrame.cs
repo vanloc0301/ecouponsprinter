@@ -417,7 +417,7 @@ namespace ECouponsPrinter
             }
 
             GlobalVariables.M.AryFavourite = list.Substring(1, list.Length - 2).Split(',');
-            MessageBox.Show(list.Substring(1, list.Length - 2));
+      //      MessageBox.Show(list.Substring(1, list.Length - 2));
         }
 
         #endregion 去除收藏夹中重复的优惠劵ID
