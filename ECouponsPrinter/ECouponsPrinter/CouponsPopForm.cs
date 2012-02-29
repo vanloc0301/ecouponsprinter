@@ -245,8 +245,8 @@ namespace ECouponsPrinter
             //float width = (float)58 * pi;
             //float height = (float)bi;
 
-    //        MessageBox.Show(pd.PrinterSettings.PaperSources.Count.ToString()); ;
-            pd.DefaultPageSettings.PaperSize = new PaperSize("paper", 220, 450);//您可以修改pagesize的大小               
+            //        MessageBox.Show(pd.PrinterSettings.PaperSources.Count.ToString()); ;
+            pd.DefaultPageSettings.PaperSize = new PaperSize("paper", 220, 510);//您可以修改pagesize的大小               
 
             //    e.Graphics.DrawImage(printimage, new RectangleF(0, 0, width, height));
             g.DrawImage(pi.image, new RectangleF(60, 0, 80, 60));
@@ -254,41 +254,65 @@ namespace ECouponsPrinter
             int line = 0, y = 65;
             string perStr = "";
             int index = 0;
+            int count = 0;
             foreach (char word in Intro)
             {
+                if (count >= 4)
+                {
+                    break;
+                }
 
                 if (IsUnicode(word))
                     line += 2;
                 else
                     line += 1;
 
-                perStr += word.ToString();
+                if (word != '\n')
+                    perStr += word.ToString();
 
                 if (line >= 13)
                 {
-                    g.DrawString(perStr, new Font("宋体", 18,FontStyle.Bold), Brushes.Black, 5, y);
-                    y += 25;
+                    g.DrawString(perStr, new Font("宋体", 16, FontStyle.Bold), Brushes.Black, 5, y);
+                    count++;
+                    y += 24;
                     line = 0;
                     perStr = "";
                     continue;
                 }
             }
-            if (perStr != "")
+
+            if (count < 4)
             {
-                g.DrawString(perStr, new Font("宋体", 18, FontStyle.Bold), Brushes.Black, 5, y);
-                y += 25;
-                line = 0;
-                perStr = "";
+                if (perStr != "")
+                {
+                    g.DrawString(perStr, new Font("宋体", 16, FontStyle.Bold), Brushes.Black, 5, y);
+                    count++;
+                    y += 24;
+                    line = 0;
+                    perStr = "";
+                }
+
+                for (int i = count; i < 4; i++)
+                {
+                    y += 24;
+                    line = 0;
+                    perStr = "";
+                }
             }
 
             y += 15;
             g.DrawLine(p, new Point(0, y), new Point(220, y));
             y += 15;
+            count = 0;
             foreach (char word in Instruction)
             {
-                if(word == '\n' && perStr != "")
+                if (count >= 14)
+                    break;
+
+                if (word == '\n' && perStr != "")
                 {
                     g.DrawString(perStr, new Font("宋体", 10), Brushes.Black, 5, y);
+                    count++;
                     y += 17;
                     line = 0;
                     perStr = "";
@@ -300,36 +324,51 @@ namespace ECouponsPrinter
                 else
                     line += 1;
 
-                perStr += word.ToString();
+                if (word != '\n')
+                    perStr += word.ToString();
 
                 if (line >= 24)
                 {
                     g.DrawString(perStr, new Font("宋体", 10), Brushes.Black, 5, y);
+                    count++;
                     y += 17;
                     line = 0;
                     perStr = "";
                     continue;
                 }
             }
-            if (perStr != "")
+
+            if (count < 14)
             {
-                g.DrawString(perStr, new Font("宋体", 10), Brushes.Black, 5, y);
-                y += 17;
-                line = 0;
-                perStr = "";
+                if (perStr != "")
+                {
+                    g.DrawString(perStr, new Font("宋体", 10, FontStyle.Bold), Brushes.Black, 5, y);
+                    count++;
+                    y += 17;
+                    line = 0;
+                    perStr = "";
+                }
+                for (int i = count; i < 14; i++)
+                {
+                    y += 17;
+                    line = 0;
+                    perStr = "";
+                }
             }
-            y += 15;
+
+            y += 10;
             g.DrawLine(p, new Point(0, y), new Point(220, y));
-            y += 20;
-            if (pi.flaPrice != 0)
-            {             
-                g.DrawString(Code.Text, new Font("Microsoft JhengHei", 13, FontStyle.Bold), Brushes.Black, 20, y);
-                y += 15;
-                g.DrawLine(p, new Point(0,y),new Point(220,y));
-            }
-            
-            g.DrawString(bottomText, new Font("微软雅黑", 13, FontStyle.Bold), Brushes.Black, 10, 380);
-            g.DrawString(GlobalVariables.StrPhone, new Font("微软雅黑", 12, FontStyle.Bold), Brushes.Black, 22, 415);
+            y += 5;
+
+      //      if (pi.flaPrice != 0)
+      //      {
+                g.DrawString("2133213123123123", new Font("Microsoft JhengHei", 13, FontStyle.Bold), Brushes.Black, 16, y);
+                y += 30;
+                g.DrawLine(p, new Point(0, y), new Point(220, y));
+      //      }
+
+            g.DrawString(bottomText, new Font("微软雅黑", 13, FontStyle.Bold), Brushes.Black, 15, 480);
+            g.DrawString(GlobalVariables.StrPhone, new Font("微软雅黑", 12, FontStyle.Bold), Brushes.Black, 27, 500);
 
             //     e.Graphics.DrawImage(printimage, new RectangleF(0, 0, width, height));
         }
@@ -385,6 +424,8 @@ namespace ECouponsPrinter
 
                         string strSql = "insert into t_bz_coupon_print values(" + tempId + "," + GlobalVariables.LoginUserId + "," + pi.id + ",#" + DateTime.Now.ToString("yyyy-M-d H:m:s") + "#," + MD5code + ")";
                         AccessCmd cmd = new AccessCmd();
+                        cmd.ExecuteNonQuery(strSql);
+                        strSql = "update t_bz_print_total set intPrintTotal=intPrintTotal+1";
                         cmd.ExecuteNonQuery(strSql);
 
                         cmd.Close();
