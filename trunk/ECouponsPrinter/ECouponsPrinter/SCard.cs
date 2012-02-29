@@ -90,8 +90,7 @@ namespace ECouponsPrinter
                     InitType('A');              
                 }
                 else
-                {
-                     string strError = "Connect device failed";                
+                {        
            //         MessageBox.Show(strError, "error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }     
         }
@@ -114,7 +113,7 @@ namespace ECouponsPrinter
                 else
                     success = true;
 
-                Sleep(20);
+                Sleep(10);
                 status = rf_init_type(icdev, btype);
                 if (status != 0)
                 {
@@ -124,7 +123,7 @@ namespace ECouponsPrinter
                 else
                     success = true;
 
-                Sleep(20);
+                Sleep(10);
                 status = rf_antenna_sta(icdev, 1);//启动天线
                 if (status != 0)
                 {
@@ -177,7 +176,7 @@ namespace ECouponsPrinter
 
             for (int i = 0; i < 1; i++)
             {
-                Sleep(20);
+                Sleep(10);
                 status = rf_request(icdev, mode, ref TagType);//搜寻所有的卡
                 if (status != 0)
                     break;
@@ -189,13 +188,13 @@ namespace ECouponsPrinter
                 status = rf_anticoll(icdev, bcnt, pSnr, ref len);//返回卡的序列号
                 if (status != 0)
                 {
-                    MessageBox.Show("返回卡的序列号错误!");
+               //     MessageBox.Show("返回卡的序列号错误!");
                     continue;
                 }
                 status = rf_select(icdev, pSnr, len, ref size);//锁定一张ISO14443-3 TYPE_A 卡
                 if (status != 0)
                 {
-                    MessageBox.Show("锁定卡时发生错误!");
+               //     MessageBox.Show("锁定卡时发生错误!");
                     continue;
                 }
 

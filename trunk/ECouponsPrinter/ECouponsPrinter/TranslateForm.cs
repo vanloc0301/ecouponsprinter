@@ -139,7 +139,7 @@ namespace ECouponsPrinter
         private void SCardTimer_Tick(object sender, EventArgs e)
         {
             string cardNo = "";
-            SCard.light(0x0000, 3);
+            SCard.light(0x0000, 2);
             if ((cardNo = sc.searchCard()) == null)
             {
                 SCard.light(0x0000, 0);
