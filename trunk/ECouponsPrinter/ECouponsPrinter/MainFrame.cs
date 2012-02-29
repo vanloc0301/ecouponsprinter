@@ -1677,7 +1677,7 @@ namespace ECouponsPrinter
             }
 
             theCouponNum = num - 1;
-            //      MessageBox.Show(num.ToString());
+            MessageBox.Show(theCouponNum.ToString());
 
             pFileStream = new FileStream(LP_ctype[0][num - 1 + (curPage - 1) * 12].lpath, FileMode.Open, FileAccess.Read);
             PB_Home_Down.Image = new Bitmap(Image.FromStream(pFileStream), 761, 389);
@@ -2703,7 +2703,7 @@ namespace ECouponsPrinter
 
                 for (int i = 0; i < curPageShowCount; i++)
                 {
-                    String name = controlName + (i + 1);
+                    string name = controlName + (i + 1);
                     PictureBox temp = null;
                     if ((temp = (PictureBox)GetControl(name, container)) != null)
                     {
@@ -3210,7 +3210,6 @@ namespace ECouponsPrinter
                     {
                         this.Panel_Ad.Invoke((MethodInvoker)delegate
                         {
-
                             showContinue = false;
 
                             if (Ad_PB1 != null)
@@ -3235,7 +3234,7 @@ namespace ECouponsPrinter
                                 Ad_MediaPlayer2.close();
                                 Ad_MediaPlayer2.Dispose();
                             }
-
+                            Panel_Ad.Controls.Clear();
                             ShowAd();
                         }, null);
                     }
