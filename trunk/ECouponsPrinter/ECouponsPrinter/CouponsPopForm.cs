@@ -148,7 +148,7 @@ namespace ECouponsPrinter
 
             if (reader.Read())
             {
-                if (reader.IsDBNull(2))
+                if (!reader.IsDBNull(2))
                 {
                     bottomText = reader.GetString(2);
                 }
@@ -309,7 +309,7 @@ namespace ECouponsPrinter
             }
             if (perStr != "")
             {
-                g.DrawString(perStr, new Font("宋体", 12, FontStyle.Bold), Brushes.Black, 5, y);
+                g.DrawString(perStr, new Font("宋体", 12), Brushes.Black, 5, y);
                 y += 17;
                 line = 0;
                 perStr = "";
@@ -318,11 +318,11 @@ namespace ECouponsPrinter
             y += 20;
             if (pi.flaPrice != 0)
             {             
-                g.DrawString(Code.Text, new Font("Microsoft JhengHei", 22, FontStyle.Bold), Brushes.Black, 20, y);
+                g.DrawString(Code.Text, new Font("Microsoft JhengHei", 16, FontStyle.Bold), Brushes.Black, 20, y);              
             }
 
-
-            g.DrawString(bottomText, new Font("微软雅黑", 16, FontStyle.Bold), Brushes.Black, 20, 440);
+            g.DrawString(bottomText, new Font("微软雅黑", 17, FontStyle.Bold), Brushes.Black, 20, 380);
+            g.DrawString(GlobalVariables.StrPhone, new Font("微软雅黑", 16, FontStyle.Bold), Brushes.Black, 20, 425);
 
             //     e.Graphics.DrawImage(printimage, new RectangleF(0, 0, width, height));
         }
