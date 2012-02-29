@@ -16,6 +16,7 @@ namespace ECouponsPrinter
         public static String id;
         private String checkCode;
         Thread th;
+        private KeyBoard kb = null;
 
         public check(double _price, String _id)
         {
@@ -23,9 +24,10 @@ namespace ECouponsPrinter
             id = _id;
             this.Reget.Text = "重新获取(" + TickNum + ")";
             this.Reget.Enabled = false;
+            GlobalVariables.isKeyBoardExist = false;
             this.Notice.Text = "您即将进行交易的金额为:  " + _price + "  元";
             this.getCode.Enabled = true;
-            this.getCode.Start();
+            this.getCode.Start();       
 
             th = new Thread(new ThreadStart(sendMes));
             th.Start();
@@ -103,6 +105,17 @@ namespace ECouponsPrinter
         private void sendMes()
         {
             sendCode();
+        }
+
+        private void codeText_Enter(object sender, EventArgs e)
+        {
+            if (!GlobalVariables.isKeyBoardExist)
+            {
+                KeyBoard kb = new KeyBoard(codeText, null, null);
+                this.kb = kb;
+                kb.Show();
+                GlobalVariables.isKeyBoardExist = true;
+            }
         }
 
     }

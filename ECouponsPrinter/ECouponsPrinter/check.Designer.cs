@@ -59,6 +59,7 @@
             this.codeText.Name = "codeText";
             this.codeText.Size = new System.Drawing.Size(233, 53);
             this.codeText.TabIndex = 2;
+            this.codeText.Enter += new System.EventHandler(this.codeText_Enter);
             // 
             // Reget
             // 
