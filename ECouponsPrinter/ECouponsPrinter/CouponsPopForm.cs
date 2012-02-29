@@ -21,7 +21,7 @@ namespace ECouponsPrinter
         private CouponPicInfo pi;
         PrintDocument pd = new PrintDocument();
         Wait wait;
-        string MD5code;
+        string MD5code = "";
         string Intro, Instruction, bottomText;
 
         public CouponsPopForm(CouponPicInfo info)
@@ -253,7 +253,6 @@ namespace ECouponsPrinter
 
             int line = 0, y = 65;
             string perStr = "";
-            int index = 0;
             int count = 0;
             foreach (char word in Intro)
             {
@@ -421,7 +420,10 @@ namespace ECouponsPrinter
                     {
                         string tempId = DateTime.Now.ToString("yyyyMMddHHmmss");
                         //   long tempId = DateTime.Now.Ticks;
-
+                        if (MD5code == "")
+                        {
+                            MD5code = "00000000";
+                        }
                         string strSql = "insert into t_bz_coupon_print values('" + tempId + "','" + GlobalVariables.LoginUserId + "','" + pi.id + "',#" + DateTime.Now.ToString("yyyy-M-d H:m:s") + "#,'" + MD5code + "')";
                         AccessCmd cmd = new AccessCmd();
                     //    MessageBox.Show(strSql);
