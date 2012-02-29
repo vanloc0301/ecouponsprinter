@@ -242,14 +242,14 @@ namespace ECouponsPrinter
             //    e.Graphics.DrawImage(printimage, new RectangleF(0, 0, width, height));
 
             g.DrawString("鑫九天公司鑫九天公司鑫九天公司", new Font("宋体", 20), Brushes.Black, 10, 20);
-            g.DrawString("123456778668", new Font("宋体", 20), Brushes.Black, 10, 50);
-            g.DrawString("123456778668", new Font("宋体", 20), Brushes.Black, 10, 80);
-            g.DrawString("鑫九天公司", new Font("宋体", 20), Brushes.Black, 10, 110);
-            g.DrawString("123456778668", new Font("宋体", 20), Brushes.Black, 10, 140);
-            g.DrawString("123456778668", new Font("宋体", 20), Brushes.Black, 10, 170);
-            g.DrawString("鑫九天公司", new Font("宋体", 20), Brushes.Black, 10, 200);
-            g.DrawString("123456778668", new Font("宋体", 20), Brushes.Black, 10, 230);
-            g.DrawString("123456778668", new Font("宋体", 20), Brushes.Black, 10, 260);
+            g.DrawString("123456778668123456778668", new Font("宋体", 20), Brushes.Black, 10, 50);
+            g.DrawString("123456123456778668778668", new Font("宋体", 20), Brushes.Black, 10, 80);
+            g.DrawString("鑫九天123456778668123456778668公司", new Font("宋体", 20), Brushes.Black, 10, 110);
+            g.DrawString("123456123456778668123456778668778668", new Font("宋体", 20), Brushes.Black, 10, 140);
+            g.DrawString("123456123456778668123456778668123456778668778668", new Font("宋体", 20), Brushes.Black, 10, 170);
+            g.DrawString("鑫九天123456778668123456778668公司", new Font("宋体", 20), Brushes.Black, 10, 200);
+            g.DrawString("123451234567786681234567786686778668", new Font("宋体", 20), Brushes.Black, 10, 230);
+            g.DrawString("123456123456778668123456778668778668", new Font("宋体", 20), Brushes.Black, 10, 260);
             g.DrawString("2010-11-12 13:13:13", new Font("宋体", 10), Brushes.Black, 10, 300);
 
             //     e.Graphics.DrawImage(printimage, new RectangleF(0, 0, width, height));

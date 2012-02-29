@@ -2600,37 +2600,31 @@ namespace ECouponsPrinter
         #endregion
 
         #region 优惠卷弹出页面数据处理
-        private CouponPicInfo InitCouponPopData(String strid)
-        {
-            //读取数据库
-            string strSql = "select * from t_bz_coupon where strId='" + strid + "'";
-            AccessCmd cmd = new AccessCmd();
-            OleDbDataReader reader = cmd.ExecuteReader(strSql);
+        //private CouponPicInfo InitCouponPopData(String strid)
+        //{
+        //    //读取数据库
+        //    string strSql = "select * from t_bz_coupon where strId='" + strid + "'";
+        //    AccessCmd cmd = new AccessCmd();
+        //    OleDbDataReader reader = cmd.ExecuteReader(strSql);
 
-            String pPath = null, name = null;
-            double flaPrice = 0;
-            CouponPicInfo pi = new CouponPicInfo();
-            pi.id = strid;
+        //    String pPath = null, name = null;
+        //    double flaPrice = 0;
+        //    CouponPicInfo pi = new CouponPicInfo();
+        //    pi.id = strid;
 
-            if (reader.Read())
-            {
-                pPath = reader.GetString(10);
-                if (pPath != "" && pPath != null)
-                {
-                    pi.lpath = path + "\\coupon\\" + pPath;
-                }
+        //    if (reader.Read())
+        //    {
+        //        name = reader.GetString(1);
+        //        if (name != "" && name != null)
+        //        {
+        //            pi.name = name;
+        //        }
 
-                name = reader.GetString(1);
-                if (name != "" && name != null)
-                {
-                    pi.name = name;
-                }
-
-                flaPrice = reader.GetDouble(7);
-                pi.flaPrice = flaPrice;
-            }
-            return pi;
-        }
+        //        flaPrice = reader.GetDouble(7);
+        //        pi.flaPrice = flaPrice;
+        //    }
+        //    return pi;
+        //}
         #endregion
 
         #region 一些公用的函数
@@ -2925,75 +2919,84 @@ namespace ECouponsPrinter
             int type = 1;        //0表示收藏，非0表示打印
 
             String id = null;
+            CouponPicInfo pi = null;
             switch (lb.Name)
             {
                 case "Home_Fav":
                     type = 0;
                     if (LP_coupon.Count > 0)
                     {
-                        id = LP_coupon[(curPage - 1) * 12 + theCouponNum].id;
+                        pi = LP_coupon[(curPage - 1) * 12 + theCouponNum];
+                        id = pi.id;
                     }
                     break;
                 case "Home_Print":
                     type = 1;
                     if (LP_coupon.Count > 0)
                     {
-                        id = LP_coupon[(curPage - 1) * 12 + theCouponNum].id;
+                        pi = LP_coupon[(curPage - 1) * 12 + theCouponNum];
+                        id = pi.id;
                     }
                     break;
                 case "ShopInfo_Fav":
                     type = 0;
                     if (LP_ctype[0].Count > 0)
                     {
-                        id = LP_ctype[0][(curPage - 1) * 6 + theCouponNum].id;
+                        pi = LP_ctype[0][(curPage - 1) * 6 + theCouponNum];
+                        id = pi.id;
                     }
                     break;
                 case "ShopInfo_Print":
                     type = 1;
                     if (LP_ctype[0].Count > 0)
                     {
-                        id = LP_ctype[0][(curPage - 1) * 6 + theCouponNum].id;
+                        pi = LP_ctype[0][(curPage - 1) * 6 + theCouponNum];
+                        id = pi.id;
                     }
                     break;
                 case "Coupon_Fav":
                     type = 0;
                     if (LP_ctype[0].Count > 0)
                     {
-                        id = LP_ctype[0][(curPage - 1) * 12 + theCouponNum].id;
+                        pi = LP_ctype[0][(curPage - 1) * 12 + theCouponNum];
+                        id = pi.id;
                     }
                     break;
                 case "Coupon_Print":
                     type = 1;
                     if (LP_ctype[0].Count > 0)
                     {
-                        id = LP_ctype[0][(curPage - 1) * 12 + theCouponNum].id;
+                        pi = LP_ctype[0][(curPage - 1) * 12 + theCouponNum];
+                        id = pi.id;
                     }
                     break;
                 case "MyInfo_Top_Print":
                     type = 1;
                     if (LP_ctype[0].Count > 0)
                     {
-                        id = LP_ctype[0][(curPage - 1) * 6 + theCouponNum].id;
+                        pi = LP_ctype[0][(curPage - 1) * 6 + theCouponNum];
+                        id = pi.id;
                     }
                     break;
                 case "MyInfo_Bottom_Fav":
                     type = 0;
                     if (LP_ctype[1].Count > 0)
                     {
-                        id = LP_ctype[1][(curPage - 1) * 6 + theCouponNum].id;
+                        pi = LP_ctype[1][(curPage - 1) * 6 + theCouponNum];
+                        id = pi.id;
                     }
                     break;
                 case "MyInfo_Bottom_Print":
                     type = 1;
                     if (LP_ctype[1].Count > 0)
                     {
-                        id = LP_ctype[1][(curPage - 1) * 6 + theCouponNum].id;
+                        pi = LP_ctype[1][(curPage - 1) * 6 + theCouponNum];
+                        id = pi.id;
                     }
                     break;
-                default: break;
+                default: pi = null; id = null; break;
             }
-
-            CouponPicInfo pi = null;
+        
             MyMsgBox mb = new MyMsgBox();
 
             if (id != null)
@@ -3007,7 +3010,6 @@ namespace ECouponsPrinter
                     }
                     else
                     {
-                        pi = InitCouponPopData(id);
                         CouponsPopForm cpf = new CouponsPopForm(pi);
                         cpf.ShowDialog();
                         Thread.Sleep(200);
