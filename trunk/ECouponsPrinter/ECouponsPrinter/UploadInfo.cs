@@ -81,7 +81,7 @@ namespace ECouponsPrinter
                 request.OpenRequest(GlobalVariables.StrServerUrl + "/servlet/MemberAuth?strCardNo=" + strCardNo, "");
                 XmlDocument doc = new XmlDocument();
                 string strXml = request.HtmlDocument;
-           //     form1.setText(strXml);
+                MessageBox.Show(strXml);
                 doc.LoadXml(strXml);
                 string strAuth = doc.GetElementsByTagName("auth").Item(0).InnerText.Trim();
                 if (strAuth.Equals("yes"))
@@ -127,7 +127,6 @@ namespace ECouponsPrinter
                 request.OpenRequest(GlobalVariables.StrServerUrl + "/servlet/PrintAlert?strTerminalNo=" + GlobalVariables.StrTerminalNo + "&intCouponPrint=" + intCouponPrint, "");
                 XmlDocument doc = new XmlDocument();
                 string strXml = request.HtmlDocument;
-                MessageBox.Show(strXml);
                 doc.LoadXml(strXml);         
                 return doc.GetElementsByTagName("return").Item(0).InnerText.Trim().Equals("OK");
             }
