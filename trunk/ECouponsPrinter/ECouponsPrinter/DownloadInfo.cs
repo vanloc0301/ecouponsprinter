@@ -92,7 +92,7 @@ namespace ECouponsPrinter
             //下载广告信息
             request.OpenRequest(GlobalVariables.StrServerUrl + "/servlet/AdDownload?strTerminalNo=" + GlobalVariables.StrTerminalNo, "");
             strXml = request.HtmlDocument;
-           // MessageBox.Show(strXml);
+            //MessageBox.Show(strXml);
             if (strXml.IndexOf("<ads>") > 0)
             {
                 doc.LoadXml(strXml);
@@ -240,18 +240,17 @@ namespace ECouponsPrinter
 
         private void deleteCoupon(XmlNode xnCoupon)
         {
-            String strId, strSmallImg = "", strLargeImg = "", strPrintImg = "";
+            String strId, strSmallImg = "", strLargeImg = "";
             XmlElement xeCoupon = (XmlElement)xnCoupon;
             strId = xeCoupon.GetElementsByTagName("strId").Item(0).InnerText.Trim();
             //查询文件
-            string strSql = "select strSmallImg,strLargeImg,strPrintImg from t_bz_coupon where strId='" + strId + "'";
+            string strSql = "select strSmallImg,strLargeImg from t_bz_coupon where strId='" + strId + "'";
             AccessCmd cmd = new AccessCmd();
             OleDbDataReader reader = cmd.ExecuteReader(strSql);
             if (reader.Read())
             {
                 strSmallImg = reader.GetString(0);
                 strLargeImg = reader.GetString(1);
-                strPrintImg = reader.GetString(2);
             }
             reader.Close();
             //删除原文件
@@ -263,10 +262,6 @@ namespace ECouponsPrinter
             {
                 File.Delete(System.Windows.Forms.Application.StartupPath + "\\coupon\\" + strLargeImg);
             }
-            if (!strPrintImg.Equals(""))
-            {
-                File.Delete(System.Windows.Forms.Application.StartupPath + "\\coupon\\" + strPrintImg);
-            }
             //写入数据库
             strSql = "delete from t_bz_coupon where strId='" + strId + "'";
             cmd.ExecuteNonQuery(strSql);
@@ -275,20 +270,19 @@ namespace ECouponsPrinter
 
         private void updateCoupon(XmlNode xnCoupon)
         {
-            String strId, strName, dtActiveTime, dtExpireTime, strShopId, strSmallImg, strLargeImg, strPrintImg, strSmallImgOld = "", strLargeImgOld = "", strPrintImgOld = "";
+            String strId, strName, dtActiveTime, dtExpireTime, strShopId, strSmallImg, strLargeImg, strPrintImg, strSmallImgOld = "", strLargeImgOld = "", strIntro, strInstruction;
             int intVip, intRecommend;
             float flaPrice;
             getCouponProps(xnCoupon, out strId, out strName, out dtActiveTime, out dtExpireTime, out strShopId, out intVip, out flaPrice, out intRecommend,
-                out strSmallImg, out strLargeImg, out strPrintImg);
+                out strSmallImg, out strLargeImg, out strIntro, out strInstruction);
             //查询文件
-            string strSql = "select strSmallImg,strLargeImg,strPrintImg from t_bz_coupon where strId='" + strId + "'";
+            string strSql = "select strSmallImg,strLargeImg from t_bz_coupon where strId='" + strId + "'";
             AccessCmd cmd = new AccessCmd();
             OleDbDataReader reader = cmd.ExecuteReader(strSql);
             if (reader.Read())
             {
                 strSmallImgOld = reader.GetString(0);
                 strLargeImgOld = reader.GetString(1);
-                strPrintImgOld = reader.GetString(2);
             }
             reader.Close();
             //删除原文件
@@ -300,46 +294,38 @@ namespace ECouponsPrinter
             {
                 File.Delete(System.Windows.Forms.Application.StartupPath + "\\coupon\\" + strLargeImgOld);
             }
-            if (!strPrintImgOld.Equals(""))
-            {
-                File.Delete(System.Windows.Forms.Application.StartupPath + "\\coupon\\" + strPrintImgOld);
-            }
             //创建文件
             if (strSmallImg.Length > 0)
                 createImg("coupon", strSmallImg);
             if (strLargeImg.Length > 0)
                 createImg("coupon", strLargeImg);
-            if (strPrintImg.Length > 0)
-                createImg("coupon", strPrintImg);
             //写入数据库（先删除、后增加，保证之前已有的信息可下载）
             strSql = "delete from t_bz_coupon where strId='" + strId + "'";
             cmd.ExecuteNonQuery(strSql);
-            strSql = "insert into t_bz_coupon(strId,strName,dtActiveTime,dtExpireTime,strShopId,intVip,intRecommend,flaPrice,strSmallImg,strLargeImg,strPrintImg) " +
+            strSql = "insert into t_bz_coupon(strId,strName,dtActiveTime,dtExpireTime,strShopId,intVip,intRecommend,flaPrice,strSmallImg,strLargeImg,strIntro,strInstruction) " +
                 "values('" + strId + "','" + strName + "','" + dtActiveTime + "','" + dtExpireTime + "','" + strShopId + "'," + intVip + "," + intRecommend + "," + flaPrice +
-                ",'" + strSmallImg + "','" + strLargeImg + "','" + strPrintImg + "')";
+                ",'" + strSmallImg + "','" + strLargeImg + "','" + strIntro + "','" + strInstruction + "')";
             cmd.ExecuteNonQuery(strSql);
             cmd.Close();
         }
 
         private void addCoupon(XmlNode xnCoupon)
         {
-            String strId, strName, dtActiveTime, dtExpireTime, strShopId, strSmallImg, strLargeImg, strPrintImg;
+            String strId, strName, dtActiveTime, dtExpireTime, strShopId, strSmallImg, strLargeImg, strIntro, strInstruction;
             int intVip, intRecommend;
             float flaPrice;
-            getCouponProps(xnCoupon, out strId, out strName, out dtActiveTime, out dtExpireTime, out strShopId, out intVip, out flaPrice, out intRecommend, 
-                out strSmallImg, out strLargeImg, out strPrintImg);
+            getCouponProps(xnCoupon, out strId, out strName, out dtActiveTime, out dtExpireTime, out strShopId, out intVip, out flaPrice, out intRecommend,
+                out strSmallImg, out strLargeImg, out strIntro, out strInstruction);
             //创建文件
             if (strSmallImg.Length > 0)
                 createImg("coupon", strSmallImg);
             if (strLargeImg.Length > 0)
                 createImg("coupon", strLargeImg);
-            if (strPrintImg.Length > 0)
-                createImg("coupon", strPrintImg);
             //写入数据库
             AccessCmd cmd = new AccessCmd();
-            string strSql = "insert into t_bz_coupon(strId,strName,dtActiveTime,dtExpireTime,strShopId,intVip,intRecommend,flaPrice,strSmallImg,strLargeImg,strPrintImg) " +
-                "values('" + strId + "','" + strName + "','" + dtActiveTime + "','" + dtExpireTime + "','" + strShopId + "'," + intVip + "," + intRecommend + "," + flaPrice + 
-                ",'" + strSmallImg + "','" + strLargeImg + "','" + strPrintImg + "')";
+            string strSql = "insert into t_bz_coupon(strId,strName,dtActiveTime,dtExpireTime,strShopId,intVip,intRecommend,flaPrice,strSmallImg,strLargeImg,strIntro,strInstruction) " +
+                "values('" + strId + "','" + strName + "','" + dtActiveTime + "','" + dtExpireTime + "','" + strShopId + "'," + intVip + "," + intRecommend + "," + flaPrice +
+                ",'" + strSmallImg + "','" + strLargeImg + "','" + strIntro + "','" + strInstruction + "')";
             cmd.ExecuteNonQuery(strSql);
             cmd.Close();
         }
@@ -460,7 +446,7 @@ namespace ECouponsPrinter
         }
 
         private static void getCouponProps(XmlNode xnCoupon, out string strId, out string strName, out string dtActiveTime, out string dtExpireTime, out string strShopId,
-            out int intVip, out float flaPrice, out int intRecommend, out string strSmallImg, out string strLargeImg, out string strPrintImg)
+            out int intVip, out float flaPrice, out int intRecommend, out string strSmallImg, out string strLargeImg, out string strIntro, out string strInstruction)
         {
             XmlElement xeCoupon = (XmlElement)xnCoupon;
             strId = xeCoupon.GetElementsByTagName("strId").Item(0).InnerText.Trim();
@@ -473,7 +459,8 @@ namespace ECouponsPrinter
             intRecommend = Int32.Parse(xeCoupon.GetElementsByTagName("intRecommend").Item(0).InnerText.Trim());
             strSmallImg = xeCoupon.GetElementsByTagName("strSmallImg").Item(0).InnerText.Trim();
             strLargeImg = xeCoupon.GetElementsByTagName("strLargeImg").Item(0).InnerText.Trim();
-            strPrintImg = xeCoupon.GetElementsByTagName("strPrintImg").Item(0).InnerText.Trim();
+            strIntro = xeCoupon.GetElementsByTagName("strIntro").Item(0).InnerText.Trim();
+            strInstruction = xeCoupon.GetElementsByTagName("strInstruction").Item(0).InnerText.Trim();
         }
 
         private void getAdProps(XmlNode xn, out string strId, out string strName, out int intType, out string strContent, out string dtStartTime, out string dtEndTime)
