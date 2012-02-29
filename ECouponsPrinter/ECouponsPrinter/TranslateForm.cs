@@ -204,7 +204,6 @@ namespace ECouponsPrinter
                 }
                 else
                 {
-                    mb.ShowMsg("登录成功！", 2);
                     GlobalVariables.isUserLogin = true;
                     GlobalVariables.LoginUserId = userid;
                     GlobalVariables.M = m;
