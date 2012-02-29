@@ -422,8 +422,10 @@ namespace ECouponsPrinter
                         int tempId = TimeSpan.Parse(DateTime.Now.ToString("HH:mm:ss")).Milliseconds;
                         //   long tempId = DateTime.Now.Ticks;
 
-                        string strSql = "insert into t_bz_coupon_print values(" + tempId + "," + GlobalVariables.LoginUserId + "," + pi.id + ",#" + DateTime.Now.ToString("yyyy-M-d H:m:s") + "#," + MD5code + ")";
+                        string strSql = "insert into t_bz_coupon_print values(" + tempId + ",'" + GlobalVariables.LoginUserId + "','" + pi.id + "',#" + DateTime.Now.ToString("yyyy-M-d H:m:s") + "#,'" + MD5code + "')";
                         AccessCmd cmd = new AccessCmd();
+                        MyMsgBox mb = new MyMsgBox();
+                        mb.ShowMsg(strSql, 3);
                         cmd.ExecuteNonQuery(strSql);
                         strSql = "update t_bz_print_total set intPrintTotal=intPrintTotal+1";
                         cmd.ExecuteNonQuery(strSql);
