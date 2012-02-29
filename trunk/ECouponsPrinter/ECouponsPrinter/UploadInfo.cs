@@ -127,8 +127,8 @@ namespace ECouponsPrinter
                 request.OpenRequest(GlobalVariables.StrServerUrl + "/servlet/PrintAlert?strTerminalNo=" + GlobalVariables.StrTerminalNo + "&intCouponPrint=" + intCouponPrint, "");
                 XmlDocument doc = new XmlDocument();
                 string strXml = request.HtmlDocument;
-                form1.setText(strXml);
-                doc.LoadXml(strXml);
+                MessageBox.Show(strXml);
+                doc.LoadXml(strXml);         
                 return doc.GetElementsByTagName("return").Item(0).InnerText.Trim().Equals("OK");
             }
             catch (Exception e)
