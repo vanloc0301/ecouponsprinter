@@ -20,7 +20,6 @@ namespace ECouponsPrinter
         private String path = System.Windows.Forms.Application.StartupPath;
         private CouponPicInfo pi;
         PrintDocument pd = new PrintDocument();
-        Image printimage = null;
         Wait wait;
         string MD5code;
         string Intro, Instruction, bottomText;
@@ -71,7 +70,7 @@ namespace ECouponsPrinter
                 if (info.ShowDialog() == DialogResult.Yes)
                 {
                     check check = new check(pi.flaPrice, pi.id);
-
+                    check.Location = new Point(30, 40);
                     if (check.ShowDialog() == DialogResult.Yes)
                     {
                         try
@@ -252,8 +251,10 @@ namespace ECouponsPrinter
 
             int line = 0, y = 65;
             string perStr = "";
+            int index = 0;
             foreach (char word in Intro)
             {
+
                 if (IsUnicode(word))
                     line += 2;
                 else
@@ -269,6 +270,13 @@ namespace ECouponsPrinter
                     perStr = "";
                     continue;
                 }
+            }
+            if (perStr != "")
+            {
+                g.DrawString(perStr, new Font("宋体", 20, FontStyle.Bold), Brushes.Black, 5, y);
+                y += 25;
+                line = 0;
+                perStr = "";
             }
 
             y += 20;
@@ -290,7 +298,7 @@ namespace ECouponsPrinter
 
                 perStr += word.ToString();
 
-                if (line >= 13)
+                if (line >= 24)
                 {
                     g.DrawString(perStr, new Font("宋体", 12), Brushes.Black, 5, y);
                     y += 17;
@@ -299,15 +307,22 @@ namespace ECouponsPrinter
                     continue;
                 }
             }
+            if (perStr != "")
+            {
+                g.DrawString(perStr, new Font("宋体", 12, FontStyle.Bold), Brushes.Black, 5, y);
+                y += 17;
+                line = 0;
+                perStr = "";
+            }
 
             y += 20;
             if (pi.flaPrice != 0)
-            { 
+            {             
                 g.DrawString(Code.Text, new Font("Microsoft JhengHei", 22, FontStyle.Bold), Brushes.Black, 20, y);
             }
 
 
-            g.DrawString(perStr, new Font("微软雅黑", 16, FontStyle.Bold), Brushes.Black, 20, 440);
+            g.DrawString(bottomText, new Font("微软雅黑", 16, FontStyle.Bold), Brushes.Black, 20, 440);
 
             //     e.Graphics.DrawImage(printimage, new RectangleF(0, 0, width, height));
         }
