@@ -435,7 +435,7 @@ namespace ECouponsPrinter
                         int printNum = 0;
                         if (reader.Read())
                         {
-                            printNum = reader.GetInt16(0);
+                            printNum = reader.GetInt32(0);
                         }
 
                         if (printNum >= GlobalVariables.IntCouponPrint)
