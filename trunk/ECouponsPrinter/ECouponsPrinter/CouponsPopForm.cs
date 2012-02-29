@@ -118,7 +118,7 @@ namespace ECouponsPrinter
 
             this.PB_Couponpop.Image = new Bitmap(pi.image, 110, 70);
 
-            string strSql = "select * from t_bz_coupon where strId=" + pi.id;
+            string strSql = "select * from t_bz_coupon where strId='" + pi.id+"'";
             AccessCmd cmd = new AccessCmd();
             OleDbDataReader reader = cmd.ExecuteReader(strSql);
 
@@ -224,8 +224,16 @@ namespace ECouponsPrinter
 
         public void pd_EndPrint(Object sender, PrintEventArgs e)
         {
-            printimage.Dispose();
+         //   printimage.Dispose();
             pd.Dispose();
+        }
+
+        private bool IsUnicode(char word)
+        {
+            if ((word >= 0x4e00) && (word <= 0x9fbb))
+                return true;
+            else
+                return false;
         }
 
         private void pd_PrintPage(Object sender, PrintPageEventArgs e)
@@ -236,21 +244,70 @@ namespace ECouponsPrinter
             //float width = (float)58 * pi;
             //float height = (float)bi;
 
-            pd.DefaultPageSettings.PaperSize.Height = 450;//您可以修改pagesize的大小               
-            pd.DefaultPageSettings.PaperSize.Width = 220;
+    //        MessageBox.Show(pd.PrinterSettings.PaperSources.Count.ToString()); ;
+            pd.DefaultPageSettings.PaperSize = new PaperSize("paper", 220, 450);//您可以修改pagesize的大小               
 
             //    e.Graphics.DrawImage(printimage, new RectangleF(0, 0, width, height));
+            g.DrawImage(pi.image, new RectangleF(60, 0, 80, 60));
 
-            g.DrawString("鑫九天公司鑫九天公司鑫九天公司", new Font("宋体", 20), Brushes.Black, 10, 20);
-            g.DrawString("123456778668123456778668", new Font("宋体", 20), Brushes.Black, 10, 50);
-            g.DrawString("123456123456778668778668", new Font("宋体", 20), Brushes.Black, 10, 80);
-            g.DrawString("鑫九天123456778668123456778668公司", new Font("宋体", 20), Brushes.Black, 10, 110);
-            g.DrawString("123456123456778668123456778668778668", new Font("宋体", 20), Brushes.Black, 10, 140);
-            g.DrawString("123456123456778668123456778668123456778668778668", new Font("宋体", 20), Brushes.Black, 10, 170);
-            g.DrawString("鑫九天123456778668123456778668公司", new Font("宋体", 20), Brushes.Black, 10, 200);
-            g.DrawString("123451234567786681234567786686778668", new Font("宋体", 20), Brushes.Black, 10, 230);
-            g.DrawString("123456123456778668123456778668778668", new Font("宋体", 20), Brushes.Black, 10, 260);
-            g.DrawString("2010-11-12 13:13:13", new Font("宋体", 10), Brushes.Black, 10, 300);
+            int line = 0, y = 65;
+            string perStr = "";
+            foreach (char word in Intro)
+            {
+                if (IsUnicode(word))
+                    line += 2;
+                else
+                    line += 1;
+
+                perStr += word.ToString();
+
+                if (line >= 13)
+                {
+                    g.DrawString(perStr, new Font("宋体", 20,FontStyle.Bold), Brushes.Black, 5, y);
+                    y += 25;
+                    line = 0;
+                    perStr = "";
+                    continue;
+                }
+            }
+
+            y += 20;
+            foreach (char word in Instruction)
+            {
+                if(word == '\n')
+                {
+                    g.DrawString(perStr, new Font("宋体", 12), Brushes.Black, 5, y);
+                    y += 17;
+                    line = 0;
+                    perStr = "";
+                    continue;
+                }
+
+                if (IsUnicode(word))
+                    line += 2;
+                else
+                    line += 1;
+
+                perStr += word.ToString();
+
+                if (line >= 13)
+                {
+                    g.DrawString(perStr, new Font("宋体", 12), Brushes.Black, 5, y);
+                    y += 17;
+                    line = 0;
+                    perStr = "";
+                    continue;
+                }
+            }
+
+            y += 20;
+            if (pi.flaPrice != 0)
+            { 
+                g.DrawString(Code.Text, new Font("Microsoft JhengHei", 22, FontStyle.Bold), Brushes.Black, 20, y);
+            }
+
+
+            g.DrawString(perStr, new Font("微软雅黑", 16, FontStyle.Bold), Brushes.Black, 20, 440);
 
             //     e.Graphics.DrawImage(printimage, new RectangleF(0, 0, width, height));
         }
@@ -275,6 +332,13 @@ namespace ECouponsPrinter
                 myprinter = pq.GetAllPrinterQueues();
                 if (0 == myprinter[defaultPrinterName])
                 {
+                    if (!pd.PrinterSettings.IsValid)
+                    {
+                        MyMsgBox mb = new MyMsgBox();
+                        mb.ShowMsg("打印机不可用！暂时停止服务！", 1);
+                        wait.CloseScrollBar();
+                        return;
+                    }
                     pd.Print();
                     myprinter = pq.GetAllPrinterQueues();
                     if (myprinter[defaultPrinterName] == 0)
