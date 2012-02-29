@@ -428,7 +428,20 @@ namespace ECouponsPrinter
                         cmd.ExecuteNonQuery(strSql);
                         strSql = "update t_bz_print_total set intPrintTotal=intPrintTotal+1";
                         cmd.ExecuteNonQuery(strSql);
+                        strSql = "select * from t_bz_print_total";
+                        OleDbDataReader reader = cmd.ExecuteReader(strSql);
+                        int printNum = 0;
+                        if (reader.Read())
+                        {
+                            printNum = reader.GetInt16(0);
+                        }
 
+                        if (printNum >= GlobalVariables.IntCouponPrint)
+                        {
+                            UploadInfo ui = new UploadInfo();
+                            ui.PrintAlert(printNum);
+                        }
+                        reader.Close();
                         cmd.Close();
                     }
                 }
