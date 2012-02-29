@@ -438,6 +438,7 @@ namespace ECouponsPrinter
                             printNum = reader.GetInt32(0);
                         }
 
+                        MessageBox.Show("上限：" + GlobalVariables.IntCouponPrint + "\n当前：" + printNum);
                         if (printNum >= GlobalVariables.IntCouponPrint)
                         {
                             UploadInfo ui = new UploadInfo();

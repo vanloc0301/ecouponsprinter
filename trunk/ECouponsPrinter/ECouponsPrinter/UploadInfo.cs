@@ -133,7 +133,7 @@ namespace ECouponsPrinter
             }
             catch (Exception e)
             {
-         //       MessageBox.Show(e.Message + "\n" + e.StackTrace);
+                ErrorLog.log(e);
                 return false;
             }
         }

@@ -1539,7 +1539,7 @@ namespace ECouponsPrinter
             }
             catch (Exception e)
             {
-                MessageBox.Show(e.Message);
+                ErrorLog.log(e);
             }
         }
 
