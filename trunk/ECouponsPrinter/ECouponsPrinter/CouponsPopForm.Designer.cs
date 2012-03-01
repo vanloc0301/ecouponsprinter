@@ -30,15 +30,15 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CouponsPopForm));
             this.Panel_Background = new System.Windows.Forms.Panel();
+            this.Label_phone = new System.Windows.Forms.Label();
+            this.Label_Instruction = new System.Windows.Forms.Label();
+            this.Label_Into = new System.Windows.Forms.Label();
             this.Code = new System.Windows.Forms.Label();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.Button_Close = new System.Windows.Forms.Button();
             this.Button_Print = new System.Windows.Forms.Button();
             this.PB_Couponpop = new System.Windows.Forms.PictureBox();
             this.Label_Top = new System.Windows.Forms.Label();
-            this.Label_Into = new System.Windows.Forms.Label();
-            this.Label_Instruction = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
             this.Panel_Background.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PB_Couponpop)).BeginInit();
@@ -48,7 +48,7 @@
             // 
             this.Panel_Background.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("Panel_Background.BackgroundImage")));
             this.Panel_Background.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.Panel_Background.Controls.Add(this.label1);
+            this.Panel_Background.Controls.Add(this.Label_phone);
             this.Panel_Background.Controls.Add(this.Label_Instruction);
             this.Panel_Background.Controls.Add(this.Label_Into);
             this.Panel_Background.Controls.Add(this.Code);
@@ -63,6 +63,38 @@
             this.Panel_Background.Size = new System.Drawing.Size(374, 768);
             this.Panel_Background.TabIndex = 2;
             // 
+            // Label_phone
+            // 
+            this.Label_phone.BackColor = System.Drawing.Color.White;
+            this.Label_phone.Font = new System.Drawing.Font("微软雅黑", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.Label_phone.Location = new System.Drawing.Point(14, 449);
+            this.Label_phone.Name = "Label_phone";
+            this.Label_phone.Size = new System.Drawing.Size(340, 108);
+            this.Label_phone.TabIndex = 7;
+            this.Label_phone.Text = "优惠生活  随处可及\r\n0527-81185155";
+            this.Label_phone.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // Label_Instruction
+            // 
+            this.Label_Instruction.BackColor = System.Drawing.Color.White;
+            this.Label_Instruction.Font = new System.Drawing.Font("宋体", 14F);
+            this.Label_Instruction.Location = new System.Drawing.Point(14, 255);
+            this.Label_Instruction.Name = "Label_Instruction";
+            this.Label_Instruction.Size = new System.Drawing.Size(340, 157);
+            this.Label_Instruction.TabIndex = 6;
+            this.Label_Instruction.Text = "电话025-93u4u75943u75\r\n地址：新街口决定是否落实经费看见的是法律框架的撒 此券没胆消费决定是否离开的撒警方立刻受到飓风\r\n此券立刻将加快建立\r\n" +
+                "最终解释权就看见拉开距离距离拉开";
+            // 
+            // Label_Into
+            // 
+            this.Label_Into.BackColor = System.Drawing.Color.White;
+            this.Label_Into.Font = new System.Drawing.Font("宋体", 20F, System.Drawing.FontStyle.Bold);
+            this.Label_Into.Location = new System.Drawing.Point(14, 169);
+            this.Label_Into.Name = "Label_Into";
+            this.Label_Into.Size = new System.Drawing.Size(340, 86);
+            this.Label_Into.TabIndex = 5;
+            this.Label_Into.Text = "凭卷享受9折优惠";
+            // 
             // Code
             // 
             this.Code.BackColor = System.Drawing.Color.White;
@@ -72,7 +104,6 @@
             this.Code.Name = "Code";
             this.Code.Size = new System.Drawing.Size(340, 37);
             this.Code.TabIndex = 4;
-            this.Code.Text = "验证码:    12345678";
             this.Code.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // pictureBox2
@@ -134,38 +165,6 @@
             this.Label_Top.Text = "0551-6868668";
             this.Label_Top.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // Label_Into
-            // 
-            this.Label_Into.BackColor = System.Drawing.Color.White;
-            this.Label_Into.Font = new System.Drawing.Font("宋体", 20F, System.Drawing.FontStyle.Bold);
-            this.Label_Into.Location = new System.Drawing.Point(14, 169);
-            this.Label_Into.Name = "Label_Into";
-            this.Label_Into.Size = new System.Drawing.Size(340, 86);
-            this.Label_Into.TabIndex = 5;
-            this.Label_Into.Text = "凭卷享受9折优惠";
-            // 
-            // Label_Instruction
-            // 
-            this.Label_Instruction.BackColor = System.Drawing.Color.White;
-            this.Label_Instruction.Font = new System.Drawing.Font("宋体", 14F);
-            this.Label_Instruction.Location = new System.Drawing.Point(14, 255);
-            this.Label_Instruction.Name = "Label_Instruction";
-            this.Label_Instruction.Size = new System.Drawing.Size(340, 157);
-            this.Label_Instruction.TabIndex = 6;
-            this.Label_Instruction.Text = "电话025-93u4u75943u75\r\n地址：新街口决定是否落实经费看见的是法律框架的撒 此券没胆消费决定是否离开的撒警方立刻受到飓风\r\n此券立刻将加快建立\r\n" +
-                "最终解释权就看见拉开距离距离拉开";
-            // 
-            // label1
-            // 
-            this.label1.BackColor = System.Drawing.Color.White;
-            this.label1.Font = new System.Drawing.Font("微软雅黑", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label1.Location = new System.Drawing.Point(14, 449);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(340, 108);
-            this.label1.TabIndex = 7;
-            this.label1.Text = "优惠生活  随处可及\r\n0527-81185155";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
             // CouponsPopForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -194,7 +193,7 @@
         private System.Windows.Forms.Label Label_Top;
         private System.Windows.Forms.Label Label_Into;
         private System.Windows.Forms.Label Label_Instruction;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label Label_phone;
 
     }
 }
