@@ -20,7 +20,9 @@ namespace ECouponsPrinter
         private static int CountDownNumber = GlobalVariables.WindowWaitTime;
         private static int UserQuitTime = GlobalVariables.UserWaitTime;
         private string _stringScrollText = GlobalVariables.MarqueeText;
-        private Thread th, marquee;
+        private Thread marquee;
+        private SCard sc;
+        private static bool isFirstKey = true;
 
         //-----------------------------------------------------------------------------
         private List<PicInfo> LP_shop;
@@ -74,18 +76,42 @@ namespace ECouponsPrinter
         }
 
         #region 处理界面点击事件
-
-        private void MainFrame_MouseEnter(object sender, EventArgs e)
+        Point mPos = new Point(0, 0);
+        private void Ad_MouseClick(object sender, MouseEventArgs e)
         {
-            InitUserQuitTime();
+            if ((e.Location.X != mPos.X) || (e.Location.Y != mPos.Y))
+            {
+                this.UnVisibleAllPanels();
+
+                //显示隐藏按钮
+                this.Button_LastCouponsPage.Visible = true;
+                this.Button_NextCouponsPage.Visible = true;
+
+                //切换
+                int y = this.VerticalScroll.Value;
+                this.Panel_Home.Location = new System.Drawing.Point(0, 95 - y);
+
+                this.InitHomeData();
+                this.Panel_Home.Visible = true;
+                this.ShowHome();
+            }
+
+            mPos = e.Location;
         }
 
-        Point mPos = new Point(0, 0);
         private void MainFrame_MouseMove(object sender, MouseEventArgs e)
         {
             if ((e.Location.X != mPos.X) || (e.Location.Y != mPos.Y))
             {
-                InitUserQuitTime();
+                if (GlobalVariables.isUserLogin)
+                {
+                    InitUserQuitTime();
+                }
+                else
+                {
+                    MyMsgBox mb = new MyMsgBox();
+                    mb.ShowMsg("请您先刷卡！", 1);
+                }
             }
 
             mPos = e.Location;
@@ -93,11 +119,18 @@ namespace ECouponsPrinter
 
         private void CatchAllClickEvent(Control ctl)
         {
-
-            ctl.MouseMove += new MouseEventHandler(MainFrame_MouseMove);
-
             if (ctl.Controls != null)
             {
+                if (ctl.Name == "Panel_Ad")
+                {
+                    ctl.MouseClick += new MouseEventHandler(Ad_MouseClick);
+                    foreach (Control ctl1 in ctl.Controls)
+                        ctl1.MouseClick += new MouseEventHandler(Ad_MouseClick);
+                    return;
+                }
+
+                ctl.MouseMove += new MouseEventHandler(MainFrame_MouseMove);
+
                 foreach (Control ctl1 in ctl.Controls)
                     CatchAllClickEvent(ctl1);
             }
@@ -997,8 +1030,10 @@ namespace ECouponsPrinter
 
             //展开遮罩窗体
             Thread.Sleep(100);
-            th = new Thread(new ThreadStart(TranslateMain));
-            th.Start();
+          //  th = new Thread(new ThreadStart(TranslateMain));
+            //th.Start();
+            //启动射频卡检测程序
+            this.SCardStart();
 
             //加载广告线程
             AdThread = new Thread(new ThreadStart(RefreshAd));
@@ -1058,6 +1093,12 @@ namespace ECouponsPrinter
                 this.Timer_Countdown.Stop();
                 this.Timer_Countdown.Enabled = false;
                 this.UnVisibleAllPanels();
+                //this.tf.Close();
+                //if (th.IsAlive)
+                //{
+                //    th.Abort();
+                //    th.Join();
+                //}
                 //切换
                 int y = this.VerticalScroll.Value;
                 this.Panel_Ad.Location = new System.Drawing.Point(0, 95 - y);
@@ -1098,23 +1139,12 @@ namespace ECouponsPrinter
                 this.Timer_UserQuit.Stop();
                 this.Timer_UserQuit.Enabled = false;
 
-                if (th != null)
-                {
-                    if (th.IsAlive)
-                    {
-                        th.Abort();
-                        th.Join();
-                    }
-                }
-
                 this.Label_Countdown.Font = new Font("Microsoft Sans Serif", 25, FontStyle.Bold);
                 this.Label_Countdown.ForeColor = Color.White;
                 this.Label_Countdown.Text = "请先刷卡";
                 GlobalVariables.isUserLogin = false;
 
                 InitTimer();
-                th = new Thread(new ThreadStart(TranslateMain));
-                th.Start();
             }
             else
             {
@@ -1204,22 +1234,12 @@ namespace ECouponsPrinter
         {
             this.Timer_UserQuit.Stop();
             this.Timer_UserQuit.Enabled = false;
-            if (th != null)
-            {
-                if (th.IsAlive)
-                {
-                    th.Abort();
-                    th.Join();
-                }
-            }
+
             this.Label_Countdown.Font = new Font("Microsoft Sans Serif", 25, FontStyle.Bold);
             this.Label_Countdown.ForeColor = Color.White;
             this.Label_Countdown.Text = "请先刷卡";
             GlobalVariables.isUserLogin = false;
-
             InitTimer();
-            th = new Thread(new ThreadStart(TranslateMain));
-            th.Start();
         }
 
         private void Label_Countdown_DoubleClick(object sender, EventArgs e)
@@ -3171,7 +3191,7 @@ namespace ECouponsPrinter
 
         #region 广告数据处理
 
-        private AxWMPLib.AxWindowsMediaPlayer Ad_MediaPlayer1, Ad_MediaPlayer2;
+        private AxWMPLib.AxWindowsMediaPlayer Ad_MediaPlayer1 = null, Ad_MediaPlayer2 = null;
         PictureBox Ad_PB1, Ad_PB2;
         List<string> Ad_str;
         List<int> Ad_type;
@@ -3261,11 +3281,13 @@ namespace ECouponsPrinter
                         }
                         if (Ad_MediaPlayer1 != null)
                         {
+                            Panel_Ad.Controls.Remove(Ad_MediaPlayer1);
                             Ad_MediaPlayer1.close();
                             Ad_MediaPlayer1.Dispose();
                         }
                         if (Ad_MediaPlayer2 != null)
                         {
+                            Panel_Ad.Controls.Remove(Ad_MediaPlayer2);
                             Ad_MediaPlayer2.close();
                             Ad_MediaPlayer2.Dispose();
                         }
@@ -3355,7 +3377,6 @@ namespace ECouponsPrinter
                     Ad_MediaPlayer1.Name = "Ad_MediaPlayer1";
                     Ad_MediaPlayer1.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("Ad_MediaPlayer.OcxState")));
                     Ad_MediaPlayer1.Size = new System.Drawing.Size(768, 576);
-
                     Panel_Ad.Controls.Add(Ad_MediaPlayer1);
                     ((System.ComponentModel.ISupportInitialize)(Ad_MediaPlayer1)).EndInit();
                     Ad_MediaPlayer1.uiMode = "none";
@@ -3579,6 +3600,203 @@ namespace ECouponsPrinter
 
         #endregion
 
+        #region 用户登录模块
+        #region 磁卡检测处理
+        [DllImport("user32.dll", CharSet = CharSet.Auto)]
+        private extern static int GetWindowTextLength(IntPtr hWnd);
+
+        [DllImport("User.dll", EntryPoint = "SendMessage")]
+        private static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto, ExactSpelling = true)]
+        public static extern IntPtr GetForegroundWindow();
+
+        [DllImport("user32.dll", EntryPoint = "GetWindowText")]
+        private static extern bool GetWindowText(IntPtr hWnd, StringBuilder title, int maxBufSize);
+
+        private const int WM_CLOSE = 0x0010;
+
+        private void CloseAllDialog()
+        {
+            IntPtr hwnd;
+            hwnd = GetForegroundWindow();
+            if (hwnd == IntPtr.Zero)
+            {
+                return;
+            }
+
+            int length = GetWindowTextLength(hwnd);
+            StringBuilder stringBuilder = new StringBuilder(2 * length + 1);
+            GetWindowText(hwnd, stringBuilder, stringBuilder.Capacity);
+
+            String strTitle = stringBuilder.ToString();
+            if (strTitle.CompareTo("MainFrame") != 0)
+            {
+                SendMessage(hwnd, WM_CLOSE, 0, 0);
+            }
+        }
+
+        protected override bool ProcessCmdKey(ref System.Windows.Forms.Message msg, System.Windows.Forms.Keys keyData)
+        {
+            int WM_KEYDOWN = 256;
+            int WM_SYSKEYDOWN = 260;
+
+            if (isFirstKey)
+            {
+                this.LoginText.Text = "";
+                if (msg.Msg == WM_KEYDOWN | msg.Msg == WM_SYSKEYDOWN)
+                {
+                    LoginText.Focus();
+                    isFirstKey = false;
+                }
+            }
+            else
+            {
+                if (keyData.Equals(Keys.Enter))
+                {
+                    String cardtext = ""; ;
+                    int i = 0, j = 0;
+
+                    for (i = 0; i < LoginText.Text.Length; i++)
+                    {
+                        if (LoginText.Text[i] >= '0' && LoginText.Text[i] <= '9')
+                        {
+                            cardtext += LoginText.Text[i].ToString();
+                            j++;
+                        }
+                    }
+
+                    MessageBox.Show(cardtext);
+                    if (!UserLogin(cardtext))
+                    {
+                        isFirstKey = true;
+                    }
+                    else
+                    {
+                        this.SCardTimer.Stop();
+                        this.SCardTimer.Enabled = false;
+                        LoginSuccessDispatch();
+                    }
+                }
+            }
+            return false;
+        }
+        #endregion
+
+        #region 射频卡检测处理
+        private void SCardStart()
+        {
+            sc = new SCard();
+            sc.Init();
+            this.SCardTimer.Enabled = true;
+            this.SCardTimer.Interval = 500;
+            this.SCardTimer.Start();
+        }
+
+        private void SCardTimer_Tick(object sender, EventArgs e)
+        {
+            string cardNo = "";
+            SCard.light(0x0000, 2);
+            if ((cardNo = sc.searchCard()) == null)
+            {
+                SCard.light(0x0000, 0);
+                return;
+            }
+            else
+            {
+                this.SCardTimer.Stop();
+                this.SCardTimer.Enabled = false;
+                if (!UserLogin(cardNo))
+                {
+                    SCard.light(0x0000, 0);
+                    this.SCardTimer.Enabled = true;
+                    this.SCardTimer.Start();
+                    return;
+                }
+                else
+                {
+                    SCard.light(0x0000, 1);
+                    LoginSuccessDispatch();
+                }
+            }
+        }
+
+        #endregion
+
+        #region 用户登录
+        private bool UserLogin(string userid)
+        {
+            UploadInfo ui = new UploadInfo();
+            Member m = ui.MemberAuth(userid);
+            MyMsgBox mb = new MyMsgBox();
+            if (m == null)
+            {
+                mb.ShowMsg("无效的用户！", 2);
+                return false;
+            }
+            else
+            {
+                if (m.StrMobileNo.Length == 0)
+                {
+                    Login login = new Login(userid);
+                    login.Location = new Point(30, 50);
+                    login.TopMost = true;
+                    //         this.Controls.Add(login);
+                    if (DialogResult.Yes == login.ShowDialog(this))
+                    {
+                        GlobalVariables.isUserLogin = true;
+                        GlobalVariables.LoginUserId = userid;
+                        GlobalVariables.M = m;
+                        return true;
+                    }
+                    else
+                    {
+                        mb.ShowMsg("登录失败！\n请先绑定手机！", 2);
+                        return false;
+                    }
+                }
+                else
+                {
+                    GlobalVariables.isUserLogin = true;
+                    GlobalVariables.LoginUserId = userid;
+                    GlobalVariables.M = m;
+                    return true;
+                }
+            }
+        }
+
+        private void LoginSuccessDispatch()
+        {
+            this.Timer_Countdown.Stop();
+            this.Timer_Countdown.Enabled = false;
+            this.Label_Countdown.Text = "";
+            InitUserQuitTime();
+
+            this.UnVisibleAllPanels();
+
+            this.InitTimer();
+
+            //显示隐藏按钮
+            this.Button_LastCouponsPage.Visible = true;
+            this.Button_NextCouponsPage.Visible = true;
+
+            //切换
+            int y = this.VerticalScroll.Value;
+            this.Panel_Home.Location = new System.Drawing.Point(0, 95 - y);
+
+            this.InitHomeData();
+            this.Panel_Home.Visible = true;
+            this.ShowHome();
+        }
+        #endregion
+
+        private void TranslateForm_Load(object sender, EventArgs e)
+        {
+            //启动射频卡检测程序
+            this.SCardStart();
+        }
+        #endregion 用户登录模块
+
         /// <summary>
         /// 定时刷新
         /// </summary>
@@ -3624,14 +3842,6 @@ namespace ECouponsPrinter
                     AdThread.Join();
                 }
 
-                if (th != null)
-                {
-                    if (th.IsAlive)
-                    {
-                        th.Abort();
-                        th.Join();
-                    }
-                }
             }
             catch (Exception e1)
             {

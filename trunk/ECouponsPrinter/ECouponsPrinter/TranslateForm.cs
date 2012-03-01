@@ -42,7 +42,6 @@ namespace ECouponsPrinter
                 this.DialogResult = DialogResult.No;
                 this.Close();
             }
-
         }
 
         #region 磁卡检测处理
@@ -218,7 +217,7 @@ namespace ECouponsPrinter
         private void TranslateForm_Load(object sender, EventArgs e)
         {
             //启动射频卡检测程序
-            //this.SCardStart();
+            this.SCardStart();
         }
 
         private void LabelOption_DoubleClick(object sender, EventArgs e)
