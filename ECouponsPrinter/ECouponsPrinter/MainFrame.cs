@@ -77,26 +77,42 @@ namespace ECouponsPrinter
 
         #region 处理界面点击事件
         Point mPos = new Point(0, 0);
-        private void Ad_MouseClick(object sender, MouseEventArgs e)
+        private void Ad_WMVMovieDown(object sender, AxWMPLib._WMPOCXEvents_MouseDownEvent e)
         {
-            if ((e.Location.X != mPos.X) || (e.Location.Y != mPos.Y))
-            {
-                this.UnVisibleAllPanels();
+            this.UnVisibleAllPanels();
 
-                //显示隐藏按钮
-                this.Button_LastCouponsPage.Visible = true;
-                this.Button_NextCouponsPage.Visible = true;
+            //显示隐藏按钮
+            this.Button_LastCouponsPage.Visible = true;
+            this.Button_NextCouponsPage.Visible = true;
 
-                //切换
-                int y = this.VerticalScroll.Value;
-                this.Panel_Home.Location = new System.Drawing.Point(0, 95 - y);
+            //切换
+            int y = this.VerticalScroll.Value;
+            this.Panel_Home.Location = new System.Drawing.Point(0, 95 - y);
 
-                this.InitHomeData();
-                this.Panel_Home.Visible = true;
-                this.ShowHome();
-            }
+            this.InitHomeData();
+            this.Panel_Home.Visible = true;
+            this.ShowHome();
 
-            mPos = e.Location;
+            mPos = new Point(e.fX, e.fY);
+        }
+
+        private void Ad_MouseDown(object sender, MouseEventArgs e)
+        {
+            this.UnVisibleAllPanels();
+
+            //显示隐藏按钮
+            this.Button_LastCouponsPage.Visible = true;
+            this.Button_NextCouponsPage.Visible = true;
+
+            //切换
+            int y = this.VerticalScroll.Value;
+            this.Panel_Home.Location = new System.Drawing.Point(0, 95 - y);
+
+            this.InitHomeData();
+            this.Panel_Home.Visible = true;
+            this.ShowHome();
+
+            mPos = new Point(e.X, e.Y);
         }
 
         private void MainFrame_MouseMove(object sender, MouseEventArgs e)
@@ -123,9 +139,9 @@ namespace ECouponsPrinter
             {
                 if (ctl.Name == "Panel_Ad")
                 {
-                    ctl.MouseClick += new MouseEventHandler(Ad_MouseClick);
+                    ctl.MouseDown += new MouseEventHandler(Ad_MouseDown);
                     foreach (Control ctl1 in ctl.Controls)
-                        ctl1.MouseClick += new MouseEventHandler(Ad_MouseClick);
+                        ctl1.MouseDown += new MouseEventHandler(Ad_MouseDown);
                     return;
                 }
 
@@ -1030,7 +1046,7 @@ namespace ECouponsPrinter
 
             //展开遮罩窗体
             Thread.Sleep(100);
-          //  th = new Thread(new ThreadStart(TranslateMain));
+            //  th = new Thread(new ThreadStart(TranslateMain));
             //th.Start();
             //启动射频卡检测程序
             this.SCardStart();
@@ -3231,67 +3247,17 @@ namespace ECouponsPrinter
 
                 if (Panel_Ad.Visible == true)
                 {
+                    Panel_Ad.Visible = false;
                     if (this.Panel_Ad.InvokeRequired)
                     {
                         this.Panel_Ad.Invoke((MethodInvoker)delegate
                         {
-                            showContinue = false;
-
-                            if (Ad_PB1 != null)
-                            {
-                                Panel_Ad.Controls.Remove(Ad_PB1);
-                                Ad_PB1.Dispose();
-                            }
-                            if (Ad_PB2 != null)
-                            {
-                                Panel_Ad.Controls.Remove(Ad_PB2);
-                                Ad_PB2.Dispose();
-                            }
-                            if (Ad_MediaPlayer1 != null)
-                            {
-                                Panel_Ad.Controls.Remove(Ad_MediaPlayer1);
-                                Ad_MediaPlayer1.close();
-                                Ad_MediaPlayer1.Dispose();
-                            }
-                            if (Ad_MediaPlayer2 != null)
-                            {
-                                Panel_Ad.Controls.Remove(Ad_MediaPlayer2);
-                                Ad_MediaPlayer2.close();
-                                Ad_MediaPlayer2.Dispose();
-                            }
-                            Panel_Ad.Controls.Clear();
                             Panel_Ad.Controls.Add(Label_AdClick);
                             ShowAd();
                         }, null);
                     }
                     else
                     {
-                        showContinue = false;
-                        Panel_Ad.Controls.Remove(Ad_PB1);
-                        Panel_Ad.Controls.Remove(Ad_PB2);
-                        Panel_Ad.Controls.Remove(Ad_MediaPlayer1);
-                        Panel_Ad.Controls.Remove(Ad_MediaPlayer2);
-                        if (Ad_PB1 != null)
-                        {
-                            Ad_PB1.Dispose();
-                        }
-                        if (Ad_PB2 != null)
-                        {
-                            Ad_PB2.Dispose();
-                        }
-                        if (Ad_MediaPlayer1 != null)
-                        {
-                            Panel_Ad.Controls.Remove(Ad_MediaPlayer1);
-                            Ad_MediaPlayer1.close();
-                            Ad_MediaPlayer1.Dispose();
-                        }
-                        if (Ad_MediaPlayer2 != null)
-                        {
-                            Panel_Ad.Controls.Remove(Ad_MediaPlayer2);
-                            Ad_MediaPlayer2.close();
-                            Ad_MediaPlayer2.Dispose();
-                        }
-                        Panel_Ad.Controls.Clear();
                         Panel_Ad.Controls.Add(Label_AdClick);
                         ShowAd();
                     }
@@ -3305,6 +3271,7 @@ namespace ECouponsPrinter
             if (Panel_Ad.Visible == false)
             {
                 showContinue = false;
+                Panel_Ad.Controls.Clear();
                 if (Ad_PB1 != null)
                 {
                     Ad_PB1.Dispose();
@@ -3315,11 +3282,15 @@ namespace ECouponsPrinter
                 }
                 if (Ad_MediaPlayer1 != null)
                 {
+                    Panel_Ad.Controls.Remove(Ad_MediaPlayer1);
+                    Ad_MediaPlayer1.Ctlcontrols.stop();
                     Ad_MediaPlayer1.close();
                     Ad_MediaPlayer1.Dispose();
                 }
                 if (Ad_MediaPlayer2 != null)
                 {
+                    Panel_Ad.Controls.Remove(Ad_MediaPlayer2);
+                    Ad_MediaPlayer2.Ctlcontrols.stop();
                     Ad_MediaPlayer2.close();
                     Ad_MediaPlayer2.Dispose();
                 }
@@ -3333,8 +3304,10 @@ namespace ECouponsPrinter
                             PicThread.Join();
                         }
                     }
-                    catch (Exception)
-                    { }
+                    catch (Exception e1)
+                    {
+                        ErrorLog.log(e1);
+                    }
                 }
 
             }
@@ -3377,6 +3350,7 @@ namespace ECouponsPrinter
                     Ad_MediaPlayer1.Name = "Ad_MediaPlayer1";
                     Ad_MediaPlayer1.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("Ad_MediaPlayer.OcxState")));
                     Ad_MediaPlayer1.Size = new System.Drawing.Size(768, 576);
+                    Ad_MediaPlayer1.MouseDownEvent += new AxWMPLib._WMPOCXEvents_MouseDownEventHandler(Ad_WMVMovieDown);
                     Panel_Ad.Controls.Add(Ad_MediaPlayer1);
                     ((System.ComponentModel.ISupportInitialize)(Ad_MediaPlayer1)).EndInit();
                     Ad_MediaPlayer1.uiMode = "none";
@@ -3390,6 +3364,7 @@ namespace ECouponsPrinter
                     Ad_PB1.Location = new System.Drawing.Point(0, 0);
                     Ad_PB1.Name = "Ad_PB1";
                     Ad_PB1.Size = new System.Drawing.Size(768, 576);
+                    Ad_PB1.MouseDown += new MouseEventHandler(Ad_MouseDown);
                     Panel_Ad.Controls.Add(Ad_PB1);
                     showType = 2;
                 }
@@ -3406,6 +3381,7 @@ namespace ECouponsPrinter
                     Ad_MediaPlayer1.Name = "Ad_MediaPlayer1";
                     Ad_MediaPlayer1.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("Ad_MediaPlayer.OcxState")));
                     Ad_MediaPlayer1.Size = new System.Drawing.Size(768, 576);
+                    Ad_MediaPlayer1.MouseDownEvent += new AxWMPLib._WMPOCXEvents_MouseDownEventHandler(Ad_WMVMovieDown);
                     Panel_Ad.Controls.Add(Ad_MediaPlayer1);
                     ((System.ComponentModel.ISupportInitialize)(Ad_MediaPlayer1)).EndInit();
                     Ad_MediaPlayer1.uiMode = "none";
@@ -3419,6 +3395,7 @@ namespace ECouponsPrinter
                     Ad_PB1.Location = new System.Drawing.Point(0, 680);
                     Ad_PB1.Name = "Ad_PB1";
                     Ad_PB1.Size = new System.Drawing.Size(768, 576);
+                    Ad_PB1.MouseDown += new MouseEventHandler(Ad_MouseDown);
                     Panel_Ad.Controls.Add(Ad_PB1);
 
                     showType = 2;
@@ -3439,6 +3416,7 @@ namespace ECouponsPrinter
                     Ad_MediaPlayer2.Name = "Ad_MediaPlayer2";
                     Ad_MediaPlayer2.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("Ad_MediaPlayer.OcxState")));
                     Ad_MediaPlayer2.Size = new System.Drawing.Size(768, 576);
+                    Ad_MediaPlayer2.MouseDownEvent += new AxWMPLib._WMPOCXEvents_MouseDownEventHandler(Ad_WMVMovieDown);
                     Panel_Ad.Controls.Add(Ad_MediaPlayer2);
                     ((System.ComponentModel.ISupportInitialize)(Ad_MediaPlayer2)).EndInit();
                     Ad_MediaPlayer2.uiMode = "none";
@@ -3461,6 +3439,7 @@ namespace ECouponsPrinter
                     Ad_PB2.Location = new System.Drawing.Point(0, y);
                     Ad_PB2.Name = "Ad_PB2";
                     Ad_PB2.Size = new System.Drawing.Size(768, 576);
+                    Ad_PB2.MouseDown += new MouseEventHandler(Ad_MouseDown);
                     Panel_Ad.Controls.Add(Ad_PB2);
 
                     if (showType == 1)
@@ -3773,8 +3752,6 @@ namespace ECouponsPrinter
             InitUserQuitTime();
 
             this.UnVisibleAllPanels();
-
-            this.InitTimer();
 
             //显示隐藏按钮
             this.Button_LastCouponsPage.Visible = true;
