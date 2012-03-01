@@ -34,6 +34,7 @@
             this.Label_ScrollText = new Marquee.UserControl1(this.components);
             this.Label_Option = new System.Windows.Forms.Label();
             this.Label_Countdown = new System.Windows.Forms.Label();
+            this.LoginText = new System.Windows.Forms.TextBox();
             this.Panel_Bottom = new System.Windows.Forms.Panel();
             this.Button_LastCouponsPage = new System.Windows.Forms.Button();
             this.Button_NextCouponsPage = new System.Windows.Forms.Button();
@@ -199,6 +200,7 @@
             this.Panel_Ad = new System.Windows.Forms.Panel();
             this.Label_AdClick = new System.Windows.Forms.Label();
             this.Timer_UserQuit = new System.Windows.Forms.Timer(this.components);
+            this.SCardTimer = new System.Windows.Forms.Timer(this.components);
             this.Panel_Top.SuspendLayout();
             this.Panel_Bottom.SuspendLayout();
             this.Panel_Home.SuspendLayout();
@@ -332,6 +334,7 @@
             // 
             this.Panel_Top.BackColor = System.Drawing.SystemColors.Control;
             this.Panel_Top.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("Panel_Top.BackgroundImage")));
+            this.Panel_Top.Controls.Add(this.LoginText);
             this.Panel_Top.Controls.Add(this.Label_ScrollText);
             this.Panel_Top.Controls.Add(this.Label_Option);
             this.Panel_Top.Controls.Add(this.Label_Countdown);
@@ -381,6 +384,13 @@
             this.Label_Countdown.UseMnemonic = false;
             this.Label_Countdown.DoubleClick += new System.EventHandler(this.Label_Countdown_DoubleClick);
             this.Label_Countdown.Click += new System.EventHandler(this.Label_Countdown_Click);
+            // 
+            // LoginText
+            // 
+            this.LoginText.Location = new System.Drawing.Point(577, 12);
+            this.LoginText.Name = "LoginText";
+            this.LoginText.Size = new System.Drawing.Size(104, 21);
+            this.LoginText.TabIndex = 72;
             // 
             // Panel_Bottom
             // 
@@ -2286,6 +2296,11 @@
             this.Timer_UserQuit.Interval = 1000;
             this.Timer_UserQuit.Tick += new System.EventHandler(this.Timer_UserQuit_Tick);
             // 
+            // SCardTimer
+            // 
+            this.SCardTimer.Interval = 500;
+            this.SCardTimer.Tick += new System.EventHandler(this.SCardTimer_Tick);
+            // 
             // MainFrame
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -2294,7 +2309,7 @@
             this.ClientSize = new System.Drawing.Size(956, 742);
             this.Controls.Add(this.Panel_Ad);
             this.Controls.Add(this.Panel_Bottom);
-            this.Controls.Add(this.Panel_Home);      
+            this.Controls.Add(this.Panel_Home);
             this.Controls.Add(this.Panel_Shop);
             this.Controls.Add(this.Panel_MyInfo);
             this.Controls.Add(this.Panel_Coupons);
@@ -2305,10 +2320,10 @@
             this.Name = "MainFrame";
             this.Text = "MainFrame";
             this.Load += new System.EventHandler(this.MainFrame_Load);
-            this.MouseEnter += new System.EventHandler(this.MainFrame_MouseEnter);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainFrame_Closing);
             this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.MainFrame_MouseMove);
             this.Panel_Top.ResumeLayout(false);
+            this.Panel_Top.PerformLayout();
             this.Panel_Bottom.ResumeLayout(false);
             this.Panel_Home.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.PB_Home_Bottom12)).EndInit();
@@ -2611,6 +2626,8 @@
         private System.Windows.Forms.Panel Panel_Ad;
         private System.Windows.Forms.Label Label_AdClick;
         private System.Windows.Forms.Timer Timer_UserQuit;
+        private System.Windows.Forms.Timer SCardTimer;
+        private System.Windows.Forms.TextBox LoginText;
 
     }
 }
