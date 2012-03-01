@@ -349,9 +349,12 @@
             // 
             // LoginText
             // 
-            this.LoginText.Location = new System.Drawing.Point(577, 12);
+            this.LoginText.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.LoginText.Cursor = System.Windows.Forms.Cursors.Arrow;
+            this.LoginText.Font = new System.Drawing.Font("宋体", 1F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.LoginText.Location = new System.Drawing.Point(763, 2);
             this.LoginText.Name = "LoginText";
-            this.LoginText.Size = new System.Drawing.Size(104, 21);
+            this.LoginText.Size = new System.Drawing.Size(1, 2);
             this.LoginText.TabIndex = 72;
             // 
             // Label_ScrollText
@@ -2330,6 +2333,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(956, 742);
+            this.Controls.Add(this.Panel_NearShop);
             this.Controls.Add(this.Panel_Black);
             this.Controls.Add(this.Panel_Coupons);
             this.Controls.Add(this.Panel_Ad);
@@ -2337,7 +2341,7 @@
             this.Controls.Add(this.Panel_Home);
             this.Controls.Add(this.Panel_Shop);
             this.Controls.Add(this.Panel_MyInfo);
-            this.Controls.Add(this.Panel_NearShop);
+
             this.Controls.Add(this.Panel_ShopInfo);
             this.Controls.Add(this.Panel_Top);
             this.DoubleBuffered = true;

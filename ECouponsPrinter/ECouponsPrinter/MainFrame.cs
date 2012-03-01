@@ -82,6 +82,8 @@ namespace ECouponsPrinter
         {
             this.UnVisibleAllPanels();
 
+            this.InitTimer();
+
             //显示隐藏按钮
             this.Button_LastCouponsPage.Visible = true;
             this.Button_NextCouponsPage.Visible = true;
@@ -94,13 +96,14 @@ namespace ECouponsPrinter
             this.Panel_Home.Visible = true;
             this.ShowHome();
 
-            mPos = new Point(e.fX, e.fY);
         }
 
         private void Ad_MouseDown(object sender, MouseEventArgs e)
         {
             this.UnVisibleAllPanels();
 
+            this.InitTimer();
+
             //显示隐藏按钮
             this.Button_LastCouponsPage.Visible = true;
             this.Button_NextCouponsPage.Visible = true;
@@ -113,7 +116,6 @@ namespace ECouponsPrinter
             this.Panel_Home.Visible = true;
             this.ShowHome();
 
-            mPos = new Point(e.X, e.Y);
         }
 
         private void MainFrame_MouseMove(object sender, MouseEventArgs e)
@@ -821,8 +823,8 @@ namespace ECouponsPrinter
             this.Btn_NewCouponList.Visible = true;
 
             InitCouponButton();
-            this.Panel_Coupons.Visible = true;          
-            ShowCouponCommonBtn();          
+            this.Panel_Coupons.Visible = true;
+            ShowCouponCommonBtn();
             ShowCoupon();
 
             //         Thread.Sleep(100);
@@ -1111,7 +1113,7 @@ namespace ECouponsPrinter
             //this.Label_ScrollText.Start();
 
             //加载计时器
-            this.Timer_Countdown.Enabled = true;
+            InitTimer();
 
             //加载隐藏按钮
             this.Label_Option.BackColor = Color.Transparent;
@@ -1126,10 +1128,6 @@ namespace ECouponsPrinter
             this.OnLoadLabelStyle(90, Color.White);
             ShowHome();
 
-            //展开遮罩窗体
-            Thread.Sleep(100);
-            //  th = new Thread(new ThreadStart(TranslateMain));
-            //th.Start();
             //启动射频卡检测程序
             this.SCardStart();
 
@@ -1216,6 +1214,7 @@ namespace ECouponsPrinter
         {
             this.Timer_Countdown.Enabled = true;
             this.Timer_Countdown.Stop();
+            this.Timer_Countdown.Interval = 1000;
             CountDownNumber = GlobalVariables.WindowWaitTime;
             this.Timer_Countdown.Start();
         }
@@ -1265,6 +1264,23 @@ namespace ECouponsPrinter
             UserQuitTime--;
             this.Timer_UserQuit.Start();
 
+        }
+
+        /// <summary>
+        /// 用户等待无操作Timer
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Label_Countdown_Click(object sender, EventArgs e)
+        {
+            this.Timer_UserQuit.Stop();
+            this.Timer_UserQuit.Enabled = false;
+
+            this.Label_Countdown.Font = new Font("Microsoft Sans Serif", 25, FontStyle.Bold);
+            this.Label_Countdown.ForeColor = Color.White;
+            this.Label_Countdown.Text = "请先刷卡";
+            GlobalVariables.isUserLogin = false;
+            InitTimer();
         }
         #endregion
 
@@ -1323,23 +1339,6 @@ namespace ECouponsPrinter
 
         }
         #endregion
-
-        /// <summary>
-        /// 用户等待无操作Timer
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Label_Countdown_Click(object sender, EventArgs e)
-        {
-            this.Timer_UserQuit.Stop();
-            this.Timer_UserQuit.Enabled = false;
-
-            this.Label_Countdown.Font = new Font("Microsoft Sans Serif", 25, FontStyle.Bold);
-            this.Label_Countdown.ForeColor = Color.White;
-            this.Label_Countdown.Text = "请先刷卡";
-            GlobalVariables.isUserLogin = false;
-            InitTimer();
-        }
 
         private void Label_Countdown_DoubleClick(object sender, EventArgs e)
         {
@@ -1664,23 +1663,19 @@ namespace ECouponsPrinter
             }
         }
 
+        /// <summary>
+        /// 下载后初始化广告倒计时和用户等待倒计时
+        /// </summary>
         private void InitParam()
         {
             if (!GlobalVariables.isUserLogin)
             {
-                this.Timer_Countdown.Stop();
-                this.Timer_Countdown.Interval = GlobalVariables.WindowWaitTime;
-                this.Timer_Countdown.Start();
+                InitTimer();
             }
             else
             {
-                this.Timer_UserQuit.Stop();
-                this.Timer_UserQuit.Interval = GlobalVariables.UserWaitTime;
-                this.Timer_UserQuit.Start();
+                InitUserQuitTime();
             }
-            this.Timer_DownloadInfo.Stop();
-            this.Timer_DownloadInfo.Interval = GlobalVariables.IntRefreshSec;
-            this.Timer_DownloadInfo.Start();
         }
 
         #endregion
@@ -2271,7 +2266,7 @@ namespace ECouponsPrinter
             int titleNum = temp.Name.Substring(15, 1)[0] - '0';
             titleNum--;
 
-            for (int i = titleNum%3; i < Label_Shop_Type.Length; i+=3)
+            for (int i = titleNum % 3; i < Label_Shop_Type.Length; i += 3)
             {
                 Label_Shop_Type[i].ForeColor = Color.White;
             }
@@ -2736,6 +2731,8 @@ namespace ECouponsPrinter
 
             theShopNum = num - 1;
             //      MessageBox.Show(num.ToString());
+
+            Label_NearShopName.Text = LP_stype[0][num - 1 + (curPage - 1) * 24].name;
 
             FileStream pFileStream = new FileStream(LP_stype[0][num - 1 + (curPage - 1) * 24].lpath, FileMode.Open, FileAccess.Read);
             PB_NearShop_Top.Image = new Bitmap(Image.FromStream(pFileStream), 761, 389);
@@ -3341,7 +3338,7 @@ namespace ECouponsPrinter
                 //mb.ShowMsg(temp, 5);
 
                 if (Panel_Ad.Visible == true)
-                {                  
+                {
                     if (this.Panel_Ad.InvokeRequired)
                     {
                         this.Panel_Ad.Invoke((MethodInvoker)delegate
@@ -3387,7 +3384,7 @@ namespace ECouponsPrinter
                     }
                     catch (Exception e1)
                     {
-                      //  ErrorLog.log(e1);
+                        //  ErrorLog.log(e1);
                     }
                 }
                 if (Ad_MediaPlayer2 != null)
@@ -3401,7 +3398,7 @@ namespace ECouponsPrinter
                     }
                     catch (Exception e2)
                     {
-                     //   ErrorLog.log(e2);
+                        //   ErrorLog.log(e2);
                     }
                 }
                 if (PicThread != null)
