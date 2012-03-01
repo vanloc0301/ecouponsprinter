@@ -31,10 +31,10 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainFrame));
             this.Panel_Top = new System.Windows.Forms.Panel();
+            this.LoginText = new System.Windows.Forms.TextBox();
             this.Label_ScrollText = new Marquee.UserControl1(this.components);
             this.Label_Option = new System.Windows.Forms.Label();
             this.Label_Countdown = new System.Windows.Forms.Label();
-            this.LoginText = new System.Windows.Forms.TextBox();
             this.Panel_Bottom = new System.Windows.Forms.Panel();
             this.Button_LastCouponsPage = new System.Windows.Forms.Button();
             this.Button_NextCouponsPage = new System.Windows.Forms.Button();
@@ -201,6 +201,8 @@
             this.Label_AdClick = new System.Windows.Forms.Label();
             this.Timer_UserQuit = new System.Windows.Forms.Timer(this.components);
             this.SCardTimer = new System.Windows.Forms.Timer(this.components);
+            this.Panel_Black = new System.Windows.Forms.Panel();
+            this.Label_Black_Info = new System.Windows.Forms.Label();
             this.Panel_Top.SuspendLayout();
             this.Panel_Bottom.SuspendLayout();
             this.Panel_Home.SuspendLayout();
@@ -328,6 +330,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.PB_NearShop13)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PB_NearShop_Top)).BeginInit();
             this.Panel_Ad.SuspendLayout();
+            this.Panel_Black.SuspendLayout();
             this.SuspendLayout();
             // 
             // Panel_Top
@@ -343,6 +346,13 @@
             this.Panel_Top.Name = "Panel_Top";
             this.Panel_Top.Size = new System.Drawing.Size(768, 101);
             this.Panel_Top.TabIndex = 0;
+            // 
+            // LoginText
+            // 
+            this.LoginText.Location = new System.Drawing.Point(577, 12);
+            this.LoginText.Name = "LoginText";
+            this.LoginText.Size = new System.Drawing.Size(104, 21);
+            this.LoginText.TabIndex = 72;
             // 
             // Label_ScrollText
             // 
@@ -384,13 +394,6 @@
             this.Label_Countdown.UseMnemonic = false;
             this.Label_Countdown.DoubleClick += new System.EventHandler(this.Label_Countdown_DoubleClick);
             this.Label_Countdown.Click += new System.EventHandler(this.Label_Countdown_Click);
-            // 
-            // LoginText
-            // 
-            this.LoginText.Location = new System.Drawing.Point(577, 12);
-            this.LoginText.Name = "LoginText";
-            this.LoginText.Size = new System.Drawing.Size(104, 21);
-            this.LoginText.TabIndex = 72;
             // 
             // Panel_Bottom
             // 
@@ -2301,19 +2304,39 @@
             this.SCardTimer.Interval = 500;
             this.SCardTimer.Tick += new System.EventHandler(this.SCardTimer_Tick);
             // 
+            // Panel_Black
+            // 
+            this.Panel_Black.BackColor = System.Drawing.Color.Black;
+            this.Panel_Black.Controls.Add(this.Label_Black_Info);
+            this.Panel_Black.Location = new System.Drawing.Point(0, 0);
+            this.Panel_Black.Name = "Panel_Black";
+            this.Panel_Black.Size = new System.Drawing.Size(768, 1366);
+            this.Panel_Black.TabIndex = 72;
+            // 
+            // Label_Black_Info
+            // 
+            this.Label_Black_Info.Font = new System.Drawing.Font("宋体", 30F, System.Drawing.FontStyle.Bold);
+            this.Label_Black_Info.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.Label_Black_Info.Location = new System.Drawing.Point(97, 622);
+            this.Label_Black_Info.Name = "Label_Black_Info";
+            this.Label_Black_Info.Size = new System.Drawing.Size(487, 85);
+            this.Label_Black_Info.TabIndex = 0;
+            this.Label_Black_Info.Text = "正在启动，请稍后....";
+            this.Label_Black_Info.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // MainFrame
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(956, 742);
+            this.Controls.Add(this.Panel_Black);
             this.Controls.Add(this.Panel_Coupons);
             this.Controls.Add(this.Panel_Ad);
             this.Controls.Add(this.Panel_Bottom);
             this.Controls.Add(this.Panel_Home);
             this.Controls.Add(this.Panel_Shop);
             this.Controls.Add(this.Panel_MyInfo);
-            
             this.Controls.Add(this.Panel_NearShop);
             this.Controls.Add(this.Panel_ShopInfo);
             this.Controls.Add(this.Panel_Top);
@@ -2452,6 +2475,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.PB_NearShop_Top)).EndInit();
             this.Panel_Ad.ResumeLayout(false);
             this.Panel_Ad.PerformLayout();
+            this.Panel_Black.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -2629,6 +2653,8 @@
         private System.Windows.Forms.Timer Timer_UserQuit;
         private System.Windows.Forms.Timer SCardTimer;
         private System.Windows.Forms.TextBox LoginText;
+        private System.Windows.Forms.Panel Panel_Black;
+        private System.Windows.Forms.Label Label_Black_Info;
 
     }
 }

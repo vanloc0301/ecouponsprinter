@@ -22,8 +22,8 @@ namespace ECouponsPrinter
 
         private void button1_Click(object sender, EventArgs e)
         {
-            DownloadInfo di = new DownloadInfo();
-            di.download();
+        //    DownloadInfo di = new DownloadInfo(this);
+        //    di.download();
         }
 
         public void setText(string str)
@@ -111,8 +111,8 @@ namespace ECouponsPrinter
 
         private void button7_Click(object sender, EventArgs e)
         {
-            DownloadInfo di = new DownloadInfo();
-            di.SynParam();
+            //DownloadInfo di = new DownloadInfo();
+            //di.SynParam();
         }
 
         private void button8_Click(object sender, EventArgs e)
@@ -167,40 +167,40 @@ namespace ECouponsPrinter
 
         private void button11_Click(object sender, EventArgs e)
         {
-            DownloadInfo di = new DownloadInfo();
-            string[] aryStrCouponId = di.CouponTop();
-            if (aryStrCouponId.Length == 0)
-            {
-                MessageBox.Show("没有数据！");
-            }
-            else
-            {
-                string strCouponIds = "";
-                for (int i = 0; i < aryStrCouponId.Length; i++)
-                {
-                    strCouponIds += aryStrCouponId[i] + ",";
-                }
-                MessageBox.Show(strCouponIds);
-            }
+        //    DownloadInfo di = new DownloadInfo();
+        //    string[] aryStrCouponId = di.CouponTop();
+        //    if (aryStrCouponId.Length == 0)
+        //    {
+        //        MessageBox.Show("没有数据！");
+        //    }
+        //    else
+        //    {
+        //        string strCouponIds = "";
+        //        for (int i = 0; i < aryStrCouponId.Length; i++)
+        //        {
+        //            strCouponIds += aryStrCouponId[i] + ",";
+        //        }
+        //        MessageBox.Show(strCouponIds);
+        //    }
         }
 
         private void button12_Click(object sender, EventArgs e)
         {
-            DownloadInfo di = new DownloadInfo();
-            string[] aryStrShopId = di.ShopAround();
-            if (aryStrShopId.Length == 0)
-            {
-                MessageBox.Show("没有数据！");
-            }
-            else
-            {
-                string strShopIds = "";
-                for (int i = 0; i < aryStrShopId.Length; i++)
-                {
-                    strShopIds += aryStrShopId[i] + ",";
-                }
-                MessageBox.Show(strShopIds);
-            }
+            //DownloadInfo di = new DownloadInfo();
+            //string[] aryStrShopId = di.ShopAround();
+            //if (aryStrShopId.Length == 0)
+            //{
+            //    MessageBox.Show("没有数据！");
+            //}
+            //else
+            //{
+            //    string strShopIds = "";
+            //    for (int i = 0; i < aryStrShopId.Length; i++)
+            //    {
+            //        strShopIds += aryStrShopId[i] + ",";
+            //    }
+            //    MessageBox.Show(strShopIds);
+            //}
         }
 
         private string[] lines;
