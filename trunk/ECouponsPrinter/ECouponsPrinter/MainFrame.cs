@@ -1812,7 +1812,6 @@ namespace ECouponsPrinter
             }
 
             theCouponNum = num - 1;
-            MessageBox.Show(theCouponNum.ToString());
 
             pFileStream = new FileStream(LP_ctype[0][num - 1 + (curPage - 1) * 12].lpath, FileMode.Open, FileAccess.Read);
             PB_Home_Down.Image = new Bitmap(Image.FromStream(pFileStream), 761, 389);
@@ -2576,11 +2575,19 @@ namespace ECouponsPrinter
 
             if (type == "Fav")
             {
-                PB_MyInfo_Fav.Image = new Bitmap(Image.FromFile(LP_ctype[0][num - 1 + (cPage1 - 1) * 6].lpath), 734, 366);
+                FileStream pFileStream = new FileStream(LP_ctype[0][num - 1 + (cPage1 - 1) * 6].lpath, FileMode.Open, FileAccess.Read);
+                PB_MyInfo_Fav.Image = new Bitmap(Image.FromStream(pFileStream), 734, 366);
+                pFileStream.Close();
+                pFileStream.Dispose();
+
             }
             else
             {
-                PB_MyInfo_His.Image = new Bitmap(Image.FromFile(LP_ctype[1][num - 1 + (cPage2 - 1) * 6].lpath), 734, 366);
+                FileStream pFileStream = new FileStream(LP_ctype[1][num - 1 + (cPage2 - 1) * 6].lpath, FileMode.Open, FileAccess.Read);
+                PB_MyInfo_His.Image = new Bitmap(Image.FromStream(pFileStream), 734, 366);
+                pFileStream.Close();
+                pFileStream.Dispose();
+
             }
 
         }
@@ -3762,7 +3769,6 @@ namespace ECouponsPrinter
                         }
                     }
 
-                    MessageBox.Show(cardtext);
                     if (!UserLogin(cardtext))
                     {
                         isFirstKey = true;
