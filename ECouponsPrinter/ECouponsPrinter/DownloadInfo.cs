@@ -13,11 +13,16 @@ namespace ECouponsPrinter
     class DownloadInfo
     {
         private HttpRequest request = new HttpRequest();
+        private MainFrame form;
 
-        public DownloadInfo() { }
+        public DownloadInfo(MainFrame f) 
+        {
+            form = f;
+        }
 
         public void download()
         {
+            form.BeforeDownload();
             //下载商家信息
             request.OpenRequest(GlobalVariables.StrServerUrl + "/servlet/ShopDownload?strTerminalNo=" + GlobalVariables.StrTerminalNo, "");
             XmlDocument doc = new XmlDocument();
@@ -124,6 +129,7 @@ namespace ECouponsPrinter
                     }
                 }
             }
+            form.AfterDownload();
         }
 
         private void deleteAd(XmlNode xn)

@@ -54,6 +54,7 @@ namespace ECouponsPrinter
             this.Panel_Home.GetType().GetProperty("DoubleBuffered", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic).SetValue(Panel_Home, true, null);
             this.Panel_NearShop.GetType().GetProperty("DoubleBuffered", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic).SetValue(Panel_NearShop, true, null);
             this.Panel_Ad.GetType().GetProperty("DoubleBuffered", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic).SetValue(Panel_Ad, true, null);
+            this.Panel_Black.GetType().GetProperty("DoubleBuffered", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic).SetValue(Panel_Black, true, null);
             // 根据分辨率作出调整
             //Size size = SystemInformation.PrimaryMonitorSize;
             //int width = size.Width;
@@ -145,7 +146,7 @@ namespace ECouponsPrinter
                     return;
                 }
 
-                if (ctl != Label_Option && ctl != this)
+                if (ctl != Label_Option && ctl.Name != "MainFrame")
                 {
                     ctl.MouseMove += new MouseEventHandler(MainFrame_MouseMove);
                 }
@@ -589,7 +590,7 @@ namespace ECouponsPrinter
         {
             ChangeExternThreeButtonForeColor(sender as Button);
 
-            DownloadInfo di = new DownloadInfo();
+            DownloadInfo di = new DownloadInfo(this);
             string[] aryStrCouponId = di.CouponTop();
             MyMsgBox mb = new MyMsgBox();
 
@@ -1173,6 +1174,7 @@ namespace ECouponsPrinter
             this.Panel_Coupons.Visible = false;
             this.Panel_NearShop.Visible = false;
             this.Panel_Ad.Visible = false;
+            this.Panel_Black.Visible = false;
 
             return null;
         }
@@ -1650,6 +1652,8 @@ namespace ECouponsPrinter
                     else if (strParamName.Equals("strServerUrl"))
                         GlobalVariables.StrServerUrl = reader.GetString(2);
                 }
+
+                InitParam();
                 reader.Close();
                 cmd.Close();
 
@@ -1658,6 +1662,25 @@ namespace ECouponsPrinter
             {
                 ErrorLog.log(e);
             }
+        }
+
+        private void InitParam()
+        {
+            if (!GlobalVariables.isUserLogin)
+            {
+                this.Timer_Countdown.Stop();
+                this.Timer_Countdown.Interval = GlobalVariables.WindowWaitTime;
+                this.Timer_Countdown.Start();
+            }
+            else
+            {
+                this.Timer_UserQuit.Stop();
+                this.Timer_UserQuit.Interval = GlobalVariables.UserWaitTime;
+                this.Timer_UserQuit.Start();
+            }
+            this.Timer_DownloadInfo.Stop();
+            this.Timer_DownloadInfo.Interval = GlobalVariables.IntRefreshSec;
+            this.Timer_DownloadInfo.Start();
         }
 
         #endregion
@@ -2586,7 +2609,7 @@ namespace ECouponsPrinter
                 }
             }
 
-            DownloadInfo di = new DownloadInfo();
+            DownloadInfo di = new DownloadInfo(this);
             string[] aryStrShopId = di.ShopAround();
             MyMsgBox mb = new MyMsgBox();
 
@@ -3362,9 +3385,9 @@ namespace ECouponsPrinter
                         Ad_MediaPlayer1.close();
                         Ad_MediaPlayer1.Dispose();
                     }
-                    catch (Exception)
-                    { 
-                        
+                    catch (Exception e1)
+                    {
+                      //  ErrorLog.log(e1);
                     }
                 }
                 if (Ad_MediaPlayer2 != null)
@@ -3376,8 +3399,10 @@ namespace ECouponsPrinter
                         Ad_MediaPlayer2.close();
                         Ad_MediaPlayer2.Dispose();
                     }
-                    catch (Exception)
-                    { }
+                    catch (Exception e2)
+                    {
+                     //   ErrorLog.log(e2);
+                    }
                 }
                 if (PicThread != null)
                 {
@@ -3399,33 +3424,6 @@ namespace ECouponsPrinter
 
             if (Panel_Ad.Visible == true)
             {
-                if (Ad_MediaPlayer1 != null)
-                {
-                    try
-                    {
-                        Panel_Ad.Controls.Remove(Ad_MediaPlayer1);
-                        Ad_MediaPlayer1.Ctlcontrols.stop();
-                        Ad_MediaPlayer1.close();
-                        Ad_MediaPlayer1.Dispose();
-                    }
-                    catch (Exception)
-                    {
-
-                    }
-                }
-                if (Ad_MediaPlayer2 != null)
-                {
-                    try
-                    {
-                        Panel_Ad.Controls.Remove(Ad_MediaPlayer2);
-                        Ad_MediaPlayer2.Ctlcontrols.stop();
-                        Ad_MediaPlayer2.close();
-                        Ad_MediaPlayer2.Dispose();
-                    }
-                    catch (Exception)
-                    { }
-                }
-
                 string time = DateTime.Now.ToString("H:m:s");
                 string strSql = "select * from t_bz_advertisement where #" + time + "#>=dtStartTime And #" + time + "#<dtEndTime And (intType=1 or intType=2)";
                 AccessCmd cmd = new AccessCmd();
@@ -3887,6 +3885,20 @@ namespace ECouponsPrinter
         }
         #endregion 用户登录模块
 
+        public void BeforeDownload()
+        {
+            this.UnVisibleAllPanels();
+            this.Label_Black_Info.Text = "正在下载更新数据,请稍后.....";
+            this.Panel_Black.Visible = true;
+
+        }
+
+        public void AfterDownload()
+        {
+            this.UnVisibleAllPanels();
+            this.Button_HomePage_MouseUp(null, null);
+        }
+
         /// <summary>
         /// 定时刷新
         /// </summary>
@@ -3898,7 +3910,7 @@ namespace ECouponsPrinter
             try
             {
                 //下载信息
-                DownloadInfo di = new DownloadInfo();
+                DownloadInfo di = new DownloadInfo(this);
                 di.download();
                 di.SynParam();
                 //同步数据
