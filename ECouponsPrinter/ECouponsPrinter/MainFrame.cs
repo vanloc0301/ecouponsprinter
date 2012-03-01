@@ -1242,6 +1242,7 @@ namespace ECouponsPrinter
                 this.Label_Countdown.Text = "请先刷卡";
                 GlobalVariables.isUserLogin = false;
 
+                this.Timer_DownloadInfo.Start();
                 InitTimer();
             }
             else
@@ -1280,6 +1281,7 @@ namespace ECouponsPrinter
             this.Label_Countdown.ForeColor = Color.White;
             this.Label_Countdown.Text = "请先刷卡";
             GlobalVariables.isUserLogin = false;
+            this.Timer_DownloadInfo.Start();
             InitTimer();
         }
         #endregion
@@ -3858,6 +3860,8 @@ namespace ECouponsPrinter
             this.Timer_Countdown.Enabled = false;
             this.Label_Countdown.Text = "";
             InitUserQuitTime();
+
+            this.Timer_DownloadInfo.Stop();
 
             this.UnVisibleAllPanels();
 
