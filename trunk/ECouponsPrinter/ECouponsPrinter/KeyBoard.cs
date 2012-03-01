@@ -28,11 +28,11 @@ namespace ECouponsPrinter
 
             if (url == null && pwd == null)
             {
-                hWnd = FindWindow(null, "Login");
+                hWnd = FindWindow(null, "check");
             }
             else if (url == null)
             {
-                hWnd = FindWindow(null, "check");
+                hWnd = FindWindow(null, "Login");
             }
             else
             {
