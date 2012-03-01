@@ -3355,17 +3355,29 @@ namespace ECouponsPrinter
                 }
                 if (Ad_MediaPlayer1 != null)
                 {
-                    Panel_Ad.Controls.Remove(Ad_MediaPlayer1);
-                    Ad_MediaPlayer1.Ctlcontrols.stop();
-                    Ad_MediaPlayer1.close();
-                    Ad_MediaPlayer1.Dispose();
+                    try
+                    {
+                        Panel_Ad.Controls.Remove(Ad_MediaPlayer1);
+                        Ad_MediaPlayer1.Ctlcontrols.stop();
+                        Ad_MediaPlayer1.close();
+                        Ad_MediaPlayer1.Dispose();
+                    }
+                    catch (Exception)
+                    { 
+                        
+                    }
                 }
                 if (Ad_MediaPlayer2 != null)
                 {
-                    Panel_Ad.Controls.Remove(Ad_MediaPlayer2);
-                    Ad_MediaPlayer2.Ctlcontrols.stop();
-                    Ad_MediaPlayer2.close();
-                    Ad_MediaPlayer2.Dispose();
+                    try
+                    {
+                        Panel_Ad.Controls.Remove(Ad_MediaPlayer2);
+                        Ad_MediaPlayer2.Ctlcontrols.stop();
+                        Ad_MediaPlayer2.close();
+                        Ad_MediaPlayer2.Dispose();
+                    }
+                    catch (Exception)
+                    { }
                 }
                 if (PicThread != null)
                 {
@@ -3387,6 +3399,33 @@ namespace ECouponsPrinter
 
             if (Panel_Ad.Visible == true)
             {
+                if (Ad_MediaPlayer1 != null)
+                {
+                    try
+                    {
+                        Panel_Ad.Controls.Remove(Ad_MediaPlayer1);
+                        Ad_MediaPlayer1.Ctlcontrols.stop();
+                        Ad_MediaPlayer1.close();
+                        Ad_MediaPlayer1.Dispose();
+                    }
+                    catch (Exception)
+                    {
+
+                    }
+                }
+                if (Ad_MediaPlayer2 != null)
+                {
+                    try
+                    {
+                        Panel_Ad.Controls.Remove(Ad_MediaPlayer2);
+                        Ad_MediaPlayer2.Ctlcontrols.stop();
+                        Ad_MediaPlayer2.close();
+                        Ad_MediaPlayer2.Dispose();
+                    }
+                    catch (Exception)
+                    { }
+                }
+
                 string time = DateTime.Now.ToString("H:m:s");
                 string strSql = "select * from t_bz_advertisement where #" + time + "#>=dtStartTime And #" + time + "#<dtEndTime And (intType=1 or intType=2)";
                 AccessCmd cmd = new AccessCmd();
