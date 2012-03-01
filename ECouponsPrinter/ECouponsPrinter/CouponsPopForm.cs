@@ -161,6 +161,10 @@ namespace ECouponsPrinter
             reader.Close();
             cmd.Close();
 
+            Label_Into.Text = Intro;
+            Label_Instruction.Text = Instruction;
+            Label_phone.Text = bottomText + "\n" + GlobalVariables.StrPhone;
+
             if (pi.flaPrice != 0)
             {
                 MD5code = this.ReturnCode();
