@@ -1906,11 +1906,6 @@ namespace ECouponsPrinter
         /// </summary>
         private void ShowShopInfo()
         {
-            FileStream pFileStream = new FileStream(LP_ctype[0][0].lpath, FileMode.Open, FileAccess.Read);
-            PB_ShopInfo_Coupons.Image = new Bitmap(Image.FromStream(pFileStream), 760, 407);
-            pFileStream.Close();
-            pFileStream.Dispose();
-
             ShowBottomPicure();
         }
 
@@ -2840,10 +2835,22 @@ namespace ECouponsPrinter
             if (LP_temp != null && LP_temp.Count != 0)
             {
                 if (container == Panel_Home)
-                    PB_Home_Down.Image = new Bitmap(Image.FromFile(LP_temp[(curPage - 1) * 12].lpath), 761, 389);
+                {
+                    FileStream pFileStream = new FileStream(LP_temp[(curPage - 1) * 12].lpath, FileMode.Open, FileAccess.Read);
+                    PB_Home_Down.Image = new Bitmap(Image.FromStream(pFileStream), 761, 389);
+                    pFileStream.Close();
+                    pFileStream.Dispose();
+
+                }
 
                 if (container == Panel_ShopInfo)
-                    PB_ShopInfo_Coupons.Image = new Bitmap(Image.FromFile(LP_temp[(curPage - 1) * 6].lpath), 760, 407);
+                {
+                    FileStream pFileStream = new FileStream(LP_temp[(curPage - 1) * 6].lpath, FileMode.Open, FileAccess.Read);
+                    PB_ShopInfo_Coupons.Image = new Bitmap(Image.FromStream(pFileStream), 760, 407);
+                    pFileStream.Close();
+                    pFileStream.Dispose();
+
+                }
 
                 for (int i = 0; i < curPageShowCount; i++)
                 {
