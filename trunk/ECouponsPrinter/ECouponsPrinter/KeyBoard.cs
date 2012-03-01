@@ -26,9 +26,13 @@ namespace ECouponsPrinter
             this.pwd = pwd;
             this.url = url;
 
-            if (url == null)
+            if (url == null && pwd == null)
             {
                 hWnd = FindWindow(null, "Login");
+            }
+            else if (url == null)
+            {
+                hWnd = FindWindow(null, "check");
             }
             else
             {
