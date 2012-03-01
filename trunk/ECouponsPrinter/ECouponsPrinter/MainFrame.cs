@@ -145,7 +145,10 @@ namespace ECouponsPrinter
                     return;
                 }
 
-                ctl.MouseMove += new MouseEventHandler(MainFrame_MouseMove);
+                if (ctl != Label_Option && ctl != this)
+                {
+                    ctl.MouseMove += new MouseEventHandler(MainFrame_MouseMove);
+                }
 
                 foreach (Control ctl1 in ctl.Controls)
                     CatchAllClickEvent(ctl1);
@@ -521,6 +524,7 @@ namespace ECouponsPrinter
         {
             Button btn = (Button)sender;
             btn.BackgroundImage = Image.FromFile(path + "\\images\\切图\\优惠券二级\\Shoptype.jpg");
+            ChangeCouponTypeForeColor(btn);
 
             String strTradeNum = btn.Name.Substring(15, 1);
             int tradeNum = strTradeNum[0] - '0';
@@ -539,6 +543,7 @@ namespace ECouponsPrinter
 
         private void Btn_NewCouponList_Click(object sender, EventArgs e)
         {
+            ChangeExternThreeButtonForeColor(sender as Button);
             MyMsgBox mb = new MyMsgBox();
             try
             {
@@ -582,6 +587,8 @@ namespace ECouponsPrinter
 
         private void Btn_Rank_Click(object sender, EventArgs e)
         {
+            ChangeExternThreeButtonForeColor(sender as Button);
+
             DownloadInfo di = new DownloadInfo();
             string[] aryStrCouponId = di.CouponTop();
             MyMsgBox mb = new MyMsgBox();
@@ -603,6 +610,8 @@ namespace ECouponsPrinter
 
         private void Btn_Rec_Click(object sender, EventArgs e)
         {
+            ChangeExternThreeButtonForeColor(sender as Button);
+
             LP_ctype[0] = FindRecCoupon();
             curPage = 1;
             curType = 0;
@@ -640,6 +649,15 @@ namespace ECouponsPrinter
 
             this.Panel_ShopInfo.Visible = true;
             ShowShopInfo();
+        }
+
+        private void ChangeExternThreeButtonForeColor(Button temp)
+        {
+            Btn_Rec.ForeColor = Color.White;
+            Btn_Rank.ForeColor = Color.White;
+            Btn_NewCouponList.ForeColor = Color.White;
+
+            temp.ForeColor = Color.Red;
         }
 
         #endregion
@@ -705,10 +723,63 @@ namespace ECouponsPrinter
 
             //准备工作
             this.UnVisibleAllPanels();
-            this.Panel_Shop.Visible = true;
 
+            InitShopTitleLabel();
+            this.Panel_Shop.Visible = true;
+            SetShopTradeTitle();
             InitShopData();
             ShowShop();
+        }
+
+        private void InitShopTitleLabel()
+        {
+            if (Label_Shop_Type != null)
+            {
+                for (int i = 0; i < Label_Shop_Type.Length; i++)
+                {
+                    Panel_Shop.Controls.Remove(Label_Shop_Type[i]);
+                    Label_Shop_Type[i].Dispose();
+                }
+                Label_Shop_Type = null;
+            }
+        }
+
+        private void SetShopTradeTitle()
+        {
+            int num = GetTradeName().Length;
+            if (num <= 0)
+                return;
+
+            Point[] p = new Point[num];
+            string[] name = GetTradeName();
+            Label_Shop_Type = new Label[num];
+
+            for (int i = 0; i < num; i++)
+            {
+                this.Label_Shop_Type[i] = new Label();
+                this.Label_Shop_Type[i].Font = new System.Drawing.Font("宋体", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+                this.Label_Shop_Type[i].ForeColor = System.Drawing.Color.White;
+                this.Label_Shop_Type[i].Image = Image.FromFile(path + @"\images\切图\商家二级\商家类别.jpg");
+                this.Label_Shop_Type[i].Location = new System.Drawing.Point(3 + i / 3 * 183, 28 + i % 3 * 391);
+                this.Label_Shop_Type[i].Margin = new System.Windows.Forms.Padding(0);
+                this.Label_Shop_Type[i].Name = "Label_Shop_Type" + (i + 1);
+                this.Label_Shop_Type[i].Text = name[i];
+                this.Label_Shop_Type[i].Size = new System.Drawing.Size(180, 50);
+                this.Label_Shop_Type[i].TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+                this.Label_Shop_Type[i].Click += new EventHandler(ShopTypeTitle_Click);
+                this.Label_Shop_Type[i].MouseMove += new MouseEventHandler(MainFrame_MouseMove);
+                this.Panel_Shop.Controls.Add(this.Label_Shop_Type[i]);
+                this.Label_Shop_Type[i].Show();
+
+            }
+
+            for (int i = 0; i < 3; i++)
+            {
+                if (Label_Shop_Type[i] != null)
+                {
+                    Label_Shop_Type[i].ForeColor = Color.Red;
+                }
+            }
         }
 
         private void Button_ShopPage_MouseDown(object sender, MouseEventArgs e)
@@ -749,8 +820,8 @@ namespace ECouponsPrinter
             this.Btn_NewCouponList.Visible = true;
 
             InitCouponButton();
-            ShowCouponCommonBtn();
-            this.Panel_Coupons.Visible = true;
+            this.Panel_Coupons.Visible = true;          
+            ShowCouponCommonBtn();          
             ShowCoupon();
 
             //         Thread.Sleep(100);
@@ -791,13 +862,18 @@ namespace ECouponsPrinter
                 Btn_Coupon_Type[i].Location = p[i];
                 Btn_Coupon_Type[i].Name = "Btn_Coupon_Type" + (i + 1);
                 Btn_Coupon_Type[i].Text = tradeName[i];
-                Btn_Coupon_Type[i].Font = new Font("宋体", 20F, FontStyle.Bold);
+                Btn_Coupon_Type[i].Font = new Font("宋体", 15F, FontStyle.Bold);
                 Btn_Coupon_Type[i].ForeColor = Color.White;
                 Btn_Coupon_Type[i].Size = new System.Drawing.Size(width, height);
                 Btn_Coupon_Type[i].UseVisualStyleBackColor = true;
                 Btn_Coupon_Type[i].MouseDown += new System.Windows.Forms.MouseEventHandler(this.Button_ShopType_MouseDown);
                 Btn_Coupon_Type[i].MouseUp += new System.Windows.Forms.MouseEventHandler(this.Button_ShopType_MouseUp);
                 Panel_Coupons.Controls.Add(Btn_Coupon_Type[i]);
+            }
+
+            if (Btn_Coupon_Type[0] != null)
+            {
+                Btn_Coupon_Type[0].ForeColor = Color.Red;
             }
         }
 
@@ -945,13 +1021,18 @@ namespace ECouponsPrinter
                 Btn_Coupon_Type[i].Location = p[i];
                 Btn_Coupon_Type[i].Name = "Btn_Coupon_Type" + (i + 1);
                 Btn_Coupon_Type[i].Text = tradeName[i];
-                Btn_Coupon_Type[i].Font = new Font("宋体", 20F, FontStyle.Bold);
+                Btn_Coupon_Type[i].Font = new Font("宋体", 15F, FontStyle.Bold);
                 Btn_Coupon_Type[i].ForeColor = Color.White;
                 Btn_Coupon_Type[i].Size = new System.Drawing.Size(width, height);
                 Btn_Coupon_Type[i].UseVisualStyleBackColor = true;
                 Btn_Coupon_Type[i].MouseDown += new System.Windows.Forms.MouseEventHandler(this.Button_ShopType_MouseDown);
                 Btn_Coupon_Type[i].MouseUp += new System.Windows.Forms.MouseEventHandler(this.Button_ShopType_MouseUp);
                 Panel_Coupons.Controls.Add(Btn_Coupon_Type[i]);
+            }
+
+            if (Btn_Coupon_Type[0] != null)
+            {
+                Btn_Coupon_Type[0].ForeColor = Color.Red;
             }
         }
 
@@ -1859,8 +1940,6 @@ namespace ECouponsPrinter
 
             if (trade.Length != 0)
             {
-                SetShopTradeTitle(trade.Length);
-
                 if (trade.Length > 3)
                 {
                     LP_stype = new List<PicInfo>[3];
@@ -2001,39 +2080,11 @@ namespace ECouponsPrinter
             ShowShopPart((int)part.bottom);
         }
 
-        private void SetShopTradeTitle(int num)
-        {
-            if (num <= 0)
-                return;
-
-            Point[] p = new Point[num];
-            string[] name = GetTradeName();
-            Label_Shop_Type = new Label[num];
-
-            for (int i = 0; i < num; i++)
-            {
-                this.Label_Shop_Type[i] = new Label();
-                this.Label_Shop_Type[i].Font = new System.Drawing.Font("宋体", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-                this.Label_Shop_Type[i].ForeColor = System.Drawing.Color.White;
-                this.Label_Shop_Type[i].Image = Image.FromFile(path + @"\images\切图\商家二级\商家类别.jpg");
-                this.Label_Shop_Type[i].Location = new System.Drawing.Point(3 + i / 3 * 183, 28 + i % 3 * 391);
-                this.Label_Shop_Type[i].Margin = new System.Windows.Forms.Padding(0);
-                this.Label_Shop_Type[i].Name = "Label_Shop_Type" + (i + 1);
-                this.Label_Shop_Type[i].Text = name[i];
-                this.Label_Shop_Type[i].Size = new System.Drawing.Size(180, 50);
-                this.Label_Shop_Type[i].TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-                this.Label_Shop_Type[i].Click += new EventHandler(ShopTypeTitle_Click);
-                this.Label_Shop_Type[i].MouseMove += new MouseEventHandler(MainFrame_MouseMove);
-                this.Panel_Shop.Controls.Add(this.Label_Shop_Type[i]);
-                this.Label_Shop_Type[i].Show();
-
-            }
-        }
-
         private void ShopTypeTitle_Click(object sender, EventArgs e)
         {
             Label temp = sender as Label;
             string name = temp.Name;
+            ChangeShopTitleForeColor(temp);
 
             int num = name.Substring(15, 1)[0] - '0';
 
@@ -2192,6 +2243,18 @@ namespace ECouponsPrinter
             }
         }
 
+        private void ChangeShopTitleForeColor(Label temp)
+        {
+            int titleNum = temp.Name.Substring(15, 1)[0] - '0';
+            titleNum--;
+
+            for (int i = titleNum%3; i < Label_Shop_Type.Length; i+=3)
+            {
+                Label_Shop_Type[i].ForeColor = Color.White;
+            }
+            temp.ForeColor = Color.Red;
+        }
+
         #endregion
 
         #region 优惠劵和VIP专区数据处理
@@ -2243,6 +2306,7 @@ namespace ECouponsPrinter
             Panel container = Panel_Coupons;         //现在正在操作的Panel容器的对象
             int perNum = 12;                        //每页显示小优惠劵的控件的数量
             List<CouponPicInfo> lp = LP_ctype[0];
+            FileStream pFileStream;
 
             count = lp.Count;
             totalPage = count / perNum + (count % perNum == 0 ? 0 : 1);
@@ -2264,8 +2328,10 @@ namespace ECouponsPrinter
 
             if (lp.Count != 0)
             {
-
-                PB_Coupon_Top.Image = new Bitmap(Image.FromFile(lp[(curPage - 1) * 12].lpath), 760, 433);
+                pFileStream = new FileStream(lp[(curPage - 1) * 12].lpath, FileMode.Open, FileAccess.Read);
+                PB_Coupon_Top.Image = new Bitmap(Image.FromStream(pFileStream), 760, 433);
+                pFileStream.Close();
+                pFileStream.Dispose();
             }
             else
             {
@@ -2294,7 +2360,6 @@ namespace ECouponsPrinter
                         }
                     }
                 }
-
 
             for (int i = 0; i < curPageShowCount; i++)
             {
@@ -2334,8 +2399,20 @@ namespace ECouponsPrinter
                 PB_Coupon_Top.Image.Dispose();
             }
 
-            PB_Coupon_Top.Image = new Bitmap(Image.FromFile(LP_ctype[curType][(curPage - 1) * 12 + num - 1].lpath), 760, 433);
+            FileStream pFileStream = new FileStream(LP_ctype[curType][(curPage - 1) * 12 + num - 1].lpath, FileMode.Open, FileAccess.Read);
+            PB_Coupon_Top.Image = new Bitmap(Image.FromStream(pFileStream), 760, 433);
+            pFileStream.Close();
+            pFileStream.Dispose();
 
+        }
+
+        private void ChangeCouponTypeForeColor(Button temp)
+        {
+            for (int i = 0; i < Btn_Coupon_Type.Length; i++)
+            {
+                Btn_Coupon_Type[i].ForeColor = Color.White;
+            }
+            temp.ForeColor = Color.Red;
         }
 
         #endregion
@@ -2391,6 +2468,7 @@ namespace ECouponsPrinter
             Panel container = Panel_MyInfo;         //现在正在操作的Panel容器的对象
             int perNum = 6;                 //每页显示小优惠劵的控件的数量
             List<CouponPicInfo> lp = null;
+            FileStream pFileStream;
 
             if (type == 1)
             {
@@ -2399,9 +2477,11 @@ namespace ECouponsPrinter
                 curPage = cPage1;
                 if (lp.Count != 0)
                 {
-                    PB_MyInfo_Fav.Image = new Bitmap(Image.FromFile(lp[(curPage - 1) * 6].lpath), 734, 366);
+                    pFileStream = new FileStream(lp[(curPage - 1) * 6].lpath, FileMode.Open, FileAccess.Read);
+                    PB_MyInfo_Fav.Image = new Bitmap(Image.FromStream(pFileStream), 734, 366);
+                    pFileStream.Close();
+                    pFileStream.Dispose();
                 }
-
             }
             else
             {
@@ -2410,7 +2490,10 @@ namespace ECouponsPrinter
                 curPage = cPage2;
                 if (lp.Count != 0)
                 {
-                    PB_MyInfo_His.Image = new Bitmap(Image.FromFile(lp[(curPage - 1) * 6].lpath), 734, 366);
+                    pFileStream = new FileStream(lp[(curPage - 1) * 6].lpath, FileMode.Open, FileAccess.Read);
+                    PB_MyInfo_His.Image = new Bitmap(Image.FromStream(pFileStream), 734, 366);
+                    pFileStream.Close();
+                    pFileStream.Dispose();
                 }
             }
 
@@ -2577,9 +2660,14 @@ namespace ECouponsPrinter
                         }
                     }
                 }
+
+            FileStream pFileStream;
             if (LP_temp.Count != 0)
             {
-                PB_NearShop_Top.Image = new Bitmap(Image.FromFile(LP_temp[(curPage - 1) * 24].lpath), 761, 389);
+                pFileStream = new FileStream(LP_temp[(curPage - 1) * 24].lpath, FileMode.Open, FileAccess.Read);
+                PB_NearShop_Top.Image = new Bitmap(Image.FromStream(pFileStream), 761, 389);
+                pFileStream.Close();
+                pFileStream.Dispose();
 
                 if (LP_temp[(curPage - 1) * 24].name != null)
                 {
@@ -2626,9 +2714,10 @@ namespace ECouponsPrinter
             theShopNum = num - 1;
             //      MessageBox.Show(num.ToString());
 
-            PB_NearShop_Top.Image.Dispose();
-
-            PB_NearShop_Top.Image = new Bitmap(Image.FromFile(LP_stype[0][num - 1 + (curPage - 1) * 24].lpath), 761, 389);
+            FileStream pFileStream = new FileStream(LP_stype[0][num - 1 + (curPage - 1) * 24].lpath, FileMode.Open, FileAccess.Read);
+            PB_NearShop_Top.Image = new Bitmap(Image.FromStream(pFileStream), 761, 389);
+            pFileStream.Close();
+            pFileStream.Dispose();
         }
 
         #endregion
@@ -3220,23 +3309,6 @@ namespace ECouponsPrinter
         {
             while (true)
             {
-                string time = DateTime.Now.ToString("H:m:s");
-                string strSql = "select * from t_bz_advertisement where #" + time + "#>=dtStartTime And #" + time + "#<dtEndTime And (intType=1 or intType=2)";
-                AccessCmd cmd = new AccessCmd();
-                OleDbDataReader reader = cmd.ExecuteReader(strSql);
-
-                Ad_type = new List<int>();
-                Ad_str = new List<string>();
-
-                while (reader.Read())
-                {
-                    Ad_type.Add(reader.GetInt32(2));
-                    Ad_str.Add(reader.GetString(3));
-                }
-
-                reader.Close();
-                cmd.Close();
-
                 //MyMsgBox mb = new MyMsgBox();
                 //string temp = "";
                 //foreach (string index in Ad_str)
@@ -3246,20 +3318,21 @@ namespace ECouponsPrinter
                 //mb.ShowMsg(temp, 5);
 
                 if (Panel_Ad.Visible == true)
-                {
-                    Panel_Ad.Visible = false;
+                {                  
                     if (this.Panel_Ad.InvokeRequired)
                     {
                         this.Panel_Ad.Invoke((MethodInvoker)delegate
                         {
+                            Panel_Ad.Visible = false;
                             Panel_Ad.Controls.Add(Label_AdClick);
-                            ShowAd();
+                            Panel_Ad.Visible = true;
                         }, null);
                     }
                     else
                     {
+                        Panel_Ad.Visible = false;
                         Panel_Ad.Controls.Add(Label_AdClick);
-                        ShowAd();
+                        Panel_Ad.Visible = true; ;
                     }
                 }
                 Thread.Sleep(1000 * 15);
@@ -3580,6 +3653,7 @@ namespace ECouponsPrinter
         #endregion
 
         #region 用户登录模块
+
         #region 磁卡检测处理
         [DllImport("user32.dll", CharSet = CharSet.Auto)]
         private extern static int GetWindowTextLength(IntPtr hWnd);
