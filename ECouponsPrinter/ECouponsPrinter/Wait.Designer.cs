@@ -35,7 +35,7 @@
             // prcBar
             // 
             this.prcBar.ForeColor = System.Drawing.Color.Lime;
-            this.prcBar.Location = new System.Drawing.Point(79, 113);
+            this.prcBar.Location = new System.Drawing.Point(59, 79);
             this.prcBar.Name = "prcBar";
             this.prcBar.Size = new System.Drawing.Size(598, 41);
             this.prcBar.TabIndex = 0;
@@ -52,11 +52,12 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(759, 326);
+            this.ClientSize = new System.Drawing.Size(729, 216);
             this.ControlBox = false;
             this.Controls.Add(this.Info);
             this.Controls.Add(this.prcBar);
             this.Name = "Wait";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Wait";
             this.ResumeLayout(false);
 

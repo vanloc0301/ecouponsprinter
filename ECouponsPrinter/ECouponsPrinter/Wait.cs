@@ -22,7 +22,7 @@ namespace ECouponsPrinter
         {
             if (currentPosition < prcBar.Maximum)
             {
-                if (currentPosition == 50)
+                if (currentPosition > 60)
                 {
                     if (this.Info.InvokeRequired)
                     {

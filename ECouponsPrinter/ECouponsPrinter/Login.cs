@@ -24,7 +24,7 @@ namespace ECouponsPrinter
             InitializeComponent();
             loginId = id;
             GlobalVariables.isKeyBoardExist = false;
-            this.Location = new Point(10, 50);
+            this.Location = new Point(10, 85);
         }
 
         private void CodeTimer_Tick(object sender, EventArgs e)

@@ -776,7 +776,17 @@ namespace ECouponsPrinter
 
             }
 
-            for (int i = 0; i < 3; i++)
+            int t;
+            if (Label_Shop_Type.Length < 3)
+            {
+                t = Label_Shop_Type.Length;
+            }
+            else
+            {
+                t = 3;
+            }
+
+            for (int i = 0; i < t; i++)
             {
                 if (Label_Shop_Type[i] != null)
                 {
@@ -874,9 +884,12 @@ namespace ECouponsPrinter
                 Panel_Coupons.Controls.Add(Btn_Coupon_Type[i]);
             }
 
-            if (Btn_Coupon_Type[0] != null)
+            if (Btn_Coupon_Type.Length > 0)
             {
-                Btn_Coupon_Type[0].ForeColor = Color.Red;
+                if (Btn_Coupon_Type[0] != null)
+                {
+                    Btn_Coupon_Type[0].ForeColor = Color.Red;
+                }
             }
         }
 
@@ -1033,9 +1046,12 @@ namespace ECouponsPrinter
                 Panel_Coupons.Controls.Add(Btn_Coupon_Type[i]);
             }
 
-            if (Btn_Coupon_Type[0] != null)
+            if (Btn_Coupon_Type.Length > 0)
             {
-                Btn_Coupon_Type[0].ForeColor = Color.Red;
+                if (Btn_Coupon_Type[0] != null)
+                {
+                    Btn_Coupon_Type[0].ForeColor = Color.Red;
+                }
             }
         }
 
