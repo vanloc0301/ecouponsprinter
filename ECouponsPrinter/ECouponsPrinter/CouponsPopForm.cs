@@ -460,6 +460,13 @@ namespace ECouponsPrinter
                             System.Threading.Thread.Sleep(50);//sleep一下减缓进度条进度，实际代码中，此处应该是实际的工作
                         }
                     }
+                    else
+                    {
+                        MyMsgBox mb = new MyMsgBox();
+                        mb.ShowMsg("打印纸已用尽！暂停服务！", 3);
+                        wait.CloseScrollBar();
+                        return;
+                    }
                 }
                 else
                 {
