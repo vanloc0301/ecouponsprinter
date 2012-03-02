@@ -73,6 +73,7 @@
             this.Controls.Add(this.close);
             this.Controls.Add(this.print);
             this.Name = "Info";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "打印提示";
             this.ResumeLayout(false);
 
