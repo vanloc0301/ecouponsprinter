@@ -103,6 +103,12 @@
     <Compile Include="check.Designer.cs">
       <DependentUpon>check.cs</DependentUpon>
     </Compile>
+    <Compile Include="CouponsPopForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CouponsPopForm.designer.cs">
+      <DependentUpon>CouponsPopForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="ErrorLog.cs" />
     <Compile Include="Info.cs">
       <SubType>Form</SubType>
@@ -134,12 +140,6 @@
       <DependentUpon>TranslateForm.cs</DependentUpon>
     </Compile>
     <Compile Include="UploadInfo.cs" />
-    <Compile Include="CouponsPopForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="CouponsPopForm.designer.cs">
-      <DependentUpon>CouponsPopForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="DownloadInfo.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
