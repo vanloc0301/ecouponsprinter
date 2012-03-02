@@ -392,7 +392,7 @@ namespace ECouponsPrinter
                 if (pq.CanelAllPrintJob() == false)
                 {
                     MyMsgBox mb = new MyMsgBox();
-                    mb.ShowMsg("打印纸已用尽！暂停服务1！", 1);
+                    mb.ShowMsg("打印纸已用尽！暂停服务！", 3);
                     wait.CloseScrollBar();
                     return;
                 }
@@ -403,7 +403,7 @@ namespace ECouponsPrinter
                     if (!pd.PrinterSettings.IsValid)
                     {
                         MyMsgBox mb = new MyMsgBox();
-                        mb.ShowMsg("打印机不可用！暂停服务！", 1);
+                        mb.ShowMsg("打印机不可用！暂停服务！", 3);
                         wait.CloseScrollBar();
                         return;
                     }
@@ -412,7 +412,7 @@ namespace ECouponsPrinter
                     if (myprinter[defaultPrinterName] == 0)
                     {
                         MyMsgBox mb = new MyMsgBox();
-                        mb.ShowMsg("打印纸已用尽！暂停服务！", 1);
+                        mb.ShowMsg("打印纸已用尽！暂停服务！", 3);
                         wait.CloseScrollBar();
                         return;
                     }
@@ -464,7 +464,7 @@ namespace ECouponsPrinter
                 else
                 {
                     MyMsgBox mb = new MyMsgBox();
-                    mb.ShowMsg("打印纸已用尽！暂停服务！", 1);
+                    mb.ShowMsg("打印纸已用尽！暂停服务！", 3);
                     wait.CloseScrollBar();
                     return;
                 }
