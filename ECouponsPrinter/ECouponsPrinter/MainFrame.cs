@@ -1785,10 +1785,7 @@ namespace ECouponsPrinter
 
             if (LP_ctype != null)
             {
-                if (LP_ctype[0] != null && LP_ctype[0].Count > 0)
-                {
-                    ShowBottomPicure();
-                }
+                ShowBottomPicure();
             }
         }
 
@@ -3206,7 +3203,7 @@ namespace ECouponsPrinter
                     }
                     else
                     {
-                        CouponsPopForm cpf = new CouponsPopForm(pi,this);
+                        CouponsPopForm cpf = new CouponsPopForm(pi, this);
                         cpf.ShowDialog();
                         Thread.Sleep(200);
                     }
