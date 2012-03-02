@@ -1129,7 +1129,7 @@ namespace ECouponsPrinter
             ShowHome();
 
             //启动射频卡检测程序
-            this.SCardStart();
+            //this.SCardStart();
 
             //加载广告线程
             AdThread = new Thread(new ThreadStart(RefreshAd));
@@ -1249,7 +1249,7 @@ namespace ECouponsPrinter
         /// <summary>
         /// 初始化用户等待倒计时
         /// </summary>
-        private void InitUserQuitTime()
+        public void InitUserQuitTime()
         {
             this.Timer_UserQuit.Enabled = true;
             this.Timer_UserQuit.Stop();
@@ -3159,12 +3159,12 @@ namespace ECouponsPrinter
                 {
                     if (!GlobalVariables.isUserLogin)
                     {
-                        mb.ShowMsg("请您先登录", 2);
+                        mb.ShowMsg("请您先登录", 1);
                         return;
                     }
                     else
                     {
-                        CouponsPopForm cpf = new CouponsPopForm(pi);
+                        CouponsPopForm cpf = new CouponsPopForm(pi,this);
                         cpf.ShowDialog();
                         Thread.Sleep(200);
                     }
@@ -3173,7 +3173,7 @@ namespace ECouponsPrinter
                 {
                     if (!GlobalVariables.isUserLogin)
                     {
-                        mb.ShowMsg("请您先登录", 2);
+                        mb.ShowMsg("请您先登录", 1);
                         return;
                     }
                     else
@@ -3185,7 +3185,7 @@ namespace ECouponsPrinter
 
                             if (ui.CouponFavourite(GlobalVariables.LoginUserId, id))
                             {
-                                mb.ShowMsg("收藏成功！", 2);
+                                mb.ShowMsg("收藏成功！", 1);
                                 string[] str = new string[(GlobalVariables.M.AryFavourite.Length + 1)];
                                 int i = 0;
                                 foreach (string favid in GlobalVariables.M.AryFavourite)
@@ -3197,7 +3197,7 @@ namespace ECouponsPrinter
                             }
                             else
                             {
-                                mb.ShowMsg("收藏失败！请稍后重试", 2);
+                                mb.ShowMsg("收藏失败！请稍后重试", 1);
                             }
                         }
                     }

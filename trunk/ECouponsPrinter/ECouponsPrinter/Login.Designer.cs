@@ -150,6 +150,7 @@
             this.Controls.Add(this.phone);
             this.Controls.Add(this.label1);
             this.Name = "Login";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "Login";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Login_FormClosing);
             this.ResumeLayout(false);
