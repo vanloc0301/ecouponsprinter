@@ -11,10 +11,12 @@ namespace ECouponsPrinter
 {
     public partial class Info : Form
     {
-        public Info(double price, String name)
+        MainFrame mf;
+        public Info(double price, String name, MainFrame frame)
         {
             InitializeComponent();
 
+            this.mf = frame;
             this.labelInfo.Text = "";
             this.labelInfo.Text += "优惠劵名称: " + name + "\n优惠劵价格:" + price + "元\n";
 
@@ -30,6 +32,7 @@ namespace ECouponsPrinter
 
         private void button1_Click(object sender, EventArgs e)
         {
+            mf.InitUserQuitTime();
             this.DialogResult = DialogResult.Yes;
             this.Close();
         }

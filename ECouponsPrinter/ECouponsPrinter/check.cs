@@ -17,11 +17,14 @@ namespace ECouponsPrinter
         private String checkCode;
         Thread th;
         private KeyBoard kb = null;
+        private MainFrame mf;
 
-        public check(double _price, String _id)
+        public check(double _price, String _id, MainFrame frame)
         {
             InitializeComponent();
             this.Location = new Point(10, 50);
+
+            this.mf = frame;
             id = _id;
             this.Reget.Text = "重新获取(" + TickNum + ")";
             this.Reget.Enabled = false;
@@ -70,6 +73,8 @@ namespace ECouponsPrinter
 
         private void Reget_Click(object sender, EventArgs e)
         {
+            mf.InitUserQuitTime();
+
             if (th != null)
             {
                 th.Abort();
@@ -85,6 +90,8 @@ namespace ECouponsPrinter
 
         private void Confirm_Click(object sender, EventArgs e)
         {
+            mf.InitUserQuitTime();
+
             String code = this.codeText.Text;
             if (code == checkCode)
             {
@@ -117,6 +124,11 @@ namespace ECouponsPrinter
                 kb.Show();
                 GlobalVariables.isKeyBoardExist = true;
             }
+        }
+
+        private void codeText_TextChanged(object sender, EventArgs e)
+        {
+            mf.InitUserQuitTime();
         }
 
     }

@@ -23,8 +23,9 @@ namespace ECouponsPrinter
         Wait wait;
         string MD5code = "";
         string Intro, Instruction, bottomText;
+        private MainFrame Frame;
 
-        public CouponsPopForm(CouponPicInfo info)
+        public CouponsPopForm(CouponPicInfo info, MainFrame myFrame)
         {
             InitializeComponent();
             this.SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.AllPaintingInWmPaint, true);
@@ -32,6 +33,7 @@ namespace ECouponsPrinter
             this.Panel_Background.GetType().GetProperty("DoubleBuffered", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic).SetValue(Panel_Background, true, null);
 
             this.pi = info;
+            this.Frame = myFrame;
             pd.BeginPrint += new PrintEventHandler(pd_BeginPrint);
             pd.EndPrint += new PrintEventHandler(pd_EndPrint);
             pd.PrintPage += new PrintPageEventHandler(pd_PrintPage);
@@ -43,6 +45,7 @@ namespace ECouponsPrinter
         private void Button_Close_MouseDown(object sender, MouseEventArgs e)
         {
             this.Button_Close.BackgroundImage = Image.FromFile(path + "\\images\\切图\\优惠券详细弹出\\关闭_1.jpg");
+            Frame.InitUserQuitTime();
         }
 
         private void Button_Close_MouseUp(object sender, MouseEventArgs e)
@@ -57,6 +60,7 @@ namespace ECouponsPrinter
         private void Button_Print_MouseDown(object sender, MouseEventArgs e)
         {
             this.Button_Print.BackgroundImage = Image.FromFile(path + "\\images\\切图\\优惠券详细弹出\\打印_1.jpg");
+            Frame.InitUserQuitTime();
         }
 
         private void Button_Print_MouseUp(object sender, MouseEventArgs e)
@@ -66,10 +70,10 @@ namespace ECouponsPrinter
 
             if (pi.flaPrice != 0)
             {
-                info = new Info(pi.flaPrice, pi.name);
+                info = new Info(pi.flaPrice, pi.name, Frame);
                 if (info.ShowDialog() == DialogResult.Yes)
                 {
-                    check check = new check(pi.flaPrice, pi.id);
+                    check check = new check(pi.flaPrice, pi.id, Frame);
                     check.Location = new Point(30, 40);
                     if (check.ShowDialog() == DialogResult.Yes)
                     {
@@ -89,7 +93,7 @@ namespace ECouponsPrinter
             }
             else
             {
-                info = new Info(pi.flaPrice, pi.name);
+                info = new Info(pi.flaPrice, pi.name, Frame);
 
                 if (info.ShowDialog() == DialogResult.Yes)
                 {
@@ -388,7 +392,7 @@ namespace ECouponsPrinter
                 if (pq.CanelAllPrintJob() == false)
                 {
                     MyMsgBox mb = new MyMsgBox();
-                    mb.ShowMsg("打印纸已用尽！打印机暂停服务1！", 1);
+                    mb.ShowMsg("打印纸已用尽！暂停服务1！", 1);
                     wait.CloseScrollBar();
                     return;
                 }
@@ -399,7 +403,7 @@ namespace ECouponsPrinter
                     if (!pd.PrinterSettings.IsValid)
                     {
                         MyMsgBox mb = new MyMsgBox();
-                        mb.ShowMsg("打印机不可用！暂时停止服务！", 1);
+                        mb.ShowMsg("打印机不可用！暂停服务！", 1);
                         wait.CloseScrollBar();
                         return;
                     }
@@ -408,7 +412,7 @@ namespace ECouponsPrinter
                     if (myprinter[defaultPrinterName] == 0)
                     {
                         MyMsgBox mb = new MyMsgBox();
-                        mb.ShowMsg("打印纸已用尽！打印机暂停服务2！", 1);
+                        mb.ShowMsg("打印纸已用尽！暂停服务！", 1);
                         wait.CloseScrollBar();
                         return;
                     }
@@ -430,7 +434,7 @@ namespace ECouponsPrinter
                         }
                         string strSql = "insert into t_bz_coupon_print values('" + tempId + "','" + GlobalVariables.LoginUserId + "','" + pi.id + "',#" + DateTime.Now.ToString("yyyy-M-d H:m:s") + "#,'" + MD5code + "')";
                         AccessCmd cmd = new AccessCmd();
-                    //    MessageBox.Show(strSql);
+                        //    MessageBox.Show(strSql);
                         cmd.ExecuteNonQuery(strSql);
                         strSql = "update t_bz_print_total set intPrintTotal=intPrintTotal+1";
                         cmd.ExecuteNonQuery(strSql);
@@ -460,7 +464,7 @@ namespace ECouponsPrinter
                 else
                 {
                     MyMsgBox mb = new MyMsgBox();
-                    mb.ShowMsg("打印纸已用尽！打印机暂停服务3！", 1);
+                    mb.ShowMsg("打印纸已用尽！暂停服务！", 1);
                     wait.CloseScrollBar();
                     return;
                 }
@@ -470,7 +474,7 @@ namespace ECouponsPrinter
                 ErrorLog.log(e);
                 wait.CloseScrollBar();
                 return;
-            }           
+            }
         }
     }
 }
