@@ -2296,6 +2296,7 @@
             this.Label_AdClick.TabIndex = 0;
             this.Label_AdClick.Text = "点击屏幕             退出广告";
             this.Label_AdClick.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.Label_AdClick.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Ad_MouseDown);
             // 
             // Timer_UserQuit
             // 
@@ -2332,7 +2333,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
-            this.ClientSize = new System.Drawing.Size(956, 742);
+            this.ClientSize = new System.Drawing.Size(973, 742);
             this.Controls.Add(this.Panel_NearShop);
             this.Controls.Add(this.Panel_Black);
             this.Controls.Add(this.Panel_Coupons);
@@ -2341,7 +2342,6 @@
             this.Controls.Add(this.Panel_Home);
             this.Controls.Add(this.Panel_Shop);
             this.Controls.Add(this.Panel_MyInfo);
-
             this.Controls.Add(this.Panel_ShopInfo);
             this.Controls.Add(this.Panel_Top);
             this.DoubleBuffered = true;
@@ -2349,7 +2349,6 @@
             this.Text = "MainFrame";
             this.Load += new System.EventHandler(this.MainFrame_Load);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainFrame_Closing);
-            this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.MainFrame_MouseMove);
             this.Panel_Top.ResumeLayout(false);
             this.Panel_Top.PerformLayout();
             this.Panel_Bottom.ResumeLayout(false);
