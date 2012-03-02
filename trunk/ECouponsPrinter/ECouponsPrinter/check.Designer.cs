@@ -144,6 +144,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(721, 414);
             this.ControlBox = false;
             this.Controls.Add(this.error);
@@ -153,6 +154,7 @@
             this.Controls.Add(this.text);
             this.Controls.Add(this.panelShow);
             this.Name = "check";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "check";
             this.panelShow.ResumeLayout(false);
             this.panelShow.PerformLayout();
