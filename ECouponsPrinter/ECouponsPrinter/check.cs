@@ -131,5 +131,14 @@ namespace ECouponsPrinter
             mf.InitUserQuitTime();
         }
 
+        private void check_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (GlobalVariables.isKeyBoardExist)
+            {
+                this.kb.Close();
+                GlobalVariables.isKeyBoardExist = false;
+            }
+        }
+
     }
 }

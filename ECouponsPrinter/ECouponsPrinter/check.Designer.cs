@@ -156,6 +156,7 @@
             this.Name = "check";
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "check";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.check_FormClosing);
             this.panelShow.ResumeLayout(false);
             this.panelShow.PerformLayout();
             this.ResumeLayout(false);
