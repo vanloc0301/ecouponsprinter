@@ -67,8 +67,7 @@ namespace ECouponsPrinter
         private static extern IntPtr FindWindow(string lpClassName,string lpWindowName);
 
         [DllImport("user32")]
-        static extern int SetForegroundWindow(IntPtr hwnd);
-        
+        static extern int SetForegroundWindow(IntPtr hwnd);       
 
         #region 定义键盘按键事件的代码
 
