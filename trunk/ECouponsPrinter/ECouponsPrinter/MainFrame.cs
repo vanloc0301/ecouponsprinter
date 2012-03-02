@@ -1189,6 +1189,8 @@ namespace ECouponsPrinter
             {
                 this.Timer_Countdown.Stop();
                 this.Timer_Countdown.Enabled = false;
+
+                CloseAllDialog();
                 this.UnVisibleAllPanels();
 
                 //切换
@@ -1231,11 +1233,26 @@ namespace ECouponsPrinter
             {
                 this.Timer_UserQuit.Stop();
                 this.Timer_UserQuit.Enabled = false;
+                CloseAllDialog();
 
                 this.Label_Countdown.Font = new Font("Microsoft Sans Serif", 25, FontStyle.Bold);
                 this.Label_Countdown.ForeColor = Color.White;
                 this.Label_Countdown.Text = "请先刷卡";
                 GlobalVariables.isUserLogin = false;
+
+                CloseAllDialog();
+                this.UnVisibleAllPanels();
+                //显示隐藏按钮
+                this.Button_LastCouponsPage.Visible = true;
+                this.Button_NextCouponsPage.Visible = true;
+
+                //切换
+                int y = this.VerticalScroll.Value;
+                this.Panel_Home.Location = new System.Drawing.Point(0, 95 - y);
+
+                this.InitHomeData();
+                this.Panel_Home.Visible = true;
+                this.ShowHome();
 
                 this.Timer_DownloadInfo.Start();
                 InitTimer();
@@ -1276,6 +1293,21 @@ namespace ECouponsPrinter
             this.Label_Countdown.ForeColor = Color.White;
             this.Label_Countdown.Text = "请先刷卡";
             GlobalVariables.isUserLogin = false;
+
+            CloseAllDialog();
+            this.UnVisibleAllPanels();
+            //显示隐藏按钮
+            this.Button_LastCouponsPage.Visible = true;
+            this.Button_NextCouponsPage.Visible = true;
+
+            //切换
+            int y = this.VerticalScroll.Value;
+            this.Panel_Home.Location = new System.Drawing.Point(0, 95 - y);
+
+            this.InitHomeData();
+            this.Panel_Home.Visible = true;
+            this.ShowHome();
+
             this.Timer_DownloadInfo.Start();
             InitTimer();
         }
@@ -2235,6 +2267,10 @@ namespace ECouponsPrinter
             if (LP_stype[curNumType - 1].Count > 0)
             {
                 this.UnVisibleAllPanels();
+
+                //显示隐藏按钮
+                this.Button_LastCouponsPage.Visible = true;
+                this.Button_NextCouponsPage.Visible = true;
 
                 int y = this.VerticalScroll.Value;
                 this.Panel_ShopInfo.Location = new System.Drawing.Point(0, 95 - y);
@@ -3449,6 +3485,7 @@ namespace ECouponsPrinter
                 reader.Close();
                 cmd.Close();
 
+                Panel_Ad.Controls.Add(Label_AdClick);
                 ShowAd();
             }
 
@@ -3703,36 +3740,11 @@ namespace ECouponsPrinter
         [DllImport("user32.dll", CharSet = CharSet.Auto)]
         private extern static int GetWindowTextLength(IntPtr hWnd);
 
-        [DllImport("User.dll", EntryPoint = "SendMessage")]
-        private static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
-
         [DllImport("user32.dll", CharSet = CharSet.Auto, ExactSpelling = true)]
         public static extern IntPtr GetForegroundWindow();
 
         [DllImport("user32.dll", EntryPoint = "GetWindowText")]
         private static extern bool GetWindowText(IntPtr hWnd, StringBuilder title, int maxBufSize);
-
-        private const int WM_CLOSE = 0x0010;
-
-        private void CloseAllDialog()
-        {
-            IntPtr hwnd;
-            hwnd = GetForegroundWindow();
-            if (hwnd == IntPtr.Zero)
-            {
-                return;
-            }
-
-            int length = GetWindowTextLength(hwnd);
-            StringBuilder stringBuilder = new StringBuilder(2 * length + 1);
-            GetWindowText(hwnd, stringBuilder, stringBuilder.Capacity);
-
-            String strTitle = stringBuilder.ToString();
-            if (strTitle.CompareTo("MainFrame") != 0)
-            {
-                SendMessage(hwnd, WM_CLOSE, 0, 0);
-            }
-        }
 
         protected override bool ProcessCmdKey(ref System.Windows.Forms.Message msg, System.Windows.Forms.Keys keyData)
         {
@@ -3905,6 +3917,52 @@ namespace ECouponsPrinter
         {
             this.UnVisibleAllPanels();
             this.Button_HomePage_MouseUp(null, null);
+        }
+
+        private const int WM_CLOSE = 0x0010;
+
+        [DllImport("User32.dll", EntryPoint = "FindWindow")]
+        private static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
+
+        [DllImport("User32.dll", EntryPoint = "SendMessage")]
+        private static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
+
+        private void CloseAllDialog()
+        {
+            IntPtr hWnd;
+
+            if (GlobalVariables.isUserLogin)
+            {
+                hWnd = FindWindow(null, "wait");
+                if (hWnd != IntPtr.Zero)
+                {
+                    SendMessage(hWnd, WM_CLOSE, 0, 0);
+                }
+                hWnd = FindWindow(null, "check");
+                if (hWnd != IntPtr.Zero)
+                {
+                    SendMessage(hWnd, WM_CLOSE, 0, 0);
+                }
+                hWnd = FindWindow(null, "打印提示");
+                if (hWnd != IntPtr.Zero)
+                {
+                    SendMessage(hWnd, WM_CLOSE, 0, 0);
+                }
+                hWnd = FindWindow(null, "CouponsPopForm");
+                if (hWnd != IntPtr.Zero)
+                {
+                    SendMessage(hWnd, WM_CLOSE, 0, 0);
+                }
+            }
+            else
+            {
+                hWnd = FindWindow(null, "Login");
+                if (hWnd != IntPtr.Zero)
+                {
+                    SendMessage(hWnd, WM_CLOSE, 0, 0);
+                }
+            }
+
         }
 
         /// <summary>
