@@ -1743,11 +1743,6 @@ namespace ECouponsPrinter
                 }
             }
 
-            if (LP_shop == null || LP_shop.Count == 0)
-            {
-                return false;
-            }
-
             LP_stype = new List<PicInfo>[1];
             LP_stype[0] = FindShopByIntType(1);
 
@@ -1760,11 +1755,6 @@ namespace ECouponsPrinter
                         LP_ctype[i].Clear();
                     }
                 }
-            }
-
-            if (LP_coupon == null || LP_coupon.Count == 0)
-            {
-                return false;
             }
 
             LP_ctype = new List<CouponPicInfo>[1];
