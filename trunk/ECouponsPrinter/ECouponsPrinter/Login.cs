@@ -24,6 +24,7 @@ namespace ECouponsPrinter
             InitializeComponent();
             loginId = id;
             GlobalVariables.isKeyBoardExist = false;
+            this.Location = new Point(10, 50);
         }
 
         private void CodeTimer_Tick(object sender, EventArgs e)
@@ -162,7 +163,7 @@ namespace ECouponsPrinter
             if (!GlobalVariables.isKeyBoardExist)
             {
                 KeyBoard kb = new KeyBoard(this.phone, this.code, null);
-                kb.Location = new Point(0, 600);
+                kb.Location = new Point(10, 600);
                 this.kb = kb;
                 kb.Show();
                 GlobalVariables.isKeyBoardExist = true;

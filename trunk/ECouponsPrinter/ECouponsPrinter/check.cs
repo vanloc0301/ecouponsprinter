@@ -21,6 +21,7 @@ namespace ECouponsPrinter
         public check(double _price, String _id)
         {
             InitializeComponent();
+            this.Location = new Point(10, 50);
             id = _id;
             this.Reget.Text = "重新获取(" + TickNum + ")";
             this.Reget.Enabled = false;

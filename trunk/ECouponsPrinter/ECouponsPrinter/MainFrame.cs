@@ -1190,12 +1190,7 @@ namespace ECouponsPrinter
                 this.Timer_Countdown.Stop();
                 this.Timer_Countdown.Enabled = false;
                 this.UnVisibleAllPanels();
-                //this.tf.Close();
-                //if (th.IsAlive)
-                //{
-                //    th.Abort();
-                //    th.Join();
-                //}
+
                 //切换
                 int y = this.VerticalScroll.Value;
                 this.Panel_Ad.Location = new System.Drawing.Point(0, 95 - y);
@@ -2169,7 +2164,7 @@ namespace ECouponsPrinter
             {
                 if (curPage == totalPage)
                 {
-                    curPageShowCount = count % (perNum + 1);
+                    curPageShowCount = (count % perNum == 0) ? perNum : count % perNum;
                 }
                 else
                     curPageShowCount = perNum;
@@ -2330,7 +2325,7 @@ namespace ECouponsPrinter
             {
                 if (curPage == totalPage)
                 {
-                    curPageShowCount = count % (perNum + 1);
+                    curPageShowCount = (count % perNum == 0) ? perNum : count % perNum;
                 }
                 else
                     curPageShowCount = perNum;
@@ -2519,7 +2514,7 @@ namespace ECouponsPrinter
             {
                 if (curPage == totalPage)
                 {
-                    curPageShowCount = count % (perNum + 1);
+                    curPageShowCount = (count % perNum == 0) ? perNum : count % perNum;
                 }
                 else
                     curPageShowCount = perNum;
@@ -2652,7 +2647,7 @@ namespace ECouponsPrinter
             {
                 if (curPage == totalPage)
                 {
-                    curPageShowCount = count % (perNum + 1);
+                    curPageShowCount = (count % perNum == 0) ? perNum : count % perNum;
                 }
                 else
                     curPageShowCount = perNum;
@@ -2808,7 +2803,7 @@ namespace ECouponsPrinter
             {
                 if (curPage == totalPage)
                 {
-                    curPageShowCount = count % (perNum + 1);
+                    curPageShowCount = (count % perNum == 0) ? perNum : count % perNum;
                 }
                 else
                     curPageShowCount = perNum;
@@ -3833,7 +3828,7 @@ namespace ECouponsPrinter
             MyMsgBox mb = new MyMsgBox();
             if (m == null)
             {
-                mb.ShowMsg("无效的用户！", 2);
+                mb.ShowMsg("无效的用户！", 1);
                 return false;
             }
             else
@@ -3841,7 +3836,6 @@ namespace ECouponsPrinter
                 if (m.StrMobileNo.Length == 0)
                 {
                     Login login = new Login(userid);
-                    login.Location = new Point(30, 50);
                     login.TopMost = true;
                     //         this.Controls.Add(login);
                     if (DialogResult.Yes == login.ShowDialog(this))
@@ -3853,7 +3847,7 @@ namespace ECouponsPrinter
                     }
                     else
                     {
-                        mb.ShowMsg("登录失败！\n请先绑定手机！", 2);
+                        mb.ShowMsg("登录失败！\n请先绑定手机！", 1);
                         return false;
                     }
                 }

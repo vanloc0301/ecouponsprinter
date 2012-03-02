@@ -37,7 +37,7 @@
             // 
             // msg
             // 
-            this.msg.Font = new System.Drawing.Font("宋体", 10F, System.Drawing.FontStyle.Bold);
+            this.msg.Font = new System.Drawing.Font("宋体", 30F, System.Drawing.FontStyle.Bold);
             this.msg.Location = new System.Drawing.Point(51, 31);
             this.msg.Name = "msg";
             this.msg.Size = new System.Drawing.Size(563, 185);
