@@ -22,7 +22,7 @@ namespace ECouponsPrinter
         public check(double _price, String _id, MainFrame frame)
         {
             InitializeComponent();
-            this.Location = new Point(10, 140);
+            this.Location = new Point(10, 150);
 
             this.mf = frame;
             id = _id;
