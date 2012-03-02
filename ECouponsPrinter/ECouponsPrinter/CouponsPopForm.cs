@@ -74,7 +74,6 @@ namespace ECouponsPrinter
                 if (info.ShowDialog() == DialogResult.Yes)
                 {
                     check check = new check(pi.flaPrice, pi.id, Frame);
-                    check.Location = new Point(30, 40);
                     if (check.ShowDialog() == DialogResult.Yes)
                     {
                         try
