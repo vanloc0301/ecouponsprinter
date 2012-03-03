@@ -1274,6 +1274,9 @@ namespace ECouponsPrinter
                 this.Panel_Home.Visible = true;
                 this.ShowHome();
 
+                //允许用户登录
+                isFirstKey = true;
+
                 this.Timer_DownloadInfo.Start();
                 InitTimer();
             }
@@ -1324,6 +1327,9 @@ namespace ECouponsPrinter
             int y = this.VerticalScroll.Value;
             this.Panel_Home.Location = new System.Drawing.Point(0, 95 - y);
 
+            //允许用户输入
+            isFirstKey = true;
+
             this.InitHomeData();
             this.Panel_Home.Visible = true;
             this.ShowHome();
@@ -1331,7 +1337,7 @@ namespace ECouponsPrinter
             this.Timer_DownloadInfo.Start();
             InitTimer();
         }
-        #endregion
+        #endregion 用户操作倒计时
 
         #region 走马灯线程
 
