@@ -148,7 +148,7 @@ namespace ECouponsPrinter
                     return;
                 }
 
-                if (ctl != Label_Option && ctl.Name != "MainFrame")
+                if (ctl != Label_Option && ctl.Name != "MainFrame" && ctl.Name != "Panel_Black")
                 {
                     ctl.MouseMove += new MouseEventHandler(MainFrame_MouseMove);
                 }
