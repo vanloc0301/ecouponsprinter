@@ -22,8 +22,9 @@ namespace ECouponsPrinter
         public check(double _price, String _id, MainFrame frame)
         {
             InitializeComponent();
-            this.Location = new Point(10, 150);
 
+            this.SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.AllPaintingInWmPaint, true);
+            this.Location = new Point(10, 150);
             this.mf = frame;
             id = _id;
             this.Reget.Text = "重新获取(" + TickNum + ")";

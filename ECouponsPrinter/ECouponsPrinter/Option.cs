@@ -17,6 +17,7 @@ namespace ECouponsPrinter
         {
             InitializeComponent();
             this.FormBorderStyle = FormBorderStyle.None;
+            this.SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.AllPaintingInWmPaint, true);
             //赋值
             this.ID.Text = GlobalVariables.StrTerminalNo;
             this.URL.Text = GlobalVariables.StrServerUrl;
