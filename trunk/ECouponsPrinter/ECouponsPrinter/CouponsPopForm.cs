@@ -34,6 +34,7 @@ namespace ECouponsPrinter
 
             this.pi = info;
             this.Frame = myFrame;
+            this.Label_Top.Text = GlobalVariables.StrPhone;
             pd.BeginPrint += new PrintEventHandler(pd_BeginPrint);
             pd.EndPrint += new PrintEventHandler(pd_EndPrint);
             pd.PrintPage += new PrintPageEventHandler(pd_PrintPage);
