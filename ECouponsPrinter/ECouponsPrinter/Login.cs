@@ -18,13 +18,15 @@ namespace ECouponsPrinter
         Thread th;
         String loginId;
         private KeyBoard kb = null;
+        MainFrame mf;
 
-        public Login(String id)
+        public Login(String id, MainFrame frame)
         {
             InitializeComponent();
             loginId = id;
             GlobalVariables.isKeyBoardExist = false;
             this.Location = new Point(10, 85);
+            this.mf = frame;
         }
 
         private void CodeTimer_Tick(object sender, EventArgs e)
@@ -177,6 +179,11 @@ namespace ECouponsPrinter
                 this.kb.Close();
                 GlobalVariables.isKeyBoardExist = false;
             }
+        }
+
+        private void phone_TextChanged(object sender, EventArgs e)
+        {
+            mf.InitTimer();
         }
     }
 }
