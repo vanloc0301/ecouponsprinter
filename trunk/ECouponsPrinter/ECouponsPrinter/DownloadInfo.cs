@@ -589,7 +589,7 @@ namespace ECouponsPrinter
         {
             request.OpenRequest(GlobalVariables.StrServerUrl + "/servlet/CouponTop?strTerminalNo=" + GlobalVariables.StrTerminalNo, "");
             string strXml = request.HtmlDocument;
-            MessageBox.Show(strXml);
+            //MessageBox.Show(strXml);
             if (strXml.IndexOf("<coupons>") > 0)
             {
                 XmlDocument doc = new XmlDocument();
