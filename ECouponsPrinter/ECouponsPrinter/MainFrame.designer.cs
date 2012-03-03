@@ -201,8 +201,9 @@
             this.Label_AdClick = new System.Windows.Forms.Label();
             this.Timer_UserQuit = new System.Windows.Forms.Timer(this.components);
             this.SCardTimer = new System.Windows.Forms.Timer(this.components);
-            this.Panel_Black = new System.Windows.Forms.Panel();
             this.Label_Black_Info = new System.Windows.Forms.Label();
+            this.Label_LoginWaitInfo = new System.Windows.Forms.Label();
+            this.Label_DownloadWaitObject = new System.Windows.Forms.Label();
             this.Panel_Top.SuspendLayout();
             this.Panel_Bottom.SuspendLayout();
             this.Panel_Home.SuspendLayout();
@@ -330,7 +331,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.PB_NearShop13)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PB_NearShop_Top)).BeginInit();
             this.Panel_Ad.SuspendLayout();
-            this.Panel_Black.SuspendLayout();
             this.SuspendLayout();
             // 
             // Panel_Top
@@ -2308,15 +2308,6 @@
             this.SCardTimer.Interval = 500;
             this.SCardTimer.Tick += new System.EventHandler(this.SCardTimer_Tick);
             // 
-            // Panel_Black
-            // 
-            this.Panel_Black.BackColor = System.Drawing.Color.Black;
-            this.Panel_Black.Controls.Add(this.Label_Black_Info);
-            this.Panel_Black.Location = new System.Drawing.Point(0, 0);
-            this.Panel_Black.Name = "Panel_Black";
-            this.Panel_Black.Size = new System.Drawing.Size(768, 1366);
-            this.Panel_Black.TabIndex = 72;
-            // 
             // Label_Black_Info
             // 
             this.Label_Black_Info.Font = new System.Drawing.Font("宋体", 30F, System.Drawing.FontStyle.Bold);
@@ -2328,13 +2319,40 @@
             this.Label_Black_Info.Text = "正在启动，请稍后....";
             this.Label_Black_Info.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // Label_LoginWaitInfo
+            // 
+            this.Label_LoginWaitInfo.BackColor = System.Drawing.Color.Black;
+            this.Label_LoginWaitInfo.Font = new System.Drawing.Font("宋体", 30F, System.Drawing.FontStyle.Bold);
+            this.Label_LoginWaitInfo.ForeColor = System.Drawing.Color.Red;
+            this.Label_LoginWaitInfo.Location = new System.Drawing.Point(160, 533);
+            this.Label_LoginWaitInfo.Margin = new System.Windows.Forms.Padding(0);
+            this.Label_LoginWaitInfo.Name = "Label_LoginWaitInfo";
+            this.Label_LoginWaitInfo.Size = new System.Drawing.Size(450, 300);
+            this.Label_LoginWaitInfo.TabIndex = 73;
+            this.Label_LoginWaitInfo.Text = "正在验证您的登陆信息\r\n\r\n请稍后......";
+            this.Label_LoginWaitInfo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.Label_LoginWaitInfo.Visible = false;
+            // 
+            // Label_DownloadWaitObject
+            // 
+            this.Label_DownloadWaitObject.BackColor = System.Drawing.Color.Black;
+            this.Label_DownloadWaitObject.Font = new System.Drawing.Font("宋体", 30F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.Label_DownloadWaitObject.ForeColor = System.Drawing.Color.Red;
+            this.Label_DownloadWaitObject.Location = new System.Drawing.Point(0, 0);
+            this.Label_DownloadWaitObject.Name = "Label_DownloadWaitObject";
+            this.Label_DownloadWaitObject.Size = new System.Drawing.Size(768, 1366);
+            this.Label_DownloadWaitObject.TabIndex = 74;
+            this.Label_DownloadWaitObject.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.Label_DownloadWaitObject.Visible = false;
+            // 
             // MainFrame
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(973, 742);
-            this.Controls.Add(this.Panel_Black);
+            this.Controls.Add(this.Label_DownloadWaitObject);
+            this.Controls.Add(this.Label_LoginWaitInfo);
             this.Controls.Add(this.Panel_NearShop);
             this.Controls.Add(this.Panel_Coupons);
             this.Controls.Add(this.Panel_Ad);
@@ -2478,7 +2496,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.PB_NearShop_Top)).EndInit();
             this.Panel_Ad.ResumeLayout(false);
             this.Panel_Ad.PerformLayout();
-            this.Panel_Black.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -2656,8 +2673,9 @@
         private System.Windows.Forms.Timer Timer_UserQuit;
         private System.Windows.Forms.Timer SCardTimer;
         private System.Windows.Forms.TextBox LoginText;
-        private System.Windows.Forms.Panel Panel_Black;
         private System.Windows.Forms.Label Label_Black_Info;
+        private System.Windows.Forms.Label Label_LoginWaitInfo;
+        private System.Windows.Forms.Label Label_DownloadWaitObject;
 
     }
 }

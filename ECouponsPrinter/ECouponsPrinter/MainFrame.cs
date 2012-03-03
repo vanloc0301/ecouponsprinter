@@ -54,7 +54,6 @@ namespace ECouponsPrinter
             this.Panel_Home.GetType().GetProperty("DoubleBuffered", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic).SetValue(Panel_Home, true, null);
             this.Panel_NearShop.GetType().GetProperty("DoubleBuffered", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic).SetValue(Panel_NearShop, true, null);
             this.Panel_Ad.GetType().GetProperty("DoubleBuffered", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic).SetValue(Panel_Ad, true, null);
-            this.Panel_Black.GetType().GetProperty("DoubleBuffered", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic).SetValue(Panel_Black, true, null);
             // 根据分辨率作出调整
             //Size size = SystemInformation.PrimaryMonitorSize;
             //int width = size.Width;
@@ -1187,7 +1186,6 @@ namespace ECouponsPrinter
         #region 初始化所有panel,将它们的visible设置为false
         private Panel UnVisibleAllPanels()
         {
-            this.Panel_Black.Visible = false;
             this.Panel_Home.Visible = false;
             this.Panel_ShopInfo.Visible = false;
             this.Panel_Shop.Visible = false;
@@ -3119,7 +3117,7 @@ namespace ECouponsPrinter
             }
             catch (Exception e1)
             {
-                //  mb.ShowMsg(e1.Message + "\n正在修复", 2);
+                ErrorLog.log(e1);
                 return new List<CouponPicInfo>();
             }
         }
@@ -3345,6 +3343,7 @@ namespace ECouponsPrinter
             }
             catch (Exception e)
             {
+                ErrorLog.log(e);
             }
             return null;
         }
@@ -3457,7 +3456,7 @@ namespace ECouponsPrinter
                     }
                     catch (Exception e1)
                     {
-                        //  ErrorLog.log(e1);
+                        ErrorLog.log(e1);
                     }
                 }
                 if (Ad_MediaPlayer2 != null)
@@ -3471,7 +3470,7 @@ namespace ECouponsPrinter
                     }
                     catch (Exception e2)
                     {
-                        //   ErrorLog.log(e2);
+                        ErrorLog.log(e2);
                     }
                 }
                 if (PicThread != null)
@@ -3778,7 +3777,7 @@ namespace ECouponsPrinter
             int WM_SYSKEYDOWN = 260;
 
             if (isFirstKey)
-            {
+            {             
                 this.LoginText.Text = "";
                 if (msg.Msg == WM_KEYDOWN | msg.Msg == WM_SYSKEYDOWN)
                 {
@@ -3790,6 +3789,8 @@ namespace ECouponsPrinter
             {
                 if (keyData.Equals(Keys.Enter))
                 {
+                    this.Label_LoginWaitInfo.Visible = true;
+                    Label_LoginWaitInfo.Refresh();
                     String cardtext = ""; ;
                     int i = 0, j = 0;
 
@@ -3812,6 +3813,8 @@ namespace ECouponsPrinter
                         this.SCardTimer.Enabled = false;
                         LoginSuccessDispatch();
                     }
+
+                    this.Label_LoginWaitInfo.Visible = false;
                 }
             }
             return false;
@@ -3864,10 +3867,10 @@ namespace ECouponsPrinter
             UploadInfo ui = new UploadInfo();
             Member m = ui.MemberAuth(userid);
             MyMsgBox mb = new MyMsgBox();
+
             if (m == null)
             {
                 mb.ShowMsg("无效的用户！", 1);
-                return false;
             }
             else
             {
@@ -3886,7 +3889,6 @@ namespace ECouponsPrinter
                     else
                     {
                         mb.ShowMsg("登录失败！\n请先绑定手机！", 1);
-                        return false;
                     }
                 }
                 else
@@ -3897,6 +3899,7 @@ namespace ECouponsPrinter
                     return true;
                 }
             }
+            return false;
         }
 
         private void LoginSuccessDispatch()
@@ -3936,14 +3939,15 @@ namespace ECouponsPrinter
             this.UnVisibleAllPanels();
             this.Timer_Countdown.Stop();
             this.Timer_Countdown.Enabled = false;
-            this.Panel_Black.Visible = true;
-
+            this.Label_DownloadWaitObject.Visible = true;
+            this.Refresh();
         }
 
         public void AfterDownload()
         {
             InitTimer();
             this.UnVisibleAllPanels();
+            this.Label_DownloadWaitObject.Visible = false;
             this.Button_HomePage_MouseUp(null, null);
         }
 
@@ -4000,34 +4004,28 @@ namespace ECouponsPrinter
         /// <param name="e"></param>
         private void Timer_DownloadInfo_Tick(object sender, EventArgs e)
         {
-            //
-            this.UnVisibleAllPanels();
-            this.Timer_Countdown.Stop();
-            this.Timer_Countdown.Enabled = false;
-            this.Panel_Black.Visible = true;
-            //
-
             this.Timer_DownloadInfo.Stop();
             try
             {
                 //下载信息
                 DownloadInfo di = new DownloadInfo(this);
-                this.Label_Black_Info.Text = "正在下载更新数据\n请稍后.....";
-                //
-                this.UnVisibleAllPanels();
-                this.Timer_Countdown.Stop();
-                this.Timer_Countdown.Enabled = false;
-                this.Panel_Black.Visible = true;
-                //
-                Thread.Sleep(3000);
+                this.Label_DownloadWaitObject.Text = "正在下载更新数据\n请稍后.....";
+                Thread.Sleep(1000);
+  //              this.Label_DownloadWaitObject.Refresh();
+                this.BeforeDownload();
                 di.download();
-                this.Label_Black_Info.Text = "正在同步数据\n请稍后.....";
+                this.Label_DownloadWaitObject.Text = "正在同步数据\n请稍后.....";
+                this.Label_DownloadWaitObject.Refresh();
+                Thread.Sleep(1000);
+ //               this.Label_DownloadWaitObject.Refresh();
                 di.SynParam();
                 //同步数据
                 this.InitData();
                 this.Timer_DownloadInfo.Interval = GlobalVariables.IntRefreshSec * 1000;
-                this.Label_Black_Info.Text = "正在上传消费数据\n请稍后.....";
                 //上传消费记录
+                this.Label_DownloadWaitObject.Text = "正在上传消费数据\n请稍后.....";
+                this.Label_DownloadWaitObject.Refresh();
+                Thread.Sleep(1000);
                 UploadInfo ui = new UploadInfo();
                 ui.CouponPrint();
                 this.AfterDownload();
