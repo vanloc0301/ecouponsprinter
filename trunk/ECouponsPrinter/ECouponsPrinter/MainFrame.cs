@@ -437,7 +437,7 @@ namespace ECouponsPrinter
                     }
                     return;
                 case "Button_NextConsumption":
-                    pageAll = LP_ctype[1].Count / 6 + (LP_ctype[0].Count % 6 == 0 ? 0 : 1);
+                    pageAll = LP_ctype[1].Count / 6 + (LP_ctype[1].Count % 6 == 0 ? 0 : 1);
                     if (cPage2 < pageAll)
                     {
                         cPage2++;
