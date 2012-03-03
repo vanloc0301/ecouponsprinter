@@ -3428,7 +3428,7 @@ namespace ECouponsPrinter
                         Panel_Ad.Visible = true; ;
                     }
                 }
-                Thread.Sleep(1000 * 60);
+                Thread.Sleep(1000 * 60 * 30);
             }
         }
 
