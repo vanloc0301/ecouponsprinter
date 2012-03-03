@@ -262,7 +262,7 @@ namespace ECouponsPrinter
             int y = this.VerticalScroll.Value;
             this.Panel_ShopInfo.Location = new System.Drawing.Point(0, 95 - y);
 
-            InitShopInfoData(LP_shop[curType].id);
+            InitShopInfoData(LP_stype[0][curType].id);
             Thread.Sleep(20);
 
             this.Panel_ShopInfo.Visible = true;
@@ -991,36 +991,43 @@ namespace ECouponsPrinter
         {
             this.Button_Vip.BackgroundImage = Image.FromFile(path + "\\images\\切图\\首页\\VIP专区.jpg");
 
-            //切换
-            int y = this.VerticalScroll.Value;
-            this.Panel_Coupons.Location = new System.Drawing.Point(0, 95 - y);
+            if (GlobalVariables.M.IntType == 1)
+            {
+                //切换
+                int y = this.VerticalScroll.Value;
+                this.Panel_Coupons.Location = new System.Drawing.Point(0, 95 - y);
 
-            if (GetTradeName() == null)
+                if (GetTradeName() == null)
+                {
+                    MyMsgBox mb = new MyMsgBox();
+                    mb.ShowMsg("暂无VIP优惠劵信息！", 2);
+                    return;
+                }
+
+                InitCouponData(GetTradeName()[0], 'v');
+                Thread.Sleep(20);
+
+                //准备工作
+                this.UnVisibleAllPanels();
+
+                //取消不必要的按钮
+                this.Button_LastCouponsPage.Visible = false;
+                this.Button_NextCouponsPage.Visible = false;
+                this.Btn_Rank.Visible = false;
+                this.Btn_Rec.Visible = false;
+                this.Btn_NewCouponList.Visible = false;
+
+                InitCouponButton();
+
+                ShowCouponVipBtn();
+                this.Panel_Coupons.Visible = true;
+                ShowCoupon();
+            }
+            else
             {
                 MyMsgBox mb = new MyMsgBox();
-                mb.ShowMsg("暂无VIP优惠劵信息！", 2);
-                return;
+                mb.ShowMsg("您还不是VIP会员\n如果想办理VIP，请联系:\n4001-868-968", 2);
             }
-
-            InitCouponData(GetTradeName()[0], 'v');
-            Thread.Sleep(20);
-
-            //准备工作
-            this.UnVisibleAllPanels();
-
-            //取消不必要的按钮
-            this.Button_LastCouponsPage.Visible = false;
-            this.Button_NextCouponsPage.Visible = false;
-            this.Btn_Rank.Visible = false;
-            this.Btn_Rec.Visible = false;
-            this.Btn_NewCouponList.Visible = false;
-
-            InitCouponButton();
-
-
-            ShowCouponVipBtn();
-            this.Panel_Coupons.Visible = true;
-            ShowCoupon();
         }
 
         /// <summary>
@@ -1574,7 +1581,7 @@ namespace ECouponsPrinter
                     LP_shop.Add(pi);
                 }
 
-                string date = DateTime.Now.ToString("yyyy-M-d H:mm:ss");
+                string date = DateTime.Now.ToString("yyyy/M/d H:mm:ss");
                 strSql = "select * from t_bz_coupon where #" + date + "#>=dtActiveTime and #" + date + "#<dtExpireTime";
                 reader = cmd.ExecuteReader(strSql);
                 LP_coupon = new List<CouponPicInfo>();
