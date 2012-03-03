@@ -147,7 +147,10 @@ namespace ECouponsPrinter
                     return;
                 }
 
-                if (ctl != Label_Option && ctl.Name != "MainFrame" && ctl.Name != "Panel_Black")
+                if (ctl.Name == "Label_ScrollText")
+                    return;
+
+                if (ctl != Label_Option && ctl.Name != "MainFrame" && ctl.Name != "Label_DownloadWaitObject" && ctl.Name != "Label_LoginWaitInfo")
                 {
                     ctl.MouseMove += new MouseEventHandler(MainFrame_MouseMove);
                 }
@@ -3118,7 +3121,11 @@ namespace ECouponsPrinter
                         strId += reader.GetString(0) + ",";
                     }
                 }
-                temp = FindCouponById(strId.Substring(0, strId.Length - 1).Split(','));
+                if (strId != "")
+                    temp = FindCouponById(strId.Substring(0, strId.Length - 1).Split(','));
+                else
+                    temp = new List<CouponPicInfo>();
+
                 return temp;
             }
             catch (Exception e1)
@@ -3783,7 +3790,7 @@ namespace ECouponsPrinter
             int WM_SYSKEYDOWN = 260;
 
             if (isFirstKey)
-            {             
+            {
                 this.LoginText.Text = "";
                 if (msg.Msg == WM_KEYDOWN | msg.Msg == WM_SYSKEYDOWN)
                 {
@@ -3969,6 +3976,12 @@ namespace ECouponsPrinter
         {
             IntPtr hWnd;
 
+            hWnd = FindWindow(null, "Option");
+            if (hWnd != IntPtr.Zero)
+            {
+                SendMessage(hWnd, WM_CLOSE, 0, 0);
+            }
+
             if (GlobalVariables.isUserLogin)
             {
                 hWnd = FindWindow(null, "wait");
@@ -4011,19 +4024,20 @@ namespace ECouponsPrinter
         private void Timer_DownloadInfo_Tick(object sender, EventArgs e)
         {
             this.Timer_DownloadInfo.Stop();
+            this.CloseAllDialog();
             try
             {
                 //下载信息
                 DownloadInfo di = new DownloadInfo(this);
                 this.Label_DownloadWaitObject.Text = "正在下载更新数据\n请稍后.....";
                 Thread.Sleep(1000);
-  //              this.Label_DownloadWaitObject.Refresh();
+                //              this.Label_DownloadWaitObject.Refresh();
                 this.BeforeDownload();
                 di.download();
                 this.Label_DownloadWaitObject.Text = "正在同步数据\n请稍后.....";
                 this.Label_DownloadWaitObject.Refresh();
                 Thread.Sleep(1000);
- //               this.Label_DownloadWaitObject.Refresh();
+                //               this.Label_DownloadWaitObject.Refresh();
                 di.SynParam();
                 //同步数据
                 this.InitData();
