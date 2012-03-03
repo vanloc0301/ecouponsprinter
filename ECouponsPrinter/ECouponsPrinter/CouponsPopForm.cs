@@ -52,7 +52,6 @@ namespace ECouponsPrinter
         private void Button_Close_MouseUp(object sender, MouseEventArgs e)
         {
             this.Button_Close.BackgroundImage = Image.FromFile(path + "\\images\\切图\\优惠券详细弹出\\关闭.jpg");
-
             this.Close();
         }
 
