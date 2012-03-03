@@ -7,6 +7,7 @@ using System.IO;
 using System.Data.OleDb;
 using System.Windows.Forms;
 using System.Net;
+using System.Drawing;
 
 namespace ECouponsPrinter
 {
@@ -193,22 +194,25 @@ namespace ECouponsPrinter
                     File.Delete(System.Windows.Forms.Application.StartupPath + "\\ad\\" + aryFile[i]);
                 }
             }
+            //删除原纪录
+            strSql = "delete from t_bz_advertisement where strId='" + strId + "'";
+            cmd.ExecuteNonQuery(strSql);
             //创建文件
             if (intType == 1)
             {
-                createImg("ad", strContent);
+                if(!createImg("ad", strContent))
+                    return;
             }
             else if (intType == 2)
             {
                 string[] aryFile = strContent.Split(new char[] { ',' });
                 for (int i = 0; i < aryFile.Length; i++)
                 {
-                    createImg("ad", aryFile[i]);
+                    if(!createImg("ad", aryFile[i]))
+                        return;
                 }
             }
             //写入数据库（先删除、后增加，保证之前已有的信息可下载）
-            strSql = "delete from t_bz_advertisement where strId='" + strId + "'";
-            cmd.ExecuteNonQuery(strSql);
             strSql = "insert into t_bz_advertisement(strId,strName,intType,strContent,dtStartTime,dtEndTime) values('" + strId + "','" + strName + "'," + intType +
                 ",'" + strContent + "','" + dtStartTime + "','" + dtEndTime + "')";
             //MessageBox.Show(strSql);
@@ -224,14 +228,16 @@ namespace ECouponsPrinter
             //创建文件
             if (intType == 1)
             {
-                createImg("ad", strContent);
+                if(!createImg("ad", strContent))
+                    return;
             }
             else if (intType == 2)
             {
                 string[] aryFile = strContent.Split(new char[] { ',' });
                 for (int i = 0; i < aryFile.Length; i++)
                 {
-                    createImg("ad", aryFile[i]);
+                    if(!createImg("ad", aryFile[i]))
+                        return;
                 }
             }
             //写入数据库
@@ -298,14 +304,17 @@ namespace ECouponsPrinter
             {
                 File.Delete(System.Windows.Forms.Application.StartupPath + "\\coupon\\" + strLargeImgOld);
             }
-            //创建文件
-            if (strSmallImg.Length > 0)
-                createImg("coupon", strSmallImg);
-            if (strLargeImg.Length > 0)
-                createImg("coupon", strLargeImg);
-            //写入数据库（先删除、后增加，保证之前已有的信息可下载）
+            //删除原纪录
             strSql = "delete from t_bz_coupon where strId='" + strId + "'";
             cmd.ExecuteNonQuery(strSql);
+            //创建文件
+            if (strSmallImg.Length > 0)
+                if(!createImg("coupon", strSmallImg))
+                    return;
+            if (strLargeImg.Length > 0)
+                if(!createImg("coupon", strLargeImg))
+                    return;
+            //写入数据库（先删除、后增加，保证之前已有的信息可下载）
             strSql = "insert into t_bz_coupon(strId,strName,dtActiveTime,dtExpireTime,strShopId,intVip,intRecommend,flaPrice,strSmallImg,strLargeImg,strIntro,strInstruction) " +
                 "values('" + strId + "','" + strName + "','" + dtActiveTime + "','" + dtExpireTime + "','" + strShopId + "'," + intVip + "," + intRecommend + "," + flaPrice +
                 ",'" + strSmallImg + "','" + strLargeImg + "','" + strIntro + "','" + strInstruction + "')";
@@ -322,9 +331,11 @@ namespace ECouponsPrinter
                 out strSmallImg, out strLargeImg, out strIntro, out strInstruction);
             //创建文件
             if (strSmallImg.Length > 0)
-                createImg("coupon", strSmallImg);
+                if(!createImg("coupon", strSmallImg))
+                    return;
             if (strLargeImg.Length > 0)
-                createImg("coupon", strLargeImg);
+                if(!createImg("coupon", strLargeImg))
+                    return;
             //写入数据库
             AccessCmd cmd = new AccessCmd();
             string strSql = "insert into t_bz_coupon(strId,strName,dtActiveTime,dtExpireTime,strShopId,intVip,intRecommend,flaPrice,strSmallImg,strLargeImg,strIntro,strInstruction) " +
@@ -387,14 +398,17 @@ namespace ECouponsPrinter
             {
                 File.Delete(System.Windows.Forms.Application.StartupPath + "\\shop\\" + strLargeImgOld);
             }
-            //创建文件
-            if (strSmallImg.Length > 0)
-                createImg("shop", strSmallImg);
-            if (strLargeImg.Length > 0)
-                createImg("shop", strLargeImg);
-            //写入数据库（先删除、后增加，保证之前已有的信息可下载）
+            //删除原纪录
             strSql = "delete from t_bz_shop where strId='" + strId + "'";
             cmd.ExecuteNonQuery(strSql);
+            //创建文件
+            if (strSmallImg.Length > 0)
+                if(!createImg("shop", strSmallImg))
+                    return;
+            if (strLargeImg.Length > 0)
+                if(!createImg("shop", strLargeImg))
+                    return;
+            //写入数据库（先删除、后增加，保证之前已有的信息可下载）
             strSql = "insert into t_bz_shop(strId,strBizName,strShopName,strTrade,strAddr,strIntro,strSmallImg,strLargeImg,intType) values('" + strId + "','" + strBizName + "','" +
                 strShopName + "','" + strTrade + "','" + strAddr + "','" + strIntro + "','" + strSmallImg + "','" + strLargeImg + "'," + intType + ")";
             cmd.ExecuteNonQuery(strSql);
@@ -407,9 +421,11 @@ namespace ECouponsPrinter
             getShopProps(xnShop, out strId, out strBizName, out strShopName, out strTrade, out strAddr, out strIntro, out strSmallImg, out strLargeImg, out intType);
             //创建文件
             if (strSmallImg.Length > 0)
-                createImg("shop", strSmallImg);
+                if(!createImg("shop", strSmallImg))
+                    return;
             if (strLargeImg.Length > 0)
-                createImg("shop", strLargeImg);
+                if(!createImg("shop", strLargeImg))
+                    return;
             //写入数据库
             AccessCmd cmd = new AccessCmd();
             string strSql = "insert into t_bz_shop(strId,strBizName,strShopName,strTrade,strAddr,strIntro,strSmallImg,strLargeImg,intType) values('" + strId + "','" + strBizName + "','" + 
@@ -418,7 +434,7 @@ namespace ECouponsPrinter
             cmd.Close();
         }
 
-        private static void createImg(String strType, String strImg)
+        private static bool createImg(String strType, String strImg)
         {
             ;
             WebRequest request = HttpWebRequest.Create(GlobalVariables.StrServerUrl + "/servlet/FileDownload?strFileType=" + strType + "&strFileName=" + strImg);
@@ -432,6 +448,28 @@ namespace ECouponsPrinter
             }
             stream.Close();
             fs.Close();
+            if (!strImg.ToLower().EndsWith("wmv"))
+            {
+                //测试图像文件是否受损
+                PictureBox pb = new PictureBox();
+                FileStream pFileStream = new FileStream(System.Windows.Forms.Application.StartupPath + "\\" + strType + "\\" + strImg, FileMode.Open, FileAccess.Read);
+                try
+                {
+                    pb.Image = new Bitmap(Image.FromStream(pFileStream), 760, 407);
+                    return true;
+                }
+                catch (Exception e)
+                {
+                    return false;
+                }
+                finally
+                {
+                    pFileStream.Close();
+                    pb.Dispose();
+                    pb = null;
+                }
+            }
+            return true;
         }
 
         private static void getShopProps(XmlNode xnShop, out String strId, out String strBizName, out String strShopName, out String strTrade, out String strAddr,
