@@ -34,13 +34,13 @@
             this.Label_Instruction = new System.Windows.Forms.Label();
             this.Label_Into = new System.Windows.Forms.Label();
             this.Code = new System.Windows.Forms.Label();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.logo = new System.Windows.Forms.PictureBox();
             this.Button_Close = new System.Windows.Forms.Button();
             this.Button_Print = new System.Windows.Forms.Button();
             this.PB_Couponpop = new System.Windows.Forms.PictureBox();
             this.Label_Top = new System.Windows.Forms.Label();
             this.Panel_Background.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.logo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PB_Couponpop)).BeginInit();
             this.SuspendLayout();
             // 
@@ -52,7 +52,7 @@
             this.Panel_Background.Controls.Add(this.Label_Instruction);
             this.Panel_Background.Controls.Add(this.Label_Into);
             this.Panel_Background.Controls.Add(this.Code);
-            this.Panel_Background.Controls.Add(this.pictureBox2);
+            this.Panel_Background.Controls.Add(this.logo);
             this.Panel_Background.Controls.Add(this.Button_Close);
             this.Panel_Background.Controls.Add(this.Button_Print);
             this.Panel_Background.Controls.Add(this.PB_Couponpop);
@@ -106,13 +106,14 @@
             this.Code.TabIndex = 4;
             this.Code.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // pictureBox2
+            // logo
             // 
-            this.pictureBox2.Location = new System.Drawing.Point(11, 3);
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(100, 75);
-            this.pictureBox2.TabIndex = 3;
-            this.pictureBox2.TabStop = false;
+            this.logo.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("logo.BackgroundImage")));
+            this.logo.Location = new System.Drawing.Point(11, 3);
+            this.logo.Name = "logo";
+            this.logo.Size = new System.Drawing.Size(100, 75);
+            this.logo.TabIndex = 3;
+            this.logo.TabStop = false;
             // 
             // Button_Close
             // 
@@ -177,7 +178,7 @@
             this.Text = "CouponsPopForm";
             this.Load += new System.EventHandler(this.CouponPop_OnLoad);
             this.Panel_Background.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.logo)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PB_Couponpop)).EndInit();
             this.ResumeLayout(false);
 
@@ -187,7 +188,7 @@
 
         private System.Windows.Forms.Panel Panel_Background;
         private System.Windows.Forms.Label Code;
-        private System.Windows.Forms.PictureBox pictureBox2;
+        private System.Windows.Forms.PictureBox logo;
         private System.Windows.Forms.Button Button_Close;
         private System.Windows.Forms.Button Button_Print;
         private System.Windows.Forms.PictureBox PB_Couponpop;
