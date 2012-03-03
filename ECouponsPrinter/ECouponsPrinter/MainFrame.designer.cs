@@ -2296,7 +2296,7 @@
             this.Label_AdClick.TabIndex = 0;
             this.Label_AdClick.Text = "点击屏幕             退出广告";
             this.Label_AdClick.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.Label_AdClick.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Ad_MouseDown);
+            this.Label_AdClick.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Ad_MouseUp);
             // 
             // Timer_UserQuit
             // 
@@ -2334,8 +2334,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(973, 742);
-            this.Controls.Add(this.Panel_NearShop);
             this.Controls.Add(this.Panel_Black);
+            this.Controls.Add(this.Panel_NearShop);
             this.Controls.Add(this.Panel_Coupons);
             this.Controls.Add(this.Panel_Ad);
             this.Controls.Add(this.Panel_Bottom);

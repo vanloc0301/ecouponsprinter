@@ -78,7 +78,7 @@ namespace ECouponsPrinter
 
         #region 处理界面点击事件
         Point mPos = new Point(0, 0);
-        private void Ad_WMVMovieDown(object sender, AxWMPLib._WMPOCXEvents_MouseDownEvent e)
+        private void Ad_WMVMovieUp(object sender, AxWMPLib._WMPOCXEvents_MouseUpEvent e)
         {
             this.UnVisibleAllPanels();
 
@@ -98,7 +98,7 @@ namespace ECouponsPrinter
 
         }
 
-        private void Ad_MouseDown(object sender, MouseEventArgs e)
+        private void Ad_MouseUp(object sender, MouseEventArgs e)
         {
             this.UnVisibleAllPanels();
 
@@ -142,9 +142,9 @@ namespace ECouponsPrinter
             {
                 if (ctl.Name == "Panel_Ad")
                 {
-                    ctl.MouseDown += new MouseEventHandler(Ad_MouseDown);
+                    ctl.MouseUp += new MouseEventHandler(Ad_MouseUp);
                     foreach (Control ctl1 in ctl.Controls)
-                        ctl1.MouseDown += new MouseEventHandler(Ad_MouseDown);
+                        ctl1.MouseDown += new MouseEventHandler(Ad_MouseUp);
                     return;
                 }
 
@@ -462,16 +462,22 @@ namespace ECouponsPrinter
             string list = ",";
             string temp = "";
 
-            foreach (string id in FavId)
+            if (FavId.Length > 0)
             {
-                temp = "," + id + ",";
-                if (!list.Contains(temp))
+                foreach (string id in FavId)
                 {
-                    list += id + ",";
+                    temp = "," + id + ",";
+                    if (!list.Contains(temp))
+                    {
+                        list += id + ",";
+                    }
                 }
+                GlobalVariables.M.AryFavourite = list.Substring(1, list.Length - 2).Split(',');
             }
-
-            GlobalVariables.M.AryFavourite = list.Substring(1, list.Length - 2).Split(',');
+            else
+            {
+                return;
+            }
             //      MessageBox.Show(list.Substring(1, list.Length - 2));
         }
 
@@ -1181,6 +1187,7 @@ namespace ECouponsPrinter
         #region 初始化所有panel,将它们的visible设置为false
         private Panel UnVisibleAllPanels()
         {
+            this.Panel_Black.Visible = false;
             this.Panel_Home.Visible = false;
             this.Panel_ShopInfo.Visible = false;
             this.Panel_Shop.Visible = false;
@@ -1188,7 +1195,6 @@ namespace ECouponsPrinter
             this.Panel_Coupons.Visible = false;
             this.Panel_NearShop.Visible = false;
             this.Panel_Ad.Visible = false;
-            this.Panel_Black.Visible = false;
 
             return null;
         }
@@ -1889,10 +1895,13 @@ namespace ECouponsPrinter
                     pFileStream.Dispose();
                 }
 
-                name = reader.GetString(1);
-                if (name != "" && name != null)
+                if (!reader.IsDBNull(1))
                 {
-                    Label_ShopInfo_Name.Text = "商家名称: " + name;
+                    name = reader.GetString(1);
+                    if (name != "" && name != null)
+                    {
+                        Label_ShopInfo_Name.Text = "商家名称: " + name;
+                    }
                 }
 
                 id = reader.GetString(0);
@@ -1904,6 +1913,10 @@ namespace ECouponsPrinter
                     {
                         Label_ShopInfo_Address.Text = "地址: " + address;
                     }
+                    else
+                    {
+                        Label_ShopInfo_Address.Text = "地址: ";
+                    }
                 }
 
                 if (!reader.IsDBNull(7))
@@ -1913,7 +1926,17 @@ namespace ECouponsPrinter
                     {
                         Label_ShopInfo_Detail.Text = "简介: " + info;
                     }
+                    else
+                    {
+                        Label_ShopInfo_Detail.Text = "简介: ";
+                    }
                 }
+            }
+
+            if (this.PB_ShopInfo_Coupons.Image != null)
+            {
+                this.PB_ShopInfo_Coupons.Image.Dispose();
+                this.PB_ShopInfo_Coupons.Image = null;
             }
 
             LP_ctype[0] = FindCouponByShopId(id);
@@ -3405,7 +3428,7 @@ namespace ECouponsPrinter
                         Panel_Ad.Visible = true; ;
                     }
                 }
-                Thread.Sleep(1000 * 15);
+                Thread.Sleep(1000 * 60);
             }
         }
 
@@ -3508,7 +3531,7 @@ namespace ECouponsPrinter
                     Ad_MediaPlayer1.Name = "Ad_MediaPlayer1";
                     Ad_MediaPlayer1.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("Ad_MediaPlayer.OcxState")));
                     Ad_MediaPlayer1.Size = new System.Drawing.Size(768, 576);
-                    Ad_MediaPlayer1.MouseDownEvent += new AxWMPLib._WMPOCXEvents_MouseDownEventHandler(Ad_WMVMovieDown);
+                    Ad_MediaPlayer1.MouseUpEvent += new AxWMPLib._WMPOCXEvents_MouseUpEventHandler(Ad_WMVMovieUp);
                     Panel_Ad.Controls.Add(Ad_MediaPlayer1);
                     ((System.ComponentModel.ISupportInitialize)(Ad_MediaPlayer1)).EndInit();
                     Ad_MediaPlayer1.uiMode = "none";
@@ -3522,7 +3545,7 @@ namespace ECouponsPrinter
                     Ad_PB1.Location = new System.Drawing.Point(0, 0);
                     Ad_PB1.Name = "Ad_PB1";
                     Ad_PB1.Size = new System.Drawing.Size(768, 576);
-                    Ad_PB1.MouseDown += new MouseEventHandler(Ad_MouseDown);
+                    Ad_PB1.MouseUp += new MouseEventHandler(Ad_MouseUp);
                     Panel_Ad.Controls.Add(Ad_PB1);
                     showType = 2;
                 }
@@ -3539,7 +3562,7 @@ namespace ECouponsPrinter
                     Ad_MediaPlayer1.Name = "Ad_MediaPlayer1";
                     Ad_MediaPlayer1.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("Ad_MediaPlayer.OcxState")));
                     Ad_MediaPlayer1.Size = new System.Drawing.Size(768, 576);
-                    Ad_MediaPlayer1.MouseDownEvent += new AxWMPLib._WMPOCXEvents_MouseDownEventHandler(Ad_WMVMovieDown);
+                    Ad_MediaPlayer1.MouseUpEvent += new AxWMPLib._WMPOCXEvents_MouseUpEventHandler(Ad_WMVMovieUp);
                     Panel_Ad.Controls.Add(Ad_MediaPlayer1);
                     ((System.ComponentModel.ISupportInitialize)(Ad_MediaPlayer1)).EndInit();
                     Ad_MediaPlayer1.uiMode = "none";
@@ -3553,7 +3576,7 @@ namespace ECouponsPrinter
                     Ad_PB1.Location = new System.Drawing.Point(0, 680);
                     Ad_PB1.Name = "Ad_PB1";
                     Ad_PB1.Size = new System.Drawing.Size(768, 576);
-                    Ad_PB1.MouseDown += new MouseEventHandler(Ad_MouseDown);
+                    Ad_PB1.MouseUp += new MouseEventHandler(Ad_MouseUp);
                     Panel_Ad.Controls.Add(Ad_PB1);
 
                     showType = 2;
@@ -3574,7 +3597,7 @@ namespace ECouponsPrinter
                     Ad_MediaPlayer2.Name = "Ad_MediaPlayer2";
                     Ad_MediaPlayer2.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("Ad_MediaPlayer.OcxState")));
                     Ad_MediaPlayer2.Size = new System.Drawing.Size(768, 576);
-                    Ad_MediaPlayer2.MouseDownEvent += new AxWMPLib._WMPOCXEvents_MouseDownEventHandler(Ad_WMVMovieDown);
+                    Ad_MediaPlayer2.MouseUpEvent += new AxWMPLib._WMPOCXEvents_MouseUpEventHandler(Ad_WMVMovieUp);
                     Panel_Ad.Controls.Add(Ad_MediaPlayer2);
                     ((System.ComponentModel.ISupportInitialize)(Ad_MediaPlayer2)).EndInit();
                     Ad_MediaPlayer2.uiMode = "none";
@@ -3597,7 +3620,7 @@ namespace ECouponsPrinter
                     Ad_PB2.Location = new System.Drawing.Point(0, y);
                     Ad_PB2.Name = "Ad_PB2";
                     Ad_PB2.Size = new System.Drawing.Size(768, 576);
-                    Ad_PB2.MouseDown += new MouseEventHandler(Ad_MouseDown);
+                    Ad_PB2.MouseUp += new MouseEventHandler(Ad_MouseUp);
                     Panel_Ad.Controls.Add(Ad_PB2);
 
                     if (showType == 1)
@@ -3911,13 +3934,15 @@ namespace ECouponsPrinter
         public void BeforeDownload()
         {
             this.UnVisibleAllPanels();
-            this.Label_Black_Info.Text = "正在下载更新数据,请稍后.....";
+            this.Timer_Countdown.Stop();
+            this.Timer_Countdown.Enabled = false;
             this.Panel_Black.Visible = true;
 
         }
 
         public void AfterDownload()
         {
+            InitTimer();
             this.UnVisibleAllPanels();
             this.Button_HomePage_MouseUp(null, null);
         }
@@ -3975,19 +4000,38 @@ namespace ECouponsPrinter
         /// <param name="e"></param>
         private void Timer_DownloadInfo_Tick(object sender, EventArgs e)
         {
+            //
+            this.UnVisibleAllPanels();
+            this.Timer_Countdown.Stop();
+            this.Timer_Countdown.Enabled = false;
+            this.Panel_Black.Visible = true;
+            //
+
             this.Timer_DownloadInfo.Stop();
             try
             {
                 //下载信息
                 DownloadInfo di = new DownloadInfo(this);
+                this.Label_Black_Info.Text = "正在下载更新数据\n请稍后.....";
+                //
+                this.UnVisibleAllPanels();
+                this.Timer_Countdown.Stop();
+                this.Timer_Countdown.Enabled = false;
+                this.Panel_Black.Visible = true;
+                //
+                Thread.Sleep(3000);
                 di.download();
+                this.Label_Black_Info.Text = "正在同步数据\n请稍后.....";
                 di.SynParam();
                 //同步数据
                 this.InitData();
                 this.Timer_DownloadInfo.Interval = GlobalVariables.IntRefreshSec * 1000;
+                this.Label_Black_Info.Text = "正在上传消费数据\n请稍后.....";
                 //上传消费记录
                 UploadInfo ui = new UploadInfo();
                 ui.CouponPrint();
+                this.AfterDownload();
+
             }
             catch (Exception ep)
             {
