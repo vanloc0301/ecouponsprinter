@@ -181,7 +181,7 @@ namespace ECouponsPrinter
             {
                 if (m.StrMobileNo.Length == 0)
                 {
-                    Login login = new Login(userid);
+                    Login login = new Login(userid, null);
                     login.Location = new Point(30, 50);
                     login.TopMost = true;
                     this.Visible = false;

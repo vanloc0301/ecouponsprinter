@@ -1237,7 +1237,7 @@ namespace ECouponsPrinter
         #endregion
 
         #region 初始化广告倒计时
-        private void InitTimer()
+        public void InitTimer()
         {
             this.Timer_Countdown.Enabled = true;
             this.Timer_Countdown.Stop();
@@ -3896,7 +3896,7 @@ namespace ECouponsPrinter
             {
                 if (m.StrMobileNo.Length == 0)
                 {
-                    Login login = new Login(userid);
+                    Login login = new Login(userid, this);
                     login.TopMost = true;
                     //         this.Controls.Add(login);
                     if (DialogResult.Yes == login.ShowDialog(this))

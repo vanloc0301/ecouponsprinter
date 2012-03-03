@@ -57,6 +57,7 @@
             this.phone.Name = "phone";
             this.phone.Size = new System.Drawing.Size(256, 46);
             this.phone.TabIndex = 1;
+            this.phone.TextChanged += new System.EventHandler(this.phone_TextChanged);
             this.phone.Enter += new System.EventHandler(this.ShowKeyBoard);
             // 
             // code
