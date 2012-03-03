@@ -102,7 +102,7 @@ namespace ECouponsPrinter
             }
             catch (Exception sysException)
             {
-                // Log the exception.                
+                ErrorLog.log(sysException);               
                 return false;
             }
         }
@@ -148,7 +148,7 @@ namespace ECouponsPrinter
             }
             catch (Exception sysException)
             {
-                // Log the exception.                
+                ErrorLog.log(sysException);            
                 return false;
             }
         }
