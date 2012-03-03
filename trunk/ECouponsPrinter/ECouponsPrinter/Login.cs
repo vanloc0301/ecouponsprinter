@@ -27,6 +27,7 @@ namespace ECouponsPrinter
             GlobalVariables.isKeyBoardExist = false;
             this.Location = new Point(10, 85);
             this.mf = frame;
+            mf.InitTimer();
         }
 
         private void CodeTimer_Tick(object sender, EventArgs e)
