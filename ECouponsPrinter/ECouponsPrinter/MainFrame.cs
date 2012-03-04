@@ -3864,8 +3864,19 @@ namespace ECouponsPrinter
             {
                 this.SCardTimer.Stop();
                 this.SCardTimer.Enabled = false;
-                this.Label_LoginWaitInfo.Visible = true;
-                Label_LoginWaitInfo.Refresh();
+                if (this.Label_LoginWaitInfo.InvokeRequired)
+                {
+                    this.Label_LoginWaitInfo.Invoke((MethodInvoker)delegate
+                    {
+                        this.Label_LoginWaitInfo.Visible = true;
+                        Label_LoginWaitInfo.Refresh();
+                    }, null);
+                }
+                else
+                {
+                    this.Label_LoginWaitInfo.Visible = true;
+                    Label_LoginWaitInfo.Refresh();
+                }
 
                 if (!UserLogin(cardNo))
                 {
@@ -3880,7 +3891,17 @@ namespace ECouponsPrinter
                     LoginSuccessDispatch();
                 }
 
-                this.Label_LoginWaitInfo.Visible = false;
+                if (this.Label_LoginWaitInfo.InvokeRequired)
+                {
+                    this.Label_LoginWaitInfo.Invoke((MethodInvoker)delegate
+                    {
+                        this.Label_LoginWaitInfo.Visible = false;
+                    }, null);
+                }
+                else
+                {
+                    this.Label_LoginWaitInfo.Visible = false;
+                }                
             }
         }
 
