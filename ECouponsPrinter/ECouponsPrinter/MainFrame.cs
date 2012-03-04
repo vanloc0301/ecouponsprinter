@@ -3864,6 +3864,9 @@ namespace ECouponsPrinter
             {
                 this.SCardTimer.Stop();
                 this.SCardTimer.Enabled = false;
+                this.Label_LoginWaitInfo.Visible = true;
+                Label_LoginWaitInfo.Refresh();
+
                 if (!UserLogin(cardNo))
                 {
                     SCard.light(0x0000, 0);
@@ -3876,6 +3879,8 @@ namespace ECouponsPrinter
                     SCard.light(0x0000, 1);
                     LoginSuccessDispatch();
                 }
+
+                this.Label_LoginWaitInfo.Visible = false;
             }
         }
 
