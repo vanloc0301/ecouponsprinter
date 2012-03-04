@@ -16,6 +16,8 @@ namespace ECouponsPrinter
         {
             InitializeComponent();
 
+            this.Location = new Point(180,600);
+
             this.mf = frame;
             this.labelInfo.Text = "";
             this.labelInfo.Text += "优惠劵名称: " + name + "\n优惠劵价格:" + price + "元\n";

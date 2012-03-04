@@ -25,7 +25,8 @@ namespace ECouponsPrinter
             InitializeComponent();
             loginId = id;
             GlobalVariables.isKeyBoardExist = false;
-            this.Location = new Point(10, 85);
+            this.FormBorderStyle = FormBorderStyle.None;
+            this.Location = new Point(10, 105);
             this.mf = frame;
             mf.InitTimer();
         }
@@ -43,6 +44,7 @@ namespace ECouponsPrinter
 
         private void Reget_Click(object sender, EventArgs e)
         {
+            mf.InitTimer();
             if (th != null)
             {
                 th.Abort();
@@ -144,15 +146,16 @@ namespace ECouponsPrinter
                 {
                     this.info.Text = "注册成功";
                     info.Refresh();
+                    this.DialogResult = DialogResult.Yes;
                 }
                 else
                 {
                     this.info.Text = "注册失败！";
                     info.Refresh();
+                    this.DialogResult = DialogResult.No;
                 }
 
                 Thread.Sleep(1000);
-                this.DialogResult = DialogResult.Yes;
                 this.Close();
             }
             else

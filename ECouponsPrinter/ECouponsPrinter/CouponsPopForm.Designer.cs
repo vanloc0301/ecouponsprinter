@@ -175,6 +175,7 @@
             this.ControlBox = false;
             this.Controls.Add(this.Panel_Background);
             this.Name = "CouponsPopForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "CouponsPopForm";
             this.Load += new System.EventHandler(this.CouponPop_OnLoad);
             this.Panel_Background.ResumeLayout(false);

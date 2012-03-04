@@ -31,6 +31,7 @@ namespace ECouponsPrinter
             this.SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.AllPaintingInWmPaint, true);
             this.SetStyle(ControlStyles.UserPaint, true);
             this.Panel_Background.GetType().GetProperty("DoubleBuffered", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic).SetValue(Panel_Background, true, null);
+            this.Location = new Point(10, 10);
 
             this.pi = info;
             this.Frame = myFrame;

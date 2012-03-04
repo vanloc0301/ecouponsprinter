@@ -1160,7 +1160,7 @@ namespace ECouponsPrinter
             ShowHome();
 
             //启动射频卡检测程序
-            //this.SCardStart();
+            this.SCardStart();
 
             //加载广告线程
             AdThread = new Thread(new ThreadStart(RefreshAd));
@@ -3514,7 +3514,7 @@ namespace ECouponsPrinter
             if (Panel_Ad.Visible == true)
             {
                 string time = DateTime.Now.ToString("H:m:s");
-                string strSql = "select * from t_bz_advertisement where #" + time + "#>=dtStartTime And #" + time + "#<dtEndTime And (intType=1 or intType=2)";
+                string strSql = "select top 2 * from t_bz_advertisement where #" + time + "#>=dtStartTime And #" + time + "#<dtEndTime And (intType=1 or intType=2)";
                 AccessCmd cmd = new AccessCmd();
                 OleDbDataReader reader = cmd.ExecuteReader(strSql);
 
@@ -3890,7 +3890,7 @@ namespace ECouponsPrinter
 
             if (m == null)
             {
-                mb.ShowMsg("无效的用户！", 1);
+                mb.ShowMsg("核对用户信息失败！", 1);
             }
             else
             {
