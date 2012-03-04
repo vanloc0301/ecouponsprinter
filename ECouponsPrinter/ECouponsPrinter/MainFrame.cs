@@ -3883,7 +3883,6 @@ namespace ECouponsPrinter
                     SCard.light(0x0000, 0);
                     this.SCardTimer.Enabled = true;
                     this.SCardTimer.Start();
-                    return;
                 }
                 else
                 {
@@ -3982,10 +3981,12 @@ namespace ECouponsPrinter
 
         public void BeforeDownload()
         {
+            this.CloseAllDialog();
             this.UnVisibleAllPanels();
             this.Timer_Countdown.Stop();
             this.Timer_Countdown.Enabled = false;
             this.Label_DownloadWaitObject.Visible = true;
+            this.Label_LoginWaitInfo.Visible = false;
             this.Refresh();
         }
 
