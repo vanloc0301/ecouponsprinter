@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Login));
             this.label1 = new System.Windows.Forms.Label();
             this.phone = new System.Windows.Forms.TextBox();
             this.code = new System.Windows.Forms.TextBox();
@@ -43,8 +44,10 @@
             // 
             // label1
             // 
+            this.label1.BackColor = System.Drawing.Color.Transparent;
             this.label1.Font = new System.Drawing.Font("宋体", 20F, System.Drawing.FontStyle.Bold);
-            this.label1.Location = new System.Drawing.Point(35, 20);
+            this.label1.ForeColor = System.Drawing.Color.Black;
+            this.label1.Location = new System.Drawing.Point(41, 49);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(608, 139);
             this.label1.TabIndex = 0;
@@ -53,7 +56,7 @@
             // phone
             // 
             this.phone.Font = new System.Drawing.Font("宋体", 25F);
-            this.phone.Location = new System.Drawing.Point(137, 183);
+            this.phone.Location = new System.Drawing.Point(137, 196);
             this.phone.Name = "phone";
             this.phone.Size = new System.Drawing.Size(256, 46);
             this.phone.TabIndex = 1;
@@ -63,7 +66,7 @@
             // code
             // 
             this.code.Font = new System.Drawing.Font("宋体", 25F);
-            this.code.Location = new System.Drawing.Point(137, 244);
+            this.code.Location = new System.Drawing.Point(137, 257);
             this.code.Name = "code";
             this.code.Size = new System.Drawing.Size(145, 46);
             this.code.TabIndex = 2;
@@ -71,8 +74,10 @@
             // 
             // label2
             // 
+            this.label2.BackColor = System.Drawing.Color.Transparent;
             this.label2.Font = new System.Drawing.Font("宋体", 18F, System.Drawing.FontStyle.Bold);
-            this.label2.Location = new System.Drawing.Point(36, 193);
+            this.label2.ForeColor = System.Drawing.Color.Black;
+            this.label2.Location = new System.Drawing.Point(36, 206);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(88, 33);
             this.label2.TabIndex = 3;
@@ -81,8 +86,10 @@
             // label3
             // 
             this.label3.AutoSize = true;
+            this.label3.BackColor = System.Drawing.Color.Transparent;
             this.label3.Font = new System.Drawing.Font("宋体", 18F, System.Drawing.FontStyle.Bold);
-            this.label3.Location = new System.Drawing.Point(39, 254);
+            this.label3.ForeColor = System.Drawing.Color.Black;
+            this.label3.Location = new System.Drawing.Point(39, 267);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(85, 24);
             this.label3.TabIndex = 3;
@@ -91,6 +98,7 @@
             // confirm
             // 
             this.confirm.Font = new System.Drawing.Font("宋体", 25F, System.Drawing.FontStyle.Bold);
+            this.confirm.ForeColor = System.Drawing.Color.Black;
             this.confirm.Location = new System.Drawing.Point(40, 377);
             this.confirm.Name = "confirm";
             this.confirm.Size = new System.Drawing.Size(219, 69);
@@ -102,6 +110,7 @@
             // cancel
             // 
             this.cancel.Font = new System.Drawing.Font("宋体", 25F, System.Drawing.FontStyle.Bold);
+            this.cancel.ForeColor = System.Drawing.Color.Black;
             this.cancel.Location = new System.Drawing.Point(408, 377);
             this.cancel.Name = "cancel";
             this.cancel.Size = new System.Drawing.Size(219, 69);
@@ -112,13 +121,15 @@
             // 
             // Reget
             // 
+            this.Reget.BackColor = System.Drawing.SystemColors.Control;
             this.Reget.Font = new System.Drawing.Font("宋体", 20F, System.Drawing.FontStyle.Bold);
-            this.Reget.Location = new System.Drawing.Point(415, 183);
+            this.Reget.ForeColor = System.Drawing.Color.Black;
+            this.Reget.Location = new System.Drawing.Point(415, 196);
             this.Reget.Name = "Reget";
             this.Reget.Size = new System.Drawing.Size(212, 46);
             this.Reget.TabIndex = 5;
             this.Reget.Text = "获取验证码";
-            this.Reget.UseVisualStyleBackColor = true;
+            this.Reget.UseVisualStyleBackColor = false;
             this.Reget.Click += new System.EventHandler(this.Reget_Click);
             // 
             // CodeTimer
@@ -128,9 +139,10 @@
             // 
             // info
             // 
+            this.info.BackColor = System.Drawing.Color.Transparent;
             this.info.Font = new System.Drawing.Font("宋体", 20F, System.Drawing.FontStyle.Bold);
             this.info.ForeColor = System.Drawing.Color.Red;
-            this.info.Location = new System.Drawing.Point(35, 308);
+            this.info.Location = new System.Drawing.Point(35, 321);
             this.info.Name = "info";
             this.info.Size = new System.Drawing.Size(402, 39);
             this.info.TabIndex = 6;
@@ -139,6 +151,8 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.Black;
+            this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.ClientSize = new System.Drawing.Size(727, 471);
             this.ControlBox = false;
             this.Controls.Add(this.info);
@@ -150,6 +164,7 @@
             this.Controls.Add(this.code);
             this.Controls.Add(this.phone);
             this.Controls.Add(this.label1);
+            this.ForeColor = System.Drawing.Color.White;
             this.Name = "Login";
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "Login";

@@ -21,6 +21,7 @@ namespace ECouponsPrinter
         {
             InitializeComponent();
             this.FormBorderStyle = FormBorderStyle.None;
+            this.SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.AllPaintingInWmPaint, true);
 
             this.id = id;
             this.pwd = pwd;
@@ -56,24 +57,24 @@ namespace ECouponsPrinter
                 //return base.CreateParams;
             }
         }
-        
+
         private void Button_Close_Click(object sender, EventArgs e)
         {
             this.Close();
             GlobalVariables.isKeyBoardExist = false;
         }
 
-        [DllImport("User32.dll",EntryPoint="FindWindow")]
-        private static extern IntPtr FindWindow(string lpClassName,string lpWindowName);
+        [DllImport("User32.dll", EntryPoint = "FindWindow")]
+        private static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
 
         [DllImport("user32")]
-        static extern int SetForegroundWindow(IntPtr hwnd);       
+        static extern int SetForegroundWindow(IntPtr hwnd);
 
         #region 定义键盘按键事件的代码
 
-        private void Key_MouseUp(object sender, MouseEventArgs e)
+        private void Key_MouseDown(object sender, MouseEventArgs e)
         {
-            if(hWnd != IntPtr.Zero)
+            if (hWnd != IntPtr.Zero)
                 SetForegroundWindow(hWnd);
             else
                 MessageBox.Show("error");
@@ -82,20 +83,20 @@ namespace ECouponsPrinter
 
             String name = btn.Name;
             int length = name.Length;
-            String str = name.Substring(length - 1,1);
+            String str = name.Substring(length - 1, 1);
 
-      //      if(hWnd != null)
-      //      MessageBox.Show(hWnd.ToString("aa"));
+            //      if(hWnd != null)
+            //      MessageBox.Show(hWnd.ToString("aa"));
 
             String sec = null;
 
-            switch(str)
+            switch (str)
             {
                 case "S":
                     sec = name.Substring(length - 2, 2);
                     if (sec == "BS")
                     {
-                        btn.BackgroundImage = Image.FromFile(path + "\\images\\切图\\KeyBoard\\退格.jpg");
+                        btn.BackgroundImage = Image.FromFile(path + "\\images\\切图\\KeyBoard\\退格_1.jpg");
                         SendKeys.Send("{BS}");
                         return;
                     }
@@ -105,7 +106,7 @@ namespace ECouponsPrinter
                     sec = name.Substring(length - 2, 2);
                     if (sec == "CE")
                     {
-                        btn.BackgroundImage = Image.FromFile(path + "\\images\\切图\\KeyBoard\\关闭.jpg");
+                        btn.BackgroundImage = Image.FromFile(path + "\\images\\切图\\KeyBoard\\关闭_1.jpg");
                         this.Close();
                         GlobalVariables.isKeyBoardExist = false;
                         return;
@@ -116,26 +117,31 @@ namespace ECouponsPrinter
                     sec = name.Substring(length - 2, 2);
                     if (sec == "CH")
                     {
-                        btn.BackgroundImage = Image.FromFile(path + "\\images\\切图\\KeyBoard\\大小写.jpg");
-                        if(KeyType == 0)
+                        btn.BackgroundImage = Image.FromFile(path + "\\images\\切图\\KeyBoard\\大小写_1.jpg");
+                        if (KeyType == 0)
                             KeyType = 1;
                         else
                             KeyType = 0;
                         return;
                     }
                     break;
-                
+
                 case "L":
                     sec = name.Substring(length - 2, 2);
                     if (sec == "CL")
                     {
-                        btn.BackgroundImage = Image.FromFile(path + "\\images\\切图\\KeyBoard\\清空.jpg");
-                        if(id.Focused)
-                            id.Text = "";
-                        if (pwd.Focused)
-                            pwd.Text = "";
-                        if (url.Focused)
-                            url.Text = "";
+                        btn.BackgroundImage = Image.FromFile(path + "\\images\\切图\\KeyBoard\\清空_1.jpg");
+                        if (id != null)
+                            if (id.Focused)
+                                id.Text = "";
+
+                        if (pwd != null)
+                            if (pwd.Focused)
+                                pwd.Text = "";
+
+                        if (url != null)
+                            if (url.Focused)
+                                url.Text = "";
 
                         return;
                     }
@@ -147,14 +153,14 @@ namespace ECouponsPrinter
                 str = str.ToUpperInvariant();
             }
 
-            btn.BackgroundImage = Image.FromFile(path + "\\images\\切图\\KeyBoard\\" + str + ".jpg");
+            btn.BackgroundImage = Image.FromFile(path + "\\images\\切图\\KeyBoard\\" + str + "_1.jpg");
             SendKeys.Send(str);
 
         }
 
         #endregion
 
-        private void Key_MouseDown(object sender, MouseEventArgs e)
+        private void Key_MouseUp(object sender, MouseEventArgs e)
         {
             Button btn = (Button)sender;
             String name = btn.Name;
@@ -168,7 +174,7 @@ namespace ECouponsPrinter
                     sec = name.Substring(length - 2, 2);
                     if (sec == "BS")
                     {
-                        btn.BackgroundImage = Image.FromFile(path + "\\images\\切图\\KeyBoard\\退格_1.jpg");
+                        btn.BackgroundImage = Image.FromFile(path + "\\images\\切图\\KeyBoard\\退格.jpg");
                         return;
                     }
                     break;
@@ -177,7 +183,7 @@ namespace ECouponsPrinter
                     sec = name.Substring(length - 2, 2);
                     if (sec == "CE")
                     {
-                        btn.BackgroundImage = Image.FromFile(path + "\\images\\切图\\KeyBoard\\关闭_1.jpg");
+                        btn.BackgroundImage = Image.FromFile(path + "\\images\\切图\\KeyBoard\\关闭.jpg");
                         return;
                     }
                     break;
@@ -186,7 +192,7 @@ namespace ECouponsPrinter
                     sec = name.Substring(length - 2, 2);
                     if (sec == "CH")
                     {
-                        btn.BackgroundImage = Image.FromFile(path + "\\images\\切图\\KeyBoard\\大小写_1.jpg");
+                        btn.BackgroundImage = Image.FromFile(path + "\\images\\切图\\KeyBoard\\大小写.jpg");
                         return;
                     }
                     break;
@@ -201,7 +207,7 @@ namespace ECouponsPrinter
                     break;
             }
 
-            btn.BackgroundImage = Image.FromFile(path+"\\images\\切图\\KeyBoard\\"+str+"_1.jpg");
+            btn.BackgroundImage = Image.FromFile(path + "\\images\\切图\\KeyBoard\\" + str + ".jpg");
         }
 
         private void KeyBoard_Load(object sender, EventArgs e)

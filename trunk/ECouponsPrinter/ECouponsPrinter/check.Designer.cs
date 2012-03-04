@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(check));
             this.panelShow = new System.Windows.Forms.Panel();
             this.codeText = new System.Windows.Forms.TextBox();
             this.Reget = new System.Windows.Forms.Button();
@@ -44,10 +45,11 @@
             // 
             // panelShow
             // 
+            this.panelShow.BackColor = System.Drawing.Color.Transparent;
             this.panelShow.Controls.Add(this.codeText);
             this.panelShow.Controls.Add(this.Reget);
             this.panelShow.Controls.Add(this.label1);
-            this.panelShow.Location = new System.Drawing.Point(55, 176);
+            this.panelShow.Location = new System.Drawing.Point(55, 215);
             this.panelShow.Name = "panelShow";
             this.panelShow.Size = new System.Drawing.Size(601, 78);
             this.panelShow.TabIndex = 6;
@@ -87,8 +89,9 @@
             // 
             // text
             // 
+            this.text.BackColor = System.Drawing.Color.Transparent;
             this.text.Font = new System.Drawing.Font("宋体", 25F, System.Drawing.FontStyle.Bold);
-            this.text.Location = new System.Drawing.Point(39, 64);
+            this.text.Location = new System.Drawing.Point(39, 104);
             this.text.Name = "text";
             this.text.Size = new System.Drawing.Size(647, 110);
             this.text.TabIndex = 7;
@@ -97,7 +100,7 @@
             // Confirm
             // 
             this.Confirm.Font = new System.Drawing.Font("宋体", 20F, System.Drawing.FontStyle.Bold);
-            this.Confirm.Location = new System.Drawing.Point(55, 325);
+            this.Confirm.Location = new System.Drawing.Point(55, 356);
             this.Confirm.Name = "Confirm";
             this.Confirm.Size = new System.Drawing.Size(202, 74);
             this.Confirm.TabIndex = 8;
@@ -108,7 +111,7 @@
             // Cancel
             // 
             this.Cancel.Font = new System.Drawing.Font("宋体", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.Cancel.Location = new System.Drawing.Point(454, 325);
+            this.Cancel.Location = new System.Drawing.Point(454, 356);
             this.Cancel.Name = "Cancel";
             this.Cancel.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.Cancel.Size = new System.Drawing.Size(202, 74);
@@ -124,17 +127,19 @@
             // 
             // Notice
             // 
+            this.Notice.BackColor = System.Drawing.Color.Transparent;
             this.Notice.Font = new System.Drawing.Font("宋体", 25F, System.Drawing.FontStyle.Bold);
-            this.Notice.Location = new System.Drawing.Point(39, 12);
+            this.Notice.Location = new System.Drawing.Point(39, 48);
             this.Notice.Name = "Notice";
             this.Notice.Size = new System.Drawing.Size(641, 45);
             this.Notice.TabIndex = 9;
             // 
             // error
             // 
+            this.error.BackColor = System.Drawing.Color.Transparent;
             this.error.Font = new System.Drawing.Font("宋体", 25F);
             this.error.ForeColor = System.Drawing.Color.Red;
-            this.error.Location = new System.Drawing.Point(53, 266);
+            this.error.Location = new System.Drawing.Point(53, 305);
             this.error.Name = "error";
             this.error.Size = new System.Drawing.Size(603, 38);
             this.error.TabIndex = 10;
@@ -145,7 +150,8 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size(721, 414);
+            this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
+            this.ClientSize = new System.Drawing.Size(744, 454);
             this.ControlBox = false;
             this.Controls.Add(this.error);
             this.Controls.Add(this.Notice);
