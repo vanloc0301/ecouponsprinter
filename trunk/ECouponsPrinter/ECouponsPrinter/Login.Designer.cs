@@ -40,6 +40,8 @@
             this.Reget = new System.Windows.Forms.Button();
             this.CodeTimer = new System.Windows.Forms.Timer(this.components);
             this.info = new System.Windows.Forms.Label();
+            this.import = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label1
@@ -47,11 +49,11 @@
             this.label1.BackColor = System.Drawing.Color.Transparent;
             this.label1.Font = new System.Drawing.Font("宋体", 20F, System.Drawing.FontStyle.Bold);
             this.label1.ForeColor = System.Drawing.Color.Black;
-            this.label1.Location = new System.Drawing.Point(41, 49);
+            this.label1.Location = new System.Drawing.Point(20, 49);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(608, 139);
+            this.label1.Size = new System.Drawing.Size(688, 31);
             this.label1.TabIndex = 0;
-            this.label1.Text = "为了保护您的账户余额和积分安全，请进行手机绑定。\r\n首先请输入手机号码，我们会以短信的方式将验证码发送至您的手机，您录入正确的验证码即可完成绑定。";
+            this.label1.Text = "为了保护您的账户余额和积分安全，请进行手机绑定。";
             // 
             // phone
             // 
@@ -147,6 +149,31 @@
             this.info.Size = new System.Drawing.Size(402, 39);
             this.info.TabIndex = 6;
             // 
+            // import
+            // 
+            this.import.BackColor = System.Drawing.Color.Transparent;
+            this.import.Font = new System.Drawing.Font("微软雅黑", 18F, System.Drawing.FontStyle.Bold);
+            this.import.ForeColor = System.Drawing.Color.Red;
+            this.import.Location = new System.Drawing.Point(108, 80);
+            this.import.Margin = new System.Windows.Forms.Padding(0);
+            this.import.Name = "import";
+            this.import.Size = new System.Drawing.Size(519, 31);
+            this.import.TabIndex = 7;
+            this.import.Text = "我们承诺，绑定手机不会收取您的任何费用。";
+            this.import.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label4
+            // 
+            this.label4.BackColor = System.Drawing.Color.Transparent;
+            this.label4.Font = new System.Drawing.Font("宋体", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label4.ForeColor = System.Drawing.Color.Black;
+            this.label4.Location = new System.Drawing.Point(20, 120);
+            this.label4.Margin = new System.Windows.Forms.Padding(0);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(691, 59);
+            this.label4.TabIndex = 8;
+            this.label4.Text = "首先请输入手机号码，我们会以短信的方式将验证码发送至您的手机，您录入正确的验证码即可完成绑定。\r\n";
+            // 
             // Login
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -155,6 +182,8 @@
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.ClientSize = new System.Drawing.Size(727, 471);
             this.ControlBox = false;
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.import);
             this.Controls.Add(this.info);
             this.Controls.Add(this.Reget);
             this.Controls.Add(this.cancel);
@@ -186,5 +215,7 @@
         private System.Windows.Forms.Button Reget;
         private System.Windows.Forms.Timer CodeTimer;
         private System.Windows.Forms.Label info;
+        private System.Windows.Forms.Label import;
+        private System.Windows.Forms.Label label4;
     }
 }

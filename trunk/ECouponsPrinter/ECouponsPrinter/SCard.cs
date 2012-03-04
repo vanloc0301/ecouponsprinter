@@ -207,7 +207,7 @@ namespace ECouponsPrinter
                 }
 
                 cardNo = ToHexString(szBytes);
-                MessageBox.Show(cardNo);
+         //       MessageBox.Show(cardNo);
             }
 
             Marshal.FreeHGlobal(pSnr);
