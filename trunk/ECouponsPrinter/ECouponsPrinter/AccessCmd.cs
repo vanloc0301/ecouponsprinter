@@ -35,17 +35,19 @@ namespace ECouponsPrinter
             return objReader;
         }
 
-        public void ExecuteNonQuery(String strSql)
+        public bool ExecuteNonQuery(String strSql)
         {
             try
             {
                 objCmd = new OleDbCommand(strSql, objConn);
                 objCmd.ExecuteNonQuery();
+                return true;
             }
             catch (Exception ep)
             {
                 ErrorLog.log(ep);
                 this.Close();
+                return false;
             }
         }
 
