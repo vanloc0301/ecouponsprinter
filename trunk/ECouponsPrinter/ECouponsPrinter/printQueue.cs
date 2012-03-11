@@ -18,7 +18,6 @@ namespace ECouponsPrinter
 
             // List the print server"s queues
             PrintQueueCollection myPrintQueues = myPrintServer.GetPrintQueues();
-            String printQueueNames = "My Print Queues:\n\n";
             foreach (PrintQueue pq in myPrintQueues)
             {
                 Application.DoEvents();

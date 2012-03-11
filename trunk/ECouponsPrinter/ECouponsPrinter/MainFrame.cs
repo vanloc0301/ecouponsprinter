@@ -254,16 +254,24 @@ namespace ECouponsPrinter
 
         private void Button_ShopInfo_MouseUp(object sender, MouseEventArgs e)
         {
-
             this.Button_ShopInfo.BackgroundImage = Image.FromFile(path + "\\images\\切图\\首页\\详细.jpg");
+
+            if (LP_stype[0] != null && LP_stype[0].Count > 0)
+            {
+                InitShopInfoData(LP_stype[0][curType].id);
+            }
+            else
+            {
+                MyMsgBox mb = new MyMsgBox();
+                mb.ShowMsg("没有信息！", 2);
+                return;
+            }
+            Thread.Sleep(20);
 
             this.UnVisibleAllPanels();
 
             int y = this.VerticalScroll.Value;
             this.Panel_ShopInfo.Location = new System.Drawing.Point(0, 95 - y);
-
-            InitShopInfoData(LP_stype[0][curType].id);
-            Thread.Sleep(20);
 
             this.Panel_ShopInfo.Visible = true;
             ShowShopInfo();
@@ -630,6 +638,18 @@ namespace ECouponsPrinter
             ShowCoupon();
         }
 
+        private void ChangeExternThreeButtonForeColor(Button temp)
+        {
+            Btn_Rec.ForeColor = Color.White;
+            Btn_Rank.ForeColor = Color.White;
+            Btn_NewCouponList.ForeColor = Color.White;
+
+            temp.ForeColor = Color.Red;
+        }
+
+        #endregion
+
+        #region 周边商家
         private void Button_NearShopInfo_MouseDown(object sender, MouseEventArgs e)
         {
             this.Btn_NearShopInfo.BackgroundImage = Image.FromFile(path + "\\images\\切图\\首页\\详细_1.jpg");
@@ -639,7 +659,6 @@ namespace ECouponsPrinter
         {
             this.Btn_NearShopInfo.BackgroundImage = Image.FromFile(path + "\\images\\切图\\首页\\详细.jpg");
 
-            this.InitTimer();
             if (LP_stype[0] != null && LP_stype[0].Count > 0)
             {
                 InitShopInfoData(LP_stype[0][(curPage - 1) * 24 + theShopNum].id);
@@ -656,24 +675,12 @@ namespace ECouponsPrinter
             int y = this.VerticalScroll.Value;
             this.Panel_ShopInfo.Location = new System.Drawing.Point(0, 95 - y);
 
-
-
             this.Panel_ShopInfo.Visible = true;
             ShowShopInfo();
         }
+        #endregion 周边商家
 
-        private void ChangeExternThreeButtonForeColor(Button temp)
-        {
-            Btn_Rec.ForeColor = Color.White;
-            Btn_Rank.ForeColor = Color.White;
-            Btn_NewCouponList.ForeColor = Color.White;
-
-            temp.ForeColor = Color.Red;
-        }
-
-        #endregion
-
-        #endregion
+        #endregion 主要
 
         #region 主框架
 
@@ -949,7 +956,7 @@ namespace ECouponsPrinter
 
         #endregion
 
-        #region "周边专区"按钮事件
+        #region "周边商家"按钮事件
         private void Button_NearShop_MouseDown(object sender, MouseEventArgs e)
         {
             this.Button_NearShop.BackgroundImage = Image.FromFile(path + "\\images\\切图\\首页\\周边商家_1.jpg");
@@ -1160,7 +1167,7 @@ namespace ECouponsPrinter
             ShowHome();
 
             //启动射频卡检测程序
-         //   this.SCardStart();
+            //   this.SCardStart();
 
             //加载广告线程
             AdThread = new Thread(new ThreadStart(RefreshAd));
@@ -2161,6 +2168,11 @@ namespace ECouponsPrinter
             ShowShopPart((int)part.bottom);
         }
 
+        /// <summary>
+        /// 点击某个商家标签，切换商家类别界面的操作函数
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ShopTypeTitle_Click(object sender, EventArgs e)
         {
             Label temp = sender as Label;
@@ -2280,6 +2292,11 @@ namespace ECouponsPrinter
             }
         }
 
+        /// <summary>
+        /// 点击商家二级界面上的商家小图跳转至商家详细
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ChangeShopPic(object sender, MouseEventArgs e)
         {
             PictureBox pb = sender as PictureBox;
@@ -2328,6 +2345,10 @@ namespace ECouponsPrinter
             }
         }
 
+        /// <summary>
+        /// 更改商家标签颜色（当前显示的页面标签颜色为红色，其他未白色）
+        /// </summary>
+        /// <param name="temp"></param>
         private void ChangeShopTitleForeColor(Label temp)
         {
             int titleNum = temp.Name.Substring(15, 1)[0] - '0';
@@ -3900,7 +3921,7 @@ namespace ECouponsPrinter
                 else
                 {
                     this.Label_LoginWaitInfo.Visible = false;
-                }                
+                }
             }
         }
 
@@ -3979,6 +4000,11 @@ namespace ECouponsPrinter
         }
         #endregion 用户登录模块
 
+        #region 下载更新数据时候的黑屏处理
+
+        /// <summary>
+        /// 从服务端下载更新之前显示黑色等待界面
+        /// </summary>
         public void BeforeDownload()
         {
             this.CloseAllDialog();
@@ -3990,6 +4016,9 @@ namespace ECouponsPrinter
             this.Refresh();
         }
 
+        /// <summary>
+        /// 从服务端下载更新完毕后隐藏黑色等待界面
+        /// </summary>
         public void AfterDownload()
         {
             InitTimer();
@@ -3997,6 +4026,10 @@ namespace ECouponsPrinter
             this.Label_DownloadWaitObject.Visible = false;
             this.Button_HomePage_MouseUp(null, null);
         }
+
+        #endregion 下载更新数据时候的黑屏处理      
+
+        #region 关闭当前界面上所有模态窗口
 
         private const int WM_CLOSE = 0x0010;
 
@@ -4049,6 +4082,7 @@ namespace ECouponsPrinter
             }
 
         }
+        #endregion 关闭当前界面上所有模态窗口
 
         /// <summary>
         /// 定时刷新

@@ -67,7 +67,7 @@
             // 
             this.Label_phone.BackColor = System.Drawing.Color.White;
             this.Label_phone.Font = new System.Drawing.Font("微软雅黑", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.Label_phone.Location = new System.Drawing.Point(14, 449);
+            this.Label_phone.Location = new System.Drawing.Point(13, 523);
             this.Label_phone.Name = "Label_phone";
             this.Label_phone.Size = new System.Drawing.Size(340, 108);
             this.Label_phone.TabIndex = 7;
@@ -80,10 +80,11 @@
             this.Label_Instruction.Font = new System.Drawing.Font("宋体", 14F);
             this.Label_Instruction.Location = new System.Drawing.Point(14, 255);
             this.Label_Instruction.Name = "Label_Instruction";
-            this.Label_Instruction.Size = new System.Drawing.Size(340, 157);
+            this.Label_Instruction.Size = new System.Drawing.Size(340, 220);
             this.Label_Instruction.TabIndex = 6;
-            this.Label_Instruction.Text = "电话025-93u4u75943u75\r\n地址：新街口决定是否落实经费看见的是法律框架的撒 此券没胆消费决定是否离开的撒警方立刻受到飓风\r\n此券立刻将加快建立\r\n" +
-                "最终解释权就看见拉开距离距离拉开";
+            this.Label_Instruction.Text = "1.凭此券消费满100元以上送两道精美冷菜\r\n2.凭此券包间送两道精美凉菜和一份什锦甜汤\r\n3.以上酒水除外，并包间送会员卡一张\r\n4.以上酒水除外，并包间送会员" +
+                "卡一张\r\n5.以上酒水除外，并包间送会员卡一张\r\n6.以上酒水除外，并包间送会员卡一张\r\n7.以上酒水除外，并包间送会员卡一张\r\n8.以上酒水除外，并包间送会员" +
+                "卡一张";
             // 
             // Label_Into
             // 
@@ -100,7 +101,7 @@
             this.Code.BackColor = System.Drawing.Color.White;
             this.Code.Font = new System.Drawing.Font("Microsoft JhengHei", 22F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.Code.ForeColor = System.Drawing.Color.Black;
-            this.Code.Location = new System.Drawing.Point(14, 412);
+            this.Code.Location = new System.Drawing.Point(13, 475);
             this.Code.Name = "Code";
             this.Code.Size = new System.Drawing.Size(340, 37);
             this.Code.TabIndex = 4;
@@ -170,8 +171,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.AutoScroll = true;
-            this.ClientSize = new System.Drawing.Size(390, 746);
+            this.ClientSize = new System.Drawing.Size(374, 746);
             this.ControlBox = false;
             this.Controls.Add(this.Panel_Background);
             this.Name = "CouponsPopForm";
