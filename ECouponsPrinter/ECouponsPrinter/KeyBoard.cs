@@ -201,7 +201,7 @@ namespace ECouponsPrinter
                     sec = name.Substring(length - 2, 2);
                     if (sec == "CL")
                     {
-                        btn.BackgroundImage = Image.FromFile(path + "\\images\\切图\\KeyBoard\\清空_1.jpg");
+                        btn.BackgroundImage = Image.FromFile(path + "\\images\\切图\\KeyBoard\\清空.jpg");
                         return;
                     }
                     break;
