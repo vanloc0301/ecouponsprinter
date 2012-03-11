@@ -535,6 +535,7 @@ namespace ECouponsPrinter
                 }
                 catch (Exception e)
                 {
+                    ErrorLog.log(e);
                     return false;
                 }
                 finally
