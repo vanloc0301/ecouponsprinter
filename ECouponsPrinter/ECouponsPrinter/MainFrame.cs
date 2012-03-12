@@ -3918,17 +3918,17 @@ namespace ECouponsPrinter
                         }
                     }
 
-                    if (cardtext == "3897")
-                    {
-                        this.SCardTimer.Stop();
-                        this.SCardTimer.Enabled = false;
-                        LoginSuccessDispatch();
-                        GlobalVariables.isUserLogin = true;
-                        GlobalVariables.LoginUserId = cardtext;
-                        GlobalVariables.M = null;
-                    }
-                    else
-                    {
+                    //if (cardtext == "3897")
+                    //{
+                    //    this.SCardTimer.Stop();
+                    //    this.SCardTimer.Enabled = false;
+                    //    LoginSuccessDispatch();
+                    //    GlobalVariables.isUserLogin = true;
+                    //    GlobalVariables.LoginUserId = cardtext;
+                    //    GlobalVariables.M = null;
+                    //}
+                    //else
+                    //{
                         if (!UserLogin(cardtext))
                         {
                             isFirstKey = true;
@@ -3939,7 +3939,7 @@ namespace ECouponsPrinter
                             this.SCardTimer.Enabled = false;
                             LoginSuccessDispatch();
                         }
-                    }
+                    //}
 
                     this.Label_LoginWaitInfo.Visible = false;
                 }
