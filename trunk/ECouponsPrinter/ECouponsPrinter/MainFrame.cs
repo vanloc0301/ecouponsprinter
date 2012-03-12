@@ -3313,7 +3313,7 @@ namespace ECouponsPrinter
 
             MyMsgBox mb = new MyMsgBox();
 
-            if (pi == null || id == null || pi.spath.CompareTo(path + "\\coupon\\null.jpg") == 0)
+            if (pi == null || id == null)
             {
                 return;
             }
