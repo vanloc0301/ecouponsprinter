@@ -12,6 +12,7 @@ using System.Drawing.Printing;
 using System.Threading;
 using System.Data.OleDb;
 using Text;
+using System.IO;
 
 namespace ECouponsPrinter
 {
@@ -118,51 +119,96 @@ namespace ECouponsPrinter
         {
             this.FormBorderStyle = FormBorderStyle.None;
             this.Height = 780;
-            this.PB_Couponpop.Image = new Bitmap(pi.image, 150, 100);
+            AccessCmd cmd = new AccessCmd();;
+            OleDbDataReader reader;
+            string strSql = "";
 
-            string strSql = "select * from t_bz_coupon where strId='" + pi.id + "'";
-            AccessCmd cmd = new AccessCmd();
-            OleDbDataReader reader = cmd.ExecuteReader(strSql);
-
-            if (reader.Read())
+            if (pi.spath.CompareTo(path + "\\coupon\\null.jpg") == 0)
             {
-                if (!reader.IsDBNull(11))
-                {
-                    Intro = reader.GetString(11);
-                }
-                else
-                {
-                    Intro = "暂无介绍";
-                }
+                strSql = "select * from t_bz_shop where strId='" + pi.shopId + "'";
+                reader = cmd.ExecuteReader(strSql);
+                try
+                {                  
+                    if (reader.Read())
+                    {
+                        if (!reader.IsDBNull(8))
+                        {
+                            FileStream pFileStream = new FileStream(path + "\\shop\\" + reader.GetString(8), FileMode.Open, FileAccess.Read);
+                            this.PB_Couponpop.Image = new Bitmap(Image.FromStream(pFileStream), 150, 100);
+                            pi.image.Dispose();
+                            pi.image = new Bitmap(Image.FromStream(pFileStream), 120, 90);
+                            pFileStream.Close();
+                            pFileStream.Dispose();
+                        }
+                        else
+                        {
+                            this.PB_Couponpop.Image = new Bitmap(pi.image, 150, 100);
+                        }
+                    }
+                    else
+                    {
+                        this.PB_Couponpop.Image = new Bitmap(pi.image, 150, 100);
+                    }
 
-                if (!reader.IsDBNull(12))
-                {
-                    Instruction = reader.GetString(12);
+                    reader.Close();
                 }
-                else
+                catch (Exception)
                 {
-                    Instruction = "暂无说明";
+                    reader.Close();
                 }
             }
-            reader.Close();
+            else
+                this.PB_Couponpop.Image = new Bitmap(pi.image, 150, 100);
 
-            strSql = "select * from t_bz_terminal_param where strParamName='strPrintBottom'";
+            strSql = "select * from t_bz_coupon where strId='" + pi.id + "'";
             reader = cmd.ExecuteReader(strSql);
-
-            if (reader.Read())
+            try
             {
-                if (!reader.IsDBNull(2))
+                if (reader.Read())
                 {
-                    bottomText = reader.GetString(2);
-                }
-                else
-                {
-                    bottomText = "";
-                }
-            }
+                    if (!reader.IsDBNull(11))
+                    {
+                        Intro = reader.GetString(11);
+                    }
+                    else
+                    {
+                        Intro = "暂无介绍";
+                    }
 
-            reader.Close();
-            cmd.Close();
+                    if (!reader.IsDBNull(12))
+                    {
+                        Instruction = reader.GetString(12);
+                    }
+                    else
+                    {
+                        Instruction = "暂无说明";
+                    }
+                }
+                reader.Close();
+
+                strSql = "select * from t_bz_terminal_param where strParamName='strPrintBottom'";
+                reader = cmd.ExecuteReader(strSql);
+
+                if (reader.Read())
+                {
+                    if (!reader.IsDBNull(2))
+                    {
+                        bottomText = reader.GetString(2);
+                    }
+                    else
+                    {
+                        bottomText = "";
+                    }
+                }
+
+                reader.Close();
+                cmd.Close();
+            }
+            catch (Exception)
+            {
+                reader.Close();
+                cmd.Close();
+            }
 
             Label_Into.Text = Intro;
             Label_Instruction.Text = Instruction;
