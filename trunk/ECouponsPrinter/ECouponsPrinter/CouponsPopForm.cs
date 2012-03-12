@@ -118,8 +118,7 @@ namespace ECouponsPrinter
         {
             this.FormBorderStyle = FormBorderStyle.None;
             this.Height = 780;
-
-            this.PB_Couponpop.Image = new Bitmap(pi.image, 110, 70);
+            this.PB_Couponpop.Image = new Bitmap(pi.image, 150, 100);
 
             string strSql = "select * from t_bz_coupon where strId='" + pi.id + "'";
             AccessCmd cmd = new AccessCmd();

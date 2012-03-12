@@ -67,7 +67,7 @@
             // 
             this.Label_phone.BackColor = System.Drawing.Color.White;
             this.Label_phone.Font = new System.Drawing.Font("微软雅黑", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.Label_phone.Location = new System.Drawing.Point(13, 523);
+            this.Label_phone.Location = new System.Drawing.Point(10, 571);
             this.Label_phone.Name = "Label_phone";
             this.Label_phone.Size = new System.Drawing.Size(340, 108);
             this.Label_phone.TabIndex = 7;
@@ -78,7 +78,7 @@
             // 
             this.Label_Instruction.BackColor = System.Drawing.Color.White;
             this.Label_Instruction.Font = new System.Drawing.Font("宋体", 14F);
-            this.Label_Instruction.Location = new System.Drawing.Point(14, 255);
+            this.Label_Instruction.Location = new System.Drawing.Point(11, 303);
             this.Label_Instruction.Name = "Label_Instruction";
             this.Label_Instruction.Size = new System.Drawing.Size(340, 220);
             this.Label_Instruction.TabIndex = 6;
@@ -90,7 +90,7 @@
             // 
             this.Label_Into.BackColor = System.Drawing.Color.White;
             this.Label_Into.Font = new System.Drawing.Font("宋体", 20F, System.Drawing.FontStyle.Bold);
-            this.Label_Into.Location = new System.Drawing.Point(14, 169);
+            this.Label_Into.Location = new System.Drawing.Point(12, 210);
             this.Label_Into.Name = "Label_Into";
             this.Label_Into.Size = new System.Drawing.Size(340, 86);
             this.Label_Into.TabIndex = 5;
@@ -101,7 +101,7 @@
             this.Code.BackColor = System.Drawing.Color.White;
             this.Code.Font = new System.Drawing.Font("Microsoft JhengHei", 22F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.Code.ForeColor = System.Drawing.Color.Black;
-            this.Code.Location = new System.Drawing.Point(13, 475);
+            this.Code.Location = new System.Drawing.Point(10, 523);
             this.Code.Name = "Code";
             this.Code.Size = new System.Drawing.Size(340, 37);
             this.Code.TabIndex = 4;
@@ -147,9 +147,10 @@
             // PB_Couponpop
             // 
             this.PB_Couponpop.BackColor = System.Drawing.SystemColors.Control;
-            this.PB_Couponpop.Location = new System.Drawing.Point(120, 94);
+            this.PB_Couponpop.Location = new System.Drawing.Point(101, 99);
+            this.PB_Couponpop.Margin = new System.Windows.Forms.Padding(0);
             this.PB_Couponpop.Name = "PB_Couponpop";
-            this.PB_Couponpop.Size = new System.Drawing.Size(110, 70);
+            this.PB_Couponpop.Size = new System.Drawing.Size(150, 100);
             this.PB_Couponpop.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.PB_Couponpop.TabIndex = 1;
             this.PB_Couponpop.TabStop = false;
@@ -171,7 +172,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(374, 746);
+            this.ClientSize = new System.Drawing.Size(374, 742);
             this.ControlBox = false;
             this.Controls.Add(this.Panel_Background);
             this.Name = "CouponsPopForm";

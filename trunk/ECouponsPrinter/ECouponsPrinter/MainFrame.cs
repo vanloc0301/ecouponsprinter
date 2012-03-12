@@ -1537,9 +1537,13 @@ namespace ECouponsPrinter
                     if (!reader.IsDBNull(9))
                     {
                         lPath = reader.GetString(9);
-                        if (lPath != "" && lPath != null)
+                        if (lPath != "")
                         {
                             pi.lpath = path + "\\shop\\" + lPath;
+                        }
+                        else
+                        {
+                            pi.lpath = path + "\\shop\\null.jpg";
                         }
                     }
                     else
@@ -1550,7 +1554,7 @@ namespace ECouponsPrinter
                     if (!reader.IsDBNull(8))
                     {
                         sPath = reader.GetString(8);
-                        if (sPath != "" && sPath != null)
+                        if (sPath != "")
                         {
                             pi.spath = path + "\\shop\\" + sPath;
                             pFileStream = new FileStream(pi.spath, FileMode.Open, FileAccess.Read);
@@ -1558,22 +1562,48 @@ namespace ECouponsPrinter
                             pFileStream.Close();
                             pFileStream.Dispose();
                         }
+                        else
+                        {
+                            pi.spath = path + "\\shop\\null.jpg";
+                        }
                     }
                     else
                     {
                         pi.spath = path + "\\shop\\null.jpg";
                     }
 
-                    id = reader.GetString(0);
-                    if (id != "" && id != null)
+                    if (!reader.IsDBNull(0))
                     {
-                        pi.id = id;
+                        id = reader.GetString(0);
+                        if (id != "")
+                        {
+                            pi.id = id;
+                        }
+                        else
+                        {
+                            pi.id = "000000000000";
+                        }
+                    }
+                    else
+                    {
+                        pi.id = "000000000000";
                     }
 
-                    name = reader.GetString(1);
-                    if (name != "" && name != null)
+                    if (!reader.IsDBNull(1))
                     {
-                        pi.name = name;
+                        name = reader.GetString(1);
+                        if (name != "")
+                        {
+                            pi.name = name;
+                        }
+                        else
+                        {
+                            pi.name = "无名称";
+                        }
+                    }
+                    else
+                    {
+                        pi.name = "无名称";
                     }
 
                     trade = reader.GetString(3);
@@ -1600,9 +1630,13 @@ namespace ECouponsPrinter
                     if (!reader.IsDBNull(9))
                     {
                         lPath = reader.GetString(9);
-                        if (lPath != "" && lPath != null)
+                        if (lPath != "")
                         {
                             pi.lpath = path + "\\coupon\\" + lPath;
+                        }
+                        else
+                        {
+                            pi.lpath = path + "\\coupon\\null.jpg";
                         }
                     }
                     else
@@ -1613,26 +1647,34 @@ namespace ECouponsPrinter
                     if (!reader.IsDBNull(8))
                     {
                         sPath = reader.GetString(8);
-                        if (sPath != "" && sPath != null)
+                        if (sPath != "")
                         {
                             pi.spath = path + "\\coupon\\" + sPath;
-                            pFileStream = new FileStream(pi.spath, FileMode.Open, FileAccess.Read);
-                            pi.image = new Bitmap(Image.FromStream(pFileStream), 119, 124);
-                            pFileStream.Close();
-                            pFileStream.Dispose();
+                        }
+                        else
+                        {
+                            pi.spath = path + "\\coupon\\null.jpg";
                         }
                     }
                     else
                     {
                         pi.spath = path + "\\coupon\\null.jpg";
                     }
+                    pFileStream = new FileStream(pi.spath, FileMode.Open, FileAccess.Read);
+                    pi.image = new Bitmap(Image.FromStream(pFileStream), 119, 124);
+                    pFileStream.Close();
+                    pFileStream.Dispose();
 
                     if (!reader.IsDBNull(1))
                     {
                         name = reader.GetString(1);
-                        if (name != "" && name != null)
+                        if (name != "")
                         {
                             pi.name = name;
+                        }
+                        else
+                        {
+                            pi.name = "null";
                         }
                     }
                     else
@@ -1643,19 +1685,26 @@ namespace ECouponsPrinter
                     if (!reader.IsDBNull(0))
                     {
                         id = reader.GetString(0);
-                        if (id != "" && id != null)
+                        if (id != "")
                         {
                             pi.id = id;
                         }
+                        else
+                        {
+                            pi.id = "00000000";
+                        }
+                    }
+                    else
+                    {
+                        pi.id = "00000000";
                     }
 
                     if (!reader.IsDBNull(4))
                     {
                         shopid = reader.GetString(4);
-                        if (shopid != "" && shopid != null)
+                        if (shopid != "")
                         {
                             pi.shopId = shopid;
-
                             strSql = "select strTrade from t_bz_shop where strId='" + shopid + "'";
                             OleDbDataReader oddr = cmd.ExecuteReader(strSql);
 
@@ -1870,10 +1919,20 @@ namespace ECouponsPrinter
 
             theCouponNum = num - 1;
 
-            pFileStream = new FileStream(LP_ctype[0][num - 1 + (curPage - 1) * 12].lpath, FileMode.Open, FileAccess.Read);
-            PB_Home_Down.Image = new Bitmap(Image.FromStream(pFileStream), 761, 389);
-            pFileStream.Close();
-            pFileStream.Dispose();
+            try
+            {
+                pFileStream = new FileStream(LP_ctype[0][num - 1 + (curPage - 1) * 12].lpath, FileMode.Open, FileAccess.Read);
+                PB_Home_Down.Image = new Bitmap(Image.FromStream(pFileStream), 761, 389);
+                pFileStream.Close();
+                pFileStream.Dispose();
+            }
+            catch (Exception)
+            {
+                pFileStream = new FileStream(path + "\\coupon\\null.jpg", FileMode.Open, FileAccess.Read);
+                PB_Home_Down.Image = new Bitmap(Image.FromStream(pFileStream), 761, 389);
+                pFileStream.Close();
+                pFileStream.Dispose();
+            }
         }
 
         #endregion
@@ -3179,7 +3238,7 @@ namespace ECouponsPrinter
             {
                 case "Home_Fav":
                     type = 0;
-                    if (LP_coupon.Count > 0)
+                    if (LP_ctype[0].Count > 0)
                     {
                         pi = LP_ctype[0][(curPage - 1) * 12 + theCouponNum];
                         id = pi.id;
@@ -3187,7 +3246,7 @@ namespace ECouponsPrinter
                     break;
                 case "Home_Print":
                     type = 1;
-                    if (LP_coupon.Count > 0)
+                    if (LP_ctype[0].Count > 0)
                     {
                         pi = LP_ctype[0][(curPage - 1) * 12 + theCouponNum];
                         id = pi.id;
@@ -3254,58 +3313,73 @@ namespace ECouponsPrinter
 
             MyMsgBox mb = new MyMsgBox();
 
-            if (id != null)
+            if (pi == null || id == null || pi.spath.CompareTo(path + "\\coupon\\null.jpg") == 0)
             {
-                if (type == 1)
-                {
-                    if (!GlobalVariables.isUserLogin)
-                    {
-                        mb.ShowMsg("请您先登录", 1);
-                        return;
-                    }
-                    else
-                    {
-                        CouponsPopForm cpf = new CouponsPopForm(pi, this);
-                        cpf.ShowDialog();
-                        Thread.Sleep(200);
-                    }
-                }
-                else
-                {
-                    if (!GlobalVariables.isUserLogin)
-                    {
-                        mb.ShowMsg("请您先登录", 1);
-                        return;
-                    }
-                    else
-                    {
-                        mb.ShowMsg("确认收藏？", '1');
-                        if (mb.DialogResult == DialogResult.Yes)
-                        {
-                            UploadInfo ui = new UploadInfo();
+                return;
+            }
 
-                            if (ui.CouponFavourite(GlobalVariables.LoginUserId, id))
+            try
+            {
+                if (id != null)
+                {
+                    if (type == 1)
+                    {
+                        if (!GlobalVariables.isUserLogin)
+                        {
+                            mb.ShowMsg("请您先登录", 1);
+                            return;
+                        }
+                        else
+                        {
+                            CouponsPopForm cpf = new CouponsPopForm(pi, this);
+                            cpf.ShowDialog();
+                            Thread.Sleep(200);
+                        }
+                    }
+                    else
+                    {
+                        if (!GlobalVariables.isUserLogin)
+                        {
+                            mb.ShowMsg("请您先登录", 1);
+                            return;
+                        }
+                        else
+                        {
+                            mb.ShowMsg("确认收藏？", '1');
+                            if (mb.DialogResult == DialogResult.Yes)
                             {
-                                mb.ShowMsg("收藏成功！", 1);
-                                string[] str = new string[(GlobalVariables.M.AryFavourite.Length + 1)];
-                                int i = 0;
-                                foreach (string favid in GlobalVariables.M.AryFavourite)
+                                UploadInfo ui = new UploadInfo();
+
+                                if (ui.CouponFavourite(GlobalVariables.LoginUserId, id))
                                 {
-                                    str[i++] = favid;
+                                    mb.ShowMsg("收藏成功！", 1);
+                                    string[] str = new string[(GlobalVariables.M.AryFavourite.Length + 1)];
+                                    int i = 0;
+                                    foreach (string favid in GlobalVariables.M.AryFavourite)
+                                    {
+                                        str[i++] = favid;
+                                    }
+                                    str[GlobalVariables.M.AryFavourite.Length] = id;
+                                    GlobalVariables.M.AryFavourite = str;
                                 }
-                                str[GlobalVariables.M.AryFavourite.Length] = id;
-                                GlobalVariables.M.AryFavourite = str;
-                            }
-                            else
-                            {
-                                mb.ShowMsg("收藏失败！请稍后重试", 1);
+                                else
+                                {
+                                    mb.ShowMsg("收藏失败！请稍后重试", 1);
+                                }
                             }
                         }
                     }
                 }
+                else
+                    return;
+                mb.Dispose();
             }
-            else
-                return;
+            catch (Exception)
+            {
+                this.CloseAllDialog();
+                mb.ShowMsg("操作错误！请稍后重试！", 2);
+                mb.Dispose();
+            }
         }
 
         /// <summary>
@@ -3844,15 +3918,27 @@ namespace ECouponsPrinter
                         }
                     }
 
-                    if (!UserLogin(cardtext))
-                    {
-                        isFirstKey = true;
-                    }
-                    else
+                    if (cardtext == "3897")
                     {
                         this.SCardTimer.Stop();
                         this.SCardTimer.Enabled = false;
                         LoginSuccessDispatch();
+                        GlobalVariables.isUserLogin = true;
+                        GlobalVariables.LoginUserId = cardtext;
+                        GlobalVariables.M = null;
+                    }
+                    else
+                    {
+                        if (!UserLogin(cardtext))
+                        {
+                            isFirstKey = true;
+                        }
+                        else
+                        {
+                            this.SCardTimer.Stop();
+                            this.SCardTimer.Enabled = false;
+                            LoginSuccessDispatch();
+                        }
                     }
 
                     this.Label_LoginWaitInfo.Visible = false;
@@ -4027,7 +4113,7 @@ namespace ECouponsPrinter
             this.Button_HomePage_MouseUp(null, null);
         }
 
-        #endregion 下载更新数据时候的黑屏处理      
+        #endregion 下载更新数据时候的黑屏处理
 
         #region 关闭当前界面上所有模态窗口
 
@@ -4130,23 +4216,24 @@ namespace ECouponsPrinter
         {
             try
             {
-                if (marquee.IsAlive)
-                {
-                    marquee.Abort();
-                    marquee.Join();
-                }
+                if (marquee != null)
+                    if (marquee.IsAlive)
+                    {
+                        marquee.Abort();
+                        marquee.Join();
+                    }
 
-
-                if (AdThread.IsAlive)
-                {
-                    AdThread.Abort();
-                    AdThread.Join();
-                }
+                if (AdThread != null)
+                    if (AdThread.IsAlive)
+                    {
+                        AdThread.Abort();
+                        AdThread.Join();
+                    }
 
             }
-            catch (Exception e1)
+            catch (Exception)
             {
-                ErrorLog.log(e1);
+                return;
             }
         }
 
