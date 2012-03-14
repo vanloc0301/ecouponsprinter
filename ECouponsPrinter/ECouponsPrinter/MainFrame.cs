@@ -1167,7 +1167,7 @@ namespace ECouponsPrinter
             ShowHome();
 
             //启动射频卡检测程序
-            //   this.SCardStart();
+            this.SCardStart();
 
             //加载广告线程
             AdThread = new Thread(new ThreadStart(RefreshAd));
