@@ -11,15 +11,28 @@ namespace ECouponsPrinter
         private static bool _isKeyBoardExist = false;           //判断是否已经生成键盘
         private static bool _isUserLogin = false;               //判断是否有用户登录
         private static int _WindowWaitTime = 10;                //未登录时,屏幕无操作超过此时间,自动开始播放广告
-        private static int _UserWaitTime = 40;                  //登录后，屏幕无操作超过此时间,自动注销用户登录信息,并返回首页
+        private static int _UserWaitTime = 50;                  //登录后，屏幕无操作超过此时间,自动注销用户登录信息,并返回首页
         private static String _MarqueeText = "欢迎使用本系统";  //走马灯的文字
-        private static Member _M = null;
-        private static String _LoginUserId = null;               //当前登录用户的ID
+        private static Member _M = null;                        //存储用户登录的信息
+        private static String _LoginUserId = null;              //当前登录用户的ID
+        private static int _PrintLimit = 5;                     //用户打印次数的限制
+        private static int _MessageRegetTime = 45;                  //短信重新发送的时间
 
-        private static String strTerminalNo = "45";//终端编号
+        private static String strTerminalNo = "001";//终端编号
         private static String strServerUrl = "http://127.0.0.1:8080/ecoupons";//远程服务端URL
         private static String strExitPwd = "xjtcmzc";//终端推出密码
 
+        public static int MessageRegetTime
+        {
+            set { _MessageRegetTime = value; }
+            get { return _MessageRegetTime; }
+        }
+
+        public static int PrintLimit
+        {
+            set { _PrintLimit = value; }
+            get { return _PrintLimit; }
+        }
 
         public static String LoginUserId
         {
