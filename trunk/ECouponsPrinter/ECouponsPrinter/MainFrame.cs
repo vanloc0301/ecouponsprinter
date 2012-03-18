@@ -1349,6 +1349,11 @@ namespace ECouponsPrinter
 
                 this.Timer_DownloadInfo.Start();
                 InitTimer();
+
+                //初始化导航栏
+                this.ResumePanelBottomState();
+                this.Button_HomePage.BackgroundImage = Image.FromFile(path + "\\images\\Frame\\首页-js.jpg");
+
             }
             else
             {
@@ -1411,6 +1416,11 @@ namespace ECouponsPrinter
 
             this.Timer_DownloadInfo.Start();
             InitTimer();
+
+            //初始化导航栏
+            this.ResumePanelBottomState();
+            this.Button_HomePage.BackgroundImage = Image.FromFile(path + "\\images\\Frame\\首页-js.jpg");
+
         }
         #endregion 用户操作倒计时
 
