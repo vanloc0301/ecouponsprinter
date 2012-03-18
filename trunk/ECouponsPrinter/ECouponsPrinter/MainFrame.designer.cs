@@ -46,6 +46,8 @@
             this.Button_CouponsPage = new System.Windows.Forms.Button();
             this.Timer_Countdown = new System.Windows.Forms.Timer(this.components);
             this.Panel_Home = new System.Windows.Forms.Panel();
+            this.Label_RecCoupon = new System.Windows.Forms.Label();
+            this.Label_RecShop = new System.Windows.Forms.Label();
             this.Home_Fav = new System.Windows.Forms.Label();
             this.Home_Print = new System.Windows.Forms.Label();
             this.PB_Home_Bottom12 = new System.Windows.Forms.PictureBox();
@@ -198,8 +200,6 @@
             this.Label_Black_Info = new System.Windows.Forms.Label();
             this.Label_LoginWaitInfo = new System.Windows.Forms.Label();
             this.Label_DownloadWaitObject = new System.Windows.Forms.Label();
-            this.Label_RecShop = new System.Windows.Forms.Label();
-            this.Label_RecCoupon = new System.Windows.Forms.Label();
             this.Panel_Top.SuspendLayout();
             this.Panel_Bottom.SuspendLayout();
             this.Panel_Home.SuspendLayout();
@@ -566,11 +566,27 @@
             this.Panel_Home.Size = new System.Drawing.Size(768, 1173);
             this.Panel_Home.TabIndex = 3;
             // 
+            // Label_RecCoupon
+            // 
+            this.Label_RecCoupon.Image = ((System.Drawing.Image)(resources.GetObject("Label_RecCoupon.Image")));
+            this.Label_RecCoupon.Location = new System.Drawing.Point(0, 0);
+            this.Label_RecCoupon.Name = "Label_RecCoupon";
+            this.Label_RecCoupon.Size = new System.Drawing.Size(100, 55);
+            this.Label_RecCoupon.TabIndex = 36;
+            // 
+            // Label_RecShop
+            // 
+            this.Label_RecShop.Image = ((System.Drawing.Image)(resources.GetObject("Label_RecShop.Image")));
+            this.Label_RecShop.Location = new System.Drawing.Point(0, 0);
+            this.Label_RecShop.Name = "Label_RecShop";
+            this.Label_RecShop.Size = new System.Drawing.Size(100, 55);
+            this.Label_RecShop.TabIndex = 35;
+            // 
             // Home_Fav
             // 
             this.Home_Fav.Font = new System.Drawing.Font("宋体", 20F, System.Drawing.FontStyle.Bold);
             this.Home_Fav.Image = ((System.Drawing.Image)(resources.GetObject("Home_Fav.Image")));
-            this.Home_Fav.Location = new System.Drawing.Point(559, 847);
+            this.Home_Fav.Location = new System.Drawing.Point(559, 846);
             this.Home_Fav.Name = "Home_Fav";
             this.Home_Fav.Size = new System.Drawing.Size(100, 55);
             this.Home_Fav.TabIndex = 34;
@@ -580,7 +596,7 @@
             // 
             this.Home_Print.Font = new System.Drawing.Font("宋体", 20F, System.Drawing.FontStyle.Bold);
             this.Home_Print.Image = ((System.Drawing.Image)(resources.GetObject("Home_Print.Image")));
-            this.Home_Print.Location = new System.Drawing.Point(663, 847);
+            this.Home_Print.Location = new System.Drawing.Point(663, 846);
             this.Home_Print.Name = "Home_Print";
             this.Home_Print.Size = new System.Drawing.Size(100, 55);
             this.Home_Print.TabIndex = 34;
@@ -2264,22 +2280,6 @@
             this.Label_DownloadWaitObject.TabIndex = 74;
             this.Label_DownloadWaitObject.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.Label_DownloadWaitObject.Visible = false;
-            // 
-            // Label_RecShop
-            // 
-            this.Label_RecShop.Image = ((System.Drawing.Image)(resources.GetObject("Label_RecShop.Image")));
-            this.Label_RecShop.Location = new System.Drawing.Point(3, 15);
-            this.Label_RecShop.Name = "Label_RecShop";
-            this.Label_RecShop.Size = new System.Drawing.Size(100, 55);
-            this.Label_RecShop.TabIndex = 35;
-            // 
-            // Label_RecCoupon
-            // 
-            this.Label_RecCoupon.Image = ((System.Drawing.Image)(resources.GetObject("Label_RecCoupon.Image")));
-            this.Label_RecCoupon.Location = new System.Drawing.Point(7, 513);
-            this.Label_RecCoupon.Name = "Label_RecCoupon";
-            this.Label_RecCoupon.Size = new System.Drawing.Size(100, 55);
-            this.Label_RecCoupon.TabIndex = 36;
             // 
             // MainFrame
             // 

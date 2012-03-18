@@ -18,7 +18,7 @@ namespace ECouponsPrinter
         private static int _PrintLimit = 5;                     //用户打印次数的限制
         private static int _MessageRegetTime = 45;                  //短信重新发送的时间
 
-        private static String strTerminalNo = "001";//终端编号
+        private static String strTerminalNo = "000";//终端编号
         private static String strServerUrl = "http://127.0.0.1:8080/ecoupons";//远程服务端URL
         private static String strExitPwd = "xjtcmzc";//终端推出密码
 
