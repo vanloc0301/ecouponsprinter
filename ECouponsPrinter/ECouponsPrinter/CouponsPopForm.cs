@@ -119,7 +119,7 @@ namespace ECouponsPrinter
         {
             this.FormBorderStyle = FormBorderStyle.None;
             this.Height = 780;
-            AccessCmd cmd = new AccessCmd();;
+            AccessCmd cmd = new AccessCmd(); ;
             OleDbDataReader reader;
             string strSql = "";
 
@@ -128,7 +128,7 @@ namespace ECouponsPrinter
                 strSql = "select * from t_bz_shop where strId='" + pi.shopId + "'";
                 reader = cmd.ExecuteReader(strSql);
                 try
-                {                  
+                {
                     if (reader.Read())
                     {
                         if (!reader.IsDBNull(8))
@@ -299,7 +299,8 @@ namespace ECouponsPrinter
             //float height = (float)bi;
 
             //        MessageBox.Show(pd.PrinterSettings.PaperSources.Count.ToString()); ;
-            pd.DefaultPageSettings.PaperSize = new PaperSize("paper", 220, 625);//您可以修改pagesize的大小               
+            pd.DefaultPageSettings.PaperSize = new PaperSize("paper", 220, 625);        //修改pagesize的大小    
+            pd.DefaultPageSettings.Margins.Left = 10;
 
             //    e.Graphics.DrawImage(printimage, new RectangleF(0, 0, width, height));
             g.DrawString("终端：" + GlobalVariables.StrTerminalNo, new Font("黑体", 9), Brushes.Black, 5, 0);
@@ -307,6 +308,7 @@ namespace ECouponsPrinter
             g.DrawString("打印时间：" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"), new Font("黑体", 9), Brushes.Black, 5, 30);
 
             g.DrawImage(pi.image, new RectangleF(50, 50, 120, 90));
+            //g.DrawImage(,,,GraphicsUnit.Pixel);
 
             int line = 0, y = 150;
             string perStr = "";
@@ -326,9 +328,9 @@ namespace ECouponsPrinter
                 if (word != '\n')
                     perStr += word.ToString();
 
-                if (line >= 13)
+                if (line >= 19)
                 {
-                    g.DrawString(perStr, new Font("黑体", 16), Brushes.Black, 5, y);
+                    g.DrawString(perStr, new Font("黑体", 16), Brushes.Black, 8, y);
                     count++;
                     y += 24;
                     line = 0;
@@ -341,7 +343,7 @@ namespace ECouponsPrinter
             {
                 if (perStr != "")
                 {
-                    g.DrawString(perStr, new Font("黑体", 16), Brushes.Black, 5, y);
+                    g.DrawString(perStr, new Font("黑体", 16), Brushes.Black, 8, y);
                     count++;
                     y += 24;
                     line = 0;
@@ -367,7 +369,7 @@ namespace ECouponsPrinter
 
                 if (word == '\n' && perStr != "")
                 {
-                    g.DrawString(perStr, new Font("黑体", 10), Brushes.Black, 5, y);
+                    g.DrawString(perStr, new Font("黑体", 10), Brushes.Black, 8, y);
                     count++;
                     y += 17;
                     line = 0;
@@ -383,9 +385,9 @@ namespace ECouponsPrinter
                 if (word != '\n')
                     perStr += word.ToString();
 
-                if (line >= 24)
+                if (line >= 25)
                 {
-                    g.DrawString(perStr, new Font("黑体", 10), Brushes.Black, 5, y);
+                    g.DrawString(perStr, new Font("黑体", 10), Brushes.Black, 8, y);
                     count++;
                     y += 17;
                     line = 0;
@@ -398,7 +400,7 @@ namespace ECouponsPrinter
             {
                 if (perStr != "")
                 {
-                    g.DrawString(perStr, new Font("黑体", 10), Brushes.Black, 5, y);
+                    g.DrawString(perStr, new Font("黑体", 10), Brushes.Black, 8, y);
                     count++;
                     y += 17;
                     line = 0;
@@ -412,19 +414,23 @@ namespace ECouponsPrinter
                 }
             }
 
-            y += 10;
-            g.DrawLine(p, new Point(0, y), new Point(220, y));
-            y += 5;
-
             if (pi.flaPrice != 0)
             {
+                y += 10;
+                g.DrawLine(p, new Point(0, y), new Point(220, y));
+                y += 5;
                 g.DrawString(Code.Text, new Font("黑体", 13), Brushes.Black, 16, y);
                 y += 55;
                 g.DrawLine(p, new Point(0, y), new Point(220, y));
             }
+            else
+            {
+                g.DrawLine(p, new Point(0, 580), new Point(220, 585));
+            }
 
             g.DrawString(bottomText, new Font("黑体", 13), Brushes.Black, 15, 590);
-            g.DrawString(GlobalVariables.StrPhone, new Font("黑体", 12), Brushes.Black, 27, 615);
+            g.DrawString(GlobalVariables.StrPhone, new Font("黑体", 12), Brushes.Black, 30, 615);
+
 
             //     e.Graphics.DrawImage(printimage, new RectangleF(0, 0, width, height));
         }
