@@ -13,7 +13,7 @@ namespace ECouponsPrinter
 {
     public partial class Login : Form
     {
-        private static int TickNum = 30;
+        private static int TickNum = GlobalVariables.MessageRegetTime;
         private String checkCode;
         Thread th;
         String loginId;
@@ -47,8 +47,11 @@ namespace ECouponsPrinter
             mf.InitTimer();
             if (th != null)
             {
-                th.Abort();
-                th.Join();
+                if (th.IsAlive)
+                {
+                    th.Abort();
+                    th.Join();
+                }
             }
             if (this.phone.Text.Trim().Length != 11)
             {
@@ -64,7 +67,7 @@ namespace ECouponsPrinter
                     th = new Thread(new ThreadStart(sendMes));
                     th.Start();
                     this.Reget.Enabled = false;
-                    TickNum = 30;
+                    TickNum = GlobalVariables.MessageRegetTime;
                     this.Reget.Text = "重新获取(" + TickNum + ")";
                     this.CodeTimer.Start();
                 }
@@ -73,8 +76,6 @@ namespace ECouponsPrinter
                     info.Text = "手机号必须为11位纯数字！";
                 }
             }
-
-
         }
 
         private void sendCode()

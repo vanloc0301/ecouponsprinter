@@ -71,15 +71,9 @@
             this.ShopInfo_Fav = new System.Windows.Forms.Label();
             this.PB_ShopInfo_Coupons = new System.Windows.Forms.PictureBox();
             this.PB_ShopInfo_Shop = new System.Windows.Forms.PictureBox();
-            this.PB_ShopInfo_Coupons06 = new System.Windows.Forms.PictureBox();
             this.Label_ShopInfo_Address = new System.Windows.Forms.Label();
-            this.PB_ShopInfo_Coupons03 = new System.Windows.Forms.PictureBox();
             this.Label_ShopInfo_Detail = new System.Windows.Forms.Label();
-            this.PB_ShopInfo_Coupons05 = new System.Windows.Forms.PictureBox();
-            this.PB_ShopInfo_Coupons01 = new System.Windows.Forms.PictureBox();
             this.Label_ShopInfo_Name = new System.Windows.Forms.Label();
-            this.PB_ShopInfo_Coupons04 = new System.Windows.Forms.PictureBox();
-            this.PB_ShopInfo_Coupons02 = new System.Windows.Forms.PictureBox();
             this.Panel_Shop = new System.Windows.Forms.Panel();
             this.PB_Shop_Type3_NextPage = new System.Windows.Forms.PictureBox();
             this.PB_Shop_Type3_LastPage = new System.Windows.Forms.PictureBox();
@@ -204,6 +198,8 @@
             this.Label_Black_Info = new System.Windows.Forms.Label();
             this.Label_LoginWaitInfo = new System.Windows.Forms.Label();
             this.Label_DownloadWaitObject = new System.Windows.Forms.Label();
+            this.Label_RecShop = new System.Windows.Forms.Label();
+            this.Label_RecCoupon = new System.Windows.Forms.Label();
             this.Panel_Top.SuspendLayout();
             this.Panel_Bottom.SuspendLayout();
             this.Panel_Home.SuspendLayout();
@@ -224,12 +220,6 @@
             this.Panel_ShopInfo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PB_ShopInfo_Coupons)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PB_ShopInfo_Shop)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PB_ShopInfo_Coupons06)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PB_ShopInfo_Coupons03)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PB_ShopInfo_Coupons05)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PB_ShopInfo_Coupons01)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PB_ShopInfo_Coupons04)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PB_ShopInfo_Coupons02)).BeginInit();
             this.Panel_Shop.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PB_Shop_Type3_NextPage)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PB_Shop_Type3_LastPage)).BeginInit();
@@ -548,6 +538,8 @@
             // 
             this.Panel_Home.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("Panel_Home.BackgroundImage")));
             this.Panel_Home.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.Panel_Home.Controls.Add(this.Label_RecCoupon);
+            this.Panel_Home.Controls.Add(this.Label_RecShop);
             this.Panel_Home.Controls.Add(this.Home_Fav);
             this.Panel_Home.Controls.Add(this.Home_Print);
             this.Panel_Home.Controls.Add(this.PB_Home_Bottom12);
@@ -577,23 +569,21 @@
             // Home_Fav
             // 
             this.Home_Fav.Font = new System.Drawing.Font("宋体", 20F, System.Drawing.FontStyle.Bold);
+            this.Home_Fav.Image = ((System.Drawing.Image)(resources.GetObject("Home_Fav.Image")));
             this.Home_Fav.Location = new System.Drawing.Point(559, 847);
             this.Home_Fav.Name = "Home_Fav";
-            this.Home_Fav.Size = new System.Drawing.Size(99, 53);
+            this.Home_Fav.Size = new System.Drawing.Size(100, 55);
             this.Home_Fav.TabIndex = 34;
-            this.Home_Fav.Text = "收 藏";
-            this.Home_Fav.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.Home_Fav.Click += new System.EventHandler(this.TranlateLabel_Click);
             // 
             // Home_Print
             // 
             this.Home_Print.Font = new System.Drawing.Font("宋体", 20F, System.Drawing.FontStyle.Bold);
+            this.Home_Print.Image = ((System.Drawing.Image)(resources.GetObject("Home_Print.Image")));
             this.Home_Print.Location = new System.Drawing.Point(663, 847);
             this.Home_Print.Name = "Home_Print";
-            this.Home_Print.Size = new System.Drawing.Size(99, 53);
+            this.Home_Print.Size = new System.Drawing.Size(100, 55);
             this.Home_Print.TabIndex = 34;
-            this.Home_Print.Text = "打 印";
-            this.Home_Print.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.Home_Print.Click += new System.EventHandler(this.TranlateLabel_Click);
             // 
             // PB_Home_Bottom12
@@ -799,15 +789,9 @@
             this.Panel_ShopInfo.Controls.Add(this.ShopInfo_Fav);
             this.Panel_ShopInfo.Controls.Add(this.PB_ShopInfo_Coupons);
             this.Panel_ShopInfo.Controls.Add(this.PB_ShopInfo_Shop);
-            this.Panel_ShopInfo.Controls.Add(this.PB_ShopInfo_Coupons06);
             this.Panel_ShopInfo.Controls.Add(this.Label_ShopInfo_Address);
-            this.Panel_ShopInfo.Controls.Add(this.PB_ShopInfo_Coupons03);
             this.Panel_ShopInfo.Controls.Add(this.Label_ShopInfo_Detail);
-            this.Panel_ShopInfo.Controls.Add(this.PB_ShopInfo_Coupons05);
-            this.Panel_ShopInfo.Controls.Add(this.PB_ShopInfo_Coupons01);
             this.Panel_ShopInfo.Controls.Add(this.Label_ShopInfo_Name);
-            this.Panel_ShopInfo.Controls.Add(this.PB_ShopInfo_Coupons04);
-            this.Panel_ShopInfo.Controls.Add(this.PB_ShopInfo_Coupons02);
             this.Panel_ShopInfo.Location = new System.Drawing.Point(0, 95);
             this.Panel_ShopInfo.Margin = new System.Windows.Forms.Padding(0);
             this.Panel_ShopInfo.Name = "Panel_ShopInfo";
@@ -818,28 +802,26 @@
             // ShopInfo_Print
             // 
             this.ShopInfo_Print.Font = new System.Drawing.Font("宋体", 20F, System.Drawing.FontStyle.Bold);
-            this.ShopInfo_Print.Location = new System.Drawing.Point(660, 956);
+            this.ShopInfo_Print.Image = ((System.Drawing.Image)(resources.GetObject("ShopInfo_Print.Image")));
+            this.ShopInfo_Print.Location = new System.Drawing.Point(662, 1109);
             this.ShopInfo_Print.Name = "ShopInfo_Print";
-            this.ShopInfo_Print.Size = new System.Drawing.Size(99, 53);
+            this.ShopInfo_Print.Size = new System.Drawing.Size(100, 55);
             this.ShopInfo_Print.TabIndex = 35;
-            this.ShopInfo_Print.Text = "打 印";
-            this.ShopInfo_Print.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.ShopInfo_Print.Click += new System.EventHandler(this.TranlateLabel_Click);
             // 
             // ShopInfo_Fav
             // 
             this.ShopInfo_Fav.Font = new System.Drawing.Font("宋体", 20F, System.Drawing.FontStyle.Bold);
-            this.ShopInfo_Fav.Location = new System.Drawing.Point(555, 956);
+            this.ShopInfo_Fav.Image = ((System.Drawing.Image)(resources.GetObject("ShopInfo_Fav.Image")));
+            this.ShopInfo_Fav.Location = new System.Drawing.Point(557, 1109);
             this.ShopInfo_Fav.Name = "ShopInfo_Fav";
-            this.ShopInfo_Fav.Size = new System.Drawing.Size(99, 53);
+            this.ShopInfo_Fav.Size = new System.Drawing.Size(100, 55);
             this.ShopInfo_Fav.TabIndex = 35;
-            this.ShopInfo_Fav.Text = "收 藏";
-            this.ShopInfo_Fav.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.ShopInfo_Fav.Click += new System.EventHandler(this.TranlateLabel_Click);
             // 
             // PB_ShopInfo_Coupons
             // 
-            this.PB_ShopInfo_Coupons.Location = new System.Drawing.Point(2, 604);
+            this.PB_ShopInfo_Coupons.Location = new System.Drawing.Point(4, 757);
             this.PB_ShopInfo_Coupons.Name = "PB_ShopInfo_Coupons";
             this.PB_ShopInfo_Coupons.Size = new System.Drawing.Size(760, 407);
             this.PB_ShopInfo_Coupons.TabIndex = 34;
@@ -853,101 +835,41 @@
             this.PB_ShopInfo_Shop.TabIndex = 31;
             this.PB_ShopInfo_Shop.TabStop = false;
             // 
-            // PB_ShopInfo_Coupons06
-            // 
-            this.PB_ShopInfo_Coupons06.Location = new System.Drawing.Point(642, 1030);
-            this.PB_ShopInfo_Coupons06.Margin = new System.Windows.Forms.Padding(0);
-            this.PB_ShopInfo_Coupons06.Name = "PB_ShopInfo_Coupons06";
-            this.PB_ShopInfo_Coupons06.Size = new System.Drawing.Size(117, 124);
-            this.PB_ShopInfo_Coupons06.TabIndex = 28;
-            this.PB_ShopInfo_Coupons06.TabStop = false;
-            this.PB_ShopInfo_Coupons06.MouseUp += new System.Windows.Forms.MouseEventHandler(this.ChangeShopInfoPicture);
-            // 
             // Label_ShopInfo_Address
             // 
             this.Label_ShopInfo_Address.BackColor = System.Drawing.Color.Transparent;
             this.Label_ShopInfo_Address.Font = new System.Drawing.Font("新宋体", 20F, System.Drawing.FontStyle.Bold);
             this.Label_ShopInfo_Address.ForeColor = System.Drawing.Color.White;
-            this.Label_ShopInfo_Address.Location = new System.Drawing.Point(19, 470);
+            this.Label_ShopInfo_Address.Location = new System.Drawing.Point(19, 484);
             this.Label_ShopInfo_Address.Margin = new System.Windows.Forms.Padding(0);
             this.Label_ShopInfo_Address.Name = "Label_ShopInfo_Address";
-            this.Label_ShopInfo_Address.Size = new System.Drawing.Size(721, 34);
+            this.Label_ShopInfo_Address.Size = new System.Drawing.Size(721, 99);
             this.Label_ShopInfo_Address.TabIndex = 24;
             this.Label_ShopInfo_Address.Text = "地址:";
-            // 
-            // PB_ShopInfo_Coupons03
-            // 
-            this.PB_ShopInfo_Coupons03.Location = new System.Drawing.Point(263, 1030);
-            this.PB_ShopInfo_Coupons03.Margin = new System.Windows.Forms.Padding(0);
-            this.PB_ShopInfo_Coupons03.Name = "PB_ShopInfo_Coupons03";
-            this.PB_ShopInfo_Coupons03.Size = new System.Drawing.Size(117, 124);
-            this.PB_ShopInfo_Coupons03.TabIndex = 25;
-            this.PB_ShopInfo_Coupons03.TabStop = false;
-            this.PB_ShopInfo_Coupons03.MouseUp += new System.Windows.Forms.MouseEventHandler(this.ChangeShopInfoPicture);
             // 
             // Label_ShopInfo_Detail
             // 
             this.Label_ShopInfo_Detail.BackColor = System.Drawing.Color.Transparent;
             this.Label_ShopInfo_Detail.Font = new System.Drawing.Font("新宋体", 20F, System.Drawing.FontStyle.Bold);
             this.Label_ShopInfo_Detail.ForeColor = System.Drawing.Color.White;
-            this.Label_ShopInfo_Detail.Location = new System.Drawing.Point(19, 525);
+            this.Label_ShopInfo_Detail.Location = new System.Drawing.Point(19, 601);
             this.Label_ShopInfo_Detail.Margin = new System.Windows.Forms.Padding(0);
             this.Label_ShopInfo_Detail.Name = "Label_ShopInfo_Detail";
-            this.Label_ShopInfo_Detail.Size = new System.Drawing.Size(721, 66);
+            this.Label_ShopInfo_Detail.Size = new System.Drawing.Size(721, 137);
             this.Label_ShopInfo_Detail.TabIndex = 24;
             this.Label_ShopInfo_Detail.Text = "简介:";
-            // 
-            // PB_ShopInfo_Coupons05
-            // 
-            this.PB_ShopInfo_Coupons05.Location = new System.Drawing.Point(516, 1030);
-            this.PB_ShopInfo_Coupons05.Margin = new System.Windows.Forms.Padding(0);
-            this.PB_ShopInfo_Coupons05.Name = "PB_ShopInfo_Coupons05";
-            this.PB_ShopInfo_Coupons05.Size = new System.Drawing.Size(117, 124);
-            this.PB_ShopInfo_Coupons05.TabIndex = 29;
-            this.PB_ShopInfo_Coupons05.TabStop = false;
-            this.PB_ShopInfo_Coupons05.MouseUp += new System.Windows.Forms.MouseEventHandler(this.ChangeShopInfoPicture);
-            // 
-            // PB_ShopInfo_Coupons01
-            // 
-            this.PB_ShopInfo_Coupons01.Location = new System.Drawing.Point(8, 1030);
-            this.PB_ShopInfo_Coupons01.Margin = new System.Windows.Forms.Padding(0);
-            this.PB_ShopInfo_Coupons01.Name = "PB_ShopInfo_Coupons01";
-            this.PB_ShopInfo_Coupons01.Size = new System.Drawing.Size(117, 124);
-            this.PB_ShopInfo_Coupons01.TabIndex = 27;
-            this.PB_ShopInfo_Coupons01.TabStop = false;
-            this.PB_ShopInfo_Coupons01.MouseUp += new System.Windows.Forms.MouseEventHandler(this.ChangeShopInfoPicture);
             // 
             // Label_ShopInfo_Name
             // 
             this.Label_ShopInfo_Name.BackColor = System.Drawing.Color.Transparent;
             this.Label_ShopInfo_Name.Font = new System.Drawing.Font("新宋体", 20F, System.Drawing.FontStyle.Bold);
             this.Label_ShopInfo_Name.ForeColor = System.Drawing.Color.White;
-            this.Label_ShopInfo_Name.Location = new System.Drawing.Point(19, 419);
+            this.Label_ShopInfo_Name.Location = new System.Drawing.Point(19, 439);
             this.Label_ShopInfo_Name.Margin = new System.Windows.Forms.Padding(0);
             this.Label_ShopInfo_Name.Name = "Label_ShopInfo_Name";
             this.Label_ShopInfo_Name.Size = new System.Drawing.Size(721, 29);
             this.Label_ShopInfo_Name.TabIndex = 24;
             this.Label_ShopInfo_Name.Text = "商家名称:";
-            // 
-            // PB_ShopInfo_Coupons04
-            // 
-            this.PB_ShopInfo_Coupons04.Location = new System.Drawing.Point(389, 1030);
-            this.PB_ShopInfo_Coupons04.Margin = new System.Windows.Forms.Padding(0);
-            this.PB_ShopInfo_Coupons04.Name = "PB_ShopInfo_Coupons04";
-            this.PB_ShopInfo_Coupons04.Size = new System.Drawing.Size(117, 124);
-            this.PB_ShopInfo_Coupons04.TabIndex = 30;
-            this.PB_ShopInfo_Coupons04.TabStop = false;
-            this.PB_ShopInfo_Coupons04.MouseUp += new System.Windows.Forms.MouseEventHandler(this.ChangeShopInfoPicture);
-            // 
-            // PB_ShopInfo_Coupons02
-            // 
-            this.PB_ShopInfo_Coupons02.Location = new System.Drawing.Point(135, 1030);
-            this.PB_ShopInfo_Coupons02.Margin = new System.Windows.Forms.Padding(0);
-            this.PB_ShopInfo_Coupons02.Name = "PB_ShopInfo_Coupons02";
-            this.PB_ShopInfo_Coupons02.Size = new System.Drawing.Size(117, 124);
-            this.PB_ShopInfo_Coupons02.TabIndex = 26;
-            this.PB_ShopInfo_Coupons02.TabStop = false;
-            this.PB_ShopInfo_Coupons02.MouseUp += new System.Windows.Forms.MouseEventHandler(this.ChangeShopInfoPicture);
             // 
             // Panel_Shop
             // 
@@ -1467,34 +1389,34 @@
             // MyInfo_Bottom_Fav
             // 
             this.MyInfo_Bottom_Fav.Font = new System.Drawing.Font("宋体", 20F, System.Drawing.FontStyle.Bold);
+            this.MyInfo_Bottom_Fav.Image = ((System.Drawing.Image)(resources.GetObject("MyInfo_Bottom_Fav.Image")));
             this.MyInfo_Bottom_Fav.Location = new System.Drawing.Point(545, 1114);
+            this.MyInfo_Bottom_Fav.Margin = new System.Windows.Forms.Padding(0);
             this.MyInfo_Bottom_Fav.Name = "MyInfo_Bottom_Fav";
-            this.MyInfo_Bottom_Fav.Size = new System.Drawing.Size(99, 53);
+            this.MyInfo_Bottom_Fav.Size = new System.Drawing.Size(100, 55);
             this.MyInfo_Bottom_Fav.TabIndex = 40;
-            this.MyInfo_Bottom_Fav.Text = "收 藏";
-            this.MyInfo_Bottom_Fav.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.MyInfo_Bottom_Fav.Click += new System.EventHandler(this.TranlateLabel_Click);
             // 
             // MyInfo_Bottom_Print
             // 
             this.MyInfo_Bottom_Print.Font = new System.Drawing.Font("宋体", 20F, System.Drawing.FontStyle.Bold);
+            this.MyInfo_Bottom_Print.Image = ((System.Drawing.Image)(resources.GetObject("MyInfo_Bottom_Print.Image")));
             this.MyInfo_Bottom_Print.Location = new System.Drawing.Point(649, 1114);
+            this.MyInfo_Bottom_Print.Margin = new System.Windows.Forms.Padding(0);
             this.MyInfo_Bottom_Print.Name = "MyInfo_Bottom_Print";
-            this.MyInfo_Bottom_Print.Size = new System.Drawing.Size(99, 53);
+            this.MyInfo_Bottom_Print.Size = new System.Drawing.Size(100, 55);
             this.MyInfo_Bottom_Print.TabIndex = 40;
-            this.MyInfo_Bottom_Print.Text = "打 印";
-            this.MyInfo_Bottom_Print.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.MyInfo_Bottom_Print.Click += new System.EventHandler(this.TranlateLabel_Click);
             // 
             // MyInfo_Top_Print
             // 
             this.MyInfo_Top_Print.Font = new System.Drawing.Font("宋体", 20F, System.Drawing.FontStyle.Bold);
+            this.MyInfo_Top_Print.Image = ((System.Drawing.Image)(resources.GetObject("MyInfo_Top_Print.Image")));
             this.MyInfo_Top_Print.Location = new System.Drawing.Point(649, 525);
+            this.MyInfo_Top_Print.Margin = new System.Windows.Forms.Padding(0);
             this.MyInfo_Top_Print.Name = "MyInfo_Top_Print";
-            this.MyInfo_Top_Print.Size = new System.Drawing.Size(99, 53);
+            this.MyInfo_Top_Print.Size = new System.Drawing.Size(100, 55);
             this.MyInfo_Top_Print.TabIndex = 40;
-            this.MyInfo_Top_Print.Text = "打 印";
-            this.MyInfo_Top_Print.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.MyInfo_Top_Print.Click += new System.EventHandler(this.TranlateLabel_Click);
             // 
             // PB_MyInfo_His
@@ -1785,23 +1707,21 @@
             // Coupon_Print
             // 
             this.Coupon_Print.Font = new System.Drawing.Font("宋体", 20F, System.Drawing.FontStyle.Bold);
+            this.Coupon_Print.Image = ((System.Drawing.Image)(resources.GetObject("Coupon_Print.Image")));
             this.Coupon_Print.Location = new System.Drawing.Point(664, 387);
             this.Coupon_Print.Name = "Coupon_Print";
-            this.Coupon_Print.Size = new System.Drawing.Size(99, 53);
+            this.Coupon_Print.Size = new System.Drawing.Size(100, 55);
             this.Coupon_Print.TabIndex = 52;
-            this.Coupon_Print.Text = "打 印";
-            this.Coupon_Print.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.Coupon_Print.Click += new System.EventHandler(this.TranlateLabel_Click);
             // 
             // Coupon_Fav
             // 
             this.Coupon_Fav.Font = new System.Drawing.Font("宋体", 20F, System.Drawing.FontStyle.Bold);
+            this.Coupon_Fav.Image = ((System.Drawing.Image)(resources.GetObject("Coupon_Fav.Image")));
             this.Coupon_Fav.Location = new System.Drawing.Point(561, 387);
             this.Coupon_Fav.Name = "Coupon_Fav";
-            this.Coupon_Fav.Size = new System.Drawing.Size(99, 53);
+            this.Coupon_Fav.Size = new System.Drawing.Size(100, 55);
             this.Coupon_Fav.TabIndex = 52;
-            this.Coupon_Fav.Text = "收 藏";
-            this.Coupon_Fav.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.Coupon_Fav.Click += new System.EventHandler(this.TranlateLabel_Click);
             // 
             // PB_Coupon_Right
@@ -2345,22 +2265,38 @@
             this.Label_DownloadWaitObject.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.Label_DownloadWaitObject.Visible = false;
             // 
+            // Label_RecShop
+            // 
+            this.Label_RecShop.Image = ((System.Drawing.Image)(resources.GetObject("Label_RecShop.Image")));
+            this.Label_RecShop.Location = new System.Drawing.Point(3, 15);
+            this.Label_RecShop.Name = "Label_RecShop";
+            this.Label_RecShop.Size = new System.Drawing.Size(100, 55);
+            this.Label_RecShop.TabIndex = 35;
+            // 
+            // Label_RecCoupon
+            // 
+            this.Label_RecCoupon.Image = ((System.Drawing.Image)(resources.GetObject("Label_RecCoupon.Image")));
+            this.Label_RecCoupon.Location = new System.Drawing.Point(7, 513);
+            this.Label_RecCoupon.Name = "Label_RecCoupon";
+            this.Label_RecCoupon.Size = new System.Drawing.Size(100, 55);
+            this.Label_RecCoupon.TabIndex = 36;
+            // 
             // MainFrame
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(973, 742);
+            this.Controls.Add(this.Panel_Home);
+            this.Controls.Add(this.Panel_ShopInfo);
+            this.Controls.Add(this.Panel_Bottom);
             this.Controls.Add(this.Label_DownloadWaitObject);
             this.Controls.Add(this.Label_LoginWaitInfo);
             this.Controls.Add(this.Panel_NearShop);
             this.Controls.Add(this.Panel_Coupons);
             this.Controls.Add(this.Panel_Ad);
-            this.Controls.Add(this.Panel_Bottom);
-            this.Controls.Add(this.Panel_Home);
             this.Controls.Add(this.Panel_Shop);
             this.Controls.Add(this.Panel_MyInfo);
-            this.Controls.Add(this.Panel_ShopInfo);
             this.Controls.Add(this.Panel_Top);
             this.DoubleBuffered = true;
             this.Name = "MainFrame";
@@ -2388,12 +2324,6 @@
             this.Panel_ShopInfo.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.PB_ShopInfo_Coupons)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PB_ShopInfo_Shop)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PB_ShopInfo_Coupons06)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PB_ShopInfo_Coupons03)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PB_ShopInfo_Coupons05)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PB_ShopInfo_Coupons01)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PB_ShopInfo_Coupons04)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PB_ShopInfo_Coupons02)).EndInit();
             this.Panel_Shop.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.PB_Shop_Type3_NextPage)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PB_Shop_Type3_LastPage)).EndInit();
@@ -2522,12 +2452,6 @@
         private System.Windows.Forms.Label Label_ShopInfo_Name;
         private System.Windows.Forms.Label Label_ShopInfo_Address;
         private System.Windows.Forms.Label Label_ShopInfo_Detail;
-        private System.Windows.Forms.PictureBox PB_ShopInfo_Coupons06;
-        private System.Windows.Forms.PictureBox PB_ShopInfo_Coupons03;
-        private System.Windows.Forms.PictureBox PB_ShopInfo_Coupons05;
-        private System.Windows.Forms.PictureBox PB_ShopInfo_Coupons01;
-        private System.Windows.Forms.PictureBox PB_ShopInfo_Coupons04;
-        private System.Windows.Forms.PictureBox PB_ShopInfo_Coupons02;
         private System.Windows.Forms.Panel Panel_Shop;
         private System.Windows.Forms.PictureBox PB_Shop_type3_12;
         private System.Windows.Forms.PictureBox PB_Shop_type3_6;
@@ -2676,6 +2600,8 @@
         private System.Windows.Forms.Label Label_Black_Info;
         private System.Windows.Forms.Label Label_LoginWaitInfo;
         private System.Windows.Forms.Label Label_DownloadWaitObject;
+        private System.Windows.Forms.Label Label_RecShop;
+        private System.Windows.Forms.Label Label_RecCoupon;
 
     }
 }

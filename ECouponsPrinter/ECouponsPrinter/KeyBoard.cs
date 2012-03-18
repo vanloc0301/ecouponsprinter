@@ -30,10 +30,12 @@ namespace ECouponsPrinter
             if (url == null && pwd == null)
             {
                 hWnd = FindWindow(null, "check");
+                UnAbleChars();
             }
             else if (url == null)
             {
                 hWnd = FindWindow(null, "Login");
+                UnAbleChars();
             }
             else
             {
@@ -208,6 +210,24 @@ namespace ECouponsPrinter
             }
 
             btn.BackgroundImage = Image.FromFile(path + "\\images\\切图\\KeyBoard\\" + str + ".jpg");
+        }
+
+        private void UnAbleChars()
+        {
+            int length;
+            string name;
+            string str;
+
+            foreach (Button btn in Panel_Background.Controls)
+            {
+                name = btn.Name;
+                length = name.Length;
+                str = name.Substring(length - 1, 1);
+                if (str[0] >= 'a' && str[0] <= 'z')
+                {
+                    btn.Enabled = false;
+                }
+            }
         }
 
         private void KeyBoard_Load(object sender, EventArgs e)
