@@ -3480,7 +3480,7 @@ namespace ECouponsPrinter
                         }
                         else
                         {
-                            if (GetUserPrintTimes() <= GlobalVariables.PrintLimit)
+                            if (GetUserPrintTimes() < GlobalVariables.PrintLimit)
                             {
                                 CouponsPopForm cpf = new CouponsPopForm(pi, this);
                                 cpf.ShowDialog();
