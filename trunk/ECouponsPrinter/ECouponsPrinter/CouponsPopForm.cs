@@ -271,6 +271,8 @@ namespace ECouponsPrinter
             //Graphics g = Graphics.FromImage(printimage);
 
             //g.CopyFromScreen(new Point(rect.Left, rect.Top), new Point(0, 0), new Size(rect.Width, rect.Height));
+            pd.PrinterSettings.DefaultPageSettings.Margins.Left = 5;
+            pd.PrinterSettings.DefaultPageSettings.Margins.Right = 5;
 
         }
 
@@ -300,7 +302,6 @@ namespace ECouponsPrinter
 
             //        MessageBox.Show(pd.PrinterSettings.PaperSources.Count.ToString()); ;
             pd.DefaultPageSettings.PaperSize = new PaperSize("paper", 220, 625);        //修改pagesize的大小    
-            pd.DefaultPageSettings.Margins.Left = 10;
 
             //    e.Graphics.DrawImage(printimage, new RectangleF(0, 0, width, height));
             g.DrawString("终端：" + GlobalVariables.StrTerminalNo, new Font("黑体", 9), Brushes.Black, 5, 0);
@@ -385,7 +386,7 @@ namespace ECouponsPrinter
                 if (word != '\n')
                     perStr += word.ToString();
 
-                if (line >= 25)
+                if (line >= 23)
                 {
                     g.DrawString(perStr, new Font("黑体", 10), Brushes.Black, 8, y);
                     count++;
