@@ -4307,6 +4307,7 @@ namespace ECouponsPrinter
             this.Label_LoginWaitInfo.Visible = false;
             this.Refresh();
             isOnLoad = true;
+            Thread.Sleep(3000);
         }
 
         /// <summary>
