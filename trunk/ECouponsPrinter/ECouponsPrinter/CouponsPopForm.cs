@@ -284,7 +284,10 @@ namespace ECouponsPrinter
 
         private bool IsUnicode(char word)
         {
+
             if ((word >= 0x4e00) && (word <= 0x9fbb))
+                return true;
+            else if ((word >= 0xff00) && (word <= 0xffef))
                 return true;
             else
                 return false;
@@ -329,7 +332,7 @@ namespace ECouponsPrinter
                 if (word != '\n')
                     perStr += word.ToString();
 
-                if (line >= 17)
+                if (line >= 15)
                 {
                     g.DrawString(perStr, new Font("黑体", 16), Brushes.Black, 8, y);
                     count++;
@@ -386,7 +389,7 @@ namespace ECouponsPrinter
                 if (word != '\n')
                     perStr += word.ToString();
 
-                if (line >= 23)
+                if (line >= 25)
                 {
                     g.DrawString(perStr, new Font("黑体", 10), Brushes.Black, 8, y);
                     count++;

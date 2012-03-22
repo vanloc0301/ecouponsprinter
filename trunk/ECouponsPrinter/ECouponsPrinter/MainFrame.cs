@@ -80,41 +80,55 @@ namespace ECouponsPrinter
         Point mPos = new Point(0, 0);
         private void Ad_WMVMovieUp(object sender, AxWMPLib._WMPOCXEvents_MouseUpEvent e)
         {
-            this.UnVisibleAllPanels();
+            try
+            {
+                this.UnVisibleAllPanels();
 
-            this.InitTimer();
+                this.InitTimer();
 
-            //显示隐藏按钮
-            this.Button_LastCouponsPage.Visible = true;
-            this.Button_NextCouponsPage.Visible = true;
+                //显示隐藏按钮
+                this.Button_LastCouponsPage.Visible = true;
+                this.Button_NextCouponsPage.Visible = true;
 
-            //切换
-            int y = this.VerticalScroll.Value;
-            this.Panel_Home.Location = new System.Drawing.Point(0, 95 - y);
+                //切换
+                int y = this.VerticalScroll.Value;
+                this.Panel_Home.Location = new System.Drawing.Point(0, 95 - y);
 
-            this.InitHomeData();
-            this.Panel_Home.Visible = true;
-            this.ShowHome();
+                this.InitHomeData();
+                this.Panel_Home.Visible = true;
+                this.ShowHome();
+            }
+            catch (Exception)
+            {
+                return;
+            }
 
         }
 
         private void Ad_MouseUp(object sender, MouseEventArgs e)
         {
-            this.UnVisibleAllPanels();
+            try
+            {
+                this.UnVisibleAllPanels();
 
-            this.InitTimer();
+                this.InitTimer();
 
-            //显示隐藏按钮
-            this.Button_LastCouponsPage.Visible = true;
-            this.Button_NextCouponsPage.Visible = true;
+                //显示隐藏按钮
+                this.Button_LastCouponsPage.Visible = true;
+                this.Button_NextCouponsPage.Visible = true;
 
-            //切换
-            int y = this.VerticalScroll.Value;
-            this.Panel_Home.Location = new System.Drawing.Point(0, 95 - y);
+                //切换
+                int y = this.VerticalScroll.Value;
+                this.Panel_Home.Location = new System.Drawing.Point(0, 95 - y);
 
-            this.InitHomeData();
-            this.Panel_Home.Visible = true;
-            this.ShowHome();
+                this.InitHomeData();
+                this.Panel_Home.Visible = true;
+                this.ShowHome();
+            }
+            catch (Exception)
+            {
+                return;
+            }
 
         }
 
@@ -1432,7 +1446,6 @@ namespace ECouponsPrinter
         /// </summary>
         private void LoadMarquee()
         {
-
             while (true)
             {
                 String dtime = DateTime.Now.ToString("H:m:s");
@@ -1480,11 +1493,6 @@ namespace ECouponsPrinter
 
         }
         #endregion
-
-        private void Label_Countdown_DoubleClick(object sender, EventArgs e)
-        {
-
-        }
 
         #region 加载屏蔽窗口
         TranslateForm tf;
@@ -4115,17 +4123,17 @@ namespace ECouponsPrinter
                         }
                     }
 
-                    //if (cardtext == "3897")
-                    //{
-                    //    this.SCardTimer.Stop();
-                    //    this.SCardTimer.Enabled = false;
-                    //    LoginSuccessDispatch();
-                    //    GlobalVariables.isUserLogin = true;
-                    //    GlobalVariables.LoginUserId = cardtext;
-                    //    GlobalVariables.M = null;
-                    //}
-                    //else
-                    //{
+                    if (cardtext == "3897")
+                    {
+                        this.SCardTimer.Stop();
+                        this.SCardTimer.Enabled = false;
+                        LoginSuccessDispatch();
+                        GlobalVariables.isUserLogin = true;
+                        GlobalVariables.LoginUserId = cardtext;
+                        GlobalVariables.M = null;
+                    }
+                    else
+                    {
 
                     if (!UserLogin(cardtext))
                     {
@@ -4137,7 +4145,7 @@ namespace ECouponsPrinter
                         this.SCardTimer.Enabled = false;
                         LoginSuccessDispatch();
                     }
-                    //}
+                    }
 
                     this.Label_LoginWaitInfo.Visible = false;
                 }
@@ -4152,7 +4160,7 @@ namespace ECouponsPrinter
             sc = new SCard();
             sc.Init();
             this.SCardTimer.Enabled = true;
-            this.SCardTimer.Interval = 750;
+            this.SCardTimer.Interval = 800;
             this.SCardTimer.Start();
         }
 
@@ -4310,6 +4318,7 @@ namespace ECouponsPrinter
             this.UnVisibleAllPanels();
             this.Label_DownloadWaitObject.Visible = false;
             this.Button_HomePage_MouseUp(null, null);
+            this.Refresh();
             isOnLoad = false;
         }
 
