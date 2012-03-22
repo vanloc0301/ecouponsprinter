@@ -197,7 +197,7 @@
             // Key_9
             // 
             this.Key_9.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("Key_9.BackgroundImage")));
-            this.Key_9.Location = new System.Drawing.Point(678, 12);
+            this.Key_9.Location = new System.Drawing.Point(605, 12);
             this.Key_9.Name = "Key_9";
             this.Key_9.Size = new System.Drawing.Size(70, 70);
             this.Key_9.TabIndex = 1;
@@ -263,7 +263,7 @@
             // Key_5
             // 
             this.Key_5.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("Key_5.BackgroundImage")));
-            this.Key_5.Location = new System.Drawing.Point(384, 12);
+            this.Key_5.Location = new System.Drawing.Point(311, 12);
             this.Key_5.Name = "Key_5";
             this.Key_5.Size = new System.Drawing.Size(70, 70);
             this.Key_5.TabIndex = 1;
@@ -307,7 +307,7 @@
             // Key_6
             // 
             this.Key_6.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("Key_6.BackgroundImage")));
-            this.Key_6.Location = new System.Drawing.Point(458, 12);
+            this.Key_6.Location = new System.Drawing.Point(385, 12);
             this.Key_6.Name = "Key_6";
             this.Key_6.Size = new System.Drawing.Size(70, 70);
             this.Key_6.TabIndex = 1;
@@ -340,7 +340,7 @@
             // Key_2
             // 
             this.Key_2.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("Key_2.BackgroundImage")));
-            this.Key_2.Location = new System.Drawing.Point(159, 12);
+            this.Key_2.Location = new System.Drawing.Point(86, 12);
             this.Key_2.Name = "Key_2";
             this.Key_2.Size = new System.Drawing.Size(70, 70);
             this.Key_2.TabIndex = 1;
@@ -384,7 +384,7 @@
             // Key_8
             // 
             this.Key_8.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("Key_8.BackgroundImage")));
-            this.Key_8.Location = new System.Drawing.Point(605, 12);
+            this.Key_8.Location = new System.Drawing.Point(532, 12);
             this.Key_8.Name = "Key_8";
             this.Key_8.Size = new System.Drawing.Size(70, 70);
             this.Key_8.TabIndex = 1;
@@ -439,7 +439,7 @@
             // Key_7
             // 
             this.Key_7.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("Key_7.BackgroundImage")));
-            this.Key_7.Location = new System.Drawing.Point(532, 12);
+            this.Key_7.Location = new System.Drawing.Point(459, 12);
             this.Key_7.Name = "Key_7";
             this.Key_7.Size = new System.Drawing.Size(70, 70);
             this.Key_7.TabIndex = 1;
@@ -483,7 +483,7 @@
             // Key_4
             // 
             this.Key_4.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("Key_4.BackgroundImage")));
-            this.Key_4.Location = new System.Drawing.Point(309, 12);
+            this.Key_4.Location = new System.Drawing.Point(236, 12);
             this.Key_4.Name = "Key_4";
             this.Key_4.Size = new System.Drawing.Size(70, 70);
             this.Key_4.TabIndex = 1;
@@ -527,7 +527,7 @@
             // Key_3
             // 
             this.Key_3.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("Key_3.BackgroundImage")));
-            this.Key_3.Location = new System.Drawing.Point(233, 12);
+            this.Key_3.Location = new System.Drawing.Point(160, 12);
             this.Key_3.Name = "Key_3";
             this.Key_3.Size = new System.Drawing.Size(70, 70);
             this.Key_3.TabIndex = 1;
@@ -549,7 +549,7 @@
             // Key_1
             // 
             this.Key_1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("Key_1.BackgroundImage")));
-            this.Key_1.Location = new System.Drawing.Point(84, 12);
+            this.Key_1.Location = new System.Drawing.Point(11, 12);
             this.Key_1.Name = "Key_1";
             this.Key_1.Size = new System.Drawing.Size(70, 70);
             this.Key_1.TabIndex = 1;
@@ -560,7 +560,7 @@
             // Key_0
             // 
             this.Key_0.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("Key_0.BackgroundImage")));
-            this.Key_0.Location = new System.Drawing.Point(10, 12);
+            this.Key_0.Location = new System.Drawing.Point(678, 12);
             this.Key_0.Name = "Key_0";
             this.Key_0.Size = new System.Drawing.Size(70, 70);
             this.Key_0.TabIndex = 1;

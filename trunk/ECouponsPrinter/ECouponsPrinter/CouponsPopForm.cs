@@ -329,7 +329,7 @@ namespace ECouponsPrinter
                 if (word != '\n')
                     perStr += word.ToString();
 
-                if (line >= 19)
+                if (line >= 17)
                 {
                     g.DrawString(perStr, new Font("黑体", 16), Brushes.Black, 8, y);
                     count++;
