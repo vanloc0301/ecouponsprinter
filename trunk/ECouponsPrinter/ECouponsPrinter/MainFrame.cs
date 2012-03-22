@@ -23,6 +23,7 @@ namespace ECouponsPrinter
         private Thread marquee;
         private SCard sc;
         private static bool isFirstKey = true;
+        private static bool isOnLoad = false;
 
         //-----------------------------------------------------------------------------
         private List<PicInfo> LP_shop;
@@ -1374,7 +1375,7 @@ namespace ECouponsPrinter
             this.Label_Countdown.Text = UserQuitTime.ToString() + "  退出";
             UserQuitTime--;
             this.Timer_UserQuit.Start();
-            
+
 
         }
 
@@ -1706,7 +1707,7 @@ namespace ECouponsPrinter
 
                     LP_shop.Add(pi);
                 }
-                catch (Exception )
+                catch (Exception)
                 {
                     continue;
                 }
@@ -2880,7 +2881,7 @@ namespace ECouponsPrinter
                 else
                 {
                     if (PB_MyInfo_Fav.Image != null)
-                        PB_MyInfo_Fav.Image.Dispose();               
+                        PB_MyInfo_Fav.Image.Dispose();
                     PB_MyInfo_Fav.Image = null;
                 }
             }
@@ -4093,6 +4094,13 @@ namespace ECouponsPrinter
             {
                 if (keyData.Equals(Keys.Enter))
                 {
+                    if (isOnLoad)
+                    {
+                        this.LoginText.Text = "";
+                        isFirstKey = true;
+                        return false;
+                    }
+
                     this.Label_LoginWaitInfo.Visible = true;
                     Label_LoginWaitInfo.Refresh();
                     String cardtext = ""; ;
@@ -4107,28 +4115,29 @@ namespace ECouponsPrinter
                         }
                     }
 
-                    if (cardtext == "3897")
+                    //if (cardtext == "3897")
+                    //{
+                    //    this.SCardTimer.Stop();
+                    //    this.SCardTimer.Enabled = false;
+                    //    LoginSuccessDispatch();
+                    //    GlobalVariables.isUserLogin = true;
+                    //    GlobalVariables.LoginUserId = cardtext;
+                    //    GlobalVariables.M = null;
+                    //}
+                    //else
+                    //{
+
+                    if (!UserLogin(cardtext))
+                    {
+                        isFirstKey = true;
+                    }
+                    else
                     {
                         this.SCardTimer.Stop();
                         this.SCardTimer.Enabled = false;
                         LoginSuccessDispatch();
-                        GlobalVariables.isUserLogin = true;
-                        GlobalVariables.LoginUserId = cardtext;
-                        GlobalVariables.M = null;
                     }
-                    else
-                    {
-                        if (!UserLogin(cardtext))
-                        {
-                            isFirstKey = true;
-                        }
-                        else
-                        {
-                            this.SCardTimer.Stop();
-                            this.SCardTimer.Enabled = false;
-                            LoginSuccessDispatch();
-                        }
-                    }
+                    //}
 
                     this.Label_LoginWaitInfo.Visible = false;
                 }
@@ -4149,6 +4158,11 @@ namespace ECouponsPrinter
 
         private void SCardTimer_Tick(object sender, EventArgs e)
         {
+            if (isOnLoad)
+            {
+                return;
+            }
+
             string cardNo = "";
             SCard.light(0x0000, 2);
             if ((cardNo = sc.searchCard()) == null)
@@ -4284,8 +4298,7 @@ namespace ECouponsPrinter
             this.Label_DownloadWaitObject.Visible = true;
             this.Label_LoginWaitInfo.Visible = false;
             this.Refresh();
-
-            
+            isOnLoad = true;
         }
 
         /// <summary>
@@ -4297,6 +4310,7 @@ namespace ECouponsPrinter
             this.UnVisibleAllPanels();
             this.Label_DownloadWaitObject.Visible = false;
             this.Button_HomePage_MouseUp(null, null);
+            isOnLoad = false;
         }
 
         #endregion 下载更新数据时候的黑屏处理
@@ -4433,7 +4447,7 @@ namespace ECouponsPrinter
 
             for (int i = 0; i < 6; i++)
             {
-                btn[i].BackgroundImage = Image.FromFile(path + "\\images\\切图\\首页\\"+image[i]+".jpg");
+                btn[i].BackgroundImage = Image.FromFile(path + "\\images\\切图\\首页\\" + image[i] + ".jpg");
             }
         }
 
