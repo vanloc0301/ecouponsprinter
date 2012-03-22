@@ -4143,7 +4143,7 @@ namespace ECouponsPrinter
             sc = new SCard();
             sc.Init();
             this.SCardTimer.Enabled = true;
-            this.SCardTimer.Interval = 500;
+            this.SCardTimer.Interval = 750;
             this.SCardTimer.Start();
         }
 
@@ -4284,6 +4284,8 @@ namespace ECouponsPrinter
             this.Label_DownloadWaitObject.Visible = true;
             this.Label_LoginWaitInfo.Visible = false;
             this.Refresh();
+
+            
         }
 
         /// <summary>
