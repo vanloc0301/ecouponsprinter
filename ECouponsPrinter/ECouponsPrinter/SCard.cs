@@ -253,7 +253,7 @@ namespace ECouponsPrinter
                 string uid = GetUserId(cardNo);
                 if (uid != null)
                 {
-                    return uid.Substring(0, 7);
+                    return uid.Substring(0, 8);
                 }
 
             }

@@ -352,12 +352,12 @@
             this.Label_ScrollText.BackColor = System.Drawing.Color.Transparent;
             this.Label_ScrollText.Direction = Marquee.UserControl1.EnumDirection.Left;
             this.Label_ScrollText.Font = new System.Drawing.Font("宋体", 30F, System.Drawing.FontStyle.Bold);
-            this.Label_ScrollText.ForeColor = System.Drawing.Color.White;
+            this.Label_ScrollText.ForeColor = System.Drawing.Color.Red;
             this.Label_ScrollText.Location = new System.Drawing.Point(24, 12);
             this.Label_ScrollText.Name = "Label_ScrollText";
             this.Label_ScrollText.Padding = new System.Windows.Forms.Padding(0, 15, 0, 0);
-            this.Label_ScrollText.scrollamount = 1;
-            this.Label_ScrollText.scrolldelay = 15;
+            this.Label_ScrollText.scrollamount = 2;
+            this.Label_ScrollText.scrolldelay = 20;
             this.Label_ScrollText.Size = new System.Drawing.Size(510, 73);
             this.Label_ScrollText.strContent = "";
             this.Label_ScrollText.TabIndex = 18;
@@ -385,7 +385,6 @@
             this.Label_Countdown.Text = "请先刷卡";
             this.Label_Countdown.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.Label_Countdown.UseMnemonic = false;
-            this.Label_Countdown.DoubleClick += new System.EventHandler(this.Label_Countdown_DoubleClick);
             this.Label_Countdown.Click += new System.EventHandler(this.Label_Countdown_Click);
             // 
             // Panel_Bottom
@@ -2286,7 +2285,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
-            this.ClientSize = new System.Drawing.Size(973, 742);
+            this.ClientSize = new System.Drawing.Size(990, 742);  
             this.Controls.Add(this.Panel_Ad);
             this.Controls.Add(this.Panel_Home);
             this.Controls.Add(this.Panel_ShopInfo);
