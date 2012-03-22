@@ -15,6 +15,7 @@ namespace ECouponsPrinter
         {
             InitializeComponent();
             this.StartPosition = FormStartPosition.CenterScreen;
+            this.FormBorderStyle = FormBorderStyle.None;
         }
 
         private void CloseTimer_Tick(object sender, EventArgs e)

@@ -38,6 +38,7 @@
             // msg
             // 
             this.msg.Font = new System.Drawing.Font("宋体", 30F, System.Drawing.FontStyle.Bold);
+            this.msg.ForeColor = System.Drawing.Color.Red;
             this.msg.Location = new System.Drawing.Point(51, 31);
             this.msg.Name = "msg";
             this.msg.Size = new System.Drawing.Size(563, 185);
@@ -51,7 +52,8 @@
             // 
             // confirm
             // 
-            this.confirm.Font = new System.Drawing.Font("宋体", 25F);
+            this.confirm.Font = new System.Drawing.Font("宋体", 25F, System.Drawing.FontStyle.Bold);
+            this.confirm.ForeColor = System.Drawing.Color.Red;
             this.confirm.Location = new System.Drawing.Point(48, 230);
             this.confirm.Name = "confirm";
             this.confirm.Size = new System.Drawing.Size(183, 65);
@@ -62,7 +64,8 @@
             // 
             // cancel
             // 
-            this.cancel.Font = new System.Drawing.Font("宋体", 25F);
+            this.cancel.Font = new System.Drawing.Font("宋体", 25F, System.Drawing.FontStyle.Bold);
+            this.cancel.ForeColor = System.Drawing.Color.Red;
             this.cancel.Location = new System.Drawing.Point(387, 230);
             this.cancel.Name = "cancel";
             this.cancel.Size = new System.Drawing.Size(183, 65);
@@ -75,6 +78,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.Black;
             this.ClientSize = new System.Drawing.Size(689, 318);
             this.ControlBox = false;
             this.Controls.Add(this.cancel);
