@@ -51,7 +51,7 @@ namespace ECouponsPrinter
             get { return GlobalVariables.strExitPwd; }
             set { GlobalVariables.strExitPwd = value; }
         }
-        private static int intRefreshSec = 30;//终端定时与服务器同步的时间间隔，以秒为单位
+        private static int intRefreshSec = 120;//终端定时与服务器同步的时间间隔，以秒为单位
 
         public static int IntRefreshSec
         {
@@ -65,7 +65,7 @@ namespace ECouponsPrinter
             get { return GlobalVariables.strPhone; }
             set { GlobalVariables.strPhone = value; }
         }
-        private static int intAdImg = 30;//当广告是多张图片时，切换的时间间隔，以秒为单位
+        private static int intAdImg = 60;//当广告是多张图片时，切换的时间间隔，以秒为单位
 
         public static int IntAdImg
         {
@@ -79,7 +79,7 @@ namespace ECouponsPrinter
             get { return GlobalVariables.intHistory; }
             set { GlobalVariables.intHistory = value; }
         }
-        private static int intCouponPrint = 500;//券打机打印张数，达到该数值则自动提醒“纸将近”
+        private static int intCouponPrint = 200;//券打机打印张数，达到该数值则自动提醒“纸将近”
 
         public static int IntCouponPrint
         {
