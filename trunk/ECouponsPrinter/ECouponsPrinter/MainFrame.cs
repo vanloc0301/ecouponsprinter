@@ -1487,7 +1487,6 @@ namespace ECouponsPrinter
                     this.Label_ScrollText.strContent = strText;
                     this.Label_ScrollText.Start();
                 }
-
                 Thread.Sleep(1800 * 1000);
             }
 
