@@ -123,32 +123,33 @@ namespace ECouponsPrinter
             OleDbDataReader reader;
             string strSql = "";
 
-            if (pi.spath.CompareTo(path + "\\coupon\\null.jpg") == 0)
+            if (pi.pPath.CompareTo(path + "\\coupon\\null.jpg") == 0)
             {
                 strSql = "select * from t_bz_shop where strId='" + pi.shopId + "'";
                 reader = cmd.ExecuteReader(strSql);
                 try
                 {
+                    FileStream pFileStream;
                     if (reader.Read())
                     {
                         if (!reader.IsDBNull(8))
                         {
-                            FileStream pFileStream = new FileStream(path + "\\shop\\" + reader.GetString(8), FileMode.Open, FileAccess.Read);
-                            this.PB_Couponpop.Image = new Bitmap(Image.FromStream(pFileStream), 150, 100);
-                            pi.image.Dispose();
-                            pi.image = new Bitmap(Image.FromStream(pFileStream), 120, 90);
-                            pFileStream.Close();
-                            pFileStream.Dispose();
+                            pFileStream = new FileStream(path + "\\shop\\" + reader.GetString(8), FileMode.Open, FileAccess.Read);
+                            
                         }
                         else
                         {
-                            this.PB_Couponpop.Image = new Bitmap(pi.image, 150, 100);
+                            pFileStream = new FileStream(path + "\\shop\\null.jpg", FileMode.Open, FileAccess.Read);
                         }
                     }
                     else
                     {
-                        this.PB_Couponpop.Image = new Bitmap(pi.image, 150, 100);
+                        pFileStream = new FileStream(path + "\\shop\\null.jpg", FileMode.Open, FileAccess.Read);
                     }
+
+                    this.PB_Couponpop.Image = new Bitmap(Image.FromStream(pFileStream), 150, 100);
+                    pFileStream.Close();
+                    pFileStream.Dispose();
 
                     reader.Close();
                 }

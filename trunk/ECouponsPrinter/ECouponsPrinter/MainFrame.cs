@@ -1632,7 +1632,7 @@ namespace ECouponsPrinter
             FileStream pFileStream;
             LP_shop = new List<PicInfo>();
 
-            String lPath, sPath, name, id, trade, shopid;
+            String lPath, sPath, pPath, name, id, trade, shopid;
             double flaPrice;
             int intVip, intType;
 
@@ -1771,6 +1771,27 @@ namespace ECouponsPrinter
                     else
                     {
                         pi.lpath = path + "\\coupon\\null.jpg";
+                    }
+
+                    if (!reader.IsDBNull(10))
+                    {
+                        pPath = reader.GetString(10);
+                        if (pPath != "")
+                        {
+                            pi.pPath = path + "\\coupon\\" + pPath;
+                            if (!File.Exists(pi.pPath))
+                            {
+                                pi.pPath = path + "\\coupon\\null.jpg";
+                            }
+                        }
+                        else
+                        {
+                            pi.pPath = path + "\\coupon\\null.jpg";
+                        }
+                    }
+                    else
+                    {
+                        pi.pPath = path + "\\coupon\\null.jpg";
                     }
 
                     if (!reader.IsDBNull(8))
@@ -2212,11 +2233,15 @@ namespace ECouponsPrinter
                     else
                     {
                         pFileStream = new FileStream(path + "\\shop\\" + lPath, FileMode.Open, FileAccess.Read);
-                    }
-                    PB_ShopInfo_Shop.Image = new Bitmap(Image.FromStream(pFileStream), 760, 397);
-                    pFileStream.Close();
-                    pFileStream.Dispose();
+                    }                  
                 }
+                else
+                {
+                    pFileStream = new FileStream(path + "\\shop\\null.jpg", FileMode.Open, FileAccess.Read);
+                }
+                PB_ShopInfo_Shop.Image = new Bitmap(Image.FromStream(pFileStream), 760, 397);
+                pFileStream.Close();
+                pFileStream.Dispose();
 
                 if (!reader.IsDBNull(1))
                 {
