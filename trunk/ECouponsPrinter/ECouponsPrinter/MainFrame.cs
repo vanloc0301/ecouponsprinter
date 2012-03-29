@@ -24,6 +24,7 @@ namespace ECouponsPrinter
         private SCard sc;
         private static bool isFirstKey = true;
         private static bool isOnLoad = false;
+        private string BackPage = "Home";
 
         //-----------------------------------------------------------------------------
         private List<PicInfo> LP_shop;
@@ -83,7 +84,6 @@ namespace ECouponsPrinter
             try
             {
                 this.UnVisibleAllPanels();
-
                 this.InitTimer();
 
                 //显示隐藏按钮
@@ -110,7 +110,6 @@ namespace ECouponsPrinter
             try
             {
                 this.UnVisibleAllPanels();
-
                 this.InitTimer();
 
                 //显示隐藏按钮
@@ -284,12 +283,12 @@ namespace ECouponsPrinter
             Thread.Sleep(20);
 
             this.UnVisibleAllPanels();
-
             int y = this.VerticalScroll.Value;
             this.Panel_ShopInfo.Location = new System.Drawing.Point(0, 95 - y);
 
             this.Panel_ShopInfo.Visible = true;
             ShowShopInfo();
+            this.BackPage = "Home";
             this.ResumePanelBottomState();
         }
 
@@ -299,6 +298,25 @@ namespace ECouponsPrinter
 
         #region 商家详细
 
+        private void PB_ShopInfo_Back_Click(object sender, EventArgs e)
+        {
+            if (this.BackPage == "Home")
+            {
+                this.Button_HomePage_MouseUp(null, null);
+                return;
+            }
+            if (this.BackPage == "Shop")
+            {
+                this.Button_ShopPage_MouseUp(null, null);
+                return;
+            }
+            if (this.BackPage == "NearShop")
+            {
+                this.Button_NearShop_MouseUp(null, null);
+                return;
+            }
+
+        }
 
         #endregion
 
@@ -693,6 +711,8 @@ namespace ECouponsPrinter
 
             this.Panel_ShopInfo.Visible = true;
             ShowShopInfo();
+            this.BackPage = "NearShop";
+            this.ResumePanelBottomState();
         }
         #endregion 周边商家
 
@@ -2633,6 +2653,7 @@ namespace ECouponsPrinter
 
                 this.Panel_ShopInfo.Visible = true;
                 ShowShopInfo();
+                this.BackPage = "Shop";
             }
             else
             {
@@ -4463,6 +4484,7 @@ namespace ECouponsPrinter
                 btn[i].BackgroundImage = Image.FromFile(path + "\\images\\切图\\首页\\" + image[i] + ".jpg");
             }
         }
+
 
     }
 }
