@@ -647,7 +647,7 @@ namespace ECouponsPrinter
         {
             ChangeExternThreeButtonForeColor(sender as Button);
 
-            LP_ctype[0] = FindRecCoupon();
+            LP_ctype[0] = FindRecCoupon(1);
             curPage = 1;
             curType = 0;
             theCouponNum = 0;
@@ -1957,7 +1957,7 @@ namespace ECouponsPrinter
             }
 
             LP_ctype = new List<CouponPicInfo>[1];
-            LP_ctype[0] = FindRecCoupon();
+            LP_ctype[0] = FindRecCoupon(0);
 
             curPage = 1;
             curType = 0;
@@ -3343,13 +3343,18 @@ namespace ECouponsPrinter
         /// 查找推荐优惠劵
         /// </summary>
         /// <returns>返回查找到的优惠劵List</returns>
-        private List<CouponPicInfo> FindRecCoupon()
+        private List<CouponPicInfo> FindRecCoupon(int type)
         {
             List<CouponPicInfo> temp = null;
             try
             {
                 String time = DateTime.Now.ToString("yyyy/M/d H:mm:ss");
-                string strSql = "select top 24 strId from t_bz_coupon where intRecommend=1 order by dtActiveTime desc";
+                string strSql;
+                //0表示首页的推荐优惠劵，是所有的；其他的表示优惠卷页面的推荐优惠劵，是前24个
+                if(type == 0)                    
+                    strSql = "select strId from t_bz_coupon where intRecommend=1 order by dtActiveTime desc";
+                else
+                    strSql = "select top 24 strId from t_bz_coupon where intRecommend=1 order by dtActiveTime desc";
                 AccessCmd cmd = new AccessCmd();
                 OleDbDataReader reader = cmd.ExecuteReader(strSql);
 
