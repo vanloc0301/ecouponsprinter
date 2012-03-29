@@ -1448,7 +1448,7 @@ namespace ECouponsPrinter
         {
             while (true)
             {
-                String dtime = DateTime.Now.ToString("H:m:s");
+                String dtime = DateTime.Now.ToString("H:mm:ss");
                 string strSql = "select * from t_bz_advertisement where intType=3 and #" + dtime + "#>=dtStartTime and #" + dtime + "#<dtEndTime";
                 AccessCmd cmd = new AccessCmd();
                 OleDbDataReader reader = cmd.ExecuteReader(strSql);
@@ -1905,8 +1905,6 @@ namespace ECouponsPrinter
             reader.Close();
             cmd.Close();
             InitParam();
-
-
         }
 
         /// <summary>
@@ -2617,6 +2615,7 @@ namespace ECouponsPrinter
             //      MessageBox.Show(num.ToString());
 
             int curNumType = name.Substring(12, 1)[0] - '0';
+            int[] tempPage = { tPage1, tPage2, tPage3 };
 
             if (LP_stype[curNumType - 1].Count > 0)
             {
@@ -2629,7 +2628,7 @@ namespace ECouponsPrinter
                 int y = this.VerticalScroll.Value;
                 this.Panel_ShopInfo.Location = new System.Drawing.Point(0, 95 - y);
 
-                InitShopInfoData(LP_stype[curNumType - 1][num + (tPage1 - 1) * 12 - 1].id);
+                InitShopInfoData(LP_stype[curNumType - 1][num + (tempPage[curNumType-1] - 1) * 12 - 1].id);
                 Thread.Sleep(20);
 
                 this.Panel_ShopInfo.Visible = true;
@@ -3349,7 +3348,7 @@ namespace ECouponsPrinter
             List<CouponPicInfo> temp = null;
             try
             {
-                String time = DateTime.Now.ToString("yyyy-M-d H:m:s");
+                String time = DateTime.Now.ToString("yyyy/M/d H:mm:ss");
                 string strSql = "select top 24 strId from t_bz_coupon where intRecommend=1 order by dtActiveTime desc";
                 AccessCmd cmd = new AccessCmd();
                 OleDbDataReader reader = cmd.ExecuteReader(strSql);
@@ -4306,7 +4305,6 @@ namespace ECouponsPrinter
             this.Label_LoginWaitInfo.Visible = false;
             this.Refresh();
             isOnLoad = true;
-            Thread.Sleep(3000);
         }
 
         /// <summary>
@@ -4387,7 +4385,6 @@ namespace ECouponsPrinter
         private void Timer_DownloadInfo_Tick(object sender, EventArgs e)
         {
             this.Timer_DownloadInfo.Stop();
-            this.CloseAllDialog();
             try
             {
                 //下载信息
@@ -4396,6 +4393,8 @@ namespace ECouponsPrinter
                 Thread.Sleep(1000);
                 //              this.Label_DownloadWaitObject.Refresh();
                 this.BeforeDownload();
+                Application.DoEvents();
+                Thread.Sleep(1000);
                 di.download();
                 this.Label_DownloadWaitObject.Text = "正在同步数据\n请稍后.....";
                 this.Label_DownloadWaitObject.Refresh();
