@@ -551,7 +551,7 @@ namespace ECouponsPrinter
         }
 
         private static void getShopProps(XmlNode xnShop, out String strId, out String strBizName, out String strShopName, out String strTrade, out String strAddr,
-            out String strIntro, out String strSmallImg, out String strLargeImg, out String intType)
+            out String strIntro, out String strSmallImg, out String strLargeImg, out String intType, out String intSort)
         {
             XmlElement xeShop = (XmlElement)xnShop;
             strId = xeShop.GetElementsByTagName("strId").Item(0).InnerText.Trim();
