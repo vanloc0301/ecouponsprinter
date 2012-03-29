@@ -3352,9 +3352,9 @@ namespace ECouponsPrinter
                 string strSql;
                 //0表示首页的推荐优惠劵，是所有的；其他的表示优惠卷页面的推荐优惠劵，是前24个
                 if(type == 0)                    
-                    strSql = "select strId from t_bz_coupon where intRecommend=1 order by dtActiveTime desc";
+                    strSql = "select strId from t_bz_coupon where intRecommend=1 and intSort<>0 order by intSort asc";
                 else
-                    strSql = "select top 24 strId from t_bz_coupon where intRecommend=1 order by dtActiveTime desc";
+                    strSql = "select top 24 strId from t_bz_coupon where intRecommend=1 and intSort<>0 order by intSort asc";
                 AccessCmd cmd = new AccessCmd();
                 OleDbDataReader reader = cmd.ExecuteReader(strSql);
 
