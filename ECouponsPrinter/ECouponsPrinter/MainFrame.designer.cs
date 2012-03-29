@@ -200,6 +200,7 @@
             this.Label_Black_Info = new System.Windows.Forms.Label();
             this.Label_LoginWaitInfo = new System.Windows.Forms.Label();
             this.Label_DownloadWaitObject = new System.Windows.Forms.Label();
+            this.PB_ShopInfo_Back = new System.Windows.Forms.PictureBox();
             this.Panel_Top.SuspendLayout();
             this.Panel_Bottom.SuspendLayout();
             this.Panel_Home.SuspendLayout();
@@ -321,6 +322,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.PB_NearShop13)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PB_NearShop_Top)).BeginInit();
             this.Panel_Ad.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.PB_ShopInfo_Back)).BeginInit();
             this.SuspendLayout();
             // 
             // Panel_Top
@@ -736,7 +738,6 @@
             this.PB_Home_Up.Size = new System.Drawing.Size(761, 384);
             this.PB_Home_Up.TabIndex = 12;
             this.PB_Home_Up.TabStop = false;
-            this.PB_Home_Up.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Button_ShopInfo_MouseUp);
             // 
             // Button_ShopInfo
             // 
@@ -800,6 +801,7 @@
             this.Panel_ShopInfo.BackColor = System.Drawing.Color.White;
             this.Panel_ShopInfo.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("Panel_ShopInfo.BackgroundImage")));
             this.Panel_ShopInfo.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.Panel_ShopInfo.Controls.Add(this.PB_ShopInfo_Back);
             this.Panel_ShopInfo.Controls.Add(this.ShopInfo_Print);
             this.Panel_ShopInfo.Controls.Add(this.ShopInfo_Fav);
             this.Panel_ShopInfo.Controls.Add(this.PB_ShopInfo_Coupons);
@@ -858,7 +860,7 @@
             this.Label_ShopInfo_Address.Location = new System.Drawing.Point(19, 484);
             this.Label_ShopInfo_Address.Margin = new System.Windows.Forms.Padding(0);
             this.Label_ShopInfo_Address.Name = "Label_ShopInfo_Address";
-            this.Label_ShopInfo_Address.Size = new System.Drawing.Size(721, 99);
+            this.Label_ShopInfo_Address.Size = new System.Drawing.Size(721, 96);
             this.Label_ShopInfo_Address.TabIndex = 24;
             this.Label_ShopInfo_Address.Text = "地址:";
             // 
@@ -867,10 +869,10 @@
             this.Label_ShopInfo_Detail.BackColor = System.Drawing.Color.Transparent;
             this.Label_ShopInfo_Detail.Font = new System.Drawing.Font("新宋体", 20F, System.Drawing.FontStyle.Bold);
             this.Label_ShopInfo_Detail.ForeColor = System.Drawing.Color.White;
-            this.Label_ShopInfo_Detail.Location = new System.Drawing.Point(19, 601);
+            this.Label_ShopInfo_Detail.Location = new System.Drawing.Point(19, 588);
             this.Label_ShopInfo_Detail.Margin = new System.Windows.Forms.Padding(0);
             this.Label_ShopInfo_Detail.Name = "Label_ShopInfo_Detail";
-            this.Label_ShopInfo_Detail.Size = new System.Drawing.Size(721, 137);
+            this.Label_ShopInfo_Detail.Size = new System.Drawing.Size(721, 161);
             this.Label_ShopInfo_Detail.TabIndex = 24;
             this.Label_ShopInfo_Detail.Text = "简介:";
             // 
@@ -882,7 +884,7 @@
             this.Label_ShopInfo_Name.Location = new System.Drawing.Point(19, 439);
             this.Label_ShopInfo_Name.Margin = new System.Windows.Forms.Padding(0);
             this.Label_ShopInfo_Name.Name = "Label_ShopInfo_Name";
-            this.Label_ShopInfo_Name.Size = new System.Drawing.Size(721, 29);
+            this.Label_ShopInfo_Name.Size = new System.Drawing.Size(582, 29);
             this.Label_ShopInfo_Name.TabIndex = 24;
             this.Label_ShopInfo_Name.Text = "商家名称:";
             // 
@@ -2280,15 +2282,24 @@
             this.Label_DownloadWaitObject.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.Label_DownloadWaitObject.Visible = false;
             // 
+            // PB_ShopInfo_Back
+            // 
+            this.PB_ShopInfo_Back.Location = new System.Drawing.Point(651, 411);
+            this.PB_ShopInfo_Back.Name = "PB_ShopInfo_Back";
+            this.PB_ShopInfo_Back.Size = new System.Drawing.Size(112, 56);
+            this.PB_ShopInfo_Back.TabIndex = 36;
+            this.PB_ShopInfo_Back.TabStop = false;
+            this.PB_ShopInfo_Back.Click += new System.EventHandler(this.PB_ShopInfo_Back_Click);
+            // 
             // MainFrame
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
-            this.ClientSize = new System.Drawing.Size(990, 742);  
+            this.ClientSize = new System.Drawing.Size(990, 742);
+            this.Controls.Add(this.Panel_ShopInfo);
             this.Controls.Add(this.Panel_Ad);
             this.Controls.Add(this.Panel_Home);
-            this.Controls.Add(this.Panel_ShopInfo);
             this.Controls.Add(this.Label_DownloadWaitObject);
             this.Controls.Add(this.Label_LoginWaitInfo);
             this.Controls.Add(this.Panel_NearShop);
@@ -2425,6 +2436,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.PB_NearShop_Top)).EndInit();
             this.Panel_Ad.ResumeLayout(false);
             this.Panel_Ad.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.PB_ShopInfo_Back)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -2601,6 +2613,7 @@
         private System.Windows.Forms.Label Label_DownloadWaitObject;
         private System.Windows.Forms.Label Label_RecShop;
         private System.Windows.Forms.Label Label_RecCoupon;
+        private System.Windows.Forms.PictureBox PB_ShopInfo_Back;
 
     }
 }
