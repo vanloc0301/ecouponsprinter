@@ -61,10 +61,16 @@ namespace ECouponsPrinter
 
     public class CouponPicInfo : PicInfo 
     {
-        
+        private string _pPath;
         private String _shopId;
         private double _flaPrice;
         private int _vip;
+
+        public string pPath
+        {
+            get { return _pPath; }
+            set { _pPath = value; }
+        }
 
         public String shopId
         {
