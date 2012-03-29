@@ -438,8 +438,8 @@ namespace ECouponsPrinter
 
         private bool updateShop(XmlNode xnShop)
         {
-            String strId, strBizName, strShopName, strTrade, strAddr, strIntro, strSmallImg, strSmallImgOld = "", strLargeImg, strLargeImgOld = "", intType="0";
-            getShopProps(xnShop, out strId, out strBizName, out strShopName, out strTrade, out strAddr, out strIntro, out strSmallImg, out strLargeImg, out intType);
+            String strId, strBizName, strShopName, strTrade, strAddr, strIntro, strSmallImg, strSmallImgOld = "", strLargeImg, strLargeImgOld = "", intType = "0", intSort = "0";
+            getShopProps(xnShop, out strId, out strBizName, out strShopName, out strTrade, out strAddr, out strIntro, out strSmallImg, out strLargeImg, out intType, out intSort);
             //查询文件
             string strSql = "select strSmallImg,strLargeImg from t_bz_shop where strId='" + strId + "'";
             AccessCmd cmd = new AccessCmd();
@@ -482,8 +482,8 @@ namespace ECouponsPrinter
             }
             cmd = new AccessCmd();
             //写入数据库（先删除、后增加，保证之前已有的信息可下载）
-            strSql = "insert into t_bz_shop(strId,strBizName,strShopName,strTrade,strAddr,strIntro,strSmallImg,strLargeImg,intType) values('" + strId + "','" + strBizName + "','" +
-                strShopName + "','" + strTrade + "','" + strAddr + "','" + strIntro + "','" + strSmallImg + "','" + strLargeImg + "'," + intType + ")";
+            strSql = "insert into t_bz_shop(strId,strBizName,strShopName,strTrade,strAddr,strIntro,strSmallImg,strLargeImg,intType,intSort) values('" + strId + "','" + strBizName + "','" +
+                strShopName + "','" + strTrade + "','" + strAddr + "','" + strIntro + "','" + strSmallImg + "','" + strLargeImg + "'," + intType + ","+intSort+")";
             bool result = cmd.ExecuteNonQuery(strSql);
             cmd.Close();
             return true;
@@ -491,8 +491,8 @@ namespace ECouponsPrinter
 
         private bool addShop(XmlNode xnShop)
         {
-            String strId, strBizName, strShopName, strTrade, strAddr, strIntro, strSmallImg, strLargeImg, intType;
-            getShopProps(xnShop, out strId, out strBizName, out strShopName, out strTrade, out strAddr, out strIntro, out strSmallImg, out strLargeImg, out intType);
+            String strId, strBizName, strShopName, strTrade, strAddr, strIntro, strSmallImg, strLargeImg, intType, intSort;
+            getShopProps(xnShop, out strId, out strBizName, out strShopName, out strTrade, out strAddr, out strIntro, out strSmallImg, out strLargeImg, out intType, out intSort);
             //创建文件
             if (strSmallImg.Length > 0)
                 if(!createImg("shop", strSmallImg))
@@ -502,8 +502,8 @@ namespace ECouponsPrinter
                     return false;
             //写入数据库
             AccessCmd cmd = new AccessCmd();
-            string strSql = "insert into t_bz_shop(strId,strBizName,strShopName,strTrade,strAddr,strIntro,strSmallImg,strLargeImg,intType) values('" + strId + "','" + strBizName + "','" + 
-                strShopName + "','" + strTrade + "','" + strAddr + "','" + strIntro + "','" + strSmallImg + "','" + strLargeImg + "'," + intType + ")";
+            string strSql = "insert into t_bz_shop(strId,strBizName,strShopName,strTrade,strAddr,strIntro,strSmallImg,strLargeImg,intType,intSort) values('" + strId + "','" + strBizName + "','" + 
+                strShopName + "','" + strTrade + "','" + strAddr + "','" + strIntro + "','" + strSmallImg + "','" + strLargeImg + "'," + intType + "," + intSort + ")";
             bool result = cmd.ExecuteNonQuery(strSql);
             cmd.Close();
             return result;
@@ -563,6 +563,7 @@ namespace ECouponsPrinter
             strSmallImg = xeShop.GetElementsByTagName("strSmallImg").Item(0).InnerText.Trim();
             strLargeImg = xeShop.GetElementsByTagName("strLargeImg").Item(0).InnerText.Trim();
             intType = xeShop.GetElementsByTagName("intType").Item(0).InnerText.Trim();
+            intSort = xeShop.GetElementsByTagName("intSort").Item(0).InnerText.Trim();
         }
 
         private static void getCouponProps(XmlNode xnCoupon, out string strId, out string strName, out string dtActiveTime, out string dtExpireTime, out string strShopId,
