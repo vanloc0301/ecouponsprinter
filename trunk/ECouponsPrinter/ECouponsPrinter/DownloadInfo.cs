@@ -516,6 +516,8 @@ namespace ECouponsPrinter
             Stream stream = request.GetResponse().GetResponseStream();
             byte[] bytes = new byte[2048];
             int i;
+            if (File.Exists(System.Windows.Forms.Application.StartupPath + "\\" + strType + "\\" + strImg))
+                File.Delete(System.Windows.Forms.Application.StartupPath + "\\" + strType + "\\" + strImg);
             FileStream fs = new FileStream(System.Windows.Forms.Application.StartupPath + "\\" + strType + "\\" + strImg, FileMode.CreateNew);
             while ((i = stream.Read(bytes, 0, 2048)) > 0)
             {
