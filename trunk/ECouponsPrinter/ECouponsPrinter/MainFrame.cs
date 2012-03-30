@@ -131,19 +131,31 @@ namespace ECouponsPrinter
 
         }
 
+        private bool jumpValue = true;       //防止过多的弹出提示"请先登录"的提示窗口
         private void MainFrame_MouseMove(object sender, MouseEventArgs e)
         {
-            if ((e.Location.X != mPos.X) || (e.Location.Y != mPos.Y))
+            if (jumpValue)
             {
-                if (GlobalVariables.isUserLogin)
+                if ((e.Location.X != mPos.X) || (e.Location.Y != mPos.Y))
                 {
-                    InitUserQuitTime();
+                    if (GlobalVariables.isUserLogin)
+                    {
+                        InitUserQuitTime();
+                    }
+                    else
+                    {
+                        MyMsgBox mb = new MyMsgBox();
+                        mb.ShowMsg("请您先刷卡！\n获取更多特权请致电：\n4001-868-968", 2);
+                    }
                 }
-                else
-                {
-                    MyMsgBox mb = new MyMsgBox();
-                    mb.ShowMsg("请您先刷卡！\n获取更多特权请致电：\n4001-868-968", 2);
-                }
+            }
+            if (jumpValue == true)
+            {
+                jumpValue = false;
+            }
+            else
+            {
+                jumpValue = true;
             }
 
             mPos = e.Location;
@@ -4141,11 +4153,6 @@ namespace ECouponsPrinter
             {
                 if (isFirstKey)
                 {
-                    IntPtr hWnd = FindWindow(null, "InfoBox");
-                    if (hWnd != IntPtr.Zero)
-                    {
-                        SendMessage(hWnd, WM_CLOSE, 0, 0);
-                    }
                     this.LoginText.Text = "";
                     if (msg.Msg == WM_KEYDOWN | msg.Msg == WM_SYSKEYDOWN)
                     {
