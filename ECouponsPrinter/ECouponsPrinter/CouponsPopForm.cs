@@ -159,7 +159,7 @@ namespace ECouponsPrinter
             }
             else
             {
-                pFileStream = new FileStream(path + "\\shop\\" + pi.pPath, FileMode.Open, FileAccess.Read);
+                FileStream pFileStream = new FileStream(path + "\\shop\\" + pi.pPath, FileMode.Open, FileAccess.Read);
                 this.PB_Couponpop.Image = new Bitmap(Image.FromStream(pFileStream), 150, 100);
                 pFileStream.Close();
                 pFileStream.Dispose();
@@ -316,7 +316,7 @@ namespace ECouponsPrinter
             g.DrawString("卡号：" + GlobalVariables.LoginUserId, new Font("黑体", 9), Brushes.Black, 5, 15);
             g.DrawString("打印时间：" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"), new Font("黑体", 9), Brushes.Black, 5, 30);
 
-            g.DrawImage(pi.image, new RectangleF(50, 50, 120, 90));
+            g.DrawImage(this.PB_Couponpop.Image, new RectangleF(50, 50, 120, 90));
             //g.DrawImage(,,,GraphicsUnit.Pixel);
 
             int line = 0, y = 150;
