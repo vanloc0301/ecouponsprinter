@@ -563,7 +563,14 @@ namespace ECouponsPrinter
             strSmallImg = xeShop.GetElementsByTagName("strSmallImg").Item(0).InnerText.Trim();
             strLargeImg = xeShop.GetElementsByTagName("strLargeImg").Item(0).InnerText.Trim();
             intType = xeShop.GetElementsByTagName("intType").Item(0).InnerText.Trim();
-            intSort = xeShop.GetElementsByTagName("intSort").Item(0).InnerText.Trim();
+            try
+            {
+                intSort = xeShop.GetElementsByTagName("intSort").Item(0).InnerText.Trim();
+            }
+            catch (Exception e)
+            {
+                intSort = "0";
+            }
         }
 
         private static void getCouponProps(XmlNode xnCoupon, out string strId, out string strName, out string dtActiveTime, out string dtExpireTime, out string strShopId,
