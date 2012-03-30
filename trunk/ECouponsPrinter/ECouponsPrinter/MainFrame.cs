@@ -1630,7 +1630,6 @@ namespace ECouponsPrinter
             OleDbDataReader reader;
             try
             {
-                cmd = new AccessCmd();
                 reader = cmd.ExecuteReader(strSql);
             }
             catch (Exception e0)
