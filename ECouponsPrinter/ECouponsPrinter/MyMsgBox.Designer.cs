@@ -52,6 +52,7 @@
             // 
             // confirm
             // 
+            this.confirm.BackColor = System.Drawing.Color.Black;
             this.confirm.Font = new System.Drawing.Font("宋体", 25F, System.Drawing.FontStyle.Bold);
             this.confirm.ForeColor = System.Drawing.Color.Red;
             this.confirm.Location = new System.Drawing.Point(48, 230);
@@ -59,7 +60,7 @@
             this.confirm.Size = new System.Drawing.Size(183, 65);
             this.confirm.TabIndex = 1;
             this.confirm.Text = "确 定";
-            this.confirm.UseVisualStyleBackColor = true;
+            this.confirm.UseVisualStyleBackColor = false;
             this.confirm.Click += new System.EventHandler(this.confirm_Click);
             // 
             // cancel

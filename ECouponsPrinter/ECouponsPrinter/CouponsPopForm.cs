@@ -159,7 +159,7 @@ namespace ECouponsPrinter
             }
             else
             {
-                FileStream pFileStream = new FileStream(path + "\\shop\\" + pi.pPath, FileMode.Open, FileAccess.Read);
+                FileStream pFileStream = new FileStream(pi.pPath, FileMode.Open, FileAccess.Read);
                 this.PB_Couponpop.Image = new Bitmap(Image.FromStream(pFileStream), 150, 100);
                 pFileStream.Close();
                 pFileStream.Dispose();
