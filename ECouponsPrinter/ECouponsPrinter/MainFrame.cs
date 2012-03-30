@@ -4141,7 +4141,7 @@ namespace ECouponsPrinter
             {
                 if (isFirstKey)
                 {
-                    hWnd = FindWindow(null, "Option");
+                    IntPtr hWnd = FindWindow(null, "InfoBox");
                     if (hWnd != IntPtr.Zero)
                     {
                         SendMessage(hWnd, WM_CLOSE, 0, 0);
@@ -4288,6 +4288,7 @@ namespace ECouponsPrinter
         #region 用户登录
         private bool UserLogin(string userid)
         {
+            this.CloseAllDialog();
             Ad_MouseUp(null, null);
 
             UploadInfo ui = new UploadInfo();
