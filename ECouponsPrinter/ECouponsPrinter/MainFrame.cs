@@ -473,7 +473,7 @@ namespace ECouponsPrinter
             switch (name)
             {
                 case "Button_NextDocument":
-                    pageAll = LP_ctype[0].Count / 6 + (LP_ctype[0].Count % 6 == 0 ? 0 : 1);
+                    pageAll = LP_ctype[0].Count / 3 + (LP_ctype[0].Count % 3 == 0 ? 0 : 1);
                     if (cPage1 < pageAll)
                     {
                         cPage1++;
@@ -481,7 +481,7 @@ namespace ECouponsPrinter
                     }
                     return;
                 case "Button_NextConsumption":
-                    pageAll = LP_ctype[1].Count / 6 + (LP_ctype[1].Count % 6 == 0 ? 0 : 1);
+                    pageAll = LP_ctype[1].Count / 3 + (LP_ctype[1].Count % 3 == 0 ? 0 : 1);
                     if (cPage2 < pageAll)
                     {
                         cPage2++;
@@ -1509,7 +1509,6 @@ namespace ECouponsPrinter
                 }
                 Thread.Sleep(1800 * 1000);
             }
-
         }
         #endregion
 
@@ -1614,7 +1613,7 @@ namespace ECouponsPrinter
         private void InitData()
         {
             //读取数据库
-            string strSql = "select * from t_bz_shop";
+            string strSql = "select * from t_bz_shop order by intType desc,intSort asc";
             AccessCmd cmd = new AccessCmd();
             OleDbDataReader reader;
             try
@@ -1673,11 +1672,6 @@ namespace ECouponsPrinter
                             {
                                 pi.spath = path + "\\shop\\null.jpg";
                             }
-
-                            pFileStream = new FileStream(pi.spath, FileMode.Open, FileAccess.Read);
-                            pi.image = new Bitmap(Image.FromStream(pFileStream), 119, 138);
-                            pFileStream.Close();
-                            pFileStream.Dispose();
                         }
                         else
                         {
@@ -1688,6 +1682,11 @@ namespace ECouponsPrinter
                     {
                         pi.spath = path + "\\shop\\null.jpg";
                     }
+                    pFileStream = new FileStream(pi.spath, FileMode.Open, FileAccess.Read);
+                    pi.image = new Bitmap(Image.FromStream(pFileStream), 119, 138);
+                    pFileStream.Close();
+                    pFileStream.Dispose();
+
 
                     if (!reader.IsDBNull(0))
                     {
@@ -2233,7 +2232,7 @@ namespace ECouponsPrinter
                     else
                     {
                         pFileStream = new FileStream(path + "\\shop\\" + lPath, FileMode.Open, FileAccess.Read);
-                    }                  
+                    }
                 }
                 else
                 {
@@ -2673,7 +2672,7 @@ namespace ECouponsPrinter
                 int y = this.VerticalScroll.Value;
                 this.Panel_ShopInfo.Location = new System.Drawing.Point(0, 95 - y);
 
-                InitShopInfoData(LP_stype[curNumType - 1][num + (tempPage[curNumType-1] - 1) * 12 - 1].id);
+                InitShopInfoData(LP_stype[curNumType - 1][num + (tempPage[curNumType - 1] - 1) * 12 - 1].id);
                 Thread.Sleep(20);
 
                 this.Panel_ShopInfo.Visible = true;
@@ -3397,10 +3396,10 @@ namespace ECouponsPrinter
                 String time = DateTime.Now.ToString("yyyy/M/d H:mm:ss");
                 string strSql;
                 //0表示首页的推荐优惠劵，是所有的；其他的表示优惠卷页面的推荐优惠劵，是前24个
-                if(type == 0)                    
-                    strSql = "select strId from t_bz_coupon where intRecommend=1 and intSort<>0 order by intSort asc";
+                if (type == 0)
+                    strSql = "select strId from t_bz_coupon where intRecommend=1 order by dtActiveTime desc";
                 else
-                    strSql = "select top 24 strId from t_bz_coupon where intRecommend=1 and intSort<>0 order by intSort asc";
+                    strSql = "select top 24 strId from t_bz_coupon where intRecommend=1 order by dtActiveTime desc";
                 AccessCmd cmd = new AccessCmd();
                 OleDbDataReader reader = cmd.ExecuteReader(strSql);
 
@@ -3447,7 +3446,7 @@ namespace ECouponsPrinter
                     type = 0;
                     if (LP_ctype[0].Count > 0)
                     {
-                        pi = LP_ctype[0][(curPage - 1) * 12 + theCouponNum];
+                        pi = LP_ctype[0][(curPage - 1) * 6 + theCouponNum];
                         id = pi.id;
                     }
                     break;
@@ -3455,7 +3454,7 @@ namespace ECouponsPrinter
                     type = 1;
                     if (LP_ctype[0].Count > 0)
                     {
-                        pi = LP_ctype[0][(curPage - 1) * 12 + theCouponNum];
+                        pi = LP_ctype[0][(curPage - 1) * 6 + theCouponNum];
                         id = pi.id;
                     }
                     break;
@@ -3479,7 +3478,7 @@ namespace ECouponsPrinter
                     type = 0;
                     if (LP_ctype[0].Count > 0)
                     {
-                        pi = LP_ctype[0][(curPage - 1) * 12 + theCouponNum];
+                        pi = LP_ctype[0][(curPage - 1) * 6 + theCouponNum];
                         id = pi.id;
                     }
                     break;
@@ -3487,7 +3486,7 @@ namespace ECouponsPrinter
                     type = 1;
                     if (LP_ctype[0].Count > 0)
                     {
-                        pi = LP_ctype[0][(curPage - 1) * 12 + theCouponNum];
+                        pi = LP_ctype[0][(curPage - 1) * 6 + theCouponNum];
                         id = pi.id;
                     }
                     break;
@@ -3495,7 +3494,7 @@ namespace ECouponsPrinter
                     type = 1;
                     if (LP_ctype[0].Count > 0)
                     {
-                        pi = LP_ctype[0][(curPage - 1) * 6 + theCouponNum];
+                        pi = LP_ctype[0][(curPage - 1) * 3 + theCouponNum];
                         id = pi.id;
                     }
                     break;
@@ -3503,7 +3502,7 @@ namespace ECouponsPrinter
                     type = 0;
                     if (LP_ctype[1].Count > 0)
                     {
-                        pi = LP_ctype[1][(curPage - 1) * 6 + theCouponNum];
+                        pi = LP_ctype[1][(curPage - 1) * 3 + theCouponNum];
                         id = pi.id;
                     }
                     break;
@@ -3511,7 +3510,7 @@ namespace ECouponsPrinter
                     type = 1;
                     if (LP_ctype[1].Count > 0)
                     {
-                        pi = LP_ctype[1][(curPage - 1) * 6 + theCouponNum];
+                        pi = LP_ctype[1][(curPage - 1) * 3 + theCouponNum];
                         id = pi.id;
                     }
                     break;
@@ -4138,66 +4137,74 @@ namespace ECouponsPrinter
             int WM_KEYDOWN = 256;
             int WM_SYSKEYDOWN = 260;
 
-            if (isFirstKey)
+            if (!GlobalVariables.isUserLogin)
             {
-                this.LoginText.Text = "";
-                if (msg.Msg == WM_KEYDOWN | msg.Msg == WM_SYSKEYDOWN)
+                if (isFirstKey)
                 {
-                    LoginText.Focus();
-                    isFirstKey = false;
+                    this.LoginText.Text = "";
+                    if (msg.Msg == WM_KEYDOWN | msg.Msg == WM_SYSKEYDOWN)
+                    {
+                        LoginText.Focus();
+                        isFirstKey = false;
+                    }
+                }
+                else
+                {
+                    if (keyData.Equals(Keys.Enter))
+                    {
+                        if (isOnLoad)
+                        {
+                            this.LoginText.Text = "";
+                            isFirstKey = true;
+                            return false;
+                        }
+
+                        this.Label_LoginWaitInfo.Visible = true;
+                        Label_LoginWaitInfo.Refresh();
+                        String cardtext = ""; ;
+                        int i = 0, j = 0;
+
+                        for (i = 0; i < LoginText.Text.Length; i++)
+                        {
+                            if (LoginText.Text[i] >= '0' && LoginText.Text[i] <= '9')
+                            {
+                                cardtext += LoginText.Text[i].ToString();
+                                j++;
+                            }
+                        }
+
+                        //if (cardtext == "3897")
+                        //{
+                        //    this.SCardTimer.Stop();
+                        //    this.SCardTimer.Enabled = false;
+                        //    LoginSuccessDispatch();
+                        //    GlobalVariables.isUserLogin = true;
+                        //    GlobalVariables.LoginUserId = cardtext;
+                        //    GlobalVariables.M = null;
+                        //}
+                        //else
+                        //{
+
+                        if (!UserLogin(cardtext))
+                        {
+                            isFirstKey = true;
+                        }
+                        else
+                        {
+                            this.SCardTimer.Stop();
+                            this.SCardTimer.Enabled = false;
+                            LoginSuccessDispatch();
+                        }
+                        //}
+
+                        this.Label_LoginWaitInfo.Visible = false;
+                    }
                 }
             }
             else
             {
-                if (keyData.Equals(Keys.Enter))
-                {
-                    if (isOnLoad)
-                    {
-                        this.LoginText.Text = "";
-                        isFirstKey = true;
-                        return false;
-                    }
-
-                    this.Label_LoginWaitInfo.Visible = true;
-                    Label_LoginWaitInfo.Refresh();
-                    String cardtext = ""; ;
-                    int i = 0, j = 0;
-
-                    for (i = 0; i < LoginText.Text.Length; i++)
-                    {
-                        if (LoginText.Text[i] >= '0' && LoginText.Text[i] <= '9')
-                        {
-                            cardtext += LoginText.Text[i].ToString();
-                            j++;
-                        }
-                    }
-
-                    //if (cardtext == "3897")
-                    //{
-                    //    this.SCardTimer.Stop();
-                    //    this.SCardTimer.Enabled = false;
-                    //    LoginSuccessDispatch();
-                    //    GlobalVariables.isUserLogin = true;
-                    //    GlobalVariables.LoginUserId = cardtext;
-                    //    GlobalVariables.M = null;
-                    //}
-                    //else
-                    //{
-
-                    if (!UserLogin(cardtext))
-                    {
-                        isFirstKey = true;
-                    }
-                    else
-                    {
-                        this.SCardTimer.Stop();
-                        this.SCardTimer.Enabled = false;
-                        LoginSuccessDispatch();
-                    }
-                    //}
-
-                    this.Label_LoginWaitInfo.Visible = false;
-                }
+                MyMsgBox mb = new MyMsgBox();
+                mb.ShowMsg("请您先退出！", 2);
             }
             return false;
         }
@@ -4276,6 +4283,8 @@ namespace ECouponsPrinter
         #region 用户登录
         private bool UserLogin(string userid)
         {
+            Ad_MouseUp(null, null);
+
             UploadInfo ui = new UploadInfo();
             Member m = ui.MemberAuth(userid);
             MyMsgBox mb = new MyMsgBox();
