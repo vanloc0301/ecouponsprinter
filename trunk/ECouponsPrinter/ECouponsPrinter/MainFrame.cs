@@ -4141,6 +4141,11 @@ namespace ECouponsPrinter
             {
                 if (isFirstKey)
                 {
+                    hWnd = FindWindow(null, "Option");
+                    if (hWnd != IntPtr.Zero)
+                    {
+                        SendMessage(hWnd, WM_CLOSE, 0, 0);
+                    }
                     this.LoginText.Text = "";
                     if (msg.Msg == WM_KEYDOWN | msg.Msg == WM_SYSKEYDOWN)
                     {
