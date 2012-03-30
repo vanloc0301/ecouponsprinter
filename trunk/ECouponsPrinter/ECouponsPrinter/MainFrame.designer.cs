@@ -2071,7 +2071,6 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(1041, 742);
-            this.Controls.Add(this.Panel_Top);
             this.Controls.Add(this.Panel_ShopInfo);
             this.Controls.Add(this.Panel_Home);
             this.Controls.Add(this.Panel_MyInfo);
@@ -2081,6 +2080,7 @@
             this.Controls.Add(this.Label_LoginWaitInfo);
             this.Controls.Add(this.Panel_NearShop);
             this.Controls.Add(this.Panel_Shop);
+            this.Controls.Add(this.Panel_Top);
             this.Controls.Add(this.Panel_Bottom);
             this.DoubleBuffered = true;
             this.Name = "MainFrame";
