@@ -53,6 +53,7 @@
             // confirm
             // 
             this.confirm.BackColor = System.Drawing.Color.Black;
+            this.confirm.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.confirm.Font = new System.Drawing.Font("宋体", 25F, System.Drawing.FontStyle.Bold);
             this.confirm.ForeColor = System.Drawing.Color.Red;
             this.confirm.Location = new System.Drawing.Point(48, 230);
@@ -65,6 +66,9 @@
             // 
             // cancel
             // 
+            this.cancel.BackColor = System.Drawing.Color.Black;
+            this.cancel.FlatAppearance.BorderSize = 0;
+            this.cancel.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.cancel.Font = new System.Drawing.Font("宋体", 25F, System.Drawing.FontStyle.Bold);
             this.cancel.ForeColor = System.Drawing.Color.Red;
             this.cancel.Location = new System.Drawing.Point(387, 230);
@@ -72,7 +76,7 @@
             this.cancel.Size = new System.Drawing.Size(183, 65);
             this.cancel.TabIndex = 1;
             this.cancel.Text = "取 消";
-            this.cancel.UseVisualStyleBackColor = true;
+            this.cancel.UseVisualStyleBackColor = false;
             this.cancel.Click += new System.EventHandler(this.cancel_Click);
             // 
             // MyMsgBox
@@ -86,7 +90,7 @@
             this.Controls.Add(this.confirm);
             this.Controls.Add(this.msg);
             this.Name = "MyMsgBox";
-            this.Text = "MyMsgBox";
+            this.Text = "InfoBox";
             this.ResumeLayout(false);
 
         }
