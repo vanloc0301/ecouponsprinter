@@ -135,7 +135,7 @@ namespace ECouponsPrinter
                         if (!reader.IsDBNull(8))
                         {
                             pFileStream = new FileStream(path + "\\shop\\" + reader.GetString(8), FileMode.Open, FileAccess.Read);
-                            
+
                         }
                         else
                         {
@@ -146,7 +146,6 @@ namespace ECouponsPrinter
                     {
                         pFileStream = new FileStream(path + "\\shop\\null.jpg", FileMode.Open, FileAccess.Read);
                     }
-
                     this.PB_Couponpop.Image = new Bitmap(Image.FromStream(pFileStream), 150, 100);
                     pFileStream.Close();
                     pFileStream.Dispose();
@@ -159,7 +158,12 @@ namespace ECouponsPrinter
                 }
             }
             else
-                this.PB_Couponpop.Image = new Bitmap(pi.image, 150, 100);
+            {
+                pFileStream = new FileStream(path + "\\shop\\" + pi.pPath, FileMode.Open, FileAccess.Read);
+                this.PB_Couponpop.Image = new Bitmap(Image.FromStream(pFileStream), 150, 100);
+                pFileStream.Close();
+                pFileStream.Dispose();
+            }
 
             strSql = "select * from t_bz_coupon where strId='" + pi.id + "'";
             reader = cmd.ExecuteReader(strSql);

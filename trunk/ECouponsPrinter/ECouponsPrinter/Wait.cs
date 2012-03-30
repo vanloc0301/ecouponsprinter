@@ -22,7 +22,7 @@ namespace ECouponsPrinter
         {
             if (currentPosition < prcBar.Maximum)
             {
-                if (currentPosition > 40)
+                if (currentPosition > 60)
                 {
                     if (this.Info.InvokeRequired)
                     {
@@ -52,9 +52,9 @@ namespace ECouponsPrinter
             else
             {
                 this.prcBar.Value = prcBar.Maximum;
-                Thread.Sleep(1000);
+                Thread.Sleep(500);
                 this.Info.Text = "操作成功！";
-                Thread.Sleep(1000);
+                Thread.Sleep(500);
                 this.Close();
             }
         }
