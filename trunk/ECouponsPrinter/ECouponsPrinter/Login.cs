@@ -70,6 +70,7 @@ namespace ECouponsPrinter
                     TickNum = GlobalVariables.MessageRegetTime;
                     this.Reget.Text = "重新获取(" + TickNum + ")";
                     this.CodeTimer.Start();
+                    this.code.Focus();
                 }
                 else
                 {

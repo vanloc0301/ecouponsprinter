@@ -87,6 +87,7 @@ namespace ECouponsPrinter
             this.Reget.Enabled = false;
             TickNum = 30;
             this.getCode.Start();
+            this.codeText.Focus();
         }
 
         private void Confirm_Click(object sender, EventArgs e)
