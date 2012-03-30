@@ -1815,7 +1815,7 @@ namespace ECouponsPrinter
                         pi.spath = path + "\\coupon\\null.jpg";
                     }
                     pFileStream = new FileStream(pi.spath, FileMode.Open, FileAccess.Read);
-                    pi.image = new Bitmap(Image.FromStream(pFileStream), 119, 124);
+                    pi.image = new Bitmap(Image.FromStream(pFileStream), 240, 120);
                     pFileStream.Close();
                     pFileStream.Dispose();
 
@@ -2085,7 +2085,7 @@ namespace ECouponsPrinter
 
             try
             {
-                pFileStream = new FileStream(LP_ctype[0][num - 1 + (curPage - 1) * 12].lpath, FileMode.Open, FileAccess.Read);
+                pFileStream = new FileStream(LP_ctype[0][num - 1 + (curPage - 1) * 6].lpath, FileMode.Open, FileAccess.Read);
                 PB_Home_Down.Image = new Bitmap(Image.FromStream(pFileStream), 761, 389);
                 pFileStream.Close();
                 pFileStream.Dispose();
@@ -2120,7 +2120,7 @@ namespace ECouponsPrinter
             //{
             controlName = "PB_Home_Bottom";
             container = Panel_Home;
-            perNum = 12;
+            perNum = 6;
             LP_temp = LP_ctype[0];
             //}
 
@@ -2166,7 +2166,7 @@ namespace ECouponsPrinter
             {
                 //if (container == Panel_Home)
                 //{
-                FileStream pFileStream = new FileStream(LP_temp[(curPage - 1) * 12].lpath, FileMode.Open, FileAccess.Read);
+                FileStream pFileStream = new FileStream(LP_temp[(curPage - 1) * 6].lpath, FileMode.Open, FileAccess.Read);
                 PB_Home_Down.Image = new Bitmap(Image.FromStream(pFileStream), 761, 389);
                 pFileStream.Close();
                 pFileStream.Dispose();
@@ -2752,7 +2752,7 @@ namespace ECouponsPrinter
         {
             String controlName = "PB_Coupon_";        //显示小优惠劵的控件的Name
             Panel container = Panel_Coupons;         //现在正在操作的Panel容器的对象
-            int perNum = 12;                        //每页显示小优惠劵的控件的数量
+            int perNum = 6;                        //每页显示小优惠劵的控件的数量
             List<CouponPicInfo> lp = LP_ctype[0];
             FileStream pFileStream;
 
@@ -2776,7 +2776,7 @@ namespace ECouponsPrinter
 
             if (lp.Count != 0)
             {
-                pFileStream = new FileStream(lp[(curPage - 1) * 12].lpath, FileMode.Open, FileAccess.Read);
+                pFileStream = new FileStream(lp[(curPage - 1) * 6].lpath, FileMode.Open, FileAccess.Read);
                 PB_Coupon_Top.Image = new Bitmap(Image.FromStream(pFileStream), 760, 433);
                 pFileStream.Close();
                 pFileStream.Dispose();
@@ -2815,7 +2815,7 @@ namespace ECouponsPrinter
                 PictureBox temp = null;
                 if ((temp = (PictureBox)GetControl(name, container)) != null)
                 {
-                    temp.Image = new Bitmap(lp[i + perNum * (curPage - 1)].image, 138, 150);
+                    temp.Image = new Bitmap(lp[i + perNum * (curPage - 1)].image, 265, 150);
                 }
             }
         }
@@ -2847,7 +2847,7 @@ namespace ECouponsPrinter
                 PB_Coupon_Top.Image.Dispose();
             }
 
-            FileStream pFileStream = new FileStream(LP_ctype[curType][(curPage - 1) * 12 + num - 1].lpath, FileMode.Open, FileAccess.Read);
+            FileStream pFileStream = new FileStream(LP_ctype[curType][(curPage - 1) * 6 + num - 1].lpath, FileMode.Open, FileAccess.Read);
             PB_Coupon_Top.Image = new Bitmap(Image.FromStream(pFileStream), 760, 433);
             pFileStream.Close();
             pFileStream.Dispose();
@@ -2914,7 +2914,7 @@ namespace ECouponsPrinter
         {
             String controlName = "";        //显示小优惠劵的控件的Name
             Panel container = Panel_MyInfo;         //现在正在操作的Panel容器的对象
-            int perNum = 6;                 //每页显示小优惠劵的控件的数量
+            int perNum = 3;                 //每页显示小优惠劵的控件的数量
             List<CouponPicInfo> lp = null;
             FileStream pFileStream;
 
@@ -2925,7 +2925,7 @@ namespace ECouponsPrinter
                 curPage = cPage1;
                 if (lp.Count != 0)
                 {
-                    pFileStream = new FileStream(lp[(curPage - 1) * 6].lpath, FileMode.Open, FileAccess.Read);
+                    pFileStream = new FileStream(lp[(curPage - 1) * 3].lpath, FileMode.Open, FileAccess.Read);
                     PB_MyInfo_Fav.Image = new Bitmap(Image.FromStream(pFileStream), 734, 366);
                     pFileStream.Close();
                     pFileStream.Dispose();
@@ -2944,7 +2944,7 @@ namespace ECouponsPrinter
                 curPage = cPage2;
                 if (lp.Count != 0)
                 {
-                    pFileStream = new FileStream(lp[(curPage - 1) * 6].lpath, FileMode.Open, FileAccess.Read);
+                    pFileStream = new FileStream(lp[(curPage - 1) * 3].lpath, FileMode.Open, FileAccess.Read);
                     PB_MyInfo_His.Image = new Bitmap(Image.FromStream(pFileStream), 734, 366);
                     pFileStream.Close();
                     pFileStream.Dispose();
@@ -3022,7 +3022,7 @@ namespace ECouponsPrinter
 
             if (type == "Fav")
             {
-                FileStream pFileStream = new FileStream(LP_ctype[0][num - 1 + (cPage1 - 1) * 6].lpath, FileMode.Open, FileAccess.Read);
+                FileStream pFileStream = new FileStream(LP_ctype[0][num - 1 + (cPage1 - 1) * 3].lpath, FileMode.Open, FileAccess.Read);
                 PB_MyInfo_Fav.Image = new Bitmap(Image.FromStream(pFileStream), 734, 366);
                 pFileStream.Close();
                 pFileStream.Dispose();
@@ -3030,7 +3030,7 @@ namespace ECouponsPrinter
             }
             else
             {
-                FileStream pFileStream = new FileStream(LP_ctype[1][num - 1 + (cPage2 - 1) * 6].lpath, FileMode.Open, FileAccess.Read);
+                FileStream pFileStream = new FileStream(LP_ctype[1][num - 1 + (cPage2 - 1) * 3].lpath, FileMode.Open, FileAccess.Read);
                 PB_MyInfo_His.Image = new Bitmap(Image.FromStream(pFileStream), 734, 366);
                 pFileStream.Close();
                 pFileStream.Dispose();
