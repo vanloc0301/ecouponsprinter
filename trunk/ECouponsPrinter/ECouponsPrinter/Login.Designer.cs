@@ -101,7 +101,7 @@
             // 
             this.confirm.Font = new System.Drawing.Font("宋体", 25F, System.Drawing.FontStyle.Bold);
             this.confirm.ForeColor = System.Drawing.Color.Black;
-            this.confirm.Location = new System.Drawing.Point(40, 377);
+            this.confirm.Location = new System.Drawing.Point(40, 408);
             this.confirm.Name = "confirm";
             this.confirm.Size = new System.Drawing.Size(219, 69);
             this.confirm.TabIndex = 4;
@@ -113,7 +113,7 @@
             // 
             this.cancel.Font = new System.Drawing.Font("宋体", 25F, System.Drawing.FontStyle.Bold);
             this.cancel.ForeColor = System.Drawing.Color.Black;
-            this.cancel.Location = new System.Drawing.Point(408, 377);
+            this.cancel.Location = new System.Drawing.Point(408, 408);
             this.cancel.Name = "cancel";
             this.cancel.Size = new System.Drawing.Size(219, 69);
             this.cancel.TabIndex = 4;
@@ -144,9 +144,9 @@
             this.info.BackColor = System.Drawing.Color.Transparent;
             this.info.Font = new System.Drawing.Font("宋体", 20F, System.Drawing.FontStyle.Bold);
             this.info.ForeColor = System.Drawing.Color.Red;
-            this.info.Location = new System.Drawing.Point(35, 321);
+            this.info.Location = new System.Drawing.Point(35, 318);
             this.info.Name = "info";
-            this.info.Size = new System.Drawing.Size(402, 39);
+            this.info.Size = new System.Drawing.Size(640, 75);
             this.info.TabIndex = 6;
             // 
             // import
@@ -180,7 +180,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
-            this.ClientSize = new System.Drawing.Size(727, 471);
+            this.ClientSize = new System.Drawing.Size(727, 489);
             this.ControlBox = false;
             this.Controls.Add(this.label4);
             this.Controls.Add(this.import);
