@@ -121,8 +121,7 @@ namespace ECouponsPrinter
             }
             else
             {
-                info.Text = "通讯错误";
-                this.Close();
+                info.Text = "您的手机号码可能已被绑定或出现通讯错误，请稍后重试或取消退出！";
             }
         }
 
