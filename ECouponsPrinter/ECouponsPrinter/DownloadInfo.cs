@@ -295,17 +295,21 @@ namespace ECouponsPrinter
 
         private bool deleteCoupon(XmlNode xnCoupon)
         {
-            String strId, strSmallImg = "", strLargeImg = "";
+            String strId, strSmallImg = "", strLargeImg = "", strPrintImg = "";
             XmlElement xeCoupon = (XmlElement)xnCoupon;
             strId = xeCoupon.GetElementsByTagName("strId").Item(0).InnerText.Trim();
             //查询文件
-            string strSql = "select strSmallImg,strLargeImg from t_bz_coupon where strId='" + strId + "'";
+            string strSql = "select strSmallImg,strLargeImg,strPrintImg from t_bz_coupon where strId='" + strId + "'";
             AccessCmd cmd = new AccessCmd();
             OleDbDataReader reader = cmd.ExecuteReader(strSql);
             if (reader.Read())
             {
-                strSmallImg = reader.GetString(0);
-                strLargeImg = reader.GetString(1);
+                if (!reader.IsDBNull(0))
+                    strSmallImg = reader.GetString(0);
+                if (!reader.IsDBNull(1))
+                    strLargeImg = reader.GetString(1);
+                if (!reader.IsDBNull(2))
+                    strPrintImg = reader.GetString(2);
             }
             reader.Close();
             //删除原文件
@@ -316,6 +320,10 @@ namespace ECouponsPrinter
             if (!strLargeImg.Equals(""))
             {
                 File.Delete(System.Windows.Forms.Application.StartupPath + "\\coupon\\" + strLargeImg);
+            }
+            if (!strPrintImg.Equals(""))
+            {
+                File.Delete(System.Windows.Forms.Application.StartupPath + "\\coupon\\" + strPrintImg);
             }
             //写入数据库
             strSql = "delete from t_bz_coupon where strId='" + strId + "'";
@@ -337,9 +345,12 @@ namespace ECouponsPrinter
             OleDbDataReader reader = cmd.ExecuteReader(strSql);
             if (reader.Read())
             {
-                strSmallImgOld = reader.GetString(0);
-                strLargeImgOld = reader.GetString(1);
-                strPrintImgOld = reader.GetString(2);
+                if (!reader.IsDBNull(0))
+                    strSmallImgOld = reader.GetString(0);
+                if (!reader.IsDBNull(1))
+                    strLargeImgOld = reader.GetString(1);
+                if (!reader.IsDBNull(2))
+                    strPrintImgOld = reader.GetString(2);
             }
             reader.Close();
             //文件操作
@@ -522,7 +533,8 @@ namespace ECouponsPrinter
 
         private static bool createImg(String strType, String strImg)
         {
-            ;
+            if (strImg == null || strImg.Equals("null"))    //如果null，直接返回
+                return true;
             WebRequest request = HttpWebRequest.Create(GlobalVariables.StrServerUrl + "/servlet/FileDownload?strFileType=" + strType + "&strFileName=" + strImg);
             Stream stream = request.GetResponse().GetResponseStream();
             byte[] bytes = new byte[2048];
@@ -548,6 +560,9 @@ namespace ECouponsPrinter
                 }
                 catch (Exception e)
                 {
+                    StreamWriter sw = File.AppendText(System.Windows.Forms.Application.StartupPath + "\\error.log");
+                    sw.WriteLine("[File]" + strType+"  "+strImg);
+                    sw.Close();
                     ErrorLog.log(e);
                     return false;
                 }
