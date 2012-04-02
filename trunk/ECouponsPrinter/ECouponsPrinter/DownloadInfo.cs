@@ -581,11 +581,11 @@ namespace ECouponsPrinter
         {
             XmlElement xeShop = (XmlElement)xnShop;
             strId = xeShop.GetElementsByTagName("strId").Item(0).InnerText.Trim();
-            strBizName = xeShop.GetElementsByTagName("strBizName").Item(0).InnerText.Trim();
-            strShopName = xeShop.GetElementsByTagName("strShopName").Item(0).InnerText.Trim();
-            strTrade = xeShop.GetElementsByTagName("strTrade").Item(0).InnerText.Trim();
-            strAddr = xeShop.GetElementsByTagName("strAddr").Item(0).InnerText.Trim();
-            strIntro = xeShop.GetElementsByTagName("strIntro").Item(0).InnerText.Trim();
+            strBizName = xeShop.GetElementsByTagName("strBizName").Item(0).InnerText.Trim().Replace("'","''");
+            strShopName = xeShop.GetElementsByTagName("strShopName").Item(0).InnerText.Trim().Replace("'", "''");
+            strTrade = xeShop.GetElementsByTagName("strTrade").Item(0).InnerText.Trim().Replace("'", "''");
+            strAddr = xeShop.GetElementsByTagName("strAddr").Item(0).InnerText.Trim().Replace("'", "''");
+            strIntro = xeShop.GetElementsByTagName("strIntro").Item(0).InnerText.Trim().Replace("'", "''");
             strSmallImg = xeShop.GetElementsByTagName("strSmallImg").Item(0).InnerText.Trim();
             strLargeImg = xeShop.GetElementsByTagName("strLargeImg").Item(0).InnerText.Trim();
             intType = xeShop.GetElementsByTagName("intType").Item(0).InnerText.Trim();
@@ -604,7 +604,7 @@ namespace ECouponsPrinter
         {
             XmlElement xeCoupon = (XmlElement)xnCoupon;
             strId = xeCoupon.GetElementsByTagName("strId").Item(0).InnerText.Trim();
-            strName = xeCoupon.GetElementsByTagName("strName").Item(0).InnerText.Trim();
+            strName = xeCoupon.GetElementsByTagName("strName").Item(0).InnerText.Trim().Replace("'", "''");
             dtActiveTime = xeCoupon.GetElementsByTagName("dtActiveTime").Item(0).InnerText.Trim();
             dtExpireTime = xeCoupon.GetElementsByTagName("dtExpireTime").Item(0).InnerText.Trim();
             strShopId = xeCoupon.GetElementsByTagName("strShopId").Item(0).InnerText.Trim();
@@ -614,17 +614,17 @@ namespace ECouponsPrinter
             strSmallImg = xeCoupon.GetElementsByTagName("strSmallImg").Item(0).InnerText.Trim();
             strLargeImg = xeCoupon.GetElementsByTagName("strLargeImg").Item(0).InnerText.Trim();
             strPrintImg = xeCoupon.GetElementsByTagName("strPrintImg").Item(0).InnerText.Trim();
-            strIntro = xeCoupon.GetElementsByTagName("strIntro").Item(0).InnerText.Trim();
-            strInstruction = xeCoupon.GetElementsByTagName("strInstruction").Item(0).InnerText.Trim();
+            strIntro = xeCoupon.GetElementsByTagName("strIntro").Item(0).InnerText.Trim().Replace("'", "''");
+            strInstruction = xeCoupon.GetElementsByTagName("strInstruction").Item(0).InnerText.Trim().Replace("'", "''");
         }
 
         private void getAdProps(XmlNode xn, out string strId, out string strName, out int intType, out string strContent, out string dtStartTime, out string dtEndTime)
         {
             XmlElement xe = (XmlElement)xn;
             strId = xe.GetElementsByTagName("strId").Item(0).InnerText.Trim();
-            strName = xe.GetElementsByTagName("strName").Item(0).InnerText.Trim();
+            strName = xe.GetElementsByTagName("strName").Item(0).InnerText.Trim().Replace("'", "''");
             intType = Int32.Parse(xe.GetElementsByTagName("intType").Item(0).InnerText.Trim());
-            strContent = xe.GetElementsByTagName("strContent").Item(0).InnerText.Trim();
+            strContent = xe.GetElementsByTagName("strContent").Item(0).InnerText.Trim().Replace("'", "''");
             dtStartTime = xe.GetElementsByTagName("dtStartTime").Item(0).InnerText.Trim();
             dtEndTime = xe.GetElementsByTagName("dtEndTime").Item(0).InnerText.Trim();
         }
