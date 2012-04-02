@@ -2547,98 +2547,105 @@ namespace ECouponsPrinter
             int perNum = 12;                 //每页显示小优惠劵的控件的数量
             List<PicInfo> lp = null;
 
-            if (type == 1)
+            try
             {
-                controlName = "PB_Shop_type1_";
-                if (LP_stype.Length >= 1)
+                if (type == 1)
                 {
-                    if (LP_stype[0] != null && LP_stype[0].Count > 0)
+                    controlName = "PB_Shop_type1_";
+                    if (LP_stype.Length >= 1)
                     {
-                        lp = LP_stype[0];
+                        if (LP_stype[0] != null && LP_stype[0].Count > 0)
+                        {
+                            lp = LP_stype[0];
+                        }
                     }
+                    curPage = tPage1;
                 }
-                curPage = tPage1;
-            }
-            else if (type == 2)
-            {
-                controlName = "PB_Shop_type2_";
-                if (LP_stype.Length >= 2)
+                else if (type == 2)
                 {
-                    if (LP_stype[1] != null && LP_stype[1].Count > 0)
+                    controlName = "PB_Shop_type2_";
+                    if (LP_stype.Length >= 2)
                     {
-                        lp = LP_stype[1];
+                        if (LP_stype[1] != null && LP_stype[1].Count > 0)
+                        {
+                            lp = LP_stype[1];
+                        }
                     }
-                }
-                curPage = tPage2;
-            }
-            else
-            {
-                controlName = "PB_Shop_type3_";
-                if (LP_stype.Length >= 3)
-                {
-                    if (LP_stype[2] != null && LP_stype[2].Count > 0)
-                    {
-                        lp = LP_stype[2];
-                    }
-                }
-                curPage = tPage3;
-            }
-
-            if (lp == null)
-            {
-                count = 0;
-                lp = new List<PicInfo>();
-            }
-            else
-                count = lp.Count;
-
-            totalPage = count / perNum + (count % perNum == 0 ? 0 : 1);
-            //    MessageBox.Show(totalPage.ToString());
-            if (count != 0)
-            {
-                if (curPage == totalPage)
-                {
-                    curPageShowCount = (count % perNum == 0) ? perNum : count % perNum;
+                    curPage = tPage2;
                 }
                 else
-                    curPageShowCount = perNum;
-            }
-            else
-            {
-                curPageShowCount = 0;
-            }
+                {
+                    controlName = "PB_Shop_type3_";
+                    if (LP_stype.Length >= 3)
+                    {
+                        if (LP_stype[2] != null && LP_stype[2].Count > 0)
+                        {
+                            lp = LP_stype[2];
+                        }
+                    }
+                    curPage = tPage3;
+                }
 
-            if (curPageShowCount >= 0)
-                for (int i = 0; i < perNum; i++)
+                if (lp == null)
+                {
+                    count = 0;
+                    lp = new List<PicInfo>();
+                }
+                else
+                    count = lp.Count;
+
+                totalPage = count / perNum + (count % perNum == 0 ? 0 : 1);
+                //    MessageBox.Show(totalPage.ToString());
+                if (count != 0)
+                {
+                    if (curPage == totalPage)
+                    {
+                        curPageShowCount = (count % perNum == 0) ? perNum : count % perNum;
+                    }
+                    else
+                        curPageShowCount = perNum;
+                }
+                else
+                {
+                    curPageShowCount = 0;
+                }
+
+                if (curPageShowCount >= 0)
+                    for (int i = 0; i < perNum; i++)
+                    {
+                        String name = controlName + (i + 1);
+                        PictureBox temp = null;
+
+                        if ((temp = (PictureBox)GetControl(name, container)) != null)
+                        {
+                            if ((i) < (curPageShowCount))
+                            {
+                                if (temp.Visible.CompareTo(true) != 0)
+                                    temp.Visible = true;
+                            }
+                            else
+                            {
+                                //     MessageBox.Show(temp.Visible.ToString());
+
+                                if (temp.Visible.CompareTo(false) != 0)
+                                    temp.Visible = false;
+                            }
+                        }
+                    }
+
+                for (int i = 0; i < curPageShowCount; i++)
                 {
                     String name = controlName + (i + 1);
                     PictureBox temp = null;
-
                     if ((temp = (PictureBox)GetControl(name, container)) != null)
                     {
-                        if ((i) < (curPageShowCount))
-                        {
-                            if (temp.Visible.CompareTo(true) != 0)
-                                temp.Visible = true;
-                        }
-                        else
-                        {
-                            //     MessageBox.Show(temp.Visible.ToString());
-
-                            if (temp.Visible.CompareTo(false) != 0)
-                                temp.Visible = false;
-                        }
+                        temp.Image = lp[i + perNum * (curPage - 1)].image;
                     }
                 }
-
-            for (int i = 0; i < curPageShowCount; i++)
+            }
+            catch (Exception e)
             {
-                String name = controlName + (i + 1);
-                PictureBox temp = null;
-                if ((temp = (PictureBox)GetControl(name, container)) != null)
-                {
-                    temp.Image = lp[i + perNum * (curPage - 1)].image;
-                }
+                ErrorLog.log(e);
             }
         }
 
