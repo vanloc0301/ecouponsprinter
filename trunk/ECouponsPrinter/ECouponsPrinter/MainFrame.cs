@@ -738,7 +738,6 @@ namespace ECouponsPrinter
         {
             ResumePanelBottomState();
             this.Button_HomePage.BackgroundImage = Image.FromFile(path + "\\images\\Frame\\首页-js.jpg");
-
             //准备工作
             this.UnVisibleAllPanels();
 
