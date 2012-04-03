@@ -29,7 +29,7 @@ namespace ECouponsPrinter
             }
             catch (Exception ep)
             {
-                ErrorLog.log(ep);
+                ErrorLog.log(ep,strSql);
                 this.Close();
             }
             return objReader;
@@ -45,7 +45,7 @@ namespace ECouponsPrinter
             }
             catch (Exception ep)
             {
-                ErrorLog.log(ep);
+                ErrorLog.log(ep,strSql);
                 this.Close();
                 return false;
             }
