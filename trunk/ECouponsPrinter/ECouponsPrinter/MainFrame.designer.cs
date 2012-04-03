@@ -31,6 +31,7 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainFrame));
             this.Panel_Top = new System.Windows.Forms.Panel();
+            this.Label_ScrollText = new Marquee.UserControl1(this.components);
             this.LoginText = new System.Windows.Forms.TextBox();
             this.Label_Option = new System.Windows.Forms.Label();
             this.Label_Countdown = new System.Windows.Forms.Label();
@@ -182,7 +183,6 @@
             this.Label_Black_Info = new System.Windows.Forms.Label();
             this.Label_LoginWaitInfo = new System.Windows.Forms.Label();
             this.Label_DownloadWaitObject = new System.Windows.Forms.Label();
-            this.Label_ScrollText = new Marquee.UserControl1(this.components);
             this.Panel_Top.SuspendLayout();
             this.Panel_Bottom.SuspendLayout();
             this.Panel_Home.SuspendLayout();
@@ -303,6 +303,22 @@
             this.Panel_Top.Size = new System.Drawing.Size(768, 101);
             this.Panel_Top.TabIndex = 0;
             // 
+            // Label_ScrollText
+            // 
+            this.Label_ScrollText.BackColor = System.Drawing.Color.Transparent;
+            this.Label_ScrollText.Direction = Marquee.UserControl1.EnumDirection.Left;
+            this.Label_ScrollText.Font = new System.Drawing.Font("宋体", 30F, System.Drawing.FontStyle.Bold);
+            this.Label_ScrollText.ForeColor = System.Drawing.Color.Red;
+            this.Label_ScrollText.Location = new System.Drawing.Point(24, 12);
+            this.Label_ScrollText.Margin = new System.Windows.Forms.Padding(0);
+            this.Label_ScrollText.Name = "Label_ScrollText";
+            this.Label_ScrollText.Padding = new System.Windows.Forms.Padding(0, 15, 0, 0);
+            this.Label_ScrollText.scrollamount = 2;
+            this.Label_ScrollText.scrolldelay = 20;
+            this.Label_ScrollText.Size = new System.Drawing.Size(510, 73);
+            this.Label_ScrollText.strContent = "";
+            this.Label_ScrollText.TabIndex = 18;
+            // 
             // LoginText
             // 
             this.LoginText.BorderStyle = System.Windows.Forms.BorderStyle.None;
@@ -377,7 +393,7 @@
             this.Button_NextCouponsPage.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.Button_NextCouponsPage.FlatAppearance.BorderSize = 0;
             this.Button_NextCouponsPage.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Button_NextCouponsPage.Location = new System.Drawing.Point(635, 3);
+            this.Button_NextCouponsPage.Location = new System.Drawing.Point(635, 2);
             this.Button_NextCouponsPage.Margin = new System.Windows.Forms.Padding(0);
             this.Button_NextCouponsPage.Name = "Button_NextCouponsPage";
             this.Button_NextCouponsPage.RightToLeft = System.Windows.Forms.RightToLeft.No;
@@ -2049,30 +2065,15 @@
             this.Label_DownloadWaitObject.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.Label_DownloadWaitObject.Visible = false;
             // 
-            // Label_ScrollText
-            // 
-            this.Label_ScrollText.BackColor = System.Drawing.Color.Transparent;
-            this.Label_ScrollText.Direction = Marquee.UserControl1.EnumDirection.Left;
-            this.Label_ScrollText.Font = new System.Drawing.Font("宋体", 30F, System.Drawing.FontStyle.Bold);
-            this.Label_ScrollText.ForeColor = System.Drawing.Color.Red;
-            this.Label_ScrollText.Location = new System.Drawing.Point(24, 12);
-            this.Label_ScrollText.Margin = new System.Windows.Forms.Padding(0);
-            this.Label_ScrollText.Name = "Label_ScrollText";
-            this.Label_ScrollText.Padding = new System.Windows.Forms.Padding(0, 15, 0, 0);
-            this.Label_ScrollText.scrollamount = 2;
-            this.Label_ScrollText.scrolldelay = 20;
-            this.Label_ScrollText.Size = new System.Drawing.Size(510, 73);
-            this.Label_ScrollText.strContent = "";
-            this.Label_ScrollText.TabIndex = 18;
-            // 
             // MainFrame
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(1041, 742);
-            this.Controls.Add(this.Panel_ShopInfo);
+            this.Controls.Add(this.Panel_Bottom);
             this.Controls.Add(this.Panel_Home);
+            this.Controls.Add(this.Panel_ShopInfo);
             this.Controls.Add(this.Panel_MyInfo);
             this.Controls.Add(this.Panel_Coupons);
             this.Controls.Add(this.Panel_Ad);
@@ -2081,7 +2082,6 @@
             this.Controls.Add(this.Panel_NearShop);
             this.Controls.Add(this.Panel_Shop);
             this.Controls.Add(this.Panel_Top);
-            this.Controls.Add(this.Panel_Bottom);
             this.DoubleBuffered = true;
             this.Name = "MainFrame";
             this.Text = "MainFrame";
