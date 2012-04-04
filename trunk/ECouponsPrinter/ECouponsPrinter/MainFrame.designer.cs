@@ -546,7 +546,7 @@
             // 
             this.Home_Fav.Font = new System.Drawing.Font("宋体", 20F, System.Drawing.FontStyle.Bold);
             this.Home_Fav.Image = ((System.Drawing.Image)(resources.GetObject("Home_Fav.Image")));
-            this.Home_Fav.Location = new System.Drawing.Point(559, 846);
+            this.Home_Fav.Location = new System.Drawing.Point(550, 842);
             this.Home_Fav.Name = "Home_Fav";
             this.Home_Fav.Size = new System.Drawing.Size(100, 55);
             this.Home_Fav.TabIndex = 34;
@@ -556,7 +556,7 @@
             // 
             this.Home_Print.Font = new System.Drawing.Font("宋体", 20F, System.Drawing.FontStyle.Bold);
             this.Home_Print.Image = ((System.Drawing.Image)(resources.GetObject("Home_Print.Image")));
-            this.Home_Print.Location = new System.Drawing.Point(663, 846);
+            this.Home_Print.Location = new System.Drawing.Point(657, 842);
             this.Home_Print.Name = "Home_Print";
             this.Home_Print.Size = new System.Drawing.Size(100, 55);
             this.Home_Print.TabIndex = 34;
@@ -626,7 +626,7 @@
             // 
             this.PB_Home_Down.Location = new System.Drawing.Point(4, 511);
             this.PB_Home_Down.Name = "PB_Home_Down";
-            this.PB_Home_Down.Size = new System.Drawing.Size(761, 389);
+            this.PB_Home_Down.Size = new System.Drawing.Size(760, 389);
             this.PB_Home_Down.TabIndex = 12;
             this.PB_Home_Down.TabStop = false;
             // 
@@ -2071,17 +2071,17 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(1041, 742);
-            this.Controls.Add(this.Panel_Bottom);
             this.Controls.Add(this.Panel_Home);
+            this.Controls.Add(this.Panel_Coupons);
             this.Controls.Add(this.Panel_ShopInfo);
             this.Controls.Add(this.Panel_MyInfo);
-            this.Controls.Add(this.Panel_Coupons);
             this.Controls.Add(this.Panel_Ad);
             this.Controls.Add(this.Label_DownloadWaitObject);
             this.Controls.Add(this.Label_LoginWaitInfo);
             this.Controls.Add(this.Panel_NearShop);
             this.Controls.Add(this.Panel_Shop);
             this.Controls.Add(this.Panel_Top);
+            this.Controls.Add(this.Panel_Bottom);
             this.DoubleBuffered = true;
             this.Name = "MainFrame";
             this.Text = "MainFrame";

@@ -289,13 +289,19 @@ namespace ECouponsPrinter
 
         private bool IsUnicode(char word)
         {
+            //if ((word >= 0x4e00) && (word <= 0x9fbb))
+            //    return true;
+            //else if ((word >= 0xff00) && (word <= 0xffef))
+            //    return true;
+            //else if ((word >= 0x3000) && (word <= 0x303f))
+            //    return true;
+            //else
+            //    return false;
 
-            if ((word >= 0x4e00) && (word <= 0x9fbb))
-                return true;
-            else if ((word >= 0xff00) && (word <= 0xffef))
-                return true;
-            else
+            if ((word >= 0x00) && (word <= 0x7f))
                 return false;
+            else
+                return true;
         }
 
         private void pd_PrintPage(Object sender, PrintPageEventArgs e)
