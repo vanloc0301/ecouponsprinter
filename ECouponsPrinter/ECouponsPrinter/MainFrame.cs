@@ -2768,7 +2768,7 @@ namespace ECouponsPrinter
         {
             String controlName = "PB_Coupon_";        //显示小优惠劵的控件的Name
             Panel container = Panel_Coupons;         //现在正在操作的Panel容器的对象
-            int perNum = 6;                        //每页显示小优惠劵的控件的数量
+            int perNum = 9;                        //每页显示小优惠劵的控件的数量
             List<CouponPicInfo> lp = LP_ctype[0];
             FileStream pFileStream;
 
@@ -2792,7 +2792,7 @@ namespace ECouponsPrinter
 
             if (lp.Count != 0)
             {
-                pFileStream = new FileStream(lp[(curPage - 1) * 6].lpath, FileMode.Open, FileAccess.Read);
+                pFileStream = new FileStream(lp[(curPage - 1) * perNum].lpath, FileMode.Open, FileAccess.Read);
                 PB_Coupon_Top.Image = new Bitmap(Image.FromStream(pFileStream), 760, 433);
                 pFileStream.Close();
                 pFileStream.Dispose();
@@ -2863,7 +2863,7 @@ namespace ECouponsPrinter
                 PB_Coupon_Top.Image.Dispose();
             }
 
-            FileStream pFileStream = new FileStream(LP_ctype[curType][(curPage - 1) * 6 + num - 1].lpath, FileMode.Open, FileAccess.Read);
+            FileStream pFileStream = new FileStream(LP_ctype[curType][(curPage - 1) * 9 + num - 1].lpath, FileMode.Open, FileAccess.Read);
             PB_Coupon_Top.Image = new Bitmap(Image.FromStream(pFileStream), 760, 433);
             pFileStream.Close();
             pFileStream.Dispose();
@@ -3495,7 +3495,7 @@ namespace ECouponsPrinter
                     type = 0;
                     if (LP_ctype[0].Count > 0)
                     {
-                        pi = LP_ctype[0][(curPage - 1) * 6 + theCouponNum];
+                        pi = LP_ctype[0][(curPage - 1) * 9 + theCouponNum];
                         id = pi.id;
                     }
                     break;
@@ -3503,7 +3503,7 @@ namespace ECouponsPrinter
                     type = 1;
                     if (LP_ctype[0].Count > 0)
                     {
-                        pi = LP_ctype[0][(curPage - 1) * 6 + theCouponNum];
+                        pi = LP_ctype[0][(curPage - 1) * 9 + theCouponNum];
                         id = pi.id;
                     }
                     break;

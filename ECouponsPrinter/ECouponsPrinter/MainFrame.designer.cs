@@ -141,10 +141,13 @@
             this.PB_Coupon_Right = new System.Windows.Forms.PictureBox();
             this.PB_Coupon_Left = new System.Windows.Forms.PictureBox();
             this.PB_Coupon_Top = new System.Windows.Forms.PictureBox();
+            this.PB_Coupon_7 = new System.Windows.Forms.PictureBox();
             this.PB_Coupon_4 = new System.Windows.Forms.PictureBox();
             this.PB_Coupon_3 = new System.Windows.Forms.PictureBox();
+            this.PB_Coupon_9 = new System.Windows.Forms.PictureBox();
             this.PB_Coupon_6 = new System.Windows.Forms.PictureBox();
             this.PB_Coupon_2 = new System.Windows.Forms.PictureBox();
+            this.PB_Coupon_8 = new System.Windows.Forms.PictureBox();
             this.PB_Coupon_5 = new System.Windows.Forms.PictureBox();
             this.PB_Coupon_1 = new System.Windows.Forms.PictureBox();
             this.Timer_DownloadInfo = new System.Windows.Forms.Timer(this.components);
@@ -254,10 +257,13 @@
             ((System.ComponentModel.ISupportInitialize)(this.PB_Coupon_Right)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PB_Coupon_Left)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PB_Coupon_Top)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PB_Coupon_7)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PB_Coupon_4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PB_Coupon_3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PB_Coupon_9)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PB_Coupon_6)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PB_Coupon_2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PB_Coupon_8)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PB_Coupon_5)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PB_Coupon_1)).BeginInit();
             this.Panel_NearShop.SuspendLayout();
@@ -1503,10 +1509,13 @@
             this.Panel_Coupons.Controls.Add(this.PB_Coupon_Right);
             this.Panel_Coupons.Controls.Add(this.PB_Coupon_Left);
             this.Panel_Coupons.Controls.Add(this.PB_Coupon_Top);
+            this.Panel_Coupons.Controls.Add(this.PB_Coupon_7);
             this.Panel_Coupons.Controls.Add(this.PB_Coupon_4);
             this.Panel_Coupons.Controls.Add(this.PB_Coupon_3);
+            this.Panel_Coupons.Controls.Add(this.PB_Coupon_9);
             this.Panel_Coupons.Controls.Add(this.PB_Coupon_6);
             this.Panel_Coupons.Controls.Add(this.PB_Coupon_2);
+            this.Panel_Coupons.Controls.Add(this.PB_Coupon_8);
             this.Panel_Coupons.Controls.Add(this.PB_Coupon_5);
             this.Panel_Coupons.Controls.Add(this.PB_Coupon_1);
             this.Panel_Coupons.Location = new System.Drawing.Point(0, 95);
@@ -1588,9 +1597,9 @@
             // 
             this.PB_Coupon_Right.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("PB_Coupon_Right.BackgroundImage")));
             this.PB_Coupon_Right.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.PB_Coupon_Right.Location = new System.Drawing.Point(686, 456);
+            this.PB_Coupon_Right.Location = new System.Drawing.Point(679, 666);
             this.PB_Coupon_Right.Name = "PB_Coupon_Right";
-            this.PB_Coupon_Right.Size = new System.Drawing.Size(72, 489);
+            this.PB_Coupon_Right.Size = new System.Drawing.Size(72, 59);
             this.PB_Coupon_Right.TabIndex = 48;
             this.PB_Coupon_Right.TabStop = false;
             this.PB_Coupon_Right.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Button_CouponsRight_MouseDown);
@@ -1600,10 +1609,10 @@
             // 
             this.PB_Coupon_Left.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("PB_Coupon_Left.BackgroundImage")));
             this.PB_Coupon_Left.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.PB_Coupon_Left.Location = new System.Drawing.Point(11, 456);
+            this.PB_Coupon_Left.Location = new System.Drawing.Point(12, 665);
             this.PB_Coupon_Left.Margin = new System.Windows.Forms.Padding(0);
             this.PB_Coupon_Left.Name = "PB_Coupon_Left";
-            this.PB_Coupon_Left.Size = new System.Drawing.Size(72, 489);
+            this.PB_Coupon_Left.Size = new System.Drawing.Size(72, 61);
             this.PB_Coupon_Left.TabIndex = 47;
             this.PB_Coupon_Left.TabStop = false;
             this.PB_Coupon_Left.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Button_CouponsLeft_MouseDown);
@@ -1618,62 +1627,101 @@
             this.PB_Coupon_Top.TabIndex = 46;
             this.PB_Coupon_Top.TabStop = false;
             // 
+            // PB_Coupon_7
+            // 
+            this.PB_Coupon_7.Location = new System.Drawing.Point(14, 797);
+            this.PB_Coupon_7.Margin = new System.Windows.Forms.Padding(0);
+            this.PB_Coupon_7.Name = "PB_Coupon_7";
+            this.PB_Coupon_7.Size = new System.Drawing.Size(240, 125);
+            this.PB_Coupon_7.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.PB_Coupon_7.TabIndex = 37;
+            this.PB_Coupon_7.TabStop = false;
+            this.PB_Coupon_7.MouseUp += new System.Windows.Forms.MouseEventHandler(this.ChangeCouponPicture);
+            // 
             // PB_Coupon_4
             // 
-            this.PB_Coupon_4.Location = new System.Drawing.Point(394, 623);
+            this.PB_Coupon_4.Location = new System.Drawing.Point(14, 635);
             this.PB_Coupon_4.Margin = new System.Windows.Forms.Padding(0);
             this.PB_Coupon_4.Name = "PB_Coupon_4";
-            this.PB_Coupon_4.Size = new System.Drawing.Size(265, 150);
+            this.PB_Coupon_4.Size = new System.Drawing.Size(240, 125);
+            this.PB_Coupon_4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.PB_Coupon_4.TabIndex = 37;
             this.PB_Coupon_4.TabStop = false;
             this.PB_Coupon_4.MouseUp += new System.Windows.Forms.MouseEventHandler(this.ChangeCouponPicture);
             // 
             // PB_Coupon_3
             // 
-            this.PB_Coupon_3.Location = new System.Drawing.Point(106, 623);
+            this.PB_Coupon_3.Location = new System.Drawing.Point(515, 471);
             this.PB_Coupon_3.Margin = new System.Windows.Forms.Padding(0);
             this.PB_Coupon_3.Name = "PB_Coupon_3";
-            this.PB_Coupon_3.Size = new System.Drawing.Size(265, 150);
+            this.PB_Coupon_3.Size = new System.Drawing.Size(240, 125);
+            this.PB_Coupon_3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.PB_Coupon_3.TabIndex = 45;
             this.PB_Coupon_3.TabStop = false;
             this.PB_Coupon_3.MouseUp += new System.Windows.Forms.MouseEventHandler(this.ChangeCouponPicture);
             // 
+            // PB_Coupon_9
+            // 
+            this.PB_Coupon_9.Location = new System.Drawing.Point(514, 797);
+            this.PB_Coupon_9.Margin = new System.Windows.Forms.Padding(0);
+            this.PB_Coupon_9.Name = "PB_Coupon_9";
+            this.PB_Coupon_9.Size = new System.Drawing.Size(240, 125);
+            this.PB_Coupon_9.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.PB_Coupon_9.TabIndex = 43;
+            this.PB_Coupon_9.TabStop = false;
+            this.PB_Coupon_9.MouseUp += new System.Windows.Forms.MouseEventHandler(this.ChangeCouponPicture);
+            // 
             // PB_Coupon_6
             // 
-            this.PB_Coupon_6.Location = new System.Drawing.Point(394, 784);
+            this.PB_Coupon_6.Location = new System.Drawing.Point(514, 635);
             this.PB_Coupon_6.Margin = new System.Windows.Forms.Padding(0);
             this.PB_Coupon_6.Name = "PB_Coupon_6";
-            this.PB_Coupon_6.Size = new System.Drawing.Size(265, 150);
+            this.PB_Coupon_6.Size = new System.Drawing.Size(240, 125);
+            this.PB_Coupon_6.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.PB_Coupon_6.TabIndex = 43;
             this.PB_Coupon_6.TabStop = false;
             this.PB_Coupon_6.MouseUp += new System.Windows.Forms.MouseEventHandler(this.ChangeCouponPicture);
             // 
             // PB_Coupon_2
             // 
-            this.PB_Coupon_2.Location = new System.Drawing.Point(394, 463);
+            this.PB_Coupon_2.Location = new System.Drawing.Point(264, 471);
             this.PB_Coupon_2.Margin = new System.Windows.Forms.Padding(0);
             this.PB_Coupon_2.Name = "PB_Coupon_2";
-            this.PB_Coupon_2.Size = new System.Drawing.Size(265, 150);
+            this.PB_Coupon_2.Size = new System.Drawing.Size(240, 125);
+            this.PB_Coupon_2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.PB_Coupon_2.TabIndex = 41;
             this.PB_Coupon_2.TabStop = false;
             this.PB_Coupon_2.MouseUp += new System.Windows.Forms.MouseEventHandler(this.ChangeCouponPicture);
             // 
+            // PB_Coupon_8
+            // 
+            this.PB_Coupon_8.Location = new System.Drawing.Point(264, 797);
+            this.PB_Coupon_8.Margin = new System.Windows.Forms.Padding(0);
+            this.PB_Coupon_8.Name = "PB_Coupon_8";
+            this.PB_Coupon_8.Size = new System.Drawing.Size(240, 125);
+            this.PB_Coupon_8.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.PB_Coupon_8.TabIndex = 42;
+            this.PB_Coupon_8.TabStop = false;
+            this.PB_Coupon_8.MouseUp += new System.Windows.Forms.MouseEventHandler(this.ChangeCouponPicture);
+            // 
             // PB_Coupon_5
             // 
-            this.PB_Coupon_5.Location = new System.Drawing.Point(105, 784);
+            this.PB_Coupon_5.Location = new System.Drawing.Point(264, 635);
             this.PB_Coupon_5.Margin = new System.Windows.Forms.Padding(0);
             this.PB_Coupon_5.Name = "PB_Coupon_5";
-            this.PB_Coupon_5.Size = new System.Drawing.Size(265, 150);
+            this.PB_Coupon_5.Size = new System.Drawing.Size(240, 125);
+            this.PB_Coupon_5.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.PB_Coupon_5.TabIndex = 42;
             this.PB_Coupon_5.TabStop = false;
             this.PB_Coupon_5.MouseUp += new System.Windows.Forms.MouseEventHandler(this.ChangeCouponPicture);
             // 
             // PB_Coupon_1
             // 
-            this.PB_Coupon_1.Location = new System.Drawing.Point(106, 463);
+            this.PB_Coupon_1.Location = new System.Drawing.Point(13, 471);
             this.PB_Coupon_1.Margin = new System.Windows.Forms.Padding(0);
             this.PB_Coupon_1.Name = "PB_Coupon_1";
-            this.PB_Coupon_1.Size = new System.Drawing.Size(265, 150);
+            this.PB_Coupon_1.Size = new System.Drawing.Size(240, 125);
+            this.PB_Coupon_1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.PB_Coupon_1.TabIndex = 34;
             this.PB_Coupon_1.TabStop = false;
             this.PB_Coupon_1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.ChangeCouponPicture);
@@ -2071,8 +2119,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(1041, 742);
-            this.Controls.Add(this.Panel_Home);
             this.Controls.Add(this.Panel_Coupons);
+            this.Controls.Add(this.Panel_Home);
             this.Controls.Add(this.Panel_ShopInfo);
             this.Controls.Add(this.Panel_MyInfo);
             this.Controls.Add(this.Panel_Ad);
@@ -2159,10 +2207,13 @@
             ((System.ComponentModel.ISupportInitialize)(this.PB_Coupon_Right)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PB_Coupon_Left)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PB_Coupon_Top)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PB_Coupon_7)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PB_Coupon_4)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PB_Coupon_3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PB_Coupon_9)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PB_Coupon_6)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PB_Coupon_2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PB_Coupon_8)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PB_Coupon_5)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PB_Coupon_1)).EndInit();
             this.Panel_NearShop.ResumeLayout(false);
@@ -2352,6 +2403,9 @@
         private System.Windows.Forms.Label Label_RecCoupon;
         private System.Windows.Forms.PictureBox PB_ShopInfo_Back;
         private Marquee.UserControl1 Label_ScrollText;
+        private System.Windows.Forms.PictureBox PB_Coupon_7;
+        private System.Windows.Forms.PictureBox PB_Coupon_9;
+        private System.Windows.Forms.PictureBox PB_Coupon_8;
 
     }
 }
