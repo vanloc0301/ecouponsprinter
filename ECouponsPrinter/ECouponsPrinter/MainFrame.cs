@@ -2825,6 +2825,30 @@ namespace ECouponsPrinter
                     }
                 }
 
+            //根据优惠劵小图的显示情况，更改翻页按钮的父容器
+            if (PB_Coupon_4.Visible == false)
+            {
+                PB_Coupon_Left.Parent = Panel_Coupons;
+                PB_Coupon_Left.Location = new Point(12, 665);
+                PB_Coupon_Right.Parent = Panel_Coupons;
+                PB_Coupon_Right.Location = new Point(679, 665);
+            }
+            else
+            {
+                PB_Coupon_Left.Parent = PB_Coupon_4;
+                PB_Coupon_Left.Location = new Point(12 - PB_Coupon_4.Location.X, 665 - PB_Coupon_4.Location.Y);
+                if (PB_Coupon_6.Visible == false)
+                {
+                    PB_Coupon_Right.Parent = Panel_Coupons;
+                    PB_Coupon_Right.Location = new Point(679, 665);
+                }
+                else
+                {
+                    PB_Coupon_Right.Parent = PB_Coupon_6;
+                    PB_Coupon_Right.Location = new Point(679 - PB_Coupon_6.Location.X, 665 - PB_Coupon_6.Location.Y);
+                }
+            }
+
             for (int i = 0; i < curPageShowCount; i++)
             {
                 String name = controlName + (i + 1);
