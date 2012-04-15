@@ -478,6 +478,8 @@ namespace ECouponsPrinter
                         return;
                     }
                     pd.Print();
+                    Application.DoEvents();
+                    Thread.Sleep(500);
                     myprinter = pq.GetAllPrinterQueues();
                     if (myprinter[defaultPrinterName] == 0)
                     {

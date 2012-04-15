@@ -1597,7 +1597,7 @@
             // 
             this.PB_Coupon_Right.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("PB_Coupon_Right.BackgroundImage")));
             this.PB_Coupon_Right.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.PB_Coupon_Right.Location = new System.Drawing.Point(679, 666);
+            this.PB_Coupon_Right.Location = new System.Drawing.Point(679, 665);
             this.PB_Coupon_Right.Name = "PB_Coupon_Right";
             this.PB_Coupon_Right.Size = new System.Drawing.Size(72, 59);
             this.PB_Coupon_Right.TabIndex = 48;
