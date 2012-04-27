@@ -24,6 +24,8 @@ namespace ECouponsPrinter
         {
             try
             {
+                if (objConn.State == System.Data.ConnectionState.Closed)
+                    objConn.Open();
                 objCmd = new OleDbCommand(strSql, objConn);
                 objReader = objCmd.ExecuteReader();
             }
@@ -39,6 +41,8 @@ namespace ECouponsPrinter
         {
             try
             {
+                if (objConn.State == System.Data.ConnectionState.Closed)
+                    objConn.Open();
                 objCmd = new OleDbCommand(strSql, objConn);
                 objCmd.ExecuteNonQuery();
                 return true;
