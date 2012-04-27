@@ -23,221 +23,401 @@ namespace ECouponsPrinter
 
         public void download()
         {
+            AccessCmd cmd = new AccessCmd();
             //下载商家信息
-            request.OpenRequest(GlobalVariables.StrServerUrl + "/servlet/ShopDownload?strTerminalNo=" + GlobalVariables.StrTerminalNo, "");
-            XmlDocument doc = new XmlDocument();
-            string strXml = request.HtmlDocument;
-            //MessageBox.Show(strXml);
-            bool result = true;
-            if (strXml.IndexOf("<shops>") > 0)
+            try
             {
-                doc.LoadXml(strXml);
-                XmlNodeList xnlShops = doc.GetElementsByTagName("shops");
-                for (int i = 0; i < xnlShops.Count; i++)
+                request.OpenRequest(GlobalVariables.StrServerUrl + "/servlet/ShopDownload?strTerminalNo=" + GlobalVariables.StrTerminalNo, "");
+                XmlDocument doc = new XmlDocument();
+                string strXml = request.HtmlDocument;
+                if (strXml.IndexOf("<shops>") > 0)
                 {
-                    XmlElement xeShops = (XmlElement)xnlShops.Item(i);
-                    String strOpe = xeShops.FirstChild.InnerText;
-                    if (strOpe.Equals("add"))
+                    //加载服务器信息
+                    doc.LoadXml(strXml);
+                    XmlNodeList xnlShop = doc.GetElementsByTagName("shop");
+                    //加载本地信息
+                    string strSql = "select strId,strSmallImg,strLargeImg from t_bz_shop";
+                    OleDbDataReader reader=cmd.ExecuteReader(strSql);
+                    List<Shop> lstShop=new List<Shop>();
+                    while (reader.Read())
                     {
-                        foreach (XmlNode xnShop in xeShops.GetElementsByTagName("shop"))
+                        Shop shop = new Shop(reader);
+                        lstShop.Add(shop);
+                    }
+                    reader.Close();
+                    //依次对比服务器与本地信息，保证两者一致
+                    for (int i = 0; i < xnlShop.Count; i++)
+                    {
+                        try
                         {
-                            result = result && addShop(xnShop);
+                            //获得服务器记录信息
+                            XmlElement xeShop = (XmlElement)xnlShop.Item(i);
+                            String strId, strBizName, strShopName, strTrade, strAddr, strIntro, strSmallImg, strLargeImg, intType, intSort;
+                            getShopProps(xeShop, out strId, out strBizName, out strShopName, out strTrade, out strAddr, out strIntro, out strSmallImg, out strLargeImg, out intType, out intSort);
+                            //比对本地信息
+                            for (int j = 0; j < lstShop.Count; j++)
+                            {
+                                Shop localShop = lstShop.ElementAt(j);
+                                if (localShop.StrId.Equals(strId))
+                                {
+                                    //找到本地信息，先更新图片
+                                    bool bolImg = true;
+                                    if (strSmallImg.Length > 0 && !strSmallImg.Equals(localShop.StrSmallImg))
+                                    {
+                                        bolImg = createImg("shop", strSmallImg);
+                                    }
+                                    if (bolImg && strLargeImg.Length > 0 && !strLargeImg.Equals(localShop.StrLargeImg))
+                                    {
+                                        bolImg = createImg("shop", strLargeImg);
+                                    }
+                                    //考虑数据库中有记录，但图片不存在的情况
+                                    if (!File.Exists(System.Windows.Forms.Application.StartupPath + "\\shop\\" + strSmallImg))
+                                    {
+                                        bolImg = bolImg && createImg("shop", strSmallImg);
+                                    }
+                                    if (!File.Exists(System.Windows.Forms.Application.StartupPath + "\\shop\\" + strLargeImg))
+                                    {
+                                        bolImg = bolImg && createImg("shop", strLargeImg);
+                                    }
+                                    //图片操作正常，删除原图片并更新数据库
+                                    if (bolImg)
+                                    {
+                                        cmd.ExecuteNonQuery("update t_bz_shop set strBizName='" + strBizName + "',strShopName='" + strShopName + "',strTrade='" + strTrade + "',strAddr='" + strAddr +
+                                            "',strIntro='" + strIntro + "',strSmallImg='" + strSmallImg + "',strLargeImg='" + strLargeImg + "',intType=" + intType + ",intSort=" + intSort +
+                                            " where strId='" + strId + "'");
+                                        if(!strSmallImg.Equals(localShop.StrSmallImg))
+                                            File.Delete(System.Windows.Forms.Application.StartupPath + "\\shop\\" + localShop.StrSmallImg);
+                                        if (!strLargeImg.Equals(localShop.StrLargeImg))
+                                            File.Delete(System.Windows.Forms.Application.StartupPath + "\\shop\\" + localShop.StrLargeImg);
+                                    }
+                                    strId = "";
+                                    lstShop.Remove(localShop);
+                                    break;
+                                }
+                            }
+                            if (strId.Length > 0)
+                            {
+                                //本地没有找到，先增加图片
+                                bool bolImg = true;
+                                if (strSmallImg.Length > 0)
+                                {
+                                    bolImg = createImg("shop", strSmallImg);
+                                }
+                                if (bolImg && strLargeImg.Length > 0)
+                                {
+                                    bolImg = createImg("shop", strLargeImg);
+                                }
+                                //图片操作正常，更新数据库
+                                if (bolImg)
+                                {
+                                    cmd.ExecuteNonQuery("insert into t_bz_shop(strId,strBizName,strShopName,strTrade,strAddr,strIntro,strSmallImg,strLargeImg,intType,intSort) values('" +
+                                        strId + "','" + strBizName + "','" + strShopName + "','" + strTrade + "','" + strAddr + "','" + strIntro + "','" + strSmallImg + "','" + strLargeImg +
+                                        "'," + intType + "," + intSort + ")");
+                                }
+                            }
+                        }
+                        catch(Exception e)
+                        {
+                            ErrorLog.log(e);
                         }
                     }
-                    else if (strOpe.Equals("update"))
+                    //删除本地没有匹配的记录
+                    for (int i = 0; i < lstShop.Count; i++)
                     {
-                        foreach (XmlNode xnShop in xeShops.GetElementsByTagName("shop"))
-                        {
-                            result = result && updateShop(xnShop);
-                        }
-                    }
-                    else if (strOpe.Equals("delete"))
-                    {
-                        foreach (XmlNode xnShop in xeShops.GetElementsByTagName("shop"))
-                        {
-                            result = result && deleteShop(xnShop);
-                        }
+                        Shop localShop = lstShop.ElementAt(i);
+                        cmd.ExecuteNonQuery("delete from t_bz_shop where strId='" + localShop.StrId + "'");
+                        if(localShop.StrSmallImg.Length>0)
+                            File.Delete(System.Windows.Forms.Application.StartupPath + "\\shop\\" + localShop.StrSmallImg);
+                        if(localShop.StrLargeImg.Length>0)
+                            File.Delete(System.Windows.Forms.Application.StartupPath + "\\shop\\" + localShop.StrLargeImg);
                     }
                 }
             }
-            //返回本地操作结果
-            string strReturn="NO";
-            if (result)
+            catch (Exception e)
             {
-                strReturn="OK";
+                ErrorLog.log(e);
             }
-            request.OpenRequest(GlobalVariables.StrServerUrl + "/servlet/ShopDownload?strTerminalNo=" + GlobalVariables.StrTerminalNo + "&strReturn="+strReturn, "");
-            strXml = request.HtmlDocument;
+
             //下载优惠券信息
-            request.OpenRequest(GlobalVariables.StrServerUrl + "/servlet/CouponDownload?strTerminalNo=" + GlobalVariables.StrTerminalNo, "");
-            strXml = request.HtmlDocument;
-            result = true;
-            //MessageBox.Show(strXml);
-            if (strXml.IndexOf("<coupons>") > 0)
+            try
             {
-                doc.LoadXml(strXml);
-                XmlNodeList xnlCoupons = doc.GetElementsByTagName("coupons");
-                for (int i = 0; i < xnlCoupons.Count; i++)
+                request.OpenRequest(GlobalVariables.StrServerUrl + "/servlet/CouponDownload?strTerminalNo=" + GlobalVariables.StrTerminalNo, "");
+                XmlDocument doc = new XmlDocument();
+                string strXml = request.HtmlDocument;
+                if (strXml.IndexOf("<coupons>") > 0)
                 {
-                    XmlElement xeCoupons = (XmlElement)xnlCoupons.Item(i);
-                    String strOpe = xeCoupons.FirstChild.InnerText;
-                    if (strOpe.Equals("add"))
+                    //加载服务器信息
+                    doc.LoadXml(strXml);
+                    XmlNodeList xnlCoupon = doc.GetElementsByTagName("coupon");
+                    //加载本地信息
+                    string strSql = "select strId,strSmallImg,strLargeImg,strPrintImg from t_bz_coupon";
+                    OleDbDataReader reader = cmd.ExecuteReader(strSql);
+                    List<Coupon> lstCoupon = new List<Coupon>();
+                    while (reader.Read())
                     {
-                        foreach (XmlNode xnCoupon in xeCoupons.GetElementsByTagName("coupon"))
+                        Coupon coupon = new Coupon(reader);
+                        lstCoupon.Add(coupon);
+                    }
+                    reader.Close();
+                    //依次对比服务器与本地信息，保证两者一致
+                    for (int i = 0; i < xnlCoupon.Count; i++)
+                    {
+                        try
                         {
-                            result = result && addCoupon(xnCoupon);
+                            //获得服务器记录信息
+                            XmlElement xeCoupon = (XmlElement)xnlCoupon.Item(i);
+                            String strId, strName, dtActiveTime, dtExpireTime, strShopId, strSmallImg, strLargeImg, strPrintImg, strIntro, strInstruction;
+                            int intVip, intRecommend;
+                            float flaPrice;
+                            getCouponProps(xeCoupon, out strId, out strName, out dtActiveTime, out dtExpireTime, out strShopId, out intVip, out flaPrice, out intRecommend,
+                                out strSmallImg, out strLargeImg, out strPrintImg, out strIntro, out strInstruction);
+                            //比对本地信息
+                            for (int j = 0; j < lstCoupon.Count; j++)
+                            {
+                                Coupon localCoupon = lstCoupon.ElementAt(j);
+                                if (localCoupon.StrId.Equals(strId))
+                                {
+                                    //找到本地信息，先更新图片
+                                    bool bolImg = true;
+                                    if (strSmallImg.Length > 0 && !strSmallImg.Equals(localCoupon.StrSmallImg))
+                                    {
+                                        bolImg = createImg("coupon", strSmallImg);
+                                    }
+                                    if (bolImg && strLargeImg.Length > 0 && !strLargeImg.Equals(localCoupon.StrLargeImg))
+                                    {
+                                        bolImg = createImg("coupon", strLargeImg);
+                                    }
+                                    if (bolImg && strPrintImg.Length > 0 && !strPrintImg.Equals(localCoupon.StrPrintImg))
+                                    {
+                                        bolImg = createImg("coupon", strPrintImg);
+                                    }
+                                    //考虑数据库中有记录，但图片不存在的情况
+                                    if (!File.Exists(System.Windows.Forms.Application.StartupPath + "\\coupon\\" + strSmallImg))
+                                    {
+                                        bolImg = bolImg && createImg("coupon", strSmallImg);
+                                    }
+                                    if (!File.Exists(System.Windows.Forms.Application.StartupPath + "\\coupon\\" + strLargeImg))
+                                    {
+                                        bolImg = bolImg && createImg("coupon", strLargeImg);
+                                    }
+                                    if (!File.Exists(System.Windows.Forms.Application.StartupPath + "\\coupon\\" + strPrintImg))
+                                    {
+                                        bolImg = bolImg && createImg("coupon", strPrintImg);
+                                    }
+                                    //图片操作正常，删除原图片并更新数据库
+                                    if (bolImg)
+                                    {
+                                        cmd.ExecuteNonQuery("update t_bz_coupon set strName='" + strName + "',dtActiveTime='" + dtActiveTime + "',dtExpireTime='" + dtExpireTime +
+                                            "',strShopId='" + strShopId + "',intVip=" + intVip + ",intRecommend=" + intRecommend + ",flaPrice=" + flaPrice + ",strSmallImg='" + strSmallImg +
+                                            "',strLargeImg='" + strLargeImg + "',strPrintImg='" + strPrintImg + "',strIntro='" + strIntro + "',strInstruction='" + strInstruction + 
+                                            "' where strId='" + strId + "'");
+                                        if(!strSmallImg.Equals(localCoupon.StrSmallImg))
+                                            File.Delete(System.Windows.Forms.Application.StartupPath + "\\coupon\\" + localCoupon.StrSmallImg);
+                                        if(!strLargeImg.Equals(localCoupon.StrLargeImg))
+                                            File.Delete(System.Windows.Forms.Application.StartupPath + "\\coupon\\" + localCoupon.StrLargeImg);
+                                        if(!strPrintImg.Equals(localCoupon.StrPrintImg))
+                                            File.Delete(System.Windows.Forms.Application.StartupPath + "\\coupon\\" + localCoupon.StrPrintImg);
+                                    }
+                                    strId = "";
+                                    lstCoupon.Remove(localCoupon);
+                                    break;
+                                }
+                            }
+                            if (strId.Length > 0)
+                            {
+                                //本地没有找到，先增加图片
+                                bool bolImg = true;
+                                if (strSmallImg.Length > 0)
+                                {
+                                    bolImg = createImg("coupon", strSmallImg);
+                                }
+                                if (bolImg && strLargeImg.Length > 0)
+                                {
+                                    bolImg = createImg("coupon", strLargeImg);
+                                }
+                                if (bolImg && strPrintImg.Length > 0)
+                                {
+                                    bolImg = createImg("coupon", strPrintImg);
+                                }
+                                //图片操作正常，更新数据库
+                                if (bolImg)
+                                {
+                                    cmd.ExecuteNonQuery("insert into t_bz_coupon(strId,strName,dtActiveTime,dtExpireTime,strShopId,intVip,intRecommend,flaPrice,strSmallImg,strLargeImg,"+
+                                        "strPrintImg,strIntro,strInstruction) values('" + strId + "','" + strName + "','" + dtActiveTime + "','" + dtExpireTime + "','" + strShopId + "'," + 
+                                        intVip + "," + intRecommend + "," + flaPrice + ",'" + strSmallImg + "','" + strLargeImg + "','" + strPrintImg + "','" + strIntro + "','" + 
+                                        strInstruction + "')");
+                                }
+                            }
+                        }
+                        catch (Exception e)
+                        {
+                            ErrorLog.log(e);
                         }
                     }
-                    else if (strOpe.Equals("update"))
+                    //删除本地没有匹配的记录
+                    for (int i = 0; i < lstCoupon.Count; i++)
                     {
-                        foreach (XmlNode xnCoupon in xeCoupons.GetElementsByTagName("coupon"))
-                        {
-                            result = result && updateCoupon(xnCoupon);
-                        }
-                    }
-                    else if (strOpe.Equals("delete"))
-                    {
-                        foreach (XmlNode xnCoupon in xeCoupons.GetElementsByTagName("coupon"))
-                        {
-                            result = result && deleteCoupon(xnCoupon);
-                        }
+                        Coupon localCoupon = lstCoupon.ElementAt(i);
+                        cmd.ExecuteNonQuery("delete from t_bz_coupon where strId='" + localCoupon.StrId + "'");
+                        if(localCoupon.StrSmallImg.Length>0)
+                            File.Delete(System.Windows.Forms.Application.StartupPath + "\\coupon\\" + localCoupon.StrSmallImg);
+                        if (localCoupon.StrLargeImg.Length > 0)
+                            File.Delete(System.Windows.Forms.Application.StartupPath + "\\coupon\\" + localCoupon.StrLargeImg);
+                        if (localCoupon.StrPrintImg.Length > 0)
+                            File.Delete(System.Windows.Forms.Application.StartupPath + "\\coupon\\" + localCoupon.StrPrintImg);
                     }
                 }
             }
-            //返回本地操作结果
-            strReturn = "NO";
-            if (result)
+            catch (Exception e)
             {
-                strReturn = "OK";
+                ErrorLog.log(e);
             }
-            request.OpenRequest(GlobalVariables.StrServerUrl + "/servlet/CouponDownload?strTerminalNo=" + GlobalVariables.StrTerminalNo + "&strReturn=" + strReturn, "");
-            strXml = request.HtmlDocument;
+
             //下载广告信息
-            request.OpenRequest(GlobalVariables.StrServerUrl + "/servlet/AdDownload?strTerminalNo=" + GlobalVariables.StrTerminalNo, "");
-            strXml = request.HtmlDocument;
-            result = true;
-            //MessageBox.Show(strXml);
-            if (strXml.IndexOf("<ads>") > 0)
-            {
-                doc.LoadXml(strXml);
-                XmlNodeList xnls = doc.GetElementsByTagName("ads");
-                for (int i = 0; i < xnls.Count; i++)
-                {
-                    XmlElement xes = (XmlElement)xnls.Item(i);
-                    String strOpe = xes.FirstChild.InnerText;
-                    if (strOpe.Equals("add"))
-                    {
-                        foreach (XmlNode xn in xes.GetElementsByTagName("ad"))
-                        {
-                            result = result && addAd(xn);
-                        }
-                    }
-                    else if (strOpe.Equals("update"))
-                    {
-                        foreach (XmlNode xn in xes.GetElementsByTagName("ad"))
-                        {
-                            result = result && updateAd(xn);
-                        }
-                    }
-                    else if (strOpe.Equals("delete"))
-                    {
-                        foreach (XmlNode xn in xes.GetElementsByTagName("ad"))
-                        {
-                            result = result && deleteAd(xn);
-                        }
-                    }
-                }
-            }
-            //返回本地操作结果
-            strReturn = "NO";
-            if (result)
-            {
-                strReturn = "OK";
-            }
-            request.OpenRequest(GlobalVariables.StrServerUrl + "/servlet/AdDownload?strTerminalNo=" + GlobalVariables.StrTerminalNo + "&strReturn=" + strReturn, "");
-            strXml = request.HtmlDocument;
-        }
-
-        private bool deleteAd(XmlNode xn)
-        {
-            String strId, strContentOld = "";
-            int intTypeOld = 0;
-            XmlElement xe = (XmlElement)xn;
-            strId = xe.GetElementsByTagName("strId").Item(0).InnerText.Trim();
-            //查询文件
-            string strSql = "select intType,strContent from t_bz_advertisement where strId='" + strId + "'";
-            AccessCmd cmd = new AccessCmd();
-            OleDbDataReader reader = cmd.ExecuteReader(strSql);
-            if (reader.Read())
-            {
-                intTypeOld = reader.GetInt32(0);
-                strContentOld = reader.GetString(1);
-            }
-            reader.Close();
-            //删除原文件
-            if (intTypeOld == 1)
-            {
-                File.Delete(System.Windows.Forms.Application.StartupPath + "\\ad\\" + strContentOld);
-            }
-            else if (intTypeOld == 2)
-            {
-                string[] aryFile = strContentOld.Split(new char[] { ',' });
-                for (int i = 0; i < aryFile.Length; i++)
-                {
-                    File.Delete(System.Windows.Forms.Application.StartupPath + "\\ad\\" + aryFile[i]);
-                }
-            }
-            //写入数据库
-            strSql = "delete from t_bz_advertisement where strId='" + strId + "'";
-            bool result = cmd.ExecuteNonQuery(strSql);                
-            cmd.Close();
-            return result;
-        }
-
-        private bool updateAd(XmlNode xn)
-        {
-            String strId, strName, strContent, strContentOld = "", dtStartTime, dtEndTime;
-            int intType, intTypeOld = 0;
-            getAdProps(xn, out strId, out strName, out intType, out strContent, out dtStartTime, out dtEndTime);
-            //查询文件
-            string strSql = "select intType,strContent from t_bz_advertisement where strId='" + strId + "'";
-            AccessCmd cmd = new AccessCmd();
-            OleDbDataReader reader = cmd.ExecuteReader(strSql);
-            if (reader.Read())
-            {
-                intTypeOld = reader.GetInt32(0);
-                strContentOld = reader.GetString(1);
-            }
-            reader.Close();
-            //删除原文件
             try
             {
-                if (intTypeOld == 1)
+                request.OpenRequest(GlobalVariables.StrServerUrl + "/servlet/AdDownload?strTerminalNo=" + GlobalVariables.StrTerminalNo, "");
+                XmlDocument doc = new XmlDocument();
+                string strXml = request.HtmlDocument;
+                if (strXml.IndexOf("<ads>") > 0)
                 {
-                    if (!strContentOld.Equals(strContent))
+                    //加载服务器信息
+                    doc.LoadXml(strXml);
+                    XmlNodeList xnlAd = doc.GetElementsByTagName("ad");
+                    //加载本地信息
+                    string strSql = "select strId,intType,strContent from t_bz_advertisement";
+                    OleDbDataReader reader = cmd.ExecuteReader(strSql);
+                    List<Advertisement> lstAd = new List<Advertisement>();
+                    while (reader.Read())
                     {
-                        if(!strContentOld.Equals(""))
-                            File.Delete(System.Windows.Forms.Application.StartupPath + "\\ad\\" + strContentOld);
-                        if (!createImg("ad", strContent))
-                            return false;
-
+                        Advertisement ad = new Advertisement(reader);
+                        lstAd.Add(ad);
                     }
-                }
-                else if (intTypeOld == 2)
-                {
-                    if (!strContentOld.Equals(strContent))
+                    reader.Close();
+                    //依次对比服务器与本地信息，保证两者一致
+                    for (int i = 0; i < xnlAd.Count; i++)
                     {
-                        string[] aryFile = strContentOld.Split(new char[] { ',' });
-                        for (int i = 0; i < aryFile.Length; i++)
+                        try
                         {
-                            if(!aryFile[i].Equals(""))
-                                File.Delete(System.Windows.Forms.Application.StartupPath + "\\ad\\" + aryFile[i]);
+                            //获得服务器记录信息
+                            XmlElement xeAd = (XmlElement)xnlAd.Item(i);
+                            String strId, strName, strContent, dtStartTime, dtEndTime;
+                            int intType;
+                            getAdProps(xeAd, out strId, out strName, out intType, out strContent, out dtStartTime, out dtEndTime);
+                            //比对本地信息
+                            for (int j = 0; j < lstAd.Count; j++)
+                            {
+                                Advertisement localAd = lstAd.ElementAt(j);
+                                if (localAd.StrId.Equals(strId))
+                                {
+                                    //找到本地信息，先更新图片
+                                    bool bolImg = true;
+                                    if (intType < 3 && strContent.Length > 0 && !strContent.Equals(localAd.StrContent))
+                                    {
+                                        if (intType == 1)
+                                        {
+                                            bolImg = createImg("ad", strContent);
+                                        }
+                                        else if (intType == 2)
+                                        {
+                                            string[] aryFile = strContent.Split(new char[] { ',' });
+                                            for (int k = 0; k < aryFile.Length; k++)
+                                            {
+                                                bolImg = bolImg && createImg("ad", aryFile[k]);
+                                            }
+                                        }
+                                    }
+                                    //考虑数据库中有记录，但图片不存在的情况
+                                    if (intType == 1 && !File.Exists(System.Windows.Forms.Application.StartupPath + "\\ad\\" + strContent))
+                                    {
+                                        bolImg = bolImg && createImg("ad", strContent);
+                                    }
+                                    else if (intType==2)
+                                    {
+                                        string[] aryFile = strContent.Split(new char[] { ',' });
+                                        for (int k = 0; k < aryFile.Length; k++)
+                                        {
+                                            if(!File.Exists(System.Windows.Forms.Application.StartupPath + "\\ad\\" + aryFile[k]))
+                                            {
+                                                bolImg = bolImg && createImg("ad", aryFile[k]);
+                                            }
+                                        }
+                                        
+                                    }
+                                    //图片操作正常，删除原图片并更新数据库
+                                    if (bolImg)
+                                    {
+                                        cmd.ExecuteNonQuery("update t_bz_advertisement set strName='" + strName + "',intType=" + intType + ",strContent='" + strContent +
+                                            "',dtStartTime='" + dtStartTime + "',dtEndTime='" + dtEndTime + "' where strId='" + strId + "'");
+                                        if (localAd.IntType == 1 && !strContent.Equals(localAd.StrContent))
+                                        {
+                                            File.Delete(System.Windows.Forms.Application.StartupPath + "\\ad\\" + localAd.StrContent);
+                                        }
+                                        else if (localAd.IntType == 2 && !strContent.Equals(localAd.StrContent))
+                                        {
+                                            string[] aryFile = localAd.StrContent.Split(new char[] { ',' });
+                                            for (int k = 0; k < aryFile.Length; k++)
+                                            {
+                                                File.Delete(System.Windows.Forms.Application.StartupPath + "\\ad\\" + aryFile[k]);
+                                            }
+                                        }
+                                    }
+                                    strId = "";
+                                    lstAd.Remove(localAd);
+                                    break;
+                                }
+                            }
+                            if (strId.Length > 0)
+                            {
+                                //本地没有找到，先增加图片
+                                bool bolImg = true;
+                                if (intType < 3 && strContent.Length > 0)
+                                {
+                                    if (intType == 1)
+                                    {
+                                        bolImg = createImg("ad", strContent);
+                                    }
+                                    else if (intType == 2)
+                                    {
+                                        string[] aryFile = strContent.Split(new char[] { ',' });
+                                        for (int k = 0; k < aryFile.Length; k++)
+                                        {
+                                            bolImg = bolImg && createImg("ad", aryFile[k]);
+                                        }
+                                    }
+                                }
+                                //图片操作正常，更新数据库
+                                if (bolImg)
+                                {
+                                    cmd.ExecuteNonQuery("insert into t_bz_advertisement(strId,strName,intType,strContent,dtStartTime,dtEndTime) values('" + strId + "','" + strName + "'," + 
+                                        intType + ",'" + strContent + "','" + dtStartTime + "','" + dtEndTime + "')");
+                                }
+                            }
                         }
-                        aryFile = strContent.Split(new char[] { ',' });
-                        for (int i = 0; i < aryFile.Length; i++)
+                        catch (Exception e)
                         {
-                            if (!createImg("ad", aryFile[i]))
-                                return false;
+                            ErrorLog.log(e);
+                        }
+                    }
+                    //删除本地没有匹配的记录
+                    for (int i = 0; i < lstAd.Count; i++)
+                    {
+                        Advertisement localAd = lstAd.ElementAt(i);
+                        cmd.ExecuteNonQuery("delete from t_bz_advertisement where strId='" + localAd.StrId + "'");
+                        if (localAd.StrContent.Length > 0)
+                        {
+                            if (localAd.IntType == 1)
+                            {
+                                File.Delete(System.Windows.Forms.Application.StartupPath + "\\ad\\" + localAd.StrContent);
+                            }
+                            else if (localAd.IntType == 2)
+                            {
+                                string[] aryFile = localAd.StrContent.Split(new char[] { ',' });
+                                for (int k = 0; k < aryFile.Length; k++)
+                                {
+                                    File.Delete(System.Windows.Forms.Application.StartupPath + "\\ad\\" + aryFile[k]);
+                                }
+                            }
                         }
                     }
                 }
@@ -245,295 +425,13 @@ namespace ECouponsPrinter
             catch (Exception e)
             {
                 ErrorLog.log(e);
-                return false;
             }
-            finally
-            {
-                //删除原纪录
-                strSql = "delete from t_bz_advertisement where strId='" + strId + "'";
-                cmd.ExecuteNonQuery(strSql);
-                cmd.Close();
-            }
-            cmd = new AccessCmd();
-            //写入数据库（先删除、后增加，保证之前已有的信息可下载）
-            strSql = "insert into t_bz_advertisement(strId,strName,intType,strContent,dtStartTime,dtEndTime) values('" + strId + "','" + strName + "'," + intType +
-                ",'" + strContent + "','" + dtStartTime + "','" + dtEndTime + "')";
-            //MessageBox.Show(strSql);
-            bool result = cmd.ExecuteNonQuery(strSql);
             cmd.Close();
-            return result;
-        }
-
-        private bool addAd(XmlNode xn)
-        {
-            String strId, strName, strContent, dtStartTime, dtEndTime;
-            int intType;
-            getAdProps(xn, out strId, out strName, out intType, out strContent, out dtStartTime, out dtEndTime);
-            //创建文件
-            if (intType == 1)
-            {
-                if(!createImg("ad", strContent))
-                    return false;
-            }
-            else if (intType == 2)
-            {
-                string[] aryFile = strContent.Split(new char[] { ',' });
-                for (int i = 0; i < aryFile.Length; i++)
-                {
-                    if(!createImg("ad", aryFile[i]))
-                        return false;
-                }
-            }
-            //写入数据库
-            AccessCmd cmd = new AccessCmd();
-            string strSql = "insert into t_bz_advertisement(strId,strName,intType,strContent,dtStartTime,dtEndTime) values('" + strId + "','" + strName + "'," + intType +
-                ",'" + strContent + "','" + dtStartTime + "','" + dtEndTime + "')";
-            bool result = cmd.ExecuteNonQuery(strSql);
-            cmd.Close();
-            return result;
-        }
-
-        private bool deleteCoupon(XmlNode xnCoupon)
-        {
-            String strId, strSmallImg = "", strLargeImg = "", strPrintImg = "";
-            XmlElement xeCoupon = (XmlElement)xnCoupon;
-            strId = xeCoupon.GetElementsByTagName("strId").Item(0).InnerText.Trim();
-            //查询文件
-            string strSql = "select strSmallImg,strLargeImg,strPrintImg from t_bz_coupon where strId='" + strId + "'";
-            AccessCmd cmd = new AccessCmd();
-            OleDbDataReader reader = cmd.ExecuteReader(strSql);
-            if (reader.Read())
-            {
-                if (!reader.IsDBNull(0))
-                    strSmallImg = reader.GetString(0);
-                if (!reader.IsDBNull(1))
-                    strLargeImg = reader.GetString(1);
-                if (!reader.IsDBNull(2))
-                    strPrintImg = reader.GetString(2);
-            }
-            reader.Close();
-            //删除原文件
-            if (!strSmallImg.Equals(""))
-            {
-                File.Delete(System.Windows.Forms.Application.StartupPath + "\\coupon\\" + strSmallImg);
-            }
-            if (!strLargeImg.Equals(""))
-            {
-                File.Delete(System.Windows.Forms.Application.StartupPath + "\\coupon\\" + strLargeImg);
-            }
-            if (!strPrintImg.Equals(""))
-            {
-                File.Delete(System.Windows.Forms.Application.StartupPath + "\\coupon\\" + strPrintImg);
-            }
-            //写入数据库
-            strSql = "delete from t_bz_coupon where strId='" + strId + "'";
-            bool result = cmd.ExecuteNonQuery(strSql);
-            cmd.Close();
-            return result;
-        }
-
-        private bool updateCoupon(XmlNode xnCoupon)
-        {
-            String strId, strName, dtActiveTime, dtExpireTime, strShopId, strSmallImg, strLargeImg, strPrintImg, strSmallImgOld = "", strLargeImgOld = "", strPrintImgOld = "", strIntro, strInstruction;
-            int intVip, intRecommend;
-            float flaPrice;
-            getCouponProps(xnCoupon, out strId, out strName, out dtActiveTime, out dtExpireTime, out strShopId, out intVip, out flaPrice, out intRecommend,
-                out strSmallImg, out strLargeImg, out strPrintImg, out strIntro, out strInstruction);
-            //查询文件
-            string strSql = "select strSmallImg,strLargeImg, strPrintImg from t_bz_coupon where strId='" + strId + "'";
-            AccessCmd cmd = new AccessCmd();
-            OleDbDataReader reader = cmd.ExecuteReader(strSql);
-            if (reader.Read())
-            {
-                if (!reader.IsDBNull(0))
-                    strSmallImgOld = reader.GetString(0);
-                if (!reader.IsDBNull(1))
-                    strLargeImgOld = reader.GetString(1);
-                if (!reader.IsDBNull(2))
-                    strPrintImgOld = reader.GetString(2);
-            }
-            reader.Close();
-            //文件操作
-            try
-            {
-                if(!strSmallImg.Equals(strSmallImgOld))
-                {
-                    if(!strSmallImgOld.Equals(""))
-                        File.Delete(System.Windows.Forms.Application.StartupPath + "\\coupon\\" + strSmallImgOld);
-                    if (!createImg("coupon", strSmallImg))
-                        return false;
-                }
-                if (!strLargeImgOld.Equals(strLargeImg))
-                {
-                    if(!strLargeImgOld.Equals(""))
-                        File.Delete(System.Windows.Forms.Application.StartupPath + "\\coupon\\" + strLargeImgOld);
-                    if (!createImg("coupon", strLargeImg))
-                        return false;
-                }
-                if (!strPrintImgOld.Equals(strPrintImg))
-                {
-                    if (!strPrintImgOld.Equals(""))
-                        File.Delete(System.Windows.Forms.Application.StartupPath + "\\coupon\\" + strPrintImgOld);
-                    if (!createImg("coupon", strPrintImg))
-                        return false;
-                }
-            }
-            catch (Exception e)
-            {
-                ErrorLog.log(e);
-                return false;
-            }
-            finally
-            {
-                //删除原纪录
-                strSql = "delete from t_bz_coupon where strId='" + strId + "'";
-                cmd.ExecuteNonQuery(strSql);
-                cmd.Close();
-            }
-            cmd = new AccessCmd();
-            //写入数据库（先删除、后增加，保证之前已有的信息可下载）
-            strSql = "insert into t_bz_coupon(strId,strName,dtActiveTime,dtExpireTime,strShopId,intVip,intRecommend,flaPrice,strSmallImg,strLargeImg,strPrintImg,strIntro,strInstruction) " +
-                "values('" + strId + "','" + strName + "','" + dtActiveTime + "','" + dtExpireTime + "','" + strShopId + "'," + intVip + "," + intRecommend + "," + flaPrice +
-                ",'" + strSmallImg + "','" + strLargeImg + "','" + strPrintImg + "','" + strIntro + "','" + strInstruction + "')";
-            bool result = cmd.ExecuteNonQuery(strSql);
-            cmd.Close();
-            return result;
-        }
-
-        private bool addCoupon(XmlNode xnCoupon)
-        {
-            String strId, strName, dtActiveTime, dtExpireTime, strShopId, strSmallImg, strLargeImg, strPrintImg, strIntro, strInstruction;
-            int intVip, intRecommend;
-            float flaPrice;
-            getCouponProps(xnCoupon, out strId, out strName, out dtActiveTime, out dtExpireTime, out strShopId, out intVip, out flaPrice, out intRecommend,
-                out strSmallImg, out strLargeImg, out strPrintImg, out strIntro, out strInstruction);
-            //创建文件
-            if (strSmallImg.Length > 0)
-                if(!createImg("coupon", strSmallImg))
-                    return false;
-            if (strLargeImg.Length > 0)
-                if(!createImg("coupon", strLargeImg))
-                    return false;
-            if (strPrintImg.Length > 0)
-                if (!createImg("coupon", strPrintImg))
-                    return false;
-            //写入数据库
-            AccessCmd cmd = new AccessCmd();
-            string strSql = "insert into t_bz_coupon(strId,strName,dtActiveTime,dtExpireTime,strShopId,intVip,intRecommend,flaPrice,strSmallImg,strLargeImg,strPrintImg,strIntro,strInstruction) " +
-                "values('" + strId + "','" + strName + "','" + dtActiveTime + "','" + dtExpireTime + "','" + strShopId + "'," + intVip + "," + intRecommend + "," + flaPrice +
-                ",'" + strSmallImg + "','" + strLargeImg + "','" + strPrintImg + "','" + strIntro + "','" + strInstruction + "')";
-            bool result = cmd.ExecuteNonQuery(strSql);
-            cmd.Close();
-            return result;
-        }
-
-        private bool deleteShop(XmlNode xnShop)
-        {
-            String strId, strSmallImg = "", strLargeImg = "";
-            XmlElement xeShop = (XmlElement)xnShop;
-            strId = xeShop.GetElementsByTagName("strId").Item(0).InnerText.Trim();
-            //查询文件
-            string strSql = "select strSmallImg,strLargeImg from t_bz_shop where strId='" + strId + "'";
-            AccessCmd cmd = new AccessCmd();
-            OleDbDataReader reader = cmd.ExecuteReader(strSql);
-            if (reader.Read())
-            {
-                strSmallImg = reader.GetString(0);
-                strLargeImg = reader.GetString(1);
-            }
-            reader.Close();
-            //删除原文件
-            if (!strSmallImg.Equals(""))
-            {
-                File.Delete(System.Windows.Forms.Application.StartupPath + "\\shop\\" + strSmallImg);
-            }
-            if (!strLargeImg.Equals(""))
-            {
-                File.Delete(System.Windows.Forms.Application.StartupPath + "\\shop\\" + strLargeImg);
-            }
-            //写入数据库
-            strSql = "delete from t_bz_shop where strId='" + strId + "'";
-            bool result = cmd.ExecuteNonQuery(strSql);
-            cmd.Close();
-            return result;
-        }
-
-        private bool updateShop(XmlNode xnShop)
-        {
-            String strId, strBizName, strShopName, strTrade, strAddr, strIntro, strSmallImg, strSmallImgOld = "", strLargeImg, strLargeImgOld = "", intType = "0", intSort = "0";
-            getShopProps(xnShop, out strId, out strBizName, out strShopName, out strTrade, out strAddr, out strIntro, out strSmallImg, out strLargeImg, out intType, out intSort);
-            //查询文件
-            string strSql = "select strSmallImg,strLargeImg from t_bz_shop where strId='" + strId + "'";
-            AccessCmd cmd = new AccessCmd();
-            OleDbDataReader reader = cmd.ExecuteReader(strSql);
-            if (reader.Read())
-            {
-                strSmallImgOld = reader.GetString(0);
-                strLargeImgOld = reader.GetString(1);
-            }
-            reader.Close();
-            //删除原文件
-            try
-            {
-                if (!strSmallImgOld.Equals(strSmallImg))
-                {
-                    if(!strSmallImgOld.Equals(""))
-                        File.Delete(System.Windows.Forms.Application.StartupPath + "\\shop\\" + strSmallImgOld);
-                    if (!createImg("shop", strSmallImg))
-                        return false;
-                }
-                if (!strLargeImgOld.Equals(strLargeImg))
-                {
-                    if(!strLargeImgOld.Equals(""))
-                        File.Delete(System.Windows.Forms.Application.StartupPath + "\\shop\\" + strLargeImgOld);
-                    if (!createImg("shop", strLargeImg))
-                        return false;
-                }
-            }
-            catch (Exception e)
-            {
-                ErrorLog.log(e);
-                return false;
-            }
-            finally
-            {
-                //删除原纪录
-                strSql = "delete from t_bz_shop where strId='" + strId + "'";
-                cmd.ExecuteNonQuery(strSql);
-                cmd.Close();
-            }
-            cmd = new AccessCmd();
-            //写入数据库（先删除、后增加，保证之前已有的信息可下载）
-            strSql = "insert into t_bz_shop(strId,strBizName,strShopName,strTrade,strAddr,strIntro,strSmallImg,strLargeImg,intType,intSort) values('" + strId + "','" + strBizName + "','" +
-                strShopName + "','" + strTrade + "','" + strAddr + "','" + strIntro + "','" + strSmallImg + "','" + strLargeImg + "'," + intType + ","+intSort+")";
-            bool result = cmd.ExecuteNonQuery(strSql);
-            cmd.Close();
-            return true;
-        }
-
-        private bool addShop(XmlNode xnShop)
-        {
-            String strId, strBizName, strShopName, strTrade, strAddr, strIntro, strSmallImg, strLargeImg, intType, intSort;
-            getShopProps(xnShop, out strId, out strBizName, out strShopName, out strTrade, out strAddr, out strIntro, out strSmallImg, out strLargeImg, out intType, out intSort);
-            //创建文件
-            if (strSmallImg.Length > 0)
-                if(!createImg("shop", strSmallImg))
-                    return false;
-            if (strLargeImg.Length > 0)
-                if(!createImg("shop", strLargeImg))
-                    return false;
-            //写入数据库
-            AccessCmd cmd = new AccessCmd();
-            string strSql = "insert into t_bz_shop(strId,strBizName,strShopName,strTrade,strAddr,strIntro,strSmallImg,strLargeImg,intType,intSort) values('" + strId + "','" + strBizName + "','" + 
-                strShopName + "','" + strTrade + "','" + strAddr + "','" + strIntro + "','" + strSmallImg + "','" + strLargeImg + "'," + intType + "," + intSort + ")";
-            bool result = cmd.ExecuteNonQuery(strSql);
-            cmd.Close();
-            return result;
         }
 
         private static bool createImg(String strType, String strImg)
         {
-            if (strImg == null || strImg.Equals("null"))    //如果null，直接返回
+            if (strImg == null || strImg.Equals("null") || strImg.Length==0)    //如果null或空，直接返回
                 return true;
             WebRequest request = HttpWebRequest.Create(GlobalVariables.StrServerUrl + "/servlet/FileDownload?strFileType=" + strType + "&strFileName=" + strImg);
             Stream stream = request.GetResponse().GetResponseStream();
@@ -564,6 +462,7 @@ namespace ECouponsPrinter
                     sw.WriteLine("[File]" + strType+"  "+strImg);
                     sw.Close();
                     ErrorLog.log(e);
+                    File.Delete(System.Windows.Forms.Application.StartupPath + "\\" + strType + "\\" + strImg);
                     return false;
                 }
                 finally
@@ -702,6 +601,131 @@ namespace ECouponsPrinter
             {
                 return new string[0];
             }
+        }
+    }
+
+    class Shop
+    {
+        private string strId;
+
+        public string StrId
+        {
+            get { return strId; }
+            set { strId = value; }
+        }
+        private string strSmallImg;
+
+        public string StrSmallImg
+        {
+            get { return strSmallImg; }
+            set { strSmallImg = value; }
+        }
+        private string strLargeImg;
+
+        public string StrLargeImg
+        {
+            get { return strLargeImg; }
+            set { strLargeImg = value; }
+        }
+
+        public Shop(OleDbDataReader reader)
+        {
+            this.StrId = reader.GetString(0);
+            if (!reader.IsDBNull(1))
+                this.StrSmallImg = reader.GetString(1);
+            else
+                this.StrSmallImg = "";
+            if(!reader.IsDBNull(2))
+                this.StrLargeImg = reader.GetString(2);
+            else
+                this.StrLargeImg = "";
+        }
+    }
+
+    class Coupon
+    {
+        private string strId;
+
+        public string StrId
+        {
+            get { return strId; }
+            set { strId = value; }
+        }
+        private string strSmallImg;
+
+        public string StrSmallImg
+        {
+            get { return strSmallImg; }
+            set { strSmallImg = value; }
+        }
+        private string strLargeImg;
+
+        public string StrLargeImg
+        {
+            get { return strLargeImg; }
+            set { strLargeImg = value; }
+        }
+        private string strPrintImg;
+
+        public string StrPrintImg
+        {
+            get { return strPrintImg; }
+            set { strPrintImg = value; }
+        }
+
+        public Coupon(OleDbDataReader reader)
+        {
+            this.StrId = reader.GetString(0);
+            if (!reader.IsDBNull(1))
+                this.StrSmallImg = reader.GetString(1);
+            else
+                this.strSmallImg = "";
+            if (!reader.IsDBNull(2))
+                this.StrLargeImg = reader.GetString(2);
+            else
+                this.StrLargeImg = "";
+            if (!reader.IsDBNull(3))
+                this.StrPrintImg = reader.GetString(3);
+            else
+                this.StrPrintImg = "";
+        }
+    }
+
+    class Advertisement
+    {
+        private string strId;
+
+        public string StrId
+        {
+            get { return strId; }
+            set { strId = value; }
+        }
+        private int intType;
+
+        public int IntType
+        {
+            get { return intType; }
+            set { intType = value; }
+        }
+        private string strContent;
+
+        public string StrContent
+        {
+            get { return strContent; }
+            set { strContent = value; }
+        }
+
+        public Advertisement(OleDbDataReader reader)
+        {
+            this.StrId = reader.GetString(0);
+            if(!reader.IsDBNull(1))
+                this.IntType = reader.GetInt32(1);
+            else
+                this.IntType = 3;
+            if (!reader.IsDBNull(2))
+                this.StrContent = reader.GetString(2);
+            else
+                this.StrContent = "";
         }
     }
 }
