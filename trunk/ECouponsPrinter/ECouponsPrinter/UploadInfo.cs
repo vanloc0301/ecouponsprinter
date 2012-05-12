@@ -26,6 +26,16 @@ namespace ECouponsPrinter
             return doc.GetElementsByTagName("return").Item(0).InnerText.Trim();
         }
 
+        public string CouponSendMessage(string strCardNo, string strContent)
+        {
+            request.OpenRequest(GlobalVariables.StrServerUrl + "/servlet/CouponSendBySM?strTerminalNo=" + GlobalVariables.StrTerminalNo + "&strCardNo=" +
+                strCardNo + "&strContent=" + strContent, "");
+            XmlDocument doc = new XmlDocument();
+            string strXml = request.HtmlDocument;
+            doc.LoadXml(strXml);
+            return doc.GetElementsByTagName("return").Item(0).InnerText.Trim();
+        }
+
         public bool CouponPrint()
         {
             AccessCmd cmd = new AccessCmd();

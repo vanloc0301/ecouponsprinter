@@ -39,6 +39,7 @@
             this.Button_Print = new System.Windows.Forms.Button();
             this.PB_Couponpop = new System.Windows.Forms.PictureBox();
             this.Label_Top = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
             this.Panel_Background.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.logo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PB_Couponpop)).BeginInit();
@@ -48,6 +49,7 @@
             // 
             this.Panel_Background.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("Panel_Background.BackgroundImage")));
             this.Panel_Background.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.Panel_Background.Controls.Add(this.button1);
             this.Panel_Background.Controls.Add(this.Label_phone);
             this.Panel_Background.Controls.Add(this.Label_Instruction);
             this.Panel_Background.Controls.Add(this.Label_Into);
@@ -168,6 +170,16 @@
             this.Label_Top.Text = "0551-6868668";
             this.Label_Top.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(165, 669);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 8;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // CouponsPopForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -198,6 +210,7 @@
         private System.Windows.Forms.Label Label_Into;
         private System.Windows.Forms.Label Label_Instruction;
         private System.Windows.Forms.Label Label_phone;
+        private System.Windows.Forms.Button button1;
 
     }
 }

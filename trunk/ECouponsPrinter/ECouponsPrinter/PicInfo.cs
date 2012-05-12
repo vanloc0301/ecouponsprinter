@@ -65,6 +65,13 @@ namespace ECouponsPrinter
         private String _shopId;
         private double _flaPrice;
         private int _vip;
+        private int _intSendBySM;
+
+        public int intSendBySM
+        {
+            get { return _intSendBySM; }
+            set { _intSendBySM = value; }
+        }
 
         public string pPath
         {

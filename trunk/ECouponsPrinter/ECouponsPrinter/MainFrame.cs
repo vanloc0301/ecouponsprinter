@@ -67,6 +67,12 @@ namespace ECouponsPrinter
             //    ChangeControl(c, widthRatio, heightRatio);
             //}
 
+            //将download文件夹中的模板文件转移到template文件夹中
+            UpdateTemplates();
+
+            //加载模板文件
+            LoadTemplates();
+
             //设置定时刷新时钟
             this.Timer_DownloadInfo.Stop();
             this.Timer_DownloadInfo.Interval = GlobalVariables.IntRefreshSec * 1000;
@@ -232,12 +238,12 @@ namespace ECouponsPrinter
 
         private void Button_LastShop_MouseDown(object sender, MouseEventArgs e)
         {
-            this.Button_LastShop.BackgroundImage = Image.FromFile(path + "\\images\\切图\\首页\\上一页_1.jpg");
+            this.Button_LastShop.BackgroundImage = Image.FromFile(path + "\\template\\9.jpg");
         }
 
         private void Button_LastShop_MouseUp(object sender, MouseEventArgs e)
         {
-            this.Button_LastShop.BackgroundImage = Image.FromFile(path + "\\images\\切图\\首页\\上一页.jpg");
+            this.Button_LastShop.BackgroundImage = Image.FromFile(path + "\\template\\8.jpg");
 
             if (curType > 0)
             {
@@ -251,13 +257,13 @@ namespace ECouponsPrinter
 
         private void Button_NextShop_MouseDown(object sender, MouseEventArgs e)
         {
-            this.Button_NextShop.BackgroundImage = Image.FromFile(path + "\\images\\切图\\首页\\后一页_1.jpg");
+            this.Button_NextShop.BackgroundImage = Image.FromFile(path + "\\template\\11.jpg");
         }
 
         private void Button_NextShop_MouseUp(object sender, MouseEventArgs e)
         {
 
-            this.Button_NextShop.BackgroundImage = Image.FromFile(path + "\\images\\切图\\首页\\后一页.jpg");
+            this.Button_NextShop.BackgroundImage = Image.FromFile(path + "\\template\\10.jpg");
 
             int length = LP_stype[0].Count;
 
@@ -275,12 +281,12 @@ namespace ECouponsPrinter
 
         private void Button_ShopInfo_MouseDown(object sender, MouseEventArgs e)
         {
-            this.Button_ShopInfo.BackgroundImage = Image.FromFile(path + "\\images\\切图\\首页\\详细_1.jpg");
+            this.Button_ShopInfo.BackgroundImage = Image.FromFile(path + "\\template\\13.jpg");
         }
 
         private void Button_ShopInfo_MouseUp(object sender, MouseEventArgs e)
         {
-            this.Button_ShopInfo.BackgroundImage = Image.FromFile(path + "\\images\\切图\\首页\\详细.jpg");
+            this.Button_ShopInfo.BackgroundImage = Image.FromFile(path + "\\template\\12.jpg");
 
             if (LP_stype[0] != null && LP_stype[0].Count > 0)
             {
@@ -340,14 +346,22 @@ namespace ECouponsPrinter
             switch (pb.Name)
             {
                 case "PB_Shop_Type1_LastPage":
+                    pb.Image = Image.FromFile(path + "\\template\\35.jpg");
+                    return;
                 case "PB_Shop_Type2_LastPage":
+                    pb.Image = Image.FromFile(path + "\\template\\39.jpg");
+                    return;
                 case "PB_Shop_Type3_LastPage":
-                    pb.Image = Image.FromFile(path + "\\images\\切图\\商家二级\\L1.jpg");
+                    pb.Image = Image.FromFile(path + "\\template\\43.jpg");
                     return;
                 case "PB_Shop_Type1_NextPage":
+                    pb.Image = Image.FromFile(path + "\\template\\37.jpg");
+                    return;
                 case "PB_Shop_Type2_NextPage":
+                    pb.Image = Image.FromFile(path + "\\template\\41.jpg");
+                    return;
                 case "PB_Shop_Type3_NextPage":
-                    pb.Image = Image.FromFile(path + "\\images\\切图\\商家二级\\N1.jpg");
+                    pb.Image = Image.FromFile(path + "\\template\\45.jpg");
                     return;
 
             }
@@ -362,7 +376,7 @@ namespace ECouponsPrinter
             switch (pb.Name)
             {
                 case "PB_Shop_Type1_LastPage":
-                    pb.Image = Image.FromFile(path + "\\images\\切图\\商家二级\\L.jpg");
+                    pb.Image = Image.FromFile(path + "\\template\\34.jpg");
                     if (tPage1 > 1)
                     {
                         tPage1--;
@@ -370,7 +384,7 @@ namespace ECouponsPrinter
                     }
                     return;
                 case "PB_Shop_Type2_LastPage":
-                    pb.Image = Image.FromFile(path + "\\images\\切图\\商家二级\\L.jpg");
+                    pb.Image = Image.FromFile(path + "\\template\\38.jpg");
                     if (tPage2 > 1)
                     {
                         tPage2--;
@@ -378,7 +392,7 @@ namespace ECouponsPrinter
                     }
                     return;
                 case "PB_Shop_Type3_LastPage":
-                    pb.Image = Image.FromFile(path + "\\images\\切图\\商家二级\\L.jpg");
+                    pb.Image = Image.FromFile(path + "\\template\\42.jpg");
                     if (tPage3 > 1)
                     {
                         tPage3--;
@@ -386,7 +400,7 @@ namespace ECouponsPrinter
                     }
                     return;
                 case "PB_Shop_Type1_NextPage":
-                    pb.Image = Image.FromFile(path + "\\images\\切图\\商家二级\\N.jpg");
+                    pb.Image = Image.FromFile(path + "\\template\\36.jpg");
                     iCount = LP_stype[0].Count;
                     tPage = iCount / 12 + (iCount % 12 == 0 ? 0 : 1);
 
@@ -397,7 +411,7 @@ namespace ECouponsPrinter
                     }
                     return;
                 case "PB_Shop_Type2_NextPage":
-                    pb.Image = Image.FromFile(path + "\\images\\切图\\商家二级\\N.jpg");
+                    pb.Image = Image.FromFile(path + "\\template\\40.jpg");
                     if (LP_stype.Length < 2)
                     {
                         return;
@@ -417,7 +431,7 @@ namespace ECouponsPrinter
                     }
                     return;
                 case "PB_Shop_Type3_NextPage":
-                    pb.Image = Image.FromFile(path + "\\images\\切图\\商家二级\\N.jpg");
+                    pb.Image = Image.FromFile(path + "\\template\\44.jpg");
                     if (LP_stype.Length < 3)
                     {
                         return;
@@ -447,7 +461,7 @@ namespace ECouponsPrinter
         private void Button_Coupon_LastPage_MouseUp(object sender, MouseEventArgs e)
         {
             Button btn = (Button)sender;
-            btn.BackgroundImage = Image.FromFile(path + "\\images\\切图\\我的专区\\last.jpg");
+            btn.BackgroundImage = Image.FromFile(path + "\\template\\60.jpg");
 
             String name = btn.Name;
             switch (name)
@@ -472,13 +486,13 @@ namespace ECouponsPrinter
         private void Button_Coupon_LastPage_MouseDown(object sender, MouseEventArgs e)
         {
             Button btn = sender as Button;
-            btn.BackgroundImage = Image.FromFile(path + "\\images\\切图\\我的专区\\last_1.jpg");
+            btn.BackgroundImage = Image.FromFile(path + "\\template\\61.jpg");
         }
 
         private void Button_Coupon_NextPage_MouseUp(object sender, MouseEventArgs e)
         {
             Button btn = (Button)sender;
-            btn.BackgroundImage = Image.FromFile(path + "\\images\\切图\\我的专区\\next.jpg");
+            btn.BackgroundImage = Image.FromFile(path + "\\template\\62.jpg");
 
             String name = btn.Name;
             int pageAll = 1;
@@ -506,7 +520,7 @@ namespace ECouponsPrinter
         private void Button_Coupon_NextPage_MouseDown(object sender, MouseEventArgs e)
         {
             Button btn = (Button)sender;
-            btn.BackgroundImage = Image.FromFile(path + "\\images\\切图\\我的专区\\next_1.jpg");
+            btn.BackgroundImage = Image.FromFile(path + "\\template\\63.jpg");
         }
 
         #endregion
@@ -546,12 +560,12 @@ namespace ECouponsPrinter
         #region "左箭头"和"右箭头"事件处理
         private void Button_CouponsLeft_MouseDown(object sender, MouseEventArgs e)
         {
-            PB_Coupon_Left.BackgroundImage = Image.FromFile(path + "\\images\\切图\\优惠券二级\\left_1.jpg");
+            PB_Coupon_Left.BackgroundImage = Image.FromFile(path + "\\template\\52.jpg");
         }
 
         private void Button_CouponsLeft_MouseUp(object sender, MouseEventArgs e)
         {
-            PB_Coupon_Left.BackgroundImage = Image.FromFile(path + "\\images\\切图\\优惠券二级\\left.jpg");
+            PB_Coupon_Left.BackgroundImage = Image.FromFile(path + "\\template\\51.jpg");
 
             if (curPage > 1)
             {
@@ -562,12 +576,12 @@ namespace ECouponsPrinter
 
         private void Button_CouponsRight_MouseDown(object sender, MouseEventArgs e)
         {
-            this.PB_Coupon_Right.BackgroundImage = Image.FromFile(path + "\\images\\切图\\优惠券二级\\right_1.jpg");
+            this.PB_Coupon_Right.BackgroundImage = Image.FromFile(path + "\\template\\54.jpg");
         }
 
         private void Button_CouponsRight_MouseUp(object sender, MouseEventArgs e)
         {
-            this.PB_Coupon_Right.BackgroundImage = Image.FromFile(path + "\\images\\切图\\优惠券二级\\right.jpg");
+            this.PB_Coupon_Right.BackgroundImage = Image.FromFile(path + "\\template\\53.jpg");
 
             if (curPage < totalPage)
             {
@@ -698,12 +712,12 @@ namespace ECouponsPrinter
         #region 周边商家
         private void Button_NearShopInfo_MouseDown(object sender, MouseEventArgs e)
         {
-            this.Btn_NearShopInfo.BackgroundImage = Image.FromFile(path + "\\images\\切图\\首页\\详细_1.jpg");
+            this.Btn_NearShopInfo.BackgroundImage = Image.FromFile(path + "\\template\\80.jpg");
         }
 
         private void Button_NearShopInfo_MouseUp(object sender, MouseEventArgs e)
         {
-            this.Btn_NearShopInfo.BackgroundImage = Image.FromFile(path + "\\images\\切图\\首页\\详细.jpg");
+            this.Btn_NearShopInfo.BackgroundImage = Image.FromFile(path + "\\template\\79.jpg");
 
             if (LP_stype[0] != null && LP_stype[0].Count > 0)
             {
@@ -736,8 +750,6 @@ namespace ECouponsPrinter
 
         private void Button_HomePage_MouseUp(object sender, MouseEventArgs e)
         {
-            ResumePanelBottomState();
-            this.Button_HomePage.BackgroundImage = Image.FromFile(path + "\\images\\Frame\\首页-js.jpg");
             //准备工作
             this.UnVisibleAllPanels();
 
@@ -760,7 +772,15 @@ namespace ECouponsPrinter
 
         private void Button_HomePage_MouseDown(object sender, MouseEventArgs e)
         {
-            this.Button_HomePage.BackgroundImage = Image.FromFile(path + "\\images\\切图\\首页\\首页_1.jpg");
+            ResumePanelBottomState();
+            try
+            {
+                this.Button_HomePage.BackgroundImage = Image.FromFile(path + "\\template\\90.jpg");
+            }
+            catch (Exception e1)
+            {
+                ErrorLog.log(e1);
+            }
         }
 
         #endregion
@@ -769,8 +789,6 @@ namespace ECouponsPrinter
 
         private void Button_ShopPage_MouseUp(object sender, MouseEventArgs e)
         {
-            ResumePanelBottomState();
-            this.Button_ShopPage.BackgroundImage = Image.FromFile(path + "\\images\\Frame\\商家-js.jpg");
 
             if (LP_shop == null || LP_shop.Count == 0)
             {
@@ -860,7 +878,8 @@ namespace ECouponsPrinter
 
         private void Button_ShopPage_MouseDown(object sender, MouseEventArgs e)
         {
-            this.Button_ShopPage.BackgroundImage = Image.FromFile(path + "\\images\\切图\\首页\\商家_1.jpg");
+            ResumePanelBottomState();
+            this.Button_ShopPage.BackgroundImage = Image.FromFile(path + "\\template\\92.jpg");
         }
 
         #endregion
@@ -869,9 +888,6 @@ namespace ECouponsPrinter
 
         private void Button_CouponsPage_MouseUp(object sender, MouseEventArgs e)
         {
-            ResumePanelBottomState();
-            this.Button_CouponsPage.BackgroundImage = Image.FromFile(path + "\\images\\Frame\\优惠券-js.jpg");
-
             //切换
             int y = this.VerticalScroll.Value;
             this.Panel_Coupons.Location = new System.Drawing.Point(0, 95 - y);
@@ -882,7 +898,8 @@ namespace ECouponsPrinter
                 mb.ShowMsg("暂无优惠劵信息！", 2);
                 return;
             }
-            InitCouponData(GetTradeName()[0], 'c');
+          //  InitCouponData(GetTradeName()[0], 'c');
+            InitCouponData("", 'c');
             Thread.Sleep(20);
             //准备工作
             this.UnVisibleAllPanels();
@@ -896,9 +913,9 @@ namespace ECouponsPrinter
             this.Btn_Rec.Visible = true;
             this.Btn_NewCouponList.Visible = true;
 
-            InitCouponButton();
+            //      InitCouponButton();
             this.Panel_Coupons.Visible = true;
-            ShowCouponCommonBtn();
+            //       ShowCouponCommonBtn();
             ShowCoupon();
 
             //         Thread.Sleep(100);
@@ -959,8 +976,8 @@ namespace ECouponsPrinter
 
         private void Button_CouponsPage_MouseDown(object sender, MouseEventArgs e)
         {
-            this.Button_CouponsPage.BackgroundImage = Image.FromFile(path + "\\images\\切图\\首页\\优惠券_1.jpg");
-
+            ResumePanelBottomState();
+            this.Button_CouponsPage.BackgroundImage = Image.FromFile(path + "\\template\\94.jpg");
         }
 
         #endregion
@@ -969,9 +986,6 @@ namespace ECouponsPrinter
 
         private void Button_MyInfoPage_MouseUp(object sender, MouseEventArgs e)
         {
-            ResumePanelBottomState();
-            this.Button_MyInfoPage.BackgroundImage = Image.FromFile(path + "\\images\\Frame\\我的专区-js.jpg");
-
             if (!GlobalVariables.isUserLogin)
             {
                 MyMsgBox mb = new MyMsgBox();
@@ -1000,8 +1014,8 @@ namespace ECouponsPrinter
 
         private void Button_MyInfoPage_MouseDown(object sender, MouseEventArgs e)
         {
-            this.Button_MyInfoPage.BackgroundImage = Image.FromFile(path + "\\images\\切图\\首页\\我的专区_1.jpg");
-
+            ResumePanelBottomState();
+            this.Button_MyInfoPage.BackgroundImage = Image.FromFile(path + "\\template\\96.jpg");
         }
 
         #endregion
@@ -1009,13 +1023,13 @@ namespace ECouponsPrinter
         #region "周边商家"按钮事件
         private void Button_NearShop_MouseDown(object sender, MouseEventArgs e)
         {
-            this.Button_NearShop.BackgroundImage = Image.FromFile(path + "\\images\\切图\\首页\\周边商家_1.jpg");
+            ResumePanelBottomState();
+            this.Button_NearShop.BackgroundImage = Image.FromFile(path + "\\template\\98.jpg");
+
         }
 
         private void Button_NearShop_MouseUp(object sender, MouseEventArgs e)
         {
-            ResumePanelBottomState();
-            this.Button_NearShop.BackgroundImage = Image.FromFile(path + "\\images\\Frame\\周边商家-js.jpg");
 
             //切换
             int y = this.VerticalScroll.Value;
@@ -1042,13 +1056,12 @@ namespace ECouponsPrinter
         #region "VIP专区"按钮事件
         private void Button_VIP_MouseDown(object sender, MouseEventArgs e)
         {
-            this.Button_Vip.BackgroundImage = Image.FromFile(path + "\\images\\切图\\首页\\VIP专区_1.jpg");
+            ResumePanelBottomState();
+            this.Button_Vip.BackgroundImage = Image.FromFile(path + "\\template\\100.jpg");
         }
 
         private void Button_VIP_MouseUp(object sender, MouseEventArgs e)
         {
-            ResumePanelBottomState();
-            this.Button_Vip.BackgroundImage = Image.FromFile(path + "\\images\\Frame\\VIP专区-js.jpg");
 
             if (GlobalVariables.M.IntType == 1)
             {
@@ -1063,7 +1076,8 @@ namespace ECouponsPrinter
                     return;
                 }
 
-                InitCouponData(GetTradeName()[0], 'v');
+      //          InitCouponData(GetTradeName()[0], 'v');
+                InitCouponData("", 'v');
                 Thread.Sleep(20);
 
                 //准备工作
@@ -1078,7 +1092,7 @@ namespace ECouponsPrinter
 
                 InitCouponButton();
 
-                ShowCouponVipBtn();
+            //    ShowCouponVipBtn();
                 this.Panel_Coupons.Visible = true;
                 ShowCoupon();
             }
@@ -1135,7 +1149,7 @@ namespace ECouponsPrinter
 
         private void Button_LastCouponsPage_MouseUp(object sender, MouseEventArgs e)
         {
-            this.Button_LastCouponsPage.BackgroundImage = Image.FromFile(path + "\\images\\切图\\首页\\上一页(小).jpg");
+            this.Button_LastCouponsPage.BackgroundImage = Image.FromFile(path + "\\template\\101.jpg");
 
             if (this.Panel_ShopInfo.Visible)
             {
@@ -1167,7 +1181,7 @@ namespace ECouponsPrinter
 
         private void Button_LastCouponsPage_MouseDown(object sender, MouseEventArgs e)
         {
-            this.Button_LastCouponsPage.BackgroundImage = Image.FromFile(path + "\\images\\切图\\首页\\上一页(小)_1.jpg");
+            this.Button_LastCouponsPage.BackgroundImage = Image.FromFile(path + "\\template\\102.jpg");
         }
 
         #endregion
@@ -1176,7 +1190,7 @@ namespace ECouponsPrinter
 
         private void Button_NextCouponsPage_MouseUp(object sender, MouseEventArgs e)
         {
-            this.Button_NextCouponsPage.BackgroundImage = Image.FromFile(path + "\\images\\切图\\首页\\后一页(小).jpg");
+            this.Button_NextCouponsPage.BackgroundImage = Image.FromFile(path + "\\template\\103.jpg");
 
             if (this.Panel_ShopInfo.Visible)
             {
@@ -1215,7 +1229,7 @@ namespace ECouponsPrinter
 
         private void Button_NextCouponsPage_MouseDown(object sender, MouseEventArgs e)
         {
-            this.Button_NextCouponsPage.BackgroundImage = Image.FromFile(path + "\\images\\切图\\首页\\后一页(小)_1.jpg");
+            this.Button_NextCouponsPage.BackgroundImage = Image.FromFile(path + "\\template\\104.jpg");
         }
 
         #endregion
@@ -1760,6 +1774,11 @@ namespace ECouponsPrinter
                 try
                 {
                     CouponPicInfo pi = new CouponPicInfo();
+
+                    if (!reader.IsDBNull(13))
+                    {
+                        pi.intSendBySM = reader.GetInt32(13);
+                    }
 
                     if (!reader.IsDBNull(9))
                     {
@@ -3280,6 +3299,28 @@ namespace ECouponsPrinter
         }
 
         /// <summary>
+        /// 获取指定名称的控件
+        /// </summary>
+        /// <param name="ControlName">控件的Name</param>
+        /// <returns></returns>
+        private Control GetControl(String ControlName)
+        {
+            foreach (Control item in this.Controls)
+            {
+                if (item.Name == ControlName)
+                    return item;
+
+                if (item is Panel)
+                {
+                    Control ctl = GetControl(ControlName, item as Panel);
+                    if (ctl != null)
+                        return ctl;
+                }
+            }
+            return null;
+        }
+
+        /// <summary>
         /// 按商店来划分优惠劵
         /// </summary>
         /// <param name="shopId">商店id</param>
@@ -3329,7 +3370,7 @@ namespace ECouponsPrinter
 
             foreach (CouponPicInfo pi in LP_coupon)
             {
-                if (pi.trade == trade)
+                if (pi.trade == trade || trade == "")
                 {
                     temp.Add(pi);
                 }
@@ -3477,7 +3518,7 @@ namespace ECouponsPrinter
         private void TranlateLabel_Click(object sender, EventArgs e)
         {
             Label lb = sender as Label;
-            int type = 1;        //0表示收藏，非0表示打印
+            int type = 1;        //0表示收藏，1表示打印
 
             String id = null;
             CouponPicInfo pi = null;
@@ -3624,6 +3665,7 @@ namespace ECouponsPrinter
                             }
                         }
                     }
+                   
                 }
                 else
                     return;
@@ -4553,14 +4595,146 @@ namespace ECouponsPrinter
         private void ResumePanelBottomState()
         {
             Button[] btn = { Button_HomePage, Button_ShopPage, Button_CouponsPage, Button_MyInfoPage, Button_NearShop, Button_Vip };
-            string[] image = { "首页", "商家", "优惠券", "我的专区", "周边商家", "VIP专区" };
+            string[] image = { "89", "91", "93", "95", "97", "99" };
 
             for (int i = 0; i < 6; i++)
             {
-                btn[i].BackgroundImage = Image.FromFile(path + "\\images\\切图\\首页\\" + image[i] + ".jpg");
+                btn[i].BackgroundImage = Image.FromFile(path + "\\template\\" + image[i] + ".jpg");
             }
         }
 
+        /// <summary>
+        /// 加载界面元素
+        /// </summary>
+        private void LoadTemplates()
+        {
+            string sql = "select * from t_bz_templates order by strId asc";
+            AccessCmd cmd = new AccessCmd(0);
+            OleDbDataReader reader = cmd.ExecuteReader(sql);
+            List<Element> lstlocal = new List<Element>();
+
+            while (reader.Read())
+            {
+                Element element = new Element(reader);
+                lstlocal.Add(element);
+            }
+
+            reader.Close();
+            cmd.Close();
+            for (int i = 0; i < lstlocal.Count; i++)
+            {
+                Element element = lstlocal.ElementAt(i);
+                if (element.strCtlName == "PB_Shop_Type2_NextPage")
+                {
+                    Console.WriteLine("");
+                }
+                Control ctl = GetControl(element.strCtlName);
+                if (ctl == null)
+                    continue;
+
+                try
+                {
+                    if (!element.strLocation.Equals(""))
+                    {
+                        Point old_P = ctl.Location;
+                        try
+                        {
+                            ctl.Location = new Point(Convert.ToInt32(element.strLocation.Split(',')[0]), Convert.ToInt32(element.strLocation.Split(',')[1]));
+                        }
+                        catch
+                        {
+                            ctl.Location = old_P;
+                        }
+
+                        Size old_S = ctl.Size;
+                        try
+                        {
+                            ctl.Size = new Size(Convert.ToInt32(element.strSize.Split(',')[0]), Convert.ToInt32(element.strSize.Split(',')[1]));
+                        }
+                        catch
+                        {
+                            ctl.Size = old_S;
+                        }
+
+                        if (!element.strBgImage.Equals(""))
+                        {
+                            if ((ctl is PictureBox) && (ctl as PictureBox).Image == null)
+                                continue;
+                            FileStream pFileStream;
+                            try
+                            {
+                                pFileStream = new FileStream(path + "\\template\\" + element.strBgImage, FileMode.Open, FileAccess.Read);
+                                if(ctl is Label)
+                                    (ctl as Label).Image = new Bitmap(Image.FromStream(pFileStream), ctl.Size);
+                                else
+                                    ctl.BackgroundImage = new Bitmap(Image.FromStream(pFileStream), ctl.Size);
+                                pFileStream.Close();
+                                pFileStream.Dispose();
+                            }
+                            catch
+                            {
+                                pFileStream = new FileStream(path + "\\defalut\\" + element.strBgImage, FileMode.Open, FileAccess.Read);
+                                if (ctl is Label)
+                                    (ctl as Label).Image = new Bitmap(Image.FromStream(pFileStream), ctl.Size);
+                                else
+                                    ctl.BackgroundImage = new Bitmap(Image.FromStream(pFileStream), ctl.Size);
+                                pFileStream.Close();
+                                pFileStream.Dispose();
+                            }
+                        }
+
+                        if (!element.strFontFamily.Equals(""))
+                        {
+                            if (ctl is Panel || ctl is PictureBox)
+                                continue;
+
+                            Font old_F = ctl.Font;
+
+                            try
+                            {
+                                ctl.Font = new Font(element.strFontFamily, element.intFontSize, old_F.Style);
+                            }
+                            catch
+                            {
+                                ctl.Font = old_F;
+                            }
+
+                            ctl.ForeColor = Color.FromArgb(Convert.ToInt32(element.strFontColor.Split(',')[0]), Convert.ToInt32(element.strFontColor.Split(',')[1]),
+                                                            Convert.ToInt32(element.strFontColor.Split(',')[2]));
+
+                            if (!element.strContent.Equals(""))
+                            {
+                                if (ctl is Panel || ctl is PictureBox)
+                                    continue;
+                                ctl.Text = element.strContent;
+                            }
+                        }
+                    }
+                }
+                catch (Exception e)
+                {
+                    ErrorLog.log(e);
+                }
+            }
+
+        }
+
+        /// <summary>
+        /// 更新模板文件夹内的文件
+        /// </summary>
+        private void UpdateTemplates()
+        {
+            string[] files = Directory.GetFiles(path + "\\download\\");
+            if (files.Length == 0)
+                return;
+
+            foreach (string file in files)
+            {
+                File.Copy(file, path + "\\template\\" + Path.GetFileNameWithoutExtension(file) + ".jpg", true);
+                File.Delete(file);
+            }
+
+        }
 
     }
 }
