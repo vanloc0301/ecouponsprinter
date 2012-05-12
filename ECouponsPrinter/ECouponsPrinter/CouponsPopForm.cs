@@ -23,8 +23,9 @@ namespace ECouponsPrinter
         PrintDocument pd = new PrintDocument();
         Wait wait;
         string MD5code = "";
-        string Intro, Instruction, bottomText;
+        string Intro, Instruction, bottomText, strMesContent;
         private MainFrame Frame;
+        Thread thSendMes;
 
         public CouponsPopForm(CouponPicInfo info, MainFrame myFrame)
         {
@@ -41,6 +42,15 @@ namespace ECouponsPrinter
             pd.EndPrint += new PrintEventHandler(pd_EndPrint);
             pd.PrintPage += new PrintPageEventHandler(pd_PrintPage);
             pd.DocumentName = "coupon";
+
+            if (pi.intSendBySM == 1)
+            {
+                button1.Visible = true;
+            }
+            else
+            {
+                button1.Visible = false;
+            }
         }
 
         #region 关闭优惠劵弹出窗口
@@ -58,6 +68,68 @@ namespace ECouponsPrinter
         }
 
         #endregion
+
+        /// <summary>
+        /// 发送短信
+        /// </summary>
+        private void SendMessage()
+        {
+            MyMsgBox mb = new MyMsgBox();
+            mb.ShowMsg("是否发送此优惠劵的信息到您的手机上?\n(信息不收取任何费用)", '1');
+            if (mb.DialogResult == DialogResult.Yes)
+            {
+                string strSql = "select strIntro from t_bz_coupon where strId='" + pi.id + "'";
+                AccessCmd cmd = new AccessCmd(); ;
+                OleDbDataReader reader = cmd.ExecuteReader(strSql);
+
+                if (reader.Read())
+                {
+                    if (!reader.IsDBNull(0))
+                    {
+                        strMesContent = reader.GetString(0).Trim();
+                    }
+                    else
+                    {
+                        strMesContent = "";
+                    }
+                }
+                reader.Close();
+                cmd.Close();
+
+                if (strMesContent != "")
+                {
+                    if (thSendMes != null)
+                    {
+                        if (thSendMes.IsAlive)
+                        {
+                            mb.ShowMsg("短信服务器忙,请稍后再试!", 1);
+                            thSendMes.Abort();
+                            thSendMes.Join();
+                            return;
+                        }
+                    }
+
+                    thSendMes = new Thread(new ThreadStart(SendMes));
+                    thSendMes.Start();
+                    mb.ShowMsg("短信已发送!", 1);
+                }
+                else
+                {
+                    mb.ShowMsg("该优惠劵暂无优惠信息", 1);
+                    return;
+                }
+            }
+        }
+
+        /// <summary>
+        /// 线程函数，发送短信
+        /// </summary>
+        private void SendMes()
+        {
+            UploadInfo ui = new UploadInfo();
+            ui.CouponSendMessage(GlobalVariables.LoginUserId, strMesContent);
+
+        }
 
         private void Button_Print_MouseDown(object sender, MouseEventArgs e)
         {
@@ -554,6 +626,12 @@ namespace ECouponsPrinter
                 wait.CloseScrollBar();
                 return;
             }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Frame.InitUserQuitTime();
+            this.SendMessage();
         }
     }
 }

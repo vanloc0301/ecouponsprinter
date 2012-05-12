@@ -20,6 +20,15 @@ namespace ECouponsPrinter
             objConn.Open();
         }
 
+        public AccessCmd(int type)
+        {
+            if (type == 0)
+            {
+                objConn = new OleDbConnection("Provider=Microsoft.Jet.OleDb.4.0;Data Source=" +
+            System.Windows.Forms.Application.StartupPath + "\\templates.mdb");
+            }
+        }
+
         public OleDbDataReader ExecuteReader(String strSql)
         {
             try

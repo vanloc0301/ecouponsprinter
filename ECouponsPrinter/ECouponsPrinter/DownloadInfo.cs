@@ -16,7 +16,7 @@ namespace ECouponsPrinter
         private HttpRequest request = new HttpRequest();
         private MainFrame form;
 
-        public DownloadInfo(MainFrame f) 
+        public DownloadInfo(MainFrame f)
         {
             form = f;
         }
@@ -24,6 +24,86 @@ namespace ECouponsPrinter
         public void download()
         {
             AccessCmd cmd = new AccessCmd();
+            AccessCmd comd = new AccessCmd(0);
+            //下载界面元素信息
+            try
+            {
+                request.OpenRequest(GlobalVariables.StrServerUrl + "/servlet/TemplateParam?strTerminalNo=" + GlobalVariables.StrTerminalNo, "");
+                XmlDocument doc = new XmlDocument();
+                string strXml = request.HtmlDocument;
+                Console.WriteLine(strXml);
+                if (strXml.IndexOf("<templates>") >= 0)
+                {
+                    //加载服务器信息
+                    doc.LoadXml(strXml);
+                    //加载顶部框架信息
+                    XmlNodeList xnlTop = doc.GetElementsByTagName("top").Item(0).ChildNodes;
+                    XmlNodeList xnlBottom = doc.GetElementsByTagName("bottom").Item(0).ChildNodes;
+                    XmlNodeList xnlMiddle = doc.GetElementsByTagName("middle").Item(0).ChildNodes;
+
+                    List<XmlNodeList> lst_xnl = new List<XmlNodeList>();
+                    lst_xnl.Add(xnlTop);
+                    for (int j = 0; j < xnlMiddle.Count; j++)
+                    {
+                        lst_xnl.Add(xnlMiddle[j].ChildNodes);
+                    }
+                    lst_xnl.Add(xnlBottom);
+                    
+                    //加载本地信息
+                    string strSql = "select * from t_bz_templates order by strId asc";
+                    OleDbDataReader reader = comd.ExecuteReader(strSql);
+                    List<Element> lstLocal = new List<Element>();
+                    while (reader.Read())
+                    {
+                        Element element = new Element(reader);
+                        lstLocal.Add(element);
+                    }
+                    reader.Close();
+
+                    int index = 0;
+                    //依次对比服务器与本地信息，保证两者一致
+                    for (int t = 0; t < lst_xnl.Count; t++)
+                    {
+                        XmlNodeList xnlTemp = lst_xnl[t];
+                        for (int i = 0; i < xnlTemp.Count; i++)
+                        {
+                            try
+                            {
+                                //获得服务器记录信息
+                                XmlElement  xe = (XmlElement)xnlTemp[i];
+                                String strLocation, strSize, strBgImage, strFontFamily, strContent, strFontSize, strFontColor, strSort;
+                                getTemplateProps(xe, out strLocation, out strSize, out strBgImage, out strFontFamily, out strContent, out strFontSize, out strFontColor, out strSort);
+                                //比对本地信息
+                                Element localtemplate = lstLocal.ElementAt(Convert.ToInt16(strSort) - 1);
+
+                                //找到本地信息，先更新图片
+                                bool bolImg = true;
+                                bolImg = createImg("template", strBgImage);
+
+                                //图片操作正常，删除原图片并更新数据库
+                                if (bolImg)
+                                {
+                                    comd.ExecuteNonQuery("update t_bz_templates set strLocation='" + strLocation + "',strSize='" + strSize + "',strFontFamily='" + strFontFamily +
+                                        "',strContent='" + strContent + "',intFontSize=" + Convert.ToInt16(strFontSize) + ",strFontColor='" + strFontColor + "' where strName='"+localtemplate.strName+"'");
+                                }
+                                index++;
+                                continue;
+                            }
+                            catch (Exception e)
+                            {
+                                ErrorLog.log(e);
+                            }
+                        }
+                    }             
+                }
+            }
+            catch (Exception e)
+            {
+                ErrorLog.log(e);
+
+            }
+            comd.Close();
+
             //下载商家信息
             try
             {
@@ -37,8 +117,8 @@ namespace ECouponsPrinter
                     XmlNodeList xnlShop = doc.GetElementsByTagName("shop");
                     //加载本地信息
                     string strSql = "select strId,strSmallImg,strLargeImg from t_bz_shop";
-                    OleDbDataReader reader=cmd.ExecuteReader(strSql);
-                    List<Shop> lstShop=new List<Shop>();
+                    OleDbDataReader reader = cmd.ExecuteReader(strSql);
+                    List<Shop> lstShop = new List<Shop>();
                     while (reader.Read())
                     {
                         Shop shop = new Shop(reader);
@@ -85,7 +165,7 @@ namespace ECouponsPrinter
                                         cmd.ExecuteNonQuery("update t_bz_shop set strBizName='" + strBizName + "',strShopName='" + strShopName + "',strTrade='" + strTrade + "',strAddr='" + strAddr +
                                             "',strIntro='" + strIntro + "',strSmallImg='" + strSmallImg + "',strLargeImg='" + strLargeImg + "',intType=" + intType + ",intSort=" + intSort +
                                             " where strId='" + strId + "'");
-                                        if(!strSmallImg.Equals(localShop.StrSmallImg))
+                                        if (!strSmallImg.Equals(localShop.StrSmallImg))
                                             File.Delete(System.Windows.Forms.Application.StartupPath + "\\shop\\" + localShop.StrSmallImg);
                                         if (!strLargeImg.Equals(localShop.StrLargeImg))
                                             File.Delete(System.Windows.Forms.Application.StartupPath + "\\shop\\" + localShop.StrLargeImg);
@@ -116,7 +196,7 @@ namespace ECouponsPrinter
                                 }
                             }
                         }
-                        catch(Exception e)
+                        catch (Exception e)
                         {
                             ErrorLog.log(e);
                         }
@@ -126,9 +206,9 @@ namespace ECouponsPrinter
                     {
                         Shop localShop = lstShop.ElementAt(i);
                         cmd.ExecuteNonQuery("delete from t_bz_shop where strId='" + localShop.StrId + "'");
-                        if(localShop.StrSmallImg.Length>0)
+                        if (localShop.StrSmallImg.Length > 0)
                             File.Delete(System.Windows.Forms.Application.StartupPath + "\\shop\\" + localShop.StrSmallImg);
-                        if(localShop.StrLargeImg.Length>0)
+                        if (localShop.StrLargeImg.Length > 0)
                             File.Delete(System.Windows.Forms.Application.StartupPath + "\\shop\\" + localShop.StrLargeImg);
                     }
                 }
@@ -167,10 +247,11 @@ namespace ECouponsPrinter
                             //获得服务器记录信息
                             XmlElement xeCoupon = (XmlElement)xnlCoupon.Item(i);
                             String strId, strName, dtActiveTime, dtExpireTime, strShopId, strSmallImg, strLargeImg, strPrintImg, strIntro, strInstruction;
-                            int intVip, intRecommend;
+                            int intVip, intRecommend, intSendBySM;
                             float flaPrice;
                             getCouponProps(xeCoupon, out strId, out strName, out dtActiveTime, out dtExpireTime, out strShopId, out intVip, out flaPrice, out intRecommend,
-                                out strSmallImg, out strLargeImg, out strPrintImg, out strIntro, out strInstruction);
+                                out strSmallImg, out strLargeImg, out strPrintImg, out strIntro, out strInstruction,out intSendBySM);
+
                             //比对本地信息
                             for (int j = 0; j < lstCoupon.Count; j++)
                             {
@@ -209,13 +290,13 @@ namespace ECouponsPrinter
                                     {
                                         cmd.ExecuteNonQuery("update t_bz_coupon set strName='" + strName + "',dtActiveTime='" + dtActiveTime + "',dtExpireTime='" + dtExpireTime +
                                             "',strShopId='" + strShopId + "',intVip=" + intVip + ",intRecommend=" + intRecommend + ",flaPrice=" + flaPrice + ",strSmallImg='" + strSmallImg +
-                                            "',strLargeImg='" + strLargeImg + "',strPrintImg='" + strPrintImg + "',strIntro='" + strIntro + "',strInstruction='" + strInstruction + 
-                                            "' where strId='" + strId + "'");
-                                        if(!strSmallImg.Equals(localCoupon.StrSmallImg))
+                                            "',strLargeImg='" + strLargeImg + "',strPrintImg='" + strPrintImg + "',strIntro='" + strIntro + "',strInstruction='" + strInstruction + "',intSendBySM=" + intSendBySM +
+                                            " where strId='" + strId + "'");
+                                        if (!strSmallImg.Equals(localCoupon.StrSmallImg))
                                             File.Delete(System.Windows.Forms.Application.StartupPath + "\\coupon\\" + localCoupon.StrSmallImg);
-                                        if(!strLargeImg.Equals(localCoupon.StrLargeImg))
+                                        if (!strLargeImg.Equals(localCoupon.StrLargeImg))
                                             File.Delete(System.Windows.Forms.Application.StartupPath + "\\coupon\\" + localCoupon.StrLargeImg);
-                                        if(!strPrintImg.Equals(localCoupon.StrPrintImg))
+                                        if (!strPrintImg.Equals(localCoupon.StrPrintImg))
                                             File.Delete(System.Windows.Forms.Application.StartupPath + "\\coupon\\" + localCoupon.StrPrintImg);
                                     }
                                     strId = "";
@@ -242,9 +323,9 @@ namespace ECouponsPrinter
                                 //图片操作正常，更新数据库
                                 if (bolImg)
                                 {
-                                    cmd.ExecuteNonQuery("insert into t_bz_coupon(strId,strName,dtActiveTime,dtExpireTime,strShopId,intVip,intRecommend,flaPrice,strSmallImg,strLargeImg,"+
-                                        "strPrintImg,strIntro,strInstruction) values('" + strId + "','" + strName + "','" + dtActiveTime + "','" + dtExpireTime + "','" + strShopId + "'," + 
-                                        intVip + "," + intRecommend + "," + flaPrice + ",'" + strSmallImg + "','" + strLargeImg + "','" + strPrintImg + "','" + strIntro + "','" + 
+                                    cmd.ExecuteNonQuery("insert into t_bz_coupon(strId,strName,dtActiveTime,dtExpireTime,strShopId,intVip,intRecommend,flaPrice,strSmallImg,strLargeImg," +
+                                        "strPrintImg,strIntro,strInstruction) values('" + strId + "','" + strName + "','" + dtActiveTime + "','" + dtExpireTime + "','" + strShopId + "'," +
+                                        intVip + "," + intRecommend + "," + flaPrice + ",'" + strSmallImg + "','" + strLargeImg + "','" + strPrintImg + "','" + strIntro + "','" +
                                         strInstruction + "')");
                                 }
                             }
@@ -259,7 +340,7 @@ namespace ECouponsPrinter
                     {
                         Coupon localCoupon = lstCoupon.ElementAt(i);
                         cmd.ExecuteNonQuery("delete from t_bz_coupon where strId='" + localCoupon.StrId + "'");
-                        if(localCoupon.StrSmallImg.Length>0)
+                        if (localCoupon.StrSmallImg.Length > 0)
                             File.Delete(System.Windows.Forms.Application.StartupPath + "\\coupon\\" + localCoupon.StrSmallImg);
                         if (localCoupon.StrLargeImg.Length > 0)
                             File.Delete(System.Windows.Forms.Application.StartupPath + "\\coupon\\" + localCoupon.StrLargeImg);
@@ -332,17 +413,17 @@ namespace ECouponsPrinter
                                     {
                                         bolImg = bolImg && createImg("ad", strContent);
                                     }
-                                    else if (intType==2)
+                                    else if (intType == 2)
                                     {
                                         string[] aryFile = strContent.Split(new char[] { ',' });
                                         for (int k = 0; k < aryFile.Length; k++)
                                         {
-                                            if(!File.Exists(System.Windows.Forms.Application.StartupPath + "\\ad\\" + aryFile[k]))
+                                            if (!File.Exists(System.Windows.Forms.Application.StartupPath + "\\ad\\" + aryFile[k]))
                                             {
                                                 bolImg = bolImg && createImg("ad", aryFile[k]);
                                             }
                                         }
-                                        
+
                                     }
                                     //图片操作正常，删除原图片并更新数据库
                                     if (bolImg)
@@ -389,7 +470,7 @@ namespace ECouponsPrinter
                                 //图片操作正常，更新数据库
                                 if (bolImg)
                                 {
-                                    cmd.ExecuteNonQuery("insert into t_bz_advertisement(strId,strName,intType,strContent,dtStartTime,dtEndTime) values('" + strId + "','" + strName + "'," + 
+                                    cmd.ExecuteNonQuery("insert into t_bz_advertisement(strId,strName,intType,strContent,dtStartTime,dtEndTime) values('" + strId + "','" + strName + "'," +
                                         intType + ",'" + strContent + "','" + dtStartTime + "','" + dtEndTime + "')");
                                 }
                             }
@@ -431,12 +512,18 @@ namespace ECouponsPrinter
 
         private static bool createImg(String strType, String strImg)
         {
-            if (strImg == null || strImg.Equals("null") || strImg.Length==0)    //如果null或空，直接返回
+            if (strImg == null || strImg.Equals("null") || strImg.Length == 0)    //如果null或空，直接返回
                 return true;
             WebRequest request = HttpWebRequest.Create(GlobalVariables.StrServerUrl + "/servlet/FileDownload?strFileType=" + strType + "&strFileName=" + strImg);
             Stream stream = request.GetResponse().GetResponseStream();
             byte[] bytes = new byte[2048];
             int i;
+
+            if (strType.Equals("template"))
+            {
+                strType = "download";
+            }
+
             if (File.Exists(System.Windows.Forms.Application.StartupPath + "\\" + strType + "\\" + strImg))
                 File.Delete(System.Windows.Forms.Application.StartupPath + "\\" + strType + "\\" + strImg);
             FileStream fs = new FileStream(System.Windows.Forms.Application.StartupPath + "\\" + strType + "\\" + strImg, FileMode.CreateNew);
@@ -454,20 +541,21 @@ namespace ECouponsPrinter
                 try
                 {
                     pb.Image = new Bitmap(Image.FromStream(pFileStream), 760, 407);
+                    pFileStream.Close();
                     return true;
                 }
                 catch (Exception e)
                 {
                     StreamWriter sw = File.AppendText(System.Windows.Forms.Application.StartupPath + "\\error.log");
-                    sw.WriteLine("[File]" + strType+"  "+strImg);
+                    sw.WriteLine("[File]" + strType + "  " + strImg);
                     sw.Close();
                     ErrorLog.log(e);
+                    pFileStream.Close();
                     File.Delete(System.Windows.Forms.Application.StartupPath + "\\" + strType + "\\" + strImg);
                     return false;
                 }
                 finally
-                {
-                    pFileStream.Close();
+                {                 
                     pb.Dispose();
                     pb = null;
                 }
@@ -475,12 +563,89 @@ namespace ECouponsPrinter
             return true;
         }
 
+        private static void getTemplateProps(XmlNode xnTemplate, out String strLocation, out String strSize, out String strBgImage, out String strFontFamily,
+            out String strContent, out String strFontSize, out String strFontColor, out String strSort)
+        {
+            XmlElement xeTemplate = (XmlElement)xnTemplate;
+            try
+            {
+                strLocation = xeTemplate.GetElementsByTagName("strLocation").Item(0).InnerText.Trim();
+            }
+            catch
+            {
+                strLocation = "";
+            }
+
+            try
+            {
+                strSize = xeTemplate.GetElementsByTagName("strSize").Item(0).InnerText.Trim();
+            }
+            catch
+            {
+                strSize = "";
+            }
+
+            try
+            {
+                strBgImage = xeTemplate.GetElementsByTagName("strBgImage").Item(0).InnerText.Trim();
+            }
+            catch
+            {
+                strBgImage = "";
+            }
+
+            try
+            {
+                strFontFamily = xeTemplate.GetElementsByTagName("strFontFamily").Item(0).InnerText.Trim();
+            }
+            catch
+            {
+                strFontFamily = "";
+            }
+
+            try
+            {
+                strContent = xeTemplate.GetElementsByTagName("strContent").Item(0).InnerText.Trim();
+            }
+            catch
+            {
+                strContent = "";
+            }
+
+            try
+            {
+                strFontSize = xeTemplate.GetElementsByTagName("intFontSize").Item(0).InnerText.Trim();
+            }
+            catch
+            {
+                strFontSize = "0";
+            }
+
+            try
+            {
+                strFontColor = xeTemplate.GetElementsByTagName("strFontColor").Item(0).InnerText.Trim();
+            }
+            catch
+            {
+                strFontColor = "";
+            }
+
+            try
+            {
+                strSort = xeTemplate.GetElementsByTagName("intSort").Item(0).InnerText.Trim();
+            }
+            catch
+            {
+                strSort = "0";
+            }
+        }
+
         private static void getShopProps(XmlNode xnShop, out String strId, out String strBizName, out String strShopName, out String strTrade, out String strAddr,
             out String strIntro, out String strSmallImg, out String strLargeImg, out String intType, out String intSort)
         {
             XmlElement xeShop = (XmlElement)xnShop;
             strId = xeShop.GetElementsByTagName("strId").Item(0).InnerText.Trim();
-            strBizName = xeShop.GetElementsByTagName("strBizName").Item(0).InnerText.Trim().Replace("'","''");
+            strBizName = xeShop.GetElementsByTagName("strBizName").Item(0).InnerText.Trim().Replace("'", "''");
             strShopName = xeShop.GetElementsByTagName("strShopName").Item(0).InnerText.Trim().Replace("'", "''");
             strTrade = xeShop.GetElementsByTagName("strTrade").Item(0).InnerText.Trim().Replace("'", "''");
             strAddr = xeShop.GetElementsByTagName("strAddr").Item(0).InnerText.Trim().Replace("'", "''");
@@ -499,7 +664,7 @@ namespace ECouponsPrinter
         }
 
         private static void getCouponProps(XmlNode xnCoupon, out string strId, out string strName, out string dtActiveTime, out string dtExpireTime, out string strShopId,
-            out int intVip, out float flaPrice, out int intRecommend, out string strSmallImg, out string strLargeImg, out string strPrintImg, out string strIntro, out string strInstruction)
+            out int intVip, out float flaPrice, out int intRecommend, out string strSmallImg, out string strLargeImg, out string strPrintImg, out string strIntro, out string strInstruction, out int intSendBySM)
         {
             XmlElement xeCoupon = (XmlElement)xnCoupon;
             strId = xeCoupon.GetElementsByTagName("strId").Item(0).InnerText.Trim();
@@ -515,6 +680,7 @@ namespace ECouponsPrinter
             strPrintImg = xeCoupon.GetElementsByTagName("strPrintImg").Item(0).InnerText.Trim();
             strIntro = xeCoupon.GetElementsByTagName("strIntro").Item(0).InnerText.Trim().Replace("'", "''");
             strInstruction = xeCoupon.GetElementsByTagName("strInstruction").Item(0).InnerText.Trim().Replace("'", "''");
+            intSendBySM = Int32.Parse(xeCoupon.GetElementsByTagName("intSendBySM").Item(0).InnerText.Trim());
         }
 
         private void getAdProps(XmlNode xn, out string strId, out string strName, out int intType, out string strContent, out string dtStartTime, out string dtEndTime)
@@ -635,7 +801,7 @@ namespace ECouponsPrinter
                 this.StrSmallImg = reader.GetString(1);
             else
                 this.StrSmallImg = "";
-            if(!reader.IsDBNull(2))
+            if (!reader.IsDBNull(2))
                 this.StrLargeImg = reader.GetString(2);
             else
                 this.StrLargeImg = "";
@@ -718,7 +884,7 @@ namespace ECouponsPrinter
         public Advertisement(OleDbDataReader reader)
         {
             this.StrId = reader.GetString(0);
-            if(!reader.IsDBNull(1))
+            if (!reader.IsDBNull(1))
                 this.IntType = reader.GetInt32(1);
             else
                 this.IntType = 3;
@@ -726,6 +892,117 @@ namespace ECouponsPrinter
                 this.StrContent = reader.GetString(2);
             else
                 this.StrContent = "";
+        }
+    }
+
+    class Element
+    {
+        public Element(OleDbDataReader reader)
+        {
+            this._strName = reader.GetString(1);
+
+            if (!reader.IsDBNull(2))
+                this._strLocation = reader.GetString(2);
+            else
+                this._strLocation = "";
+
+            if (!reader.IsDBNull(3))
+                this._strSize = reader.GetString(3);
+            else
+                this._strSize = "";
+
+            if (!reader.IsDBNull(4))
+                this._strBgImage = reader.GetString(4);
+            else
+                this._strBgImage = "";
+
+            if (!reader.IsDBNull(5))
+                this._strFontFamily = reader.GetString(5);
+            else
+                this._strFontFamily = "";
+
+            if (!reader.IsDBNull(6))
+                this._strContent = reader.GetString(6);
+            else
+                this._strContent = "";
+
+            if (!reader.IsDBNull(7))
+                this._intFontSize = reader.GetInt16(7);
+            else
+                this._intFontSize = 0;
+
+            if (!reader.IsDBNull(8))
+                this._strFontColor = reader.GetString(8);
+            else
+                this._strFontColor = "";
+
+            if (!reader.IsDBNull(9))
+                this._strCtlName = reader.GetString(9);
+            else
+                this._strCtlName = "";
+        }
+
+        private string _strName;
+        public string strName
+        {
+            get { return _strName; }
+            set { _strName = value; }
+        }
+
+        private string _strLocation;
+        public string strLocation
+        {
+            get { return _strLocation; }
+            set { _strLocation = value; }
+        }
+
+        private string _strSize;
+        public string strSize
+        {
+            get { return _strSize; }
+            set { _strSize = value; }
+        }
+
+        private string _strBgImage;
+        public string strBgImage
+        {
+            get { return _strBgImage; }
+            set { _strBgImage = value; }
+        }
+
+        private string _strFontFamily;
+        public string strFontFamily
+        {
+            get { return _strFontFamily; }
+            set { _strFontFamily = value; }
+        }
+
+        private string _strContent;
+        public string strContent
+        {
+            get { return _strContent; }
+            set { _strContent = value; }
+        }
+
+        private int _intFontSize;
+        public int intFontSize
+        {
+            get { return _intFontSize; }
+            set { _intFontSize = value; }
+        }
+
+        private string _strFontColor;
+        public string strFontColor
+        {
+            get { return _strFontColor; }
+            set { _strFontColor = value; }
+        }
+
+        private string _strCtlName;
+        public string strCtlName
+        {
+            get { return _strCtlName; }
+            set { _strCtlName = value; }
         }
     }
 }

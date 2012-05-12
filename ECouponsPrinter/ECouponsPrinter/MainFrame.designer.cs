@@ -362,7 +362,6 @@
             // 
             // Panel_Bottom
             // 
-            this.Panel_Bottom.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("Panel_Bottom.BackgroundImage")));
             this.Panel_Bottom.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.Panel_Bottom.Controls.Add(this.Button_LastCouponsPage);
             this.Panel_Bottom.Controls.Add(this.Button_NextCouponsPage);
@@ -399,6 +398,7 @@
             this.Button_NextCouponsPage.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.Button_NextCouponsPage.FlatAppearance.BorderSize = 0;
             this.Button_NextCouponsPage.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.Button_NextCouponsPage.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.Button_NextCouponsPage.Location = new System.Drawing.Point(635, 2);
             this.Button_NextCouponsPage.Margin = new System.Windows.Forms.Padding(0);
             this.Button_NextCouponsPage.Name = "Button_NextCouponsPage";
@@ -1527,7 +1527,6 @@
             // 
             // Btn_Rec
             // 
-            this.Btn_Rec.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("Btn_Rec.BackgroundImage")));
             this.Btn_Rec.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.Btn_Rec.FlatAppearance.BorderSize = 0;
             this.Btn_Rec.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -1543,7 +1542,6 @@
             // 
             // Btn_NewCouponList
             // 
-            this.Btn_NewCouponList.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("Btn_NewCouponList.BackgroundImage")));
             this.Btn_NewCouponList.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.Btn_NewCouponList.FlatAppearance.BorderSize = 0;
             this.Btn_NewCouponList.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -1559,7 +1557,6 @@
             // 
             // Btn_Rank
             // 
-            this.Btn_Rank.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("Btn_Rank.BackgroundImage")));
             this.Btn_Rank.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.Btn_Rank.FlatAppearance.BorderSize = 0;
             this.Btn_Rank.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -2119,15 +2116,15 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(1041, 742);
+            this.Controls.Add(this.Panel_Shop);
             this.Controls.Add(this.Panel_Coupons);
             this.Controls.Add(this.Panel_Home);
-            this.Controls.Add(this.Panel_ShopInfo);
             this.Controls.Add(this.Panel_MyInfo);
+            this.Controls.Add(this.Panel_ShopInfo);
             this.Controls.Add(this.Panel_Ad);
             this.Controls.Add(this.Label_DownloadWaitObject);
             this.Controls.Add(this.Label_LoginWaitInfo);
             this.Controls.Add(this.Panel_NearShop);
-            this.Controls.Add(this.Panel_Shop);
             this.Controls.Add(this.Panel_Top);
             this.Controls.Add(this.Panel_Bottom);
             this.DoubleBuffered = true;
