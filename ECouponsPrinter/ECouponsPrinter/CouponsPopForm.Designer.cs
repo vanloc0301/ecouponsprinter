@@ -30,6 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CouponsPopForm));
             this.Panel_Background = new System.Windows.Forms.Panel();
+            this.btn_SM = new System.Windows.Forms.Button();
             this.Label_phone = new System.Windows.Forms.Label();
             this.Label_Instruction = new System.Windows.Forms.Label();
             this.Label_Into = new System.Windows.Forms.Label();
@@ -39,7 +40,6 @@
             this.Button_Print = new System.Windows.Forms.Button();
             this.PB_Couponpop = new System.Windows.Forms.PictureBox();
             this.Label_Top = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
             this.Panel_Background.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.logo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PB_Couponpop)).BeginInit();
@@ -49,7 +49,7 @@
             // 
             this.Panel_Background.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("Panel_Background.BackgroundImage")));
             this.Panel_Background.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.Panel_Background.Controls.Add(this.button1);
+            this.Panel_Background.Controls.Add(this.btn_SM);
             this.Panel_Background.Controls.Add(this.Label_phone);
             this.Panel_Background.Controls.Add(this.Label_Instruction);
             this.Panel_Background.Controls.Add(this.Label_Into);
@@ -64,6 +64,20 @@
             this.Panel_Background.Name = "Panel_Background";
             this.Panel_Background.Size = new System.Drawing.Size(374, 768);
             this.Panel_Background.TabIndex = 2;
+            // 
+            // btn_SM
+            // 
+            this.btn_SM.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btn_SM.BackgroundImage")));
+            this.btn_SM.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btn_SM.FlatAppearance.BorderSize = 0;
+            this.btn_SM.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_SM.Location = new System.Drawing.Point(124, 695);
+            this.btn_SM.Name = "btn_SM";
+            this.btn_SM.Size = new System.Drawing.Size(120, 60);
+            this.btn_SM.TabIndex = 8;
+            this.btn_SM.UseVisualStyleBackColor = true;
+            this.btn_SM.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btn_SM_MouseDown);
+            this.btn_SM.MouseUp += new System.Windows.Forms.MouseEventHandler(this.btn_SM_MouseUp);
             // 
             // Label_phone
             // 
@@ -121,12 +135,13 @@
             // Button_Close
             // 
             this.Button_Close.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("Button_Close.BackgroundImage")));
+            this.Button_Close.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.Button_Close.FlatAppearance.BorderSize = 0;
             this.Button_Close.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Button_Close.Location = new System.Drawing.Point(199, 695);
+            this.Button_Close.Location = new System.Drawing.Point(249, 695);
             this.Button_Close.Margin = new System.Windows.Forms.Padding(0);
             this.Button_Close.Name = "Button_Close";
-            this.Button_Close.Size = new System.Drawing.Size(137, 63);
+            this.Button_Close.Size = new System.Drawing.Size(120, 60);
             this.Button_Close.TabIndex = 2;
             this.Button_Close.UseVisualStyleBackColor = true;
             this.Button_Close.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Button_Close_MouseDown);
@@ -135,12 +150,13 @@
             // Button_Print
             // 
             this.Button_Print.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("Button_Print.BackgroundImage")));
+            this.Button_Print.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.Button_Print.FlatAppearance.BorderSize = 0;
             this.Button_Print.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Button_Print.Location = new System.Drawing.Point(47, 695);
+            this.Button_Print.Location = new System.Drawing.Point(1, 695);
             this.Button_Print.Margin = new System.Windows.Forms.Padding(0);
             this.Button_Print.Name = "Button_Print";
-            this.Button_Print.Size = new System.Drawing.Size(137, 63);
+            this.Button_Print.Size = new System.Drawing.Size(120, 60);
             this.Button_Print.TabIndex = 2;
             this.Button_Print.UseVisualStyleBackColor = true;
             this.Button_Print.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Button_Print_MouseDown);
@@ -169,16 +185,6 @@
             this.Label_Top.TabIndex = 0;
             this.Label_Top.Text = "0551-6868668";
             this.Label_Top.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(165, 669);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 8;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // CouponsPopForm
             // 
@@ -210,7 +216,7 @@
         private System.Windows.Forms.Label Label_Into;
         private System.Windows.Forms.Label Label_Instruction;
         private System.Windows.Forms.Label Label_phone;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btn_SM;
 
     }
 }
