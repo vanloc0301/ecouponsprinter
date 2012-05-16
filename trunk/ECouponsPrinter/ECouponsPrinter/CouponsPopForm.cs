@@ -45,11 +45,15 @@ namespace ECouponsPrinter
 
             if (pi.intSendBySM == 1)
             {
-                button1.Visible = true;
+                btn_SM.Visible = true;
+                Button_Print.Location = new Point(1, 695);
+                Button_Close.Location = new Point(249, 695);
             }
             else
             {
-                button1.Visible = false;
+                btn_SM.Visible = false;
+                Button_Print.Location = new Point(47, 695);
+                Button_Close.Location = new Point(199, 695);
             }
         }
 
@@ -628,10 +632,16 @@ namespace ECouponsPrinter
             }
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void btn_SM_MouseUp(object sender, MouseEventArgs e)
         {
+            this.btn_SM.BackgroundImage = Image.FromFile(path + "\\images\\切图\\优惠券详细弹出\\短信.jpg");
             Frame.InitUserQuitTime();
             this.SendMessage();
+        }
+
+        private void btn_SM_MouseDown(object sender, MouseEventArgs e)
+        {
+            this.btn_SM.BackgroundImage = Image.FromFile(path + "\\images\\切图\\优惠券详细弹出\\短信_1.jpg");
         }
     }
 }
