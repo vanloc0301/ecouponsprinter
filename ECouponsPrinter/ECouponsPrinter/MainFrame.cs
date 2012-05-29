@@ -129,6 +129,15 @@ namespace ECouponsPrinter
                 this.InitHomeData();
                 this.Panel_Home.Visible = true;
                 this.ShowHome();
+
+                ResumePanelBottomState();
+                try
+                {
+                    this.Button_HomePage.BackgroundImage = Image.FromFile(path + "\\template\\90.jpg");
+                }
+                catch (Exception)
+                {
+                }
             }
             catch (Exception)
             {
@@ -150,8 +159,9 @@ namespace ECouponsPrinter
                     }
                     else
                     {
-                        MyMsgBox mb = new MyMsgBox();
-                        mb.ShowMsg("请您先刷卡！\n获取更多特权请致电：\n4001-868-968", 2);
+                        InitTimer();
+                        //MyMsgBox mb = new MyMsgBox();
+                        //mb.ShowMsg("请您先刷卡！\n获取更多特权请致电：\n4001-868-968", 2);
                     }
                 }
             }
@@ -179,13 +189,13 @@ namespace ECouponsPrinter
                     return;
                 }
 
-                if (ctl.Name == "Label_ScrollText")
-                    return;
+                //if (ctl.Name == "Label_ScrollText")
+                //    return;
 
-                if (ctl != Label_Option && ctl.Name != "MainFrame" && ctl.Name != "Label_DownloadWaitObject" && ctl.Name != "Label_LoginWaitInfo")
-                {
-                    ctl.MouseMove += new MouseEventHandler(MainFrame_MouseMove);
-                }
+                //if (ctl != Label_Option && ctl.Name != "MainFrame" && ctl.Name != "Label_DownloadWaitObject" && ctl.Name != "Label_LoginWaitInfo")
+                //{
+                //    ctl.MouseMove += new MouseEventHandler(MainFrame_MouseMove);
+                //}
 
                 foreach (Control ctl1 in ctl.Controls)
                     CatchAllClickEvent(ctl1);
@@ -898,7 +908,7 @@ namespace ECouponsPrinter
                 mb.ShowMsg("暂无优惠劵信息！", 2);
                 return;
             }
-          //  InitCouponData(GetTradeName()[0], 'c');
+            //  InitCouponData(GetTradeName()[0], 'c');
             InitCouponData("", 'c');
             Thread.Sleep(20);
             //准备工作
@@ -1076,7 +1086,7 @@ namespace ECouponsPrinter
                     return;
                 }
 
-      //          InitCouponData(GetTradeName()[0], 'v');
+                //          InitCouponData(GetTradeName()[0], 'v');
                 InitCouponData("", 'v');
                 Thread.Sleep(20);
 
@@ -1092,7 +1102,7 @@ namespace ECouponsPrinter
 
                 InitCouponButton();
 
-            //    ShowCouponVipBtn();
+                //    ShowCouponVipBtn();
                 this.Panel_Coupons.Visible = true;
                 ShowCoupon();
             }
@@ -1350,8 +1360,6 @@ namespace ECouponsPrinter
             }
         }
 
-        #endregion
-
         #region 初始化广告倒计时
         public void InitTimer()
         {
@@ -1363,6 +1371,8 @@ namespace ECouponsPrinter
         }
 
         #endregion
+        #endregion
+
         #endregion
 
         #region 用户操作倒计时
@@ -3510,6 +3520,7 @@ namespace ECouponsPrinter
             }
         }
 
+
         /// <summary>
         /// 收藏和打印半透明Label的时间处理
         /// </summary>
@@ -3517,6 +3528,15 @@ namespace ECouponsPrinter
         /// <param name="e"></param>
         private void TranlateLabel_Click(object sender, EventArgs e)
         {
+
+            MyMsgBox mb = new MyMsgBox();
+
+            if (!GlobalVariables.isUserLogin)
+            {
+                mb.ShowMsg("请您先刷卡！\n获取更多特权请致电：\n4001-868-968", 2);
+                return;
+            }
+
             Label lb = sender as Label;
             int type = 1;        //0表示收藏，1表示打印
 
@@ -3599,8 +3619,6 @@ namespace ECouponsPrinter
                 default: pi = null; id = null; break;
             }
 
-            MyMsgBox mb = new MyMsgBox();
-
             if (pi == null || id == null)
             {
                 return;
@@ -3665,7 +3683,7 @@ namespace ECouponsPrinter
                             }
                         }
                     }
-                   
+
                 }
                 else
                     return;
@@ -4225,6 +4243,15 @@ namespace ECouponsPrinter
                 if (isFirstKey)
                 {
                     this.LoginText.Text = "";
+                    if (!LoginText.Focused)
+                    {
+                        LoginText.Focus();
+                      //  MessageBox.Show(keyData.ToString().Substring(1,1));
+                        SendKeys.Send(keyData.ToString().Substring(1, 1));
+                      //  this.LoginText.Text = keyData.ToString().Substring(1, 1);
+                    }
+                        
+
                     if (msg.Msg == WM_KEYDOWN | msg.Msg == WM_SYSKEYDOWN)
                     {
                         LoginText.Focus();
@@ -4236,7 +4263,7 @@ namespace ECouponsPrinter
                     if (keyData.Equals(Keys.Enter))
                     {
                         if (isOnLoad)
-                        {
+                        {                    
                             this.LoginText.Text = "";
                             isFirstKey = true;
                             return false;
@@ -4429,6 +4456,15 @@ namespace ECouponsPrinter
             this.InitHomeData();
             this.Panel_Home.Visible = true;
             this.ShowHome();
+
+            ResumePanelBottomState();
+            try
+            {
+                this.Button_HomePage.BackgroundImage = Image.FromFile(path + "\\template\\90.jpg");
+            }
+            catch (Exception)
+            {
+            }
         }
         #endregion
 
@@ -4664,7 +4700,7 @@ namespace ECouponsPrinter
                             try
                             {
                                 pFileStream = new FileStream(path + "\\template\\" + element.strBgImage, FileMode.Open, FileAccess.Read);
-                                if(ctl is Label)
+                                if (ctl is Label)
                                     (ctl as Label).Image = new Bitmap(Image.FromStream(pFileStream), ctl.Size);
                                 else
                                     ctl.BackgroundImage = new Bitmap(Image.FromStream(pFileStream), ctl.Size);
