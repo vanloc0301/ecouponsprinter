@@ -1647,10 +1647,53 @@ namespace ECouponsPrinter
         /// </summary>
         private void InitData()
         {
-            //读取数据库
-            string strSql = "select * from t_bz_shop order by intType desc,intSort asc";
             AccessCmd cmd = new AccessCmd();
             OleDbDataReader reader;
+
+            //初始化参数
+            tradeName = GetTradeName();
+            //加载参数
+            string strSql = "select * from t_bz_terminal_param";
+            reader = cmd.ExecuteReader(strSql);
+            while (reader.Read())
+            {
+                try
+                {
+                    string strParamName = reader.GetString(1);
+                    if (strParamName.Equals("strExitPwd"))
+                        GlobalVariables.StrExitPwd = reader.GetString(2);
+                    else if (strParamName.Equals("intMemberSec"))
+                        GlobalVariables.UserWaitTime = Int16.Parse(reader.GetString(2));
+                    else if (strParamName.Equals("intRefreshSec"))
+                        GlobalVariables.IntRefreshSec = Int16.Parse(reader.GetString(2));
+                    else if (strParamName.Equals("strPhone"))
+                        GlobalVariables.StrPhone = reader.GetString(2);
+                    else if (strParamName.Equals("intAdSec"))
+                        GlobalVariables.WindowWaitTime = Int16.Parse(reader.GetString(2));
+                    else if (strParamName.Equals("intAdImg"))
+                        GlobalVariables.IntAdImg = Int16.Parse(reader.GetString(2));
+                    else if (strParamName.Equals("intHistory"))
+                        GlobalVariables.IntHistory = Int16.Parse(reader.GetString(2));
+                    else if (strParamName.Equals("intCouponPrint"))
+                        GlobalVariables.IntCouponPrint = Int16.Parse(reader.GetString(2));
+                    else if (strParamName.Equals("strTerminalNo"))
+                        GlobalVariables.StrTerminalNo = reader.GetString(2);
+                    else if (strParamName.Equals("strServerUrl"))
+                        GlobalVariables.StrServerUrl = reader.GetString(2);
+                    else if (strParamName.Equals("intPrintLimit"))
+                        GlobalVariables.PrintLimit = Int16.Parse(reader.GetString(2));
+                    else if (strParamName.Equals("intSmsReceive"))
+                        GlobalVariables.MessageRegetTime = reader.GetInt32(2);
+                }
+                catch (Exception)
+                {
+                    continue;
+                }
+            }
+            reader.Close();
+
+            //读取数据库
+            strSql = "select * from t_bz_shop order by intType desc,intSort asc";
             try
             {
                 reader = cmd.ExecuteReader(strSql);
@@ -1938,49 +1981,6 @@ namespace ECouponsPrinter
                     continue;
                 }
             }
-            reader.Close();
-
-            //初始化参数
-            tradeName = GetTradeName();
-            //加载参数
-            strSql = "select * from t_bz_terminal_param";
-            reader = cmd.ExecuteReader(strSql);
-            while (reader.Read())
-            {
-                try
-                {
-                    string strParamName = reader.GetString(1);
-                    if (strParamName.Equals("strExitPwd"))
-                        GlobalVariables.StrExitPwd = reader.GetString(2);
-                    else if (strParamName.Equals("intMemberSec"))
-                        GlobalVariables.UserWaitTime = Int16.Parse(reader.GetString(2));
-                    else if (strParamName.Equals("intRefreshSec"))
-                        GlobalVariables.IntRefreshSec = Int16.Parse(reader.GetString(2));
-                    else if (strParamName.Equals("strPhone"))
-                        GlobalVariables.StrPhone = reader.GetString(2);
-                    else if (strParamName.Equals("intAdSec"))
-                        GlobalVariables.WindowWaitTime = Int16.Parse(reader.GetString(2));
-                    else if (strParamName.Equals("intAdImg"))
-                        GlobalVariables.IntAdImg = Int16.Parse(reader.GetString(2));
-                    else if (strParamName.Equals("intHistory"))
-                        GlobalVariables.IntHistory = Int16.Parse(reader.GetString(2));
-                    else if (strParamName.Equals("intCouponPrint"))
-                        GlobalVariables.IntCouponPrint = Int16.Parse(reader.GetString(2));
-                    else if (strParamName.Equals("strTerminalNo"))
-                        GlobalVariables.StrTerminalNo = reader.GetString(2);
-                    else if (strParamName.Equals("strServerUrl"))
-                        GlobalVariables.StrServerUrl = reader.GetString(2);
-                    else if (strParamName.Equals("intPrintLimit"))
-                        GlobalVariables.PrintLimit = reader.GetInt32(2);
-                    else if (strParamName.Equals("intSmsReceive"))
-                        GlobalVariables.MessageRegetTime = reader.GetInt32(2);
-                }
-                catch (Exception)
-                {
-                    continue;
-                }
-            }
-
             reader.Close();
             cmd.Close();
             InitParam();
