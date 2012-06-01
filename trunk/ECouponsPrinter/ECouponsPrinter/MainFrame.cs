@@ -20,7 +20,7 @@ namespace ECouponsPrinter
         private static int CountDownNumber = GlobalVariables.WindowWaitTime;
         private static int UserQuitTime = GlobalVariables.UserWaitTime;
         private string _stringScrollText = GlobalVariables.MarqueeText;
-        private Thread marquee;
+        private Thread marquee, th_doSc;
         private SCard sc;
         private static bool isFirstKey = true;
         private static bool isOnLoad = false;
@@ -1416,6 +1416,7 @@ namespace ECouponsPrinter
                 //开启射频卡
                 SCardTimer.Enabled = true;
                 SCardTimer.Start();
+                isCardScan = false;
 
                 this.Timer_DownloadInfo.Start();
                 InitTimer();
@@ -1479,6 +1480,7 @@ namespace ECouponsPrinter
             //启动射频卡
             this.SCardTimer.Enabled = true;
             this.SCardTimer.Start();
+            isCardScan = false;
 
             this.InitHomeData();
             this.Panel_Home.Visible = true;
@@ -4246,11 +4248,11 @@ namespace ECouponsPrinter
                     if (!LoginText.Focused)
                     {
                         LoginText.Focus();
-                      //  MessageBox.Show(keyData.ToString().Substring(1,1));
+                        //  MessageBox.Show(keyData.ToString().Substring(1,1));
                         SendKeys.Send(keyData.ToString().Substring(1, 1));
-                      //  this.LoginText.Text = keyData.ToString().Substring(1, 1);
+                        //  this.LoginText.Text = keyData.ToString().Substring(1, 1);
                     }
-                        
+
 
                     if (msg.Msg == WM_KEYDOWN | msg.Msg == WM_SYSKEYDOWN)
                     {
@@ -4263,7 +4265,7 @@ namespace ECouponsPrinter
                     if (keyData.Equals(Keys.Enter))
                     {
                         if (isOnLoad)
-                        {                    
+                        {
                             this.LoginText.Text = "";
                             isFirstKey = true;
                             return false;
@@ -4321,13 +4323,38 @@ namespace ECouponsPrinter
         #endregion
 
         #region 射频卡检测处理
+        private bool isCardScan = false;
+        private string cardNo = "";
         private void SCardStart()
+        {
+            th_doSc = new Thread(new ThreadStart(doSc));
+            th_doSc.Start();
+            this.SCardTimer.Enabled = true;
+            this.SCardTimer.Interval = 500;
+            this.SCardTimer.Start();
+        }
+
+        private void doSc()
         {
             sc = new SCard();
             sc.Init();
-            this.SCardTimer.Enabled = true;
-            this.SCardTimer.Interval = 800;
-            this.SCardTimer.Start();
+            while (true)
+            {
+                if (!isCardScan)
+                {
+                    cardNo = "";
+                    SCard.light(0x0000, 2);
+                    if ((cardNo = sc.searchCard()) == null)
+                    {
+                        SCard.light(0x0000, 0);
+                    }
+                    else
+                    {
+                        isCardScan = true;
+                    }
+                }
+                Thread.Sleep(500);
+            }
         }
 
         private void SCardTimer_Tick(object sender, EventArgs e)
@@ -4337,36 +4364,42 @@ namespace ECouponsPrinter
                 return;
             }
 
-            string cardNo = "";
-            SCard.light(0x0000, 2);
-            if ((cardNo = sc.searchCard()) == null)
-            {
-                SCard.light(0x0000, 0);
-                return;
-            }
-            else
+            if (isCardScan)
             {
                 this.SCardTimer.Stop();
                 this.SCardTimer.Enabled = false;
-                if (this.Label_LoginWaitInfo.InvokeRequired)
-                {
-                    this.Label_LoginWaitInfo.Invoke((MethodInvoker)delegate
-                    {
-                        this.Label_LoginWaitInfo.Visible = true;
-                        Label_LoginWaitInfo.Refresh();
-                    }, null);
-                }
-                else
-                {
-                    this.Label_LoginWaitInfo.Visible = true;
-                    Label_LoginWaitInfo.Refresh();
-                }
+                //string cardNo = "";
+                //SCard.light(0x0000, 2);
+                //if ((cardNo = sc.searchCard()) == null)
+                //{
+                //    SCard.light(0x0000, 0);
+                //    return;
+                //}
+                //else
+                //{
+                //    this.SCardTimer.Stop();
+                //    this.SCardTimer.Enabled = false;
+                //    if (this.Label_LoginWaitInfo.InvokeRequired)
+                //    {
+                //        this.Label_LoginWaitInfo.Invoke((MethodInvoker)delegate
+                //        {
+                //            this.Label_LoginWaitInfo.Visible = true;
+                //            Label_LoginWaitInfo.Refresh();
+                //        }, null);
+                //    }
+                //    else
+                //    {
+                this.Label_LoginWaitInfo.Visible = true;
+                Label_LoginWaitInfo.Refresh();
+                //}
 
+            //    MessageBox.Show(cardNo);
                 if (!UserLogin(cardNo))
                 {
                     SCard.light(0x0000, 0);
                     this.SCardTimer.Enabled = true;
                     this.SCardTimer.Start();
+                    isCardScan = false;
                 }
                 else
                 {
@@ -4374,17 +4407,17 @@ namespace ECouponsPrinter
                     LoginSuccessDispatch();
                 }
 
-                if (this.Label_LoginWaitInfo.InvokeRequired)
-                {
-                    this.Label_LoginWaitInfo.Invoke((MethodInvoker)delegate
-                    {
-                        this.Label_LoginWaitInfo.Visible = false;
-                    }, null);
-                }
-                else
-                {
+                //if (this.Label_LoginWaitInfo.InvokeRequired)
+                //{
+                //    this.Label_LoginWaitInfo.Invoke((MethodInvoker)delegate
+                //    {
+                //        this.Label_LoginWaitInfo.Visible = false;
+                //    }, null);
+                //}
+                //else
+                //{
                     this.Label_LoginWaitInfo.Visible = false;
-                }
+                //}
             }
         }
 
