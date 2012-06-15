@@ -177,13 +177,13 @@ namespace ECouponsPrinter
                     return;
                 }
 
-                //if (ctl.Name == "Label_ScrollText")
-                //    return;
+                if (ctl.Name == "Label_ScrollText")
+                    return;
 
-                //if (ctl != Label_Option && ctl.Name != "MainFrame" && ctl.Name != "Label_DownloadWaitObject" && ctl.Name != "Label_LoginWaitInfo")
-                //{
-                //    ctl.MouseMove += new MouseEventHandler(MainFrame_MouseMove);
-                //}
+                if (ctl != Label_Option && ctl.Name != "MainFrame" && ctl.Name != "Label_DownloadWaitObject" && ctl.Name != "Label_LoginWaitInfo")
+                {
+                    ctl.MouseMove += new MouseEventHandler(MainFrame_MouseMove);
+                }
 
                 foreach (Control ctl1 in ctl.Controls)
                     CatchAllClickEvent(ctl1);
@@ -1060,6 +1060,13 @@ namespace ECouponsPrinter
 
         private void Button_VIP_MouseUp(object sender, MouseEventArgs e)
         {
+            MyMsgBox mb = new MyMsgBox();
+
+            if (!GlobalVariables.isUserLogin)
+            {
+                mb.ShowMsg("请您先刷卡！\n获取更多特权请致电：\n4001-868-968", 2);
+                return;
+            }
 
             if (GlobalVariables.M.IntType == 1)
             {
@@ -1069,7 +1076,6 @@ namespace ECouponsPrinter
 
                 if (GetTradeName() == null)
                 {
-                    MyMsgBox mb = new MyMsgBox();
                     mb.ShowMsg("暂无VIP优惠劵信息！", 2);
                     return;
                 }
@@ -1096,7 +1102,6 @@ namespace ECouponsPrinter
             }
             else
             {
-                MyMsgBox mb = new MyMsgBox();
                 mb.ShowMsg("您还不是VIP会员\n如果想办理VIP，请联系:\n4001-868-968", 2);
             }
         }
@@ -4272,7 +4277,7 @@ namespace ECouponsPrinter
                             {
                                 this.SCardTimer.Stop();
                                 this.SCardTimer.Enabled = false;
-                                //LoginSuccessDispatch();
+                                LoginSuccessDispatch();
                             }
                         }
 
@@ -4394,7 +4399,7 @@ namespace ECouponsPrinter
         private bool UserLogin(string userid)
         {
             this.CloseAllDialog();
-            Ad_MouseUp(null, null);
+            this.InitTimer();
 
             UploadInfo ui = new UploadInfo();
             Member m = ui.MemberAuth(userid);
