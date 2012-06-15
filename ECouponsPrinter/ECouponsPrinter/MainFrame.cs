@@ -115,25 +115,13 @@ namespace ECouponsPrinter
         {
             try
             {
-                this.UnVisibleAllPanels();
                 this.InitTimer();
-
-                //显示隐藏按钮
-                this.Button_LastCouponsPage.Visible = true;
-                this.Button_NextCouponsPage.Visible = true;
-
-                //切换
-                int y = this.VerticalScroll.Value;
-                this.Panel_Home.Location = new System.Drawing.Point(0, 95 - y);
-
-                this.InitHomeData();
-                this.Panel_Home.Visible = true;
-                this.ShowHome();
+                this.Button_ShopPage_MouseUp(null,null);
 
                 ResumePanelBottomState();
                 try
                 {
-                    this.Button_HomePage.BackgroundImage = Image.FromFile(path + "\\template\\90.jpg");
+                    this.Button_ShopPage.BackgroundImage = Image.FromFile(path + "\\template\\92.jpg");
                 }
                 catch (Exception)
                 {
@@ -1278,8 +1266,9 @@ namespace ECouponsPrinter
 
             //加载主页面
             this.UnVisibleAllPanels();
-            InitHomeData();
-            this.Panel_Home.Visible = true;
+            this.Button_ShopPage_MouseUp(null, null);
+            ResumePanelBottomState();
+            this.Button_ShopPage.BackgroundImage = Image.FromFile(path + "\\template\\92.jpg");
 
             //加载半透明的Label
             this.OnLoadLabelStyle(90, Color.White);
@@ -1397,18 +1386,7 @@ namespace ECouponsPrinter
                 GlobalVariables.isUserLogin = false;
 
                 CloseAllDialog();
-                this.UnVisibleAllPanels();
-                //显示隐藏按钮
-                this.Button_LastCouponsPage.Visible = true;
-                this.Button_NextCouponsPage.Visible = true;
-
-                //切换
-                int y = this.VerticalScroll.Value;
-                this.Panel_Home.Location = new System.Drawing.Point(0, 95 - y);
-
-                this.InitHomeData();
-                this.Panel_Home.Visible = true;
-                this.ShowHome();
+                this.Button_ShopPage_MouseUp(null, null);
 
                 //允许用户登录
                 isFirstKey = true;
@@ -1423,7 +1401,7 @@ namespace ECouponsPrinter
 
                 //初始化导航栏
                 this.ResumePanelBottomState();
-                this.Button_HomePage.BackgroundImage = Image.FromFile(path + "\\images\\Frame\\首页-js.jpg");
+                this.Button_ShopPage.BackgroundImage = Image.FromFile(path + "\\template\\92.jpg");
 
             }
             else
@@ -1465,14 +1443,7 @@ namespace ECouponsPrinter
             GlobalVariables.isUserLogin = false;
 
             CloseAllDialog();
-            this.UnVisibleAllPanels();
-            //显示隐藏按钮
-            this.Button_LastCouponsPage.Visible = true;
-            this.Button_NextCouponsPage.Visible = true;
-
-            //切换
-            int y = this.VerticalScroll.Value;
-            this.Panel_Home.Location = new System.Drawing.Point(0, 95 - y);
+            this.Button_ShopPage_MouseUp(null, null);
 
             //允许用户输入
             isFirstKey = true;
@@ -1482,16 +1453,12 @@ namespace ECouponsPrinter
             this.SCardTimer.Start();
             isCardScan = false;
 
-            this.InitHomeData();
-            this.Panel_Home.Visible = true;
-            this.ShowHome();
-
             this.Timer_DownloadInfo.Start();
             InitTimer();
 
             //初始化导航栏
             this.ResumePanelBottomState();
-            this.Button_HomePage.BackgroundImage = Image.FromFile(path + "\\images\\Frame\\首页-js.jpg");
+            this.Button_ShopPage.BackgroundImage = Image.FromFile(path + "\\template\\92.jpg");
 
         }
         #endregion 用户操作倒计时
@@ -4305,7 +4272,7 @@ namespace ECouponsPrinter
                             {
                                 this.SCardTimer.Stop();
                                 this.SCardTimer.Enabled = false;
-                                LoginSuccessDispatch();
+                                //LoginSuccessDispatch();
                             }
                         }
 
@@ -4476,28 +4443,28 @@ namespace ECouponsPrinter
 
             this.Timer_DownloadInfo.Stop();
 
-            this.UnVisibleAllPanels();
+            //this.UnVisibleAllPanels();
 
-            //显示隐藏按钮
-            this.Button_LastCouponsPage.Visible = true;
-            this.Button_NextCouponsPage.Visible = true;
+            ////显示隐藏按钮
+            //this.Button_LastCouponsPage.Visible = true;
+            //this.Button_NextCouponsPage.Visible = true;
 
-            //切换
-            int y = this.VerticalScroll.Value;
-            this.Panel_Home.Location = new System.Drawing.Point(0, 95 - y);
+            ////切换
+            //int y = this.VerticalScroll.Value;
+            //this.Panel_Home.Location = new System.Drawing.Point(0, 95 - y);
 
-            this.InitHomeData();
-            this.Panel_Home.Visible = true;
-            this.ShowHome();
+            //this.InitHomeData();
+            //this.Panel_Home.Visible = true;
+            //this.ShowHome();
 
-            ResumePanelBottomState();
-            try
-            {
-                this.Button_HomePage.BackgroundImage = Image.FromFile(path + "\\template\\90.jpg");
-            }
-            catch (Exception)
-            {
-            }
+            //ResumePanelBottomState();
+            //try
+            //{
+            //    this.Button_HomePage.BackgroundImage = Image.FromFile(path + "\\template\\90.jpg");
+            //}
+            //catch (Exception)
+            //{
+            //}
         }
         #endregion
 
@@ -4528,7 +4495,15 @@ namespace ECouponsPrinter
             InitTimer();
             this.UnVisibleAllPanels();
             this.Label_DownloadWaitObject.Visible = false;
-            this.Button_HomePage_MouseUp(null, null);
+            this.Button_ShopPage_MouseUp(null, null);
+            ResumePanelBottomState();
+            try
+            {
+                this.Button_ShopPage.BackgroundImage = Image.FromFile(path + "\\template\\92.jpg");
+            }
+            catch (Exception)
+            {
+            }
             this.Refresh();
             isOnLoad = false;
         }
