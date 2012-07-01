@@ -89,20 +89,18 @@ namespace ECouponsPrinter
         {
             try
             {
-                this.UnVisibleAllPanels();
                 this.InitTimer();
 
-                //显示隐藏按钮
-                this.Button_LastCouponsPage.Visible = true;
-                this.Button_NextCouponsPage.Visible = true;
+                this.Button_ShopPage_MouseUp(null, null);
 
-                //切换
-                int y = this.VerticalScroll.Value;
-                this.Panel_Home.Location = new System.Drawing.Point(0, 95 - y);
-
-                this.InitHomeData();
-                this.Panel_Home.Visible = true;
-                this.ShowHome();
+                ResumePanelBottomState();
+                try
+                {
+                    this.Button_ShopPage.BackgroundImage = Image.FromFile(path + "\\template\\92.jpg");
+                }
+                catch (Exception)
+                {
+                }
             }
             catch (Exception)
             {
