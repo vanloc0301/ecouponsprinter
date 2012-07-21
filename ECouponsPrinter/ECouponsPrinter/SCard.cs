@@ -80,8 +80,8 @@ namespace ECouponsPrinter
             int baud = 0;
             int status;
 
-            port = 2;
-            baud = 19200;
+            port = 1;
+            baud = 14400;
 
             status = rf_init_com(port, baud);
             if (0 == status)

@@ -43,6 +43,7 @@ namespace ECouponsPrinter
         //-----------------------------------------------------------------------------   
         string[] buttonName = { };
         enum part { up = 1, middle = 2, bottom = 3 };
+//        enum Sounds { Do = 550, Re = 587, Mi = 659, Fa = 698, So = 784, La = 880, Ti = 998, Do2 = 1046 };
 
         public MainFrame()
         {
@@ -82,6 +83,11 @@ namespace ECouponsPrinter
             CatchAllClickEvent(this);
 
         }
+
+      //  [DllImport("kernel32.dll")]
+      //  private static extern int Beep(int dwFreq, int dwDuration);  
+      //  [DllImport("user32.dll")]
+      //  public static extern bool MessageBeep(uint uType);
 
         #region 处理界面点击事件
         Point mPos = new Point(0, 0);
@@ -133,6 +139,7 @@ namespace ECouponsPrinter
         }
 
         private bool jumpValue = true;       //防止过多的弹出提示"请先登录"的提示窗口
+        //public const int MB_ICONEXCLAMATION = 48;
         private void MainFrame_MouseMove(object sender, MouseEventArgs e)
         {
             if (jumpValue)
@@ -1437,6 +1444,9 @@ namespace ECouponsPrinter
         /// <param name="e"></param>
         private void Label_Countdown_Click(object sender, EventArgs e)
         {
+            if (!GlobalVariables.isUserLogin)
+                return;
+
             this.Timer_UserQuit.Stop();
             this.Timer_UserQuit.Enabled = false;
 
@@ -2533,6 +2543,13 @@ namespace ECouponsPrinter
 
             LP_stype[(num - 1) % 3] = FindShopByTrade(tradeName[num - 1]);
 
+            if (num % 3 == 1)
+                tPage1 = 1;
+            else if (num % 3 == 2)
+                tPage2 = 1;
+            else
+                tPage3 = 1;
+
             ShowShopPart(num % 3);
         }
 
@@ -2622,6 +2639,7 @@ namespace ECouponsPrinter
                             {
                                 if (temp.Visible.CompareTo(true) != 0)
                                     temp.Visible = true;
+                                temp.Image = lp[i + perNum * (curPage - 1)].image;
                             }
                             else
                             {
@@ -2633,15 +2651,15 @@ namespace ECouponsPrinter
                         }
                     }
 
-                for (int i = 0; i < curPageShowCount; i++)
-                {
-                    String name = controlName + (i + 1);
-                    PictureBox temp = null;
-                    if ((temp = (PictureBox)GetControl(name, container)) != null)
-                    {
-                        temp.Image = lp[i + perNum * (curPage - 1)].image;
-                    }
-                }
+                //for (int i = 0; i < curPageShowCount; i++)
+                //{
+                //    String name = controlName + (i + 1);
+                //    PictureBox temp = null;
+                //    if ((temp = (PictureBox)GetControl(name, container)) != null)
+                //    {
+                //        temp.Image = lp[i + perNum * (curPage - 1)].image;
+                //    }
+                //}
             }
             catch (Exception e)
             {
@@ -4580,14 +4598,14 @@ namespace ECouponsPrinter
             {
                 //下载信息
                 DownloadInfo di = new DownloadInfo(this);
-                this.Label_DownloadWaitObject.Text = "正在下载更新数据\n请稍后.....";
+ //               this.Label_DownloadWaitObject.Text = "正在下载更新数据\n请稍后.....";
                 Thread.Sleep(1000);
                 //              this.Label_DownloadWaitObject.Refresh();
                 this.BeforeDownload();
                 Application.DoEvents();
                 Thread.Sleep(1000);
                 di.download();
-                this.Label_DownloadWaitObject.Text = "正在同步数据\n请稍后.....";
+ //               this.Label_DownloadWaitObject.Text = "正在同步数据\n请稍后.....";
                 this.Label_DownloadWaitObject.Refresh();
                 Thread.Sleep(1000);
                 //               this.Label_DownloadWaitObject.Refresh();
@@ -4596,7 +4614,7 @@ namespace ECouponsPrinter
                 this.InitData();
                 this.Timer_DownloadInfo.Interval = GlobalVariables.IntRefreshSec * 1000;
                 //上传消费记录
-                this.Label_DownloadWaitObject.Text = "正在上传消费数据\n请稍后.....";
+  //              this.Label_DownloadWaitObject.Text = "正在上传消费数据\n请稍后.....";
                 this.Label_DownloadWaitObject.Refresh();
                 Thread.Sleep(1000);
                 UploadInfo ui = new UploadInfo();
@@ -4712,9 +4730,15 @@ namespace ECouponsPrinter
                             {
                                 pFileStream = new FileStream(path + "\\template\\" + element.strBgImage, FileMode.Open, FileAccess.Read);
                                 if (ctl is Label)
-                                    (ctl as Label).Image = new Bitmap(Image.FromStream(pFileStream), ctl.Size);
+                                {
+                                    Label lb = ctl as Label;
+                                    lb.Image = new Bitmap(Image.FromStream(pFileStream), ctl.Size);
+                                   
+                                }
                                 else
+                                {
                                     ctl.BackgroundImage = new Bitmap(Image.FromStream(pFileStream), ctl.Size);
+                                }
                                 pFileStream.Close();
                                 pFileStream.Dispose();
                             }
@@ -4732,28 +4756,40 @@ namespace ECouponsPrinter
 
                         if (!element.strFontFamily.Equals(""))
                         {
+                            //if (ctl.Name == "Label_Countdown")
+                            //    Console.WriteLine("get it");
                             if (ctl is Panel || ctl is PictureBox)
                                 continue;
 
                             Font old_F = ctl.Font;
+                            Label lb = ctl as Label;
 
-                            try
-                            {
-                                ctl.Font = new Font(element.strFontFamily, element.intFontSize, old_F.Style);
-                            }
-                            catch
-                            {
-                                ctl.Font = old_F;
-                            }
+                            if (element.strContent != "")
+                                lb.Text = element.strContent;
+                            if (element.strFontFamily != "" & element.intFontSize != 0)
+                                lb.Font = new Font(new FontFamily(element.strFontFamily), element.intFontSize,old_F.Style);
 
-                            ctl.ForeColor = Color.FromArgb(Convert.ToInt32(element.strFontColor.Split(',')[0]), Convert.ToInt32(element.strFontColor.Split(',')[1]),
-                                                            Convert.ToInt32(element.strFontColor.Split(',')[2]));
-
-                            if (!element.strContent.Equals(""))
+                            if (element.strFontColor != "")
                             {
-                                if (ctl is Panel || ctl is PictureBox)
-                                    continue;
-                                ctl.Text = element.strContent;
+                                try
+                                {
+                                    string[] color = element.strFontColor.Split(',');
+                                    int[] intcolor = { Convert.ToInt32(color[0]), Convert.ToInt32(color[1]), Convert.ToInt32(color[2]) };
+
+                                    for (int t = 0; t < 3; t++)
+                                    {
+                                        if (intcolor[t] < 0)
+                                            intcolor[t] = 0;
+                                        if (intcolor[t] > 255)
+                                            intcolor[t] = 255;
+                                    }
+
+                                    lb.ForeColor = Color.FromArgb(intcolor[0], intcolor[1], intcolor[2]);
+                                }
+                                catch
+                                {
+                                    lb.ForeColor = Color.FromArgb(255,255,255);
+                                }
                             }
                         }
                     }
