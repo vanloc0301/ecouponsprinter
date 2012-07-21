@@ -35,6 +35,16 @@ namespace ECouponsPrinter
             {
                 File.CreateText(System.Windows.Forms.Application.StartupPath + "\\error.log");
             }
+            else
+            {
+                FileInfo fi = new FileInfo(System.Windows.Forms.Application.StartupPath + "\\error.log");
+                if (fi.Length > 15000000)
+                {
+                    fi.MoveTo(System.Windows.Forms.Application.StartupPath + "\\error " + DateTime.Now.ToString("yyyy-MM-dd HH") + ".log");
+                    File.CreateText(System.Windows.Forms.Application.StartupPath + "\\error.log");
+                }
+                
+            }
 
             Application.Run(new MainFrame());
         }

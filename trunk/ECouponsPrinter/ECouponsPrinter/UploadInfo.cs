@@ -154,8 +154,10 @@ namespace ECouponsPrinter
                 "&strCode=" + strCode + "&strMobileNo=" + strMobileNo, "");
             XmlDocument doc = new XmlDocument();
             string strXml = request.HtmlDocument;
+            MessageBox.Show(strXml);
             if (strXml.IndexOf("<return>") > 0)
             {
+               
                 doc.LoadXml(strXml);
                 return doc.GetElementsByTagName("return").Item(0).InnerText.Trim().Equals("OK");
             }
