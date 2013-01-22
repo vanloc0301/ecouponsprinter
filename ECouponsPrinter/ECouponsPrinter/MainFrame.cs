@@ -43,7 +43,7 @@ namespace ECouponsPrinter
         //-----------------------------------------------------------------------------   
         string[] buttonName = { };
         enum part { up = 1, middle = 2, bottom = 3 };
-//        enum Sounds { Do = 550, Re = 587, Mi = 659, Fa = 698, So = 784, La = 880, Ti = 998, Do2 = 1046 };
+        //        enum Sounds { Do = 550, Re = 587, Mi = 659, Fa = 698, So = 784, La = 880, Ti = 998, Do2 = 1046 };
 
         public MainFrame()
         {
@@ -84,10 +84,10 @@ namespace ECouponsPrinter
 
         }
 
-      //  [DllImport("kernel32.dll")]
-      //  private static extern int Beep(int dwFreq, int dwDuration);  
-      //  [DllImport("user32.dll")]
-      //  public static extern bool MessageBeep(uint uType);
+        //  [DllImport("kernel32.dll")]
+        //  private static extern int Beep(int dwFreq, int dwDuration);  
+        //  [DllImport("user32.dll")]
+        //  public static extern bool MessageBeep(uint uType);
 
         #region 处理界面点击事件
         Point mPos = new Point(0, 0);
@@ -120,7 +120,7 @@ namespace ECouponsPrinter
             try
             {
                 this.InitTimer();
-                this.Button_ShopPage_MouseUp(null,null);
+                this.Button_ShopPage_MouseUp(null, null);
 
                 ResumePanelBottomState();
                 try
@@ -196,42 +196,6 @@ namespace ECouponsPrinter
         }
 
         #endregion 处理界面点击事件
-
-        //private void ChangeControl(Control c, float widthRatio, float heightRatio)
-        //{
-        //    c.Width = (int)(c.Width * widthRatio);
-        //    c.Height = (int)(c.Height * heightRatio);
-        //    c.Location = new Point((int)(c.Location.X * widthRatio), (int)(c.Location.Y * heightRatio));
-        //    if (c is Button)
-        //    {
-        //        if (c.BackgroundImage != null)
-        //        {
-        //            c.BackgroundImageLayout = ImageLayout.Stretch;
-        //        }
-        //    }
-        //    if (c is Label)
-        //    {
-        //        c.Font = new Font(c.Font.FontFamily, c.Font.Size * heightRatio, c.Font.Style);
-        //        if (c.BackgroundImage != null)
-        //        {
-        //            c.BackgroundImageLayout = ImageLayout.Stretch;
-        //        }
-        //    }
-        //    if (c.Controls != null)
-        //    {
-        //        if (c is Panel)
-        //        {
-        //            if (c.BackgroundImage != null)
-        //            {
-        //                c.BackgroundImageLayout = ImageLayout.Stretch;
-        //            }
-        //        }
-        //        foreach (Control cc in c.Controls)
-        //        {
-        //            ChangeControl(cc, widthRatio, heightRatio);
-        //        }
-        //    }
-        //}
 
         #region 主要
 
@@ -310,7 +274,6 @@ namespace ECouponsPrinter
             this.Panel_ShopInfo.Visible = true;
             ShowShopInfo();
             this.BackPage = "Home";
-            this.ResumePanelBottomState();
         }
 
         #endregion
@@ -321,22 +284,20 @@ namespace ECouponsPrinter
 
         private void PB_ShopInfo_Back_Click(object sender, EventArgs e)
         {
+            Panel srcPanel = this.Panel_ShopInfo, destPanel = null;
             if (this.BackPage == "Home")
             {
-                this.Button_HomePage_MouseUp(null, null);
-                return;
+                destPanel = this.Panel_Home;
             }
             if (this.BackPage == "Shop")
             {
-                this.Button_ShopPage_MouseUp(null, null);
-                return;
+                destPanel = this.Panel_Shop;
             }
             if (this.BackPage == "NearShop")
             {
-                this.Button_NearShop_MouseUp(null, null);
-                return;
+                destPanel = this.Panel_NearShop;
             }
-
+            FlipPanelVisible(srcPanel,destPanel);
         }
 
         #endregion
@@ -741,7 +702,6 @@ namespace ECouponsPrinter
             this.Panel_ShopInfo.Visible = true;
             ShowShopInfo();
             this.BackPage = "NearShop";
-            this.ResumePanelBottomState();
         }
         #endregion 周边商家
 
@@ -1333,6 +1293,17 @@ namespace ECouponsPrinter
         }
 
         #endregion
+
+        /// <summary>
+        /// 两个panel的visible属性的切换
+        /// </summary>
+        /// <param name="src">原panel</param>
+        /// <param name="dest">目标panel</param>
+        private void FlipPanelVisible(Panel src, Panel dest)
+        {
+            src.Visible = false;
+            dest.Visible = true;
+        }
 
         #region 广告
 
@@ -1958,7 +1929,7 @@ namespace ECouponsPrinter
 
                     LP_coupon.Add(pi);
                 }
-                catch (Exception e2)
+                catch (Exception)
                 {
                     continue;
                 }
@@ -3746,7 +3717,8 @@ namespace ECouponsPrinter
         {
             try
             {
-                string strSql = "select distinct strTrade from t_bz_shop";
+                string strSql = "select strTrade from t_bz_shop group by strTrade order by count(strTrade) desc";
+                //select strTrade from t_bz_shop b group by strTrade order by count(strTrade) desc
                 AccessCmd cmd = new AccessCmd();
                 OleDbDataReader reader = cmd.ExecuteReader(strSql);
 
@@ -4381,7 +4353,7 @@ namespace ECouponsPrinter
                 Label_LoginWaitInfo.Refresh();
                 //}
 
-            //    MessageBox.Show(cardNo);
+                //    MessageBox.Show(cardNo);
                 if (!UserLogin(cardNo))
                 {
                     SCard.light(0x0000, 0);
@@ -4404,7 +4376,7 @@ namespace ECouponsPrinter
                 //}
                 //else
                 //{
-                    this.Label_LoginWaitInfo.Visible = false;
+                this.Label_LoginWaitInfo.Visible = false;
                 //}
             }
         }
@@ -4598,14 +4570,14 @@ namespace ECouponsPrinter
             {
                 //下载信息
                 DownloadInfo di = new DownloadInfo(this);
- //               this.Label_DownloadWaitObject.Text = "正在下载更新数据\n请稍后.....";
+                //               this.Label_DownloadWaitObject.Text = "正在下载更新数据\n请稍后.....";
                 Thread.Sleep(1000);
                 //              this.Label_DownloadWaitObject.Refresh();
                 this.BeforeDownload();
                 Application.DoEvents();
                 Thread.Sleep(1000);
                 di.download();
- //               this.Label_DownloadWaitObject.Text = "正在同步数据\n请稍后.....";
+                //               this.Label_DownloadWaitObject.Text = "正在同步数据\n请稍后.....";
                 this.Label_DownloadWaitObject.Refresh();
                 Thread.Sleep(1000);
                 //               this.Label_DownloadWaitObject.Refresh();
@@ -4614,7 +4586,7 @@ namespace ECouponsPrinter
                 this.InitData();
                 this.Timer_DownloadInfo.Interval = GlobalVariables.IntRefreshSec * 1000;
                 //上传消费记录
-  //              this.Label_DownloadWaitObject.Text = "正在上传消费数据\n请稍后.....";
+                //              this.Label_DownloadWaitObject.Text = "正在上传消费数据\n请稍后.....";
                 this.Label_DownloadWaitObject.Refresh();
                 Thread.Sleep(1000);
                 UploadInfo ui = new UploadInfo();
@@ -4629,6 +4601,11 @@ namespace ECouponsPrinter
             this.Timer_DownloadInfo.Start();
         }
 
+        /// <summary>
+        ///  系统关闭前的资源释放
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void MainFrame_Closing(object sender, FormClosingEventArgs e)
         {
             try
@@ -4733,7 +4710,7 @@ namespace ECouponsPrinter
                                 {
                                     Label lb = ctl as Label;
                                     lb.Image = new Bitmap(Image.FromStream(pFileStream), ctl.Size);
-                                   
+
                                 }
                                 else
                                 {
@@ -4767,7 +4744,7 @@ namespace ECouponsPrinter
                             if (element.strContent != "")
                                 lb.Text = element.strContent;
                             if (element.strFontFamily != "" & element.intFontSize != 0)
-                                lb.Font = new Font(new FontFamily(element.strFontFamily), element.intFontSize,old_F.Style);
+                                lb.Font = new Font(new FontFamily(element.strFontFamily), element.intFontSize, old_F.Style);
 
                             if (element.strFontColor != "")
                             {
@@ -4788,7 +4765,7 @@ namespace ECouponsPrinter
                                 }
                                 catch
                                 {
-                                    lb.ForeColor = Color.FromArgb(255,255,255);
+                                    lb.ForeColor = Color.FromArgb(255, 255, 255);
                                 }
                             }
                         }
@@ -4818,6 +4795,5 @@ namespace ECouponsPrinter
             }
 
         }
-
     }
 }
